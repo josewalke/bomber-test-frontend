@@ -1,22 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar fixed app>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <div v-if="userName">
-        Hi {{ userName }}
-        <v-btn icon>
-          <v-icon>mdi-account-circle</v-icon>
-        </v-btn>
-        <v-btn text @click="logout">Logout</v-btn>
-      </div>
-      <v-btn v-else text to="/auth">Login</v-btn>
-    </v-app-bar>
-
     <v-content>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-content>
 
     <v-footer fixed app class="text-center">
