@@ -3,7 +3,7 @@
     <v-app-bar class="nav-bar" fixed flat>
       <v-toolbar-title class="white--text font-weight-black" v-text="title" />
       <v-spacer />
-      <!-- nav del ordenador -->
+      <!-- inicio nav del ordenador -->
       <v-btn text class="white--text btn-ordenador">Home</v-btn>
       <v-btn text class="white--text btn-ordenador">Precios</v-btn>
       <div v-if="userName">
@@ -16,7 +16,39 @@
       <v-btn v-else text class="white--text btn-ordenador" to="/auth"
         >Login/Registro</v-btn
       >
-      <!-- nav del movil -->
+      <!-- inicio modal -->
+      <v-dialog v-model="dialog" max-width="800">
+        <template v-slot:activator="{ on }">
+          <v-btn color="primary" dark v-on="on">Open Dialog</v-btn>
+        </template>
+        <v-card>
+          <v-row align="center" justify="center">
+            <v-col cols="12" md="6">
+              <v-tabs v-model="tab">
+                <v-tab key="1" :href="`#tab-1`">Login</v-tab>
+                <v-tab key="2" :href="`#tab-2`">Signup</v-tab>
+                <v-tab-item key="1" value="tab-1">
+                  <v-row class="py-7">
+                    <v-col>
+                      <Login />
+                    </v-col>
+                  </v-row>
+                </v-tab-item>
+                <v-tab-item key="2" value="tab-2">
+                  <v-row class="py-7">
+                    <v-col>
+                      <Signup />
+                    </v-col>
+                  </v-row>
+                </v-tab-item>
+              </v-tabs>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-dialog>
+      <!-- final modal -->
+      <!-- final nav del ordenador -->
+      <!-- inicio nav del movil -->
       <v-menu offset-y>
         <template v-slot:activator="{ on }">
           <v-btn text class="menu" v-on="on">
@@ -29,6 +61,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
+      <!-- final nav del movil -->
     </v-app-bar>
     <div class="hero-banner">
       <v-layout class="banner-text" column justify-center align-center>
@@ -96,12 +129,18 @@
 </template>
 
 <script>
+import Login from '~/components/Login.vue'
+import Signup from '~/components/Signup.vue'
 export default {
   data() {
     return {
       title: 'Oposicion de Bombero',
       items: [{ title: 'Login', to: '/auth' }]
     }
+  },
+  components: {
+    Login,
+    Signup
   }
 }
 </script>
