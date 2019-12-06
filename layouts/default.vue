@@ -11,6 +11,16 @@
         <v-btn text @click="logout">Logout</v-btn>
       </div>
       <v-btn class="btn-login" v-else text to="/auth">Login</v-btn>
+      <!-- inicio modal -->
+      <v-dialog v-model="dialog" max-width="800">
+        <template v-slot:activator="{ on }">
+          <v-btn color="primary" dark v-on="on">Open Dialog</v-btn>
+        </template>
+        <v-card>
+          <Auth></Auth>
+        </v-card>
+      </v-dialog>
+      <!-- final modal -->
       <v-menu offset-y>
         <template v-slot:activator="{ on }">
           <v-btn text class="menu" v-on="on">
@@ -40,12 +50,17 @@
 
 <script scoped>
 import { mapGetters } from 'vuex'
+import Auth from '~/pages/auth.vue'
 export default {
   data() {
     return {
       title: 'Reboot Final Project',
-      items: [{ title: 'Login', to: '/auth' }]
+      items: [{ title: 'Login', to: '/auth' }],
+      dialog: false
     }
+  },
+  components: {
+    Auth
   },
   computed: {
     ...mapGetters(['userName'])

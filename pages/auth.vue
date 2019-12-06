@@ -27,6 +27,7 @@
 import Login from '~/components/Login'
 import Signup from '~/components/Signup'
 export default {
+  name: 'auth',
   components: { Login, Signup },
   data() {
     return {
