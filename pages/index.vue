@@ -6,18 +6,11 @@
       <!-- inicio nav del ordenador -->
       <v-btn text class="white--text btn-ordenador">Home</v-btn>
       <v-btn text class="white--text btn-ordenador">Precios</v-btn>
-      <div v-if="userName">
-        Hi {{ userName }}
-        <v-btn icon>
-          <v-icon>mdi-account-circle</v-icon>
-        </v-btn>
-        <v-btn text @click="logout">Logout</v-btn>
-      </div>
-      <v-btn v-else text class="white--text btn-ordenador" to="/auth"
+      <v-btn text class="white--text btn-ordenador" to="/auth"
         >Login/Registro</v-btn
       >
       <!-- inicio modal -->
-      <v-dialog v-model="dialog" max-width="800">
+      <v-dialog max-width="800">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark v-on="on">Open Dialog</v-btn>
         </template>

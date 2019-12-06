@@ -57,15 +57,15 @@ export default {
   methods: {
     async login() {
       const user = {
-        user_email: this.email,
-        user_password: this.password
+        email: this.email,
+        password: this.password
       }
 
       const newToken = await axios.post('auth/login', user)
       debugger
       if (!newToken.data.error) {
         this.$store.commit('saveToken', newToken.data)
-        this.$router.push('/')
+        this.$router.push('/user')
       } else {
         alert(newToken.data.error)
       }
