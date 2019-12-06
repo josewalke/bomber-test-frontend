@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="10" offset-md="1">
         <v-form ref="form" lazy-validation>
-          <v-card>
+          <v-card fixed flat>
             <v-card-title>
               <h2>Sign Up</h2>
             </v-card-title>
