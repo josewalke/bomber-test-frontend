@@ -1,10 +1,11 @@
 <template>
   <div>
     <v-app-bar class="nav-bar" fixed flat>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title class="white--text font-weight-black" v-text="title" />
       <v-spacer />
-      <v-btn text class="white--text">Home</v-btn>
-      <v-btn text class="white--text">Precios</v-btn>
+      <!-- nav del ordenador -->
+      <v-btn text class="white--text btn-ordenador">Home</v-btn>
+      <v-btn text class="white--text btn-ordenador">Precios</v-btn>
       <div v-if="userName">
         Hi {{ userName }}
         <v-btn icon>
@@ -12,7 +13,22 @@
         </v-btn>
         <v-btn text @click="logout">Logout</v-btn>
       </div>
-      <v-btn v-else text class="white--text" to="/auth">Login/Registro</v-btn>
+      <v-btn v-else text class="white--text btn-ordenador" to="/auth"
+        >Login/Registro</v-btn
+      >
+      <!-- nav del movil -->
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn text class="menu" v-on="on">
+            <v-icon class="white--text">mdi-menu</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item v-for="(item, index) in items" :key="index">
+            <v-btn text :to="item.to">{{ item.title }}</v-btn>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <div class="hero-banner">
       <v-layout class="banner-text" column justify-center align-center>
@@ -64,11 +80,30 @@
         </div>
       </div>
     </div>
+    <v-footer class="text-center">
+      <v-row align="center" justify="center">
+        <v-col cols="12">
+          <h1 class="white--text">Siguenos en las redes</h1>
+        </v-col>
+        <v-col cols="4">
+          <v-icon class="white--text" x-large>mdi-instagram</v-icon>
+          <v-icon class="white--text" x-large>mdi-facebook-box</v-icon>
+          <v-icon class="white--text" x-large>mdi-twitter-box</v-icon>
+        </v-col>
+      </v-row>
+    </v-footer>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      title: 'Oposicion de Bombero',
+      items: [{ title: 'Login', to: '/auth' }]
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 .nav-bar {
@@ -176,9 +211,21 @@ export default {}
   font-size: 18px;
 }
 
+.v-footer {
+  background-color: #da3e3e;
+}
+
 @media only screen and (max-width: 600px) {
   .columns {
     width: 100%;
+  }
+  .btn-ordenador {
+    display: none;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .menu {
+    display: none;
   }
 }
 </style>
