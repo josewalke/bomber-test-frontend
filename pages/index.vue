@@ -125,15 +125,15 @@
 import Login from '~/components/Login.vue'
 import Signup from '~/components/Signup.vue'
 export default {
+  components: {
+    Login,
+    Signup
+  },
   data() {
     return {
       title: 'Oposicion de Bombero',
       items: [{ title: 'Login', to: '/auth' }]
     }
-  },
-  components: {
-    Login,
-    Signup
   }
 }
 </script>

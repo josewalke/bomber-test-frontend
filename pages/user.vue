@@ -12,8 +12,15 @@
       <v-list-item v-for="item in items" :key="item.title">
         <v-list-item-content>
           <v-btn text class="justify-start" color="#6b6b6b">
-            <v-icon class="mr-2">{{ item.icon }}</v-icon>
-            {{ item.title }}
+            <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
+          </v-btn>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item>
+        <v-list-item-content>
+          <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
+            <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
           </v-btn>
         </v-list-item-content>
       </v-list-item>
@@ -28,9 +35,14 @@ export default {
         { title: 'Alumnos', icon: 'mdi-account' },
         { title: 'Temas', icon: 'mdi-file-document-box' },
         { title: 'Mensaje', icon: 'mdi-email' },
-        { title: 'Configuracion', icon: 'mdi-settings' },
-        { title: 'Logout', icon: 'mdi-logout-variant' }
+        { title: 'Configuracion', icon: 'mdi-settings' }
       ]
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.commit('clearToken')
+      this.$router.push('/')
     }
   }
 }
