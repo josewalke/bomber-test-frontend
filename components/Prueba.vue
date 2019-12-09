@@ -1,16 +1,29 @@
 <template>
-  <h1>hola</h1>
+  <div>
+    <h1>hola</h1>
+    <pre>{{ jose }}</pre>
+  </div>
 </template>
 
 <script>
+import axios from '~/plugins/axios'
+
 export default {
-  name: 'Prueba'
+  name: 'Prueba',
+  async asyncData() {
+    console.log('my users')
+    const users = await axios.get('/users')
+    console.log(users)
+    return { jose: users }
+  }
 }
 </script>
 
-<style>
-h1 {
-  font-size: 200px;
-  text-align: center;
+<style scoped>
+div {
+  width: 300px;
+  height: 300px;
+  border: solid 2px black;
+  margin: auto;
 }
 </style>

@@ -12,7 +12,7 @@
       <!-- inicio modal -->
       <v-dialog max-width="800">
         <template v-slot:activator="{ on }">
-          <v-btn color="primary" dark v-on="on">Open Dialog</v-btn>
+          <v-btn color="primary" dark v-on="on">Login/Registro</v-btn>
         </template>
         <v-card>
           <v-row align="center" justify="center">
@@ -134,7 +134,8 @@ export default {
       title: 'Oposicion de Bombero',
       items: [{ title: 'Login', to: '/auth' }]
     }
-  }
+  },
+  layout: 'basic'
 }
 </script>
 <style lang="scss" scoped>

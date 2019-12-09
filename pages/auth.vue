@@ -36,7 +36,8 @@ export default {
     return {
       tab: null
     }
-  }
+  },
+  layout: 'basic'
 }
 </script>
 
