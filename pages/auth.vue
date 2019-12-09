@@ -4,19 +4,19 @@
       <v-row align="center" justify="center">
         <v-col cols="12" md="6">
           <v-tabs v-model="tab">
-            <v-tab key="1" :href="`#tab-1`">Login</v-tab>
-            <v-tab key="2" :href="`#tab-2`">Signup</v-tab>
+            <v-tab key="1" :href="`#tab-1`">Signup</v-tab>
+            <v-tab key="2" :href="`#tab-2`">Login</v-tab>
             <v-tab-item key="1" value="tab-1">
               <v-row class="py-7">
                 <v-col>
-                  <Login />
+                  <Signup />
                 </v-col>
               </v-row>
             </v-tab-item>
             <v-tab-item key="2" value="tab-2">
               <v-row class="py-7">
                 <v-col>
-                  <Signup />
+                  <Login />
                 </v-col>
               </v-row>
             </v-tab-item>
@@ -36,7 +36,8 @@ export default {
     return {
       tab: null
     }
-  }
+  },
+  layout: 'basic'
 }
 </script>
 
