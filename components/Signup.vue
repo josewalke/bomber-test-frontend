@@ -10,8 +10,22 @@
             <v-card-text>
               <v-text-field
                 v-model="name"
-                label="Name"
+                label="Nombre"
                 :rules="[rules.required]"
+                validate-on-blur
+              />
+
+              <v-text-field
+                v-model="lastName"
+                label="Apellidos"
+                :rules="[rules.required]"
+                validate-on-blur
+              />
+
+              <v-text-field
+                v-model="phone"
+                label="Telefono"
+                :rules="[rules.required, rules.phone]"
                 validate-on-blur
               />
 
@@ -27,7 +41,7 @@
                 :type="showPassword ? 'text' : 'password'"
                 :rules="[rules.required, rules.password]"
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                label="Password"
+                label="Contraseña"
                 @click:append="showPassword = !showPassword"
               />
             </v-card-text>
@@ -52,23 +66,28 @@ export default {
       email: '',
       password: '',
       name: '',
+      lastName: '',
+      phone: '',
       showPassword: false,
       rules: {
-        required: v => !!v || 'Item is required',
+        required: v => !!v || 'Campo Obligatorio',
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'Invalid e-mail.'
+          return pattern.test(value) || 'Email no valido'
         },
-        password: v => v.length > 5 || 'Password too short!'
+        password: v => v.length > 5 || 'Contraseña demasiado corta',
+        phone: v => v.length === 9 || 'Telefono no valido'
       }
     }
   },
   methods: {
     async signup() {
       const user = {
-        user_name: this.name,
-        user_email: this.email,
-        user_password: this.password
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        lastName: this.lastName,
+        phone: this.phone
       }
 
       const newToken = await axios.post('auth/signup', user)
