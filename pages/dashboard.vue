@@ -1,29 +1,18 @@
 <template>
-  <div>
-    <h1>{{ users[1].name }}</h1>
-  </div>
+  <StudentsList :items="users"></StudentsList>
 </template>
 
 <script>
 import data from '../services/data'
+import StudentsList from '~/components/StudentsList.vue'
 export default {
-  data() {
-    return {
-      users: ['hola']
-    }
+  components: {
+    StudentsList
   },
-  methods: {
-    alert() {},
-    getAllUsers() {
-      console.log('hola')
-      data.Api_getAllUsers().then(users => {
-        users.forEach(user => this.users.push(user))
-      })
-      console.log(this.users[0])
-    }
-  },
-  mounted() {
-    this.getAllUsers()
+  async asyncData() {
+    const users = await data.Api_getAllUsers()
+    console.log(users[0])
+    return { users }
   }
 }
 </script>
