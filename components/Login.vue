@@ -64,7 +64,7 @@ export default {
       const newToken = await axios.post('auth/login', user)
       if (!newToken.data.error) {
         this.$store.commit('saveToken', newToken.data)
-        this.$router.push('/user')
+        this.$router.push('/user/profile')
       } else {
         alert(newToken.data.error)
       }

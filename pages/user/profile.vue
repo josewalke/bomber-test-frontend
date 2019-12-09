@@ -1,14 +1,36 @@
 <template>
-  <v-app> Hola {{ users }} </v-app>
+  <v-app>
+    {{ objectId }}
+    {{ usuario }}
+  </v-app>
 </template>
 
 <script>
-import axios from '~/plugins/axios'
+import data from '~/services/data'
+import { mapState } from 'vuex'
 
 export default {
   async asyncData() {
-    const response = await axios.get('/users')
-    return { users: response.data }
+    const user = await data.Api_getUserById()
+    return { usuario: user }
+  },
+  // data() {
+  //   return {
+  //     usuario: this.$store.state.objectId
+  //   }
+  // },
+  computed: {
+    ...mapState(['objectId'])
+  },
+  // mounted() {
+  //   this.findUser()
+  // },
+  methods: {
+    findUser() {
+      data.Api_getUserById(this.objectId).then(response => {
+        this.usuario = response
+      })
+    }
   }
 }
 </script>
