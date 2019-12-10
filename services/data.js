@@ -13,8 +13,11 @@ export default {
     return axios
       .get(API_URL + 'users/me', { headers: { token } })
       .then(response => response.data)
-      .catch(err => {
-        console.log(err)
-      })
+      .catch(err => {console.log(err)})
+  },
+  Api_getAllQuestions() {
+    return axios.get(API_URL + 'questions').then(response => response.data)
+  },
+  Api_genrateTest() {
+    axios.post(API_URL + 'tests')
   }
-}
