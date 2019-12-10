@@ -1,19 +1,23 @@
 <template>
-  <StudentsList :items="users"></StudentsList>
+  <div>
+    <TestsList :items="users"></TestsList>
+  </div>
 </template>
 
 <script>
 import data from '~/services/data'
-import StudentsList from '~/components/StudentsList.vue'
+import TestsList from '~/components/TestsList.vue'
+
 export default {
   components: {
-    StudentsList
+    TestsList
   },
   async asyncData() {
     const users = await data.Api_getAllUsers()
-    return { users }
-  },
-  layout: 'admin'
+    const questions = await data.Api_getAllQuestions()
+    return { users, questions }
+  }
 }
 </script>
+
 <style lang="scss" scoped></style>
