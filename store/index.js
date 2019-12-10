@@ -7,8 +7,14 @@ export const state = () => ({
 })
 
 export const getters = {
+  email(state) {
+    return state.email
+  },
   userName(state) {
     return state.username
+  },
+  objectId(state) {
+    return state.objectId
   }
 }
 export const mutations = {
