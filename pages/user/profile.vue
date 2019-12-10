@@ -18,26 +18,18 @@ export default {
     const response = await app.$axios.get(API_URL + 'users/me', {
       headers: { token: store.state.token }
     })
-
     return { usuario: response.data }
-  },
-  data() {
-    return {
-      usuario: {}
-    }
   }
-  // mounted() {
-  //   console.log({ front: this.$store.state.localStorage.objectId })
-  //   console.log('token', window.localStorage.getItem('UserMe'))
-  // },
-  // methods: {
-  //   onClick() {
-  //     data
-  //       .Api_getUserById(
-  //         JSON.parse(window.localStorage.getItem('token').objectId)
-  //       )
-  //       .then(data => (this.usuario = data))
+  // data() {
+  //   return {
+  //     usuario: {}
   //   }
+  // },
+  // mounted() {
+  //   console.log('token', JSON.parse(window.localStorage.getItem('token')).token)
+  //   data
+  //     .Api_getUserById(JSON.parse(window.localStorage.getItem('token')).token)
+  //     .then(data => (this.usuario = data))
   // }
 }
 </script>
