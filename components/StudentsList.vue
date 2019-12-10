@@ -16,7 +16,12 @@
 export default {
   name: 'StudentsList',
   props: {
-    items: Array
+    items: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
   },
   data() {
     return {
