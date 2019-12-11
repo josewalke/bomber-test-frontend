@@ -11,7 +11,6 @@ export default {
   },
   async asyncData() {
     const users = await API.getAllUsers()
-    console.log(users[0])
     return { users }
   },
   layout: 'admin'

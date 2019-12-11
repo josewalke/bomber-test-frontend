@@ -11,9 +11,7 @@ import axios from '~/plugins/axios'
 export default {
   name: 'Prueba',
   async asyncData() {
-    console.log('my users')
     const users = await axios.get('/users')
-    console.log(users)
     return { jose: users }
   }
 }
