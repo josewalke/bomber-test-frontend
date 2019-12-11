@@ -9,8 +9,12 @@ export const state = () => ({
 export const getters = {
   userName(state) {
     return state.username
+  },
+  token(state) {
+    return state.token
   }
 }
+
 export const mutations = {
   saveToken(state, { username, email, role, objectId, token }) {
     state.token = token

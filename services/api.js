@@ -6,5 +6,16 @@ export default {
   },
   getUserById(prueba) {
     return axios.get('users/' + prueba).then(response => response.data)
+  },
+  getAllQuestions() {
+    return axios
+      .get(process.env.API_URL + 'questions')
+      .then(response => response.data)
+  },
+  generateTest(token) {
+    console.log(`token: ${token}`)
+    return axios
+      .post('tests', null, { headers: { token } })
+      .then(response => console.log(response.data))
   }
 }
