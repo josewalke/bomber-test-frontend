@@ -1,5 +1,4 @@
 process.stdout.write('\x1Bc')
-import config from '../.config.js'
 
 const express = require('express')
 const app = express()
@@ -29,9 +28,9 @@ async function start() {
   app.use(nuxt.render)
 
   // Listen the server
-  app.listen(config.PORT, config.HOST)
+  app.listen(process.env.PORT, process.env.HOST)
   consola.ready({
-    message: `Server listening on http://${config.HOST}:${config.PORT}`,
+    message: `Server listening on http://${process.env.HOST}:${process.env.PORT}`,
     badge: true
   })
 }
