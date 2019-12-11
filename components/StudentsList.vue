@@ -35,7 +35,7 @@ export default {
         { text: 'Apellidos', value: 'lastName' },
         { text: 'Email', value: 'email' },
         { text: 'Teléfono', value: 'phone' },
-        { text: 'Suscripción', value: 'suscription' },
+        { text: 'Suscripción', value: 'suscription_type' },
         { text: 'Activo', value: 'active' }
       ]
     }
