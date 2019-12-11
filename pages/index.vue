@@ -17,7 +17,7 @@
         <v-card>
           <v-row align="center" justify="center">
             <v-col cols="12" md="6">
-              <v-tabs v-model="tab">
+              <v-tabs>
                 <v-tab key="1" :href="`#tab-1`">Login</v-tab>
                 <v-tab key="2" :href="`#tab-2`">Signup</v-tab>
                 <v-tab-item key="1" value="tab-1">
