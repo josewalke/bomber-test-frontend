@@ -1,8 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 const colors = require('vuetify/es5/util/colors').default
+require('dotenv').config()
 
 module.exports = {
-  mode: 'universal',
+  mode: 'spa',
+  env: {
+    API_URL: process.env.API_URL
+  },
   /*
    ** Headers of the page
    */

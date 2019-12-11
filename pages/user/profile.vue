@@ -1,17 +1,15 @@
 <template>
-  <v-app>
-    {{ usuario }}
-  </v-app>
+  <v-app>{{ usuario }}</v-app>
 </template>
 
 <script>
-import data from '~/services/data'
+import API from '~/services/api'
 
 export default {
   async asyncData({ store }) {
     const prueba = store.state.objectId
     console.log(prueba)
-    const user = await data.Api_getUserById(prueba)
+    const user = await API.getUserById(prueba)
     return { usuario: user }
   }
 }

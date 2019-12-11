@@ -3,14 +3,14 @@
 </template>
 
 <script>
-import data from '~/services/data'
+import API from '~/services/api'
 import StudentsList from '~/components/StudentsList.vue'
 export default {
   components: {
     StudentsList
   },
   async asyncData() {
-    const users = await data.Api_getAllUsers()
+    const users = await API.getAllUsers()
     console.log(users[0])
     return { users }
   },
