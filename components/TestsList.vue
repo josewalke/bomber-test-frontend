@@ -8,7 +8,6 @@
         fab
         small
         color="#DA3E3E"
-        to="exam"
         @click="testGeneration"
       >
         <v-icon>mdi-plus-thick</v-icon>
@@ -76,23 +75,22 @@ export default {
     return {
       headers: [
         {
-          text: 'Nombre',
+          text: 'Titulo',
           align: 'left',
           sortable: true,
-          value: 'name'
+          value: 'title'
         },
-        { text: 'Apellidos', value: 'lastName' },
-        { text: 'Email', value: 'email' },
-        { text: 'Teléfono', value: 'phone' },
-        { text: 'Suscripción', value: 'suscription_type' },
-        { text: 'Activo', value: 'active' }
+        { text: 'Aciertos', value: 'aciertos_num' },
+        { text: 'Fallos', value: 'fallos_num' },
+        { text: 'Nota', value: 'nota' }
       ]
     }
   },
   methods: {
-    testGeneration() {
+    async testGeneration() {
       const token = this.$store.getters.token
-      API.generateTest(token)
+      await API.generateTest(token)
+      this.$router.push('exam')
     }
   }
 }

@@ -41,9 +41,7 @@ export default {
     return {
       items: [
         { title: 'Perfil', icon: 'mdi-account', view: 'profile' },
-        { title: 'Test', icon: 'mdi-file-document-box', view: 'tests' },
-        { title: 'Mensaje', icon: 'mdi-email', view: 'mensaje' },
-        { title: 'Configuracion', icon: 'mdi-settings' }
+        { title: 'Test', icon: 'mdi-file-document-box', view: 'tests' }
       ]
     }
   },

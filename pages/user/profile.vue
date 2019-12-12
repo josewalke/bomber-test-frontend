@@ -7,7 +7,7 @@ import API from '~/services/api'
 
 export default {
   async asyncData({ store }) {
-    const prueba = store.state.objectId
+    const prueba = store.state.userId
     const user = await API.getUserById(prueba)
     return { usuario: user }
   }

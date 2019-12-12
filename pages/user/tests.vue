@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TestsList :items="users"></TestsList>
+    <TestsList :items="tests"></TestsList>
   </div>
 </template>
 
@@ -12,10 +12,12 @@ export default {
   components: {
     TestsList
   },
-  async asyncData() {
-    const users = await API.getAllUsers()
+  async asyncData({ store }) {
+    const userId = store.getters.userId
+    // const tests = await API.getAllUsers()
+    const tests = await API.getAllTest(userId).then(response => response)
     const questions = await API.getAllQuestions()
-    return { users, questions }
+    return { questions, tests }
   }
 }
 </script>

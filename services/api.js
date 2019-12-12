@@ -16,5 +16,8 @@ export default {
     return axios
       .post('tests', null, { headers: { token } })
       .then(response => response.data)
+  },
+  getAllTest(userId) {
+    return axios.get('tests/user/' + userId).then(response => response.data)
   }
 }

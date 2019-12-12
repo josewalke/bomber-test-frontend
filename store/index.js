@@ -3,7 +3,7 @@ export const state = () => ({
   username: '',
   email: '',
   role: '',
-  objectId: ''
+  userId: ''
 })
 
 export const getters = {
@@ -12,22 +12,25 @@ export const getters = {
   },
   token(state) {
     return state.token
+  },
+  userId(state) {
+    return state.userId
   }
 }
 
 export const mutations = {
-  saveToken(state, { username, email, role, objectId, token }) {
+  saveToken(state, { username, email, role, userId, token }) {
     state.token = token
     state.username = username
     state.email = email
     state.role = role
-    state.objectId = objectId
+    state.userId = userId
   },
   clearToken(state) {
     state.token = ''
     state.username = ''
     state.email = ''
     state.role = ''
-    state.objectId = ''
+    state.userId = ''
   }
 }
