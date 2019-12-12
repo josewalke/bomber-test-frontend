@@ -8,6 +8,7 @@
         fab
         small
         color="#DA3E3E"
+        to="exam"
         @click="testGeneration"
       >
         <v-icon>mdi-plus-thick</v-icon>

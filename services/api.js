@@ -13,9 +13,8 @@ export default {
       .then(response => response.data)
   },
   generateTest(token) {
-    console.log(`token: ${token}`)
     return axios
       .post('tests', null, { headers: { token } })
-      .then(response => console.log(response.data))
+      .then(response => response.data)
   }
 }
