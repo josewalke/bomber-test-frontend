@@ -26,16 +26,10 @@
 </template>
 
 <script>
-import API from '~/services/api'
+// import API from '~/services/api'
+import { mapGetters } from 'vuex'
 
 export default {
-  async asyncData({ store }) {
-    const userId = store.getters.userId
-    // const tests = await API.getAllUsers()
-    const tests = await API.getAllTest(userId).then(response => response)
-    const questions = await API.getAllQuestions()
-    return { questions, tests }
-  },
   data() {
     return {
       headers: [
@@ -51,10 +45,15 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapGetters(['tests'])
+  },
+  mounted() {
+    // this.$store.dispatch('loadTest')
+  },
   methods: {
     async testGeneration() {
-      const token = this.$store.getters.token
-      await API.generateTest(token)
+      await this.$store.dispatch('createTest')
       this.$router.push('exam')
     }
   }

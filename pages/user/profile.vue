@@ -2,24 +2,20 @@
   <v-row>
     <v-col cols="10" offset="1">
       <v-card class="mx-auto">
-        <v-img
-          src="https://icon-library.net/images/avatar-icon-png/avatar-icon-png-8.jpg"
-          height="200px"
-        ></v-img>
+        <v-img :src="image_url" height="200px"></v-img>
 
         <v-card-title>
-          {{ usuario.name }}
-          {{ usuario.lastName }}
+          {{ username }}
         </v-card-title>
 
         <v-card-subtitle>
           <div>
             <font-awesome-icon icon="envelope" />
-            {{ usuario.email }}
+            {{ email }}
           </div>
           <div>
             <font-awesome-icon icon="phone-square" />
-            {{ usuario.phone }}
+            {{ phone }}
           </div>
         </v-card-subtitle>
       </v-card></v-col
@@ -28,13 +24,11 @@
 </template>
 
 <script>
-import API from '~/services/api'
+import { mapGetters } from 'vuex'
 
 export default {
-  async asyncData({ store }) {
-    const prueba = store.state.userId
-    const user = await API.getUserById(prueba)
-    return { usuario: user }
+  computed: {
+    ...mapGetters(['tests', 'username', 'image_url', 'email', 'phone'])
   }
 }
 </script>

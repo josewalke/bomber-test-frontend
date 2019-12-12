@@ -25,7 +25,7 @@
               <v-text-field
                 v-model="phone"
                 label="Telefono"
-                :rules="[rules.required, rules.phone]"
+                :rules="[rules.required]"
                 validate-on-blur
               />
 
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-import axios from '~/plugins/axios'
 export default {
   data() {
     return {
@@ -75,8 +74,7 @@ export default {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(value) || 'Email no valido'
         },
-        password: v => v.length > 5 || 'Contraseña demasiado corta',
-        phone: v => v.length === 9 || 'Telefono no valido'
+        password: v => v.length > 5 || 'Contraseña demasiado corta'
       }
     }
   },
@@ -90,12 +88,12 @@ export default {
         phone: this.phone
       }
 
-      const newToken = await axios.post('auth/signup', user)
-      if (!newToken.error) {
-        this.$store.commit('saveToken', newToken.data)
+      const response = await this.$store.dispatch('signup', user)
+
+      if (!response.error) {
         this.$router.push('/user/profile')
       } else {
-        alert(newToken.error)
+        alert(response.error)
       }
     }
   }

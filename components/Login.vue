@@ -36,14 +36,11 @@
 </template>
 
 <script>
-import axios from '~/plugins/axios'
-// import axios from 'axios'
-
 export default {
   data() {
     return {
-      email: '',
-      password: '',
+      email: 'jose@gmail.com',
+      password: '123456',
       showPassword: false,
       rules: {
         required: v => !!v || 'Item is required',
@@ -61,12 +58,12 @@ export default {
         password: this.password
       }
 
-      const newToken = await axios.post('auth/login', user)
-      if (!newToken.data.error) {
-        this.$store.commit('saveToken', newToken.data)
+      const response = await this.$store.dispatch('login', user)
+
+      if (!response.error) {
         this.$router.push('/user/profile')
       } else {
-        alert(newToken.data.error)
+        alert(response.error)
       }
     }
   }
