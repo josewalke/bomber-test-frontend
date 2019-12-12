@@ -6,9 +6,6 @@
       <!-- inicio nav del ordenador -->
       <v-btn text class="white--text btn-ordenador">Home</v-btn>
       <v-btn text class="white--text btn-ordenador">Precios</v-btn>
-      <v-btn text class="white--text btn-ordenador" to="/auth"
-        >Login/Registro</v-btn
-      >
       <!-- inicio modal -->
       <v-dialog max-width="800">
         <template v-slot:activator="{ on }">
@@ -132,7 +129,8 @@ export default {
   data() {
     return {
       title: 'Oposicion de Bombero',
-      items: [{ title: 'Login', to: '/auth' }]
+      items: [{ title: 'Login', to: '/auth' }],
+      tab: null
     }
   },
   layout: 'basic'
