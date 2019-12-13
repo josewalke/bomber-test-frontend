@@ -9,6 +9,12 @@ export const state = () => ({
   userId: '',
   phone: '',
   img_url: '',
+  mensajes: '',
+  MensajesTotales: '',
+  aprobados: '',
+  suspendidos: '',
+  total: '',
+  suscription_type: '',
   tests: [],
   currentTest: {}
 })
@@ -27,7 +33,7 @@ export const getters = {
     return state.tests
   },
   image_url(state) {
-    return state.image_url
+    return state.img_url
   },
   email(state) {
     return state.email
@@ -37,13 +43,46 @@ export const getters = {
   },
   currentTest(state) {
     return state.currentTest
+  },
+  mensajes(state) {
+    return state.mensajes
+  },
+  MensajesTotales(state) {
+    return state.MensajesTotales
+  },
+  aprobados(state) {
+    return state.aprobados
+  },
+  suspendidos(state) {
+    return state.suspendidos
+  },
+  total(state) {
+    return state.total
+  },
+  suscription_type(state) {
+    return state.suscription_type
   }
 }
 
 export const mutations = {
   saveToken(
     state,
-    { firstName, lastName, email, role, userId, phone, img_url, token }
+    {
+      firstName,
+      lastName,
+      email,
+      role,
+      userId,
+      phone,
+      img_url,
+      token,
+      mensajes,
+      MensajesTotales,
+      aprobados,
+      suspendidos,
+      total,
+      suscription_type
+    }
   ) {
     state.token = token
     state.firstName = firstName
@@ -53,6 +92,12 @@ export const mutations = {
     state.userId = userId
     state.phone = phone
     state.img_url = img_url
+    state.mensajes = mensajes
+    state.MensajesTotales = MensajesTotales
+    state.aprobados = aprobados
+    state.suspendidos = suspendidos
+    state.total = total
+    state.suscription_type = suscription_type
   },
   saveTests(state, tests) {
     state.tests = tests
