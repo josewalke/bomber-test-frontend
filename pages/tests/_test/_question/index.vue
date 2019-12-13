@@ -25,7 +25,9 @@
           class="question"
           @click="selectAnswer(2)"
         >
-          <h3>{{ currentTest.no_contestadas[0].answer_wrong[1] }}</h3>
+          <h3>
+            {{ currentTest.no_contestadas[0].answer_wrong[1] }}
+          </h3>
         </v-card>
       </v-col>
       <v-col cols="5">
@@ -86,5 +88,8 @@ export default {
 }
 .question {
   padding: 10px;
+}
+h3 {
+  color: black;
 }
 </style>

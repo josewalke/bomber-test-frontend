@@ -1,28 +1,25 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <h1>Bienvenido al test</h1>
-        <template>
-          <v-carousel>
-            <v-carousel-item
-              v-for="(question, i) in $store.state.currentTest.no_contestadas"
-              :key="i"
-            >
-              <v-sheet height="100%" tile>
-                <v-row class="fill-height" align="center" justify="center">
-                  <Question
-                    :enunciado="question.enunciado"
-                    :answers="question.answer_wrong"
-                  />>
-                </v-row>
-              </v-sheet>
-            </v-carousel-item>
-          </v-carousel>
-        </template>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-row>
+    <v-col>
+      <template>
+        <v-carousel hide-delimiters height="100vh">
+          <v-carousel-item
+            v-for="(question, i) in $store.state.currentTest.no_contestadas"
+            :key="i"
+          >
+            <v-sheet height="100%" tile>
+              <v-row class="fill-height" align="center" justify="center">
+                <Question
+                  :enunciado="question.enunciado"
+                  :answers="question.answer_wrong"
+                />>
+              </v-row>
+            </v-sheet>
+          </v-carousel-item>
+        </v-carousel>
+      </template>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
