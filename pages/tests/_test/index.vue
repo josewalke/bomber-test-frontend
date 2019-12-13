@@ -12,7 +12,8 @@
                 <Question
                   :enunciado="question.enunciado"
                   :answers="question.answer_wrong"
-                />>
+                  @selectAnswer="selectAnswer"
+                />
               </v-row>
             </v-sheet>
           </v-carousel-item>
@@ -36,8 +37,9 @@ export default {
     store.commit('saveCurrentTest', test)
   },
   methods: {
-    selectAnswer(number) {
+    async selectAnswer(number) {
       console.log(number)
+      // await this.$store.dispatch('verRespuesta', responseBody)
     }
   }
 }

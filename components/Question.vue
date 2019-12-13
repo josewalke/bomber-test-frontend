@@ -11,6 +11,7 @@
           rounded
           tile
           min-height="200"
+          :color="estado"
           class="question"
           @click="selectAnswer(idx)"
         >
@@ -35,10 +36,16 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      estado: ''
+    }
+  },
 
   methods: {
-    selectAnswer(number) {
-      console.log(number)
+    async selectAnswer(number) {
+      this.$emit('selectAnswer', number)
+      // await this.$store.dispatch('verRespuesta', responseBody)
     }
   }
 }

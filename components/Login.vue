@@ -1,38 +1,29 @@
 <template>
-  <div>
-    <v-row>
-      <v-col cols="10" offset-md="1">
-        <v-form ref="form" lazy-validation>
-          <v-card fixed flat>
-            <v-card-title>
-              <h2>Login</h2>
-            </v-card-title>
-            <v-card-text>
-              <v-text-field
-                v-model="email"
-                label="E-mail"
-                :rules="[rules.required, rules.email]"
-                validate-on-blur
-              />
+  <v-form ref="form" lazy-validation>
+    <v-card fixed flat>
+      <v-card-text>
+        <v-text-field
+          v-model="email"
+          label="E-mail"
+          :rules="[rules.required, rules.email]"
+          validate-on-blur
+        />
 
-              <v-text-field
-                v-model="password"
-                :type="showPassword ? 'text' : 'password'"
-                :rules="[rules.required]"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                label="Password"
-                @click:append="showPassword = !showPassword"
-              />
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="success" class="mr-4" @click="login">Login</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-form>
-      </v-col>
-    </v-row>
-  </div>
+        <v-text-field
+          v-model="password"
+          :type="showPassword ? 'text' : 'password'"
+          :rules="[rules.required]"
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          label="Password"
+          @click:append="showPassword = !showPassword"
+        />
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="success" class="mr-4" @click="login">Login</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-form>
 </template>
 
 <script>

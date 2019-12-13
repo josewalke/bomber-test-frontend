@@ -97,10 +97,25 @@ export const actions = {
     commit('saveCurrentTest', newTest)
     const tests = await API.getAllTest(state.userId)
     commit('saveTests', tests)
-  }
+  },
   // async loadTest({ commit, state }) {
   //   const tests = await API.getAllTest(state.userId)
   //   commit('saveTests', tests)
   //   ESTO ESTA MEJOR
   // }
+  async verRespuesta({ state }, responseBody) {
+    const respuesta =
+      state.currentTest.no_contestadas[0].answer_wrong[responseBody.number]
+    const correcta = state.currentTest.no_contestadas[0].answers_correct
+    const enunciado = state.currentTest.no_contestadas[0].enunciado
+
+    if (responseBody.enunciado === enunciado) {
+      if (respuesta === correcta) {
+        return console.log(true)
+      } else {
+        return console.log(false)
+      }
+    }
+    // console.log(responseBody, respuesta, enunciado, correcta)
+  }
 }

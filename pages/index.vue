@@ -4,10 +4,10 @@
       <v-toolbar-title class="white--text font-weight-black" v-text="title" />
       <v-spacer />
       <!-- inicio nav del ordenador -->
-      <v-btn text class="white--text btn-ordenador">Home</v-btn>
+      <v-btn text class="white--text btn-ordenador">Inicio</v-btn>
       <v-btn text class="white--text btn-ordenador">Precios</v-btn>
       <!-- inicio modal -->
-      <v-dialog max-width="800">
+      <v-dialog max-width="500">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark v-on="on">Login/Registro</v-btn>
         </template>
@@ -15,19 +15,19 @@
           <v-row align="center" justify="center">
             <v-col cols="12" md="6">
               <v-tabs v-model="tab">
-                <v-tab key="1" :href="`#tab-1`">Login</v-tab>
-                <v-tab key="2" :href="`#tab-2`">Signup</v-tab>
+                <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                <v-tab key="2" :href="`#tab-2`">Login</v-tab>
                 <v-tab-item key="1" value="tab-1">
-                  <v-row class="py-7">
-                    <v-col>
-                      <Login />
+                  <v-row class="py-2">
+                    <v-col cols="12">
+                      <Signup />
                     </v-col>
                   </v-row>
                 </v-tab-item>
                 <v-tab-item key="2" value="tab-2">
-                  <v-row class="py-7">
+                  <v-row class="py-2">
                     <v-col>
-                      <Signup />
+                      <Login />
                     </v-col>
                   </v-row>
                 </v-tab-item>
@@ -55,50 +55,53 @@
     </v-app-bar>
     <div class="hero-banner">
       <v-layout class="banner-text" column justify-center align-center>
-        <h1>PREPÁRATE PARA TU FUTURO CON NOSOTROS</h1>
-        <p>la mayor base de datos de preguntas de examen</p>
+        <h1>Conviertete en Bombero</h1>
+        <br />
+        <p class="subtitle">
+          La mayor Base de Datos <br />de preguntas de examen
+        </p>
         <v-btn rounded height="75" class="btn-big white--text" color="#DA3E3E"
           >Prueba gratis</v-btn
         >
       </v-layout>
     </div>
     <div class="quotes">
-      <h1>+ de 2.000 preguntas</h1>
-      <p>de examen con las que prepararte y realizar simulacros de examen</p>
+      <h1>2.000+ Preguntas de Examen</h1>
+      <p>con las que prepararte para aprobar la Oposicion de Bombero</p>
     </div>
     <div class="table-wraper">
       <div class="table-container">
         <div class="columns">
           <ul class="price">
             <li class="header">Basic</li>
-            <li class="grey">$ 9.99 / year</li>
-            <li>10GB Storage</li>
-            <li>10 Emails</li>
-            <li>10 Domains</li>
-            <li>1GB Bandwidth</li>
-            <li class="grey"><a href="#" class="button">Sign Up</a></li>
+            <li class="grey">Gratis</li>
+            <li>50 Tests /mes</li>
+            <li>200 Preguntas</li>
+            <li>5 Consultas /mes</li>
+            <li>1 Clase Teórica /mes</li>
+            <li class="grey"><a href="#" class="button">Registrate</a></li>
           </ul>
         </div>
         <div class="columns">
           <ul class="price">
             <li class="header">Pro</li>
-            <li class="grey">$ 24.99 / year</li>
-            <li>25GB Storage</li>
-            <li>25 Emails</li>
-            <li>25 Domains</li>
-            <li>2GB Bandwidth</li>
-            <li class="grey"><a href="#" class="button">Sign Up</a></li>
+            <li class="grey">€ 39.99 /MES</li>
+            <li>100 Tests /mes</li>
+            <li>1000 Preguntas</li>
+            <li>20 Consultas /mes</li>
+            <li>4 Clases Teórica /mes</li>
+            <li class="grey"><a href="#" class="button">Registrate</a></li>
           </ul>
         </div>
         <div class="columns">
           <ul class="price">
             <li class="header">Premium</li>
-            <li class="grey">$ 49.99 / year</li>
-            <li>50GB Storage</li>
-            <li>50 Emails</li>
-            <li>50 Domains</li>
-            <li>5GB Bandwidth</li>
-            <li class="grey"><a href="#" class="button">Sign Up</a></li>
+            <li class="grey">€ 299.99 /MES</li>
+            <li>Tests ilimtados</li>
+            <li>2000+ Preguntas</li>
+            <li>Consultas ilimitadas</li>
+            <li>Clases Teóricas ilimitadas</li>
+            <li class="grey"><a href="#" class="button">Registrate</a></li>
           </ul>
         </div>
       </div>
@@ -138,7 +141,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .nav-bar {
-  background-color: rgba(255, 0, 0, 0);
+  background-color: rgba(184, 0, 0, 1);
 }
 .hero-banner {
   color: rgba(255, 0, 0, 1);
@@ -176,7 +179,7 @@ export default {
 }
 
 .btn-big {
-  margin-left: 40%;
+  // margin-left: 40%;
   font-size: 1.4rem;
 }
 .quotes {
@@ -233,7 +236,7 @@ export default {
 }
 
 .button {
-  background-color: #e26767;
+  background-color: rgb(0, 129, 204);
   border: none;
   color: white;
   padding: 10px 25px;
@@ -258,5 +261,9 @@ export default {
   .menu {
     display: none;
   }
+}
+.subtitle {
+  line-height: 40px;
+  margin-bottom: 40px;
 }
 </style>
