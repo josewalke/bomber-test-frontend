@@ -14,13 +14,43 @@
           <v-icon>mdi-plus-thick</v-icon>
         </v-btn>
       </div>
-      <v-data-table
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">Titulo</th>
+              <th class="text-left">Aciertos</th>
+              <th class="text-left">Fallos</th>
+              <th class="text-left">Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="item in tests"
+              :key="item._id"
+              @click="goToTest(item._id)"
+            >
+              <td>{{ item.title }}</td>
+              <td>{{ item.aciertos_num }}</td>
+              <td>{{ item.fallos_num }}</td>
+              <td>{{ item.nota }}</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+
+      <!-- <v-data-table
         fixed-header
         :headers="headers"
         :items="tests"
         :items-per-page="10"
         class="elevation-1"
-      ></v-data-table>
+        @click:row="goToTest()"
+      >
+        <template v-slot:item.action="{ item }">
+          <v-btn>{{ item }}</v-btn>
+        </template>
+      </v-data-table> -->
     </div>
   </div>
 </template>
@@ -29,21 +59,21 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  data() {
-    return {
-      headers: [
-        {
-          text: 'Titulo',
-          align: 'left',
-          sortable: true,
-          value: 'title'
-        },
-        { text: 'Aciertos', value: 'aciertos_num' },
-        { text: 'Fallos', value: 'fallos_num' },
-        { text: 'Nota', value: 'nota' }
-      ]
-    }
-  },
+  // data() {
+  //   return {
+  //     headers: [
+  //       {
+  //         text: 'Titulo',
+  //         align: 'left',
+  //         sortable: true,
+  //         value: 'title'
+  //       },
+  //       { text: 'Aciertos', value: 'aciertos_num' },
+  //       { text: 'Fallos', value: 'fallos_num' },
+  //       { text: 'Nota', value: 'nota' }
+  //     ]
+  //   }
+  // },
   computed: {
     ...mapGetters(['tests'])
   },
@@ -53,7 +83,10 @@ export default {
   methods: {
     async testGeneration() {
       await this.$store.dispatch('createTest')
-      this.$router.push(`tests/${this.$store.state.currentTest._id}`)
+      this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
+    },
+    goToTest(id) {
+      this.$router.push(`/tests/${id}`)
     }
   }
 }

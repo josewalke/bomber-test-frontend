@@ -11,9 +11,9 @@
           rounded
           tile
           min-height="200"
-          :color="estado"
+          :color="colores[idx]"
           class="question"
-          @click="selectAnswer(idx)"
+          @click="selectAnswer(answer, idx)"
         >
           <h3>{{ answer }}</h3>
         </v-card>
@@ -34,18 +34,25 @@ export default {
       default: () => {
         return []
       }
+    },
+    correct: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
-      estado: ''
+      colores: ['grey', 'grey', 'grey', 'grey'],
+      answered: false
     }
   },
 
   methods: {
-    async selectAnswer(number) {
-      this.$emit('selectAnswer', number)
-      // await this.$store.dispatch('verRespuesta', responseBody)
+    selectAnswer(answer, idx) {
+      if (!this.answered) {
+        this.colores.splice(idx, 1, answer === this.correct ? 'green' : 'red')
+        this.answered = true
+      }
     }
   }
 }
