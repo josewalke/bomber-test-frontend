@@ -12,7 +12,7 @@
       <v-list dense>
         <v-list-item v-for="item in items" :key="item.title">
           <v-list-item-content>
-            <v-btn text class="justify-start" color="#6b6b6b" :to="item.view">
+            <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
               <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
             </v-btn>
           </v-list-item-content>
@@ -41,8 +41,8 @@ export default {
   data() {
     return {
       items: [
-        { title: 'Perfil', icon: 'mdi-account', view: 'profile' },
-        { title: 'Test', icon: 'mdi-file-document-box', view: 'tests' }
+        { title: 'Perfil', icon: 'mdi-account', page: '/user' },
+        { title: 'Test', icon: 'mdi-file-document-box', page: '/tests' }
       ]
     }
   },

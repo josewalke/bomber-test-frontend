@@ -5,7 +5,7 @@
         <v-img :src="image_url" height="200px"></v-img>
 
         <v-card-title>
-          {{ username }}
+          {{ userName }}
         </v-card-title>
 
         <v-card-subtitle>
@@ -28,7 +28,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['tests', 'username', 'image_url', 'email', 'phone'])
+    ...mapGetters(['tests', 'userName', 'image_url', 'email', 'phone'])
   }
 }
 </script>

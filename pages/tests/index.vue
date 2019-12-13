@@ -26,7 +26,6 @@
 </template>
 
 <script>
-// import API from '~/services/api'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -54,7 +53,7 @@ export default {
   methods: {
     async testGeneration() {
       await this.$store.dispatch('createTest')
-      this.$router.push('exam')
+      this.$router.push(`tests/${this.$store.state.currentTest._id}`)
     }
   }
 }

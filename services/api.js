@@ -18,6 +18,9 @@ export default {
   getAllTest(userId) {
     return axios.get('tests/user/' + userId).then(response => response.data)
   },
+  getTest(testId) {
+    return axios.get('tests/' + testId).then(response => response.data)
+  },
   login(user) {
     return axios.post('auth/login', user).then(response => response.data)
   },

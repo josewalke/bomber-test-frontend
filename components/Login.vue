@@ -61,7 +61,7 @@ export default {
       const response = await this.$store.dispatch('login', user)
 
       if (!response.error) {
-        this.$router.push('/user/profile')
+        this.$router.push('/user')
       } else {
         alert(response.error)
       }

@@ -1,20 +1,21 @@
+import API from '~/services/api'
+
 export const state = () => ({
   token: '',
+  firstName: '',
   lastName: '',
   email: '',
   role: '',
   userId: '',
   phone: '',
   img_url: '',
-  tests: []
+  tests: [],
+  currentTest: {}
 })
 
 export const getters = {
-  username(state) {
-    return state.username
-  },
-  userProfile(state) {
-    return { usename: state.username }
+  userName(state) {
+    return `${state.firstName} ${state.lastName}`
   },
   token(state) {
     return state.token
@@ -33,6 +34,9 @@ export const getters = {
   },
   phone(state) {
     return state.phone
+  },
+  currentTest(state) {
+    return state.currentTest
   }
 }
 
@@ -53,15 +57,21 @@ export const mutations = {
   saveTests(state, tests) {
     state.tests = tests
   },
+  saveCurrentTest(state, test) {
+    state.currentTest = test
+  },
   clearToken(state) {
     state.token = ''
-    state.username = ''
+    state.firstName = ''
+    state.lastName = ''
     state.email = ''
     state.role = ''
     state.userId = ''
+    state.phone = ''
+    state.img_url = ''
+    localStorage.clear()
   }
 }
-import API from '~/services/api'
 
 export const actions = {
   async login({ commit, state }, userData) {
@@ -83,8 +93,8 @@ export const actions = {
     return response
   },
   async createTest({ commit, state }) {
-    // Creo el test
-    await API.generateTest(state.token)
+    const newTest = await API.generateTest(state.token)
+    commit('saveCurrentTest', newTest)
     const tests = await API.getAllTest(state.userId)
     commit('saveTests', tests)
   }
