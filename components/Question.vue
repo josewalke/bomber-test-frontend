@@ -68,4 +68,8 @@ export default {
 .question {
   padding: 10px;
 }
+.question:hover {
+  /* box-shadow: 10px 10px rgb(255, 0, 0); */
+  box-shadow: 0 8px 16px 0 rgba(255, 0, 0, 1);
+}
 </style>
