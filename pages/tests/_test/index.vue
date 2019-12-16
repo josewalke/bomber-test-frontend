@@ -7,7 +7,7 @@
             v-for="(question, i) in $store.state.currentTest.no_contestadas"
             :key="i"
           >
-            <v-sheet height="100%" tile>
+            <v-sheet color="white" height="100%" tile>
               <v-row class="fill-height" align="center" justify="center">
                 <Question
                   :enunciado="question.enunciado"
