@@ -32,7 +32,7 @@ export default {
     return {
       // email: 'BRUNO.Herrera@gmail.com',
       // password: '12345',
-      email: 'jose@gmail.com',
+      email: 'fico@gmail.com',
       password: '123456',
       showPassword: false,
       rules: {
