@@ -6,13 +6,12 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="(answer, idx) in answers" :key="idx" cols="5">
+      <v-col v-for="(answer, idx) in answers" :key="idx" cols="6">
         <v-card
-          rounded
-          tile
+          shaped
           min-height="200"
           :color="colores[idx]"
-          class="question"
+          :class="prueba[idx]"
           @click="selectAnswer(answer, idx)"
         >
           <h3>{{ answer }}</h3>
@@ -43,7 +42,8 @@ export default {
   data() {
     return {
       colores: ['grey', 'grey', 'grey', 'grey'],
-      answered: false
+      answered: false,
+      prueba: ['none', 'none', 'none', 'none']
     }
   },
 
@@ -51,6 +51,11 @@ export default {
     selectAnswer(answer, idx) {
       if (!this.answered) {
         this.colores.splice(idx, 1, answer === this.correct ? 'green' : 'red')
+        this.prueba.splice(
+          idx,
+          1,
+          answer === this.correct ? 'correct' : 'error'
+        )
         this.answered = true
       }
     }
@@ -65,11 +70,69 @@ export default {
 .btn-size {
   height: 100%;
 }
-.question {
+.v-card {
   padding: 10px;
 }
-.question:hover {
-  /* box-shadow: 10px 10px rgb(255, 0, 0); */
-  box-shadow: 0 8px 16px 0 rgba(255, 0, 0, 1);
+.v-card:hover {
+  transform: scale(1.01, 1.01);
+  transform-origin: left;
+}
+h1 {
+  color: black;
+}
+.error {
+  animation: move_error 0.5s;
+}
+.correct {
+  animation: move_correct 1s;
+}
+@keyframes move_error {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  10% {
+    transform: rotateZ(-1deg);
+  }
+  20% {
+    transform: rotateZ(1deg);
+  }
+  30% {
+    transform: rotateZ(-1deg);
+  }
+  40% {
+    transform: rotateZ(1deg);
+  }
+  50% {
+    transform: rotateZ(-1deg);
+  }
+  60% {
+    transform: rotateZ(1deg);
+  }
+  70% {
+    transform: rotateZ(-1deg);
+  }
+  80% {
+    transform: rotateZ(1deg);
+  }
+  90% {
+    transform: rotateZ(-1deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+@keyframes move_correct {
+  0% {
+    transform: scale(1, 1);
+    transform-origin: left;
+  }
+  50% {
+    transform: scale(1.1, 1.1);
+    transform-origin: left;
+  }
+  100% {
+    transform: scale(1, 1);
+    transform-origin: left;
+  }
 }
 </style>
