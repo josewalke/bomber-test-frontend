@@ -33,7 +33,14 @@
               <td>{{ item.title }}</td>
               <td>{{ item.aciertos_num }}</td>
               <td>{{ item.fallos_num }}</td>
-              <td>{{ item.nota }}</td>
+              <td>
+                <span v-if="item.nota === 'Suspendido'" class="red--text">{{
+                  item.nota
+                }}</span>
+                <span v-if="item.nota === 'Aprobado'" class="green--text">{{
+                  item.nota
+                }}</span>
+              </td>
             </tr>
           </tbody>
         </template>
@@ -92,4 +99,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.header-wraper {
+  display: flex;
+  justify-content: space-between;
+}
+.red {
+}
+</style>
