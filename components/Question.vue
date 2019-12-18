@@ -1,5 +1,10 @@
 <template>
   <v-container>
+    <div class="infoQ">
+      <h2>Pregunta {{ numero + 1 }}/20</h2>
+      <v-spacer />
+      <v-btn color="#da3e3e" to="/tests"><v-icon>mdi-close</v-icon></v-btn>
+    </div>
     <v-row>
       <v-col>
         <h1>{{ enunciado }}</h1>
@@ -32,6 +37,12 @@ export default {
       type: Array,
       default: () => {
         return []
+      }
+    },
+    numero: {
+      type: Number,
+      default: () => {
+        return 0
       }
     },
     correct: {
@@ -80,11 +91,20 @@ export default {
 h1 {
   color: black;
 }
+h2 {
+  color: rgb(68, 68, 68);
+}
+.v-icon {
+  color: rgb(68, 68, 68);
+}
 .error {
   animation: move_error 0.5s;
 }
 .correct {
   animation: move_correct 1s;
+}
+.infoQ {
+  display: flex;
 }
 @keyframes move_error {
   0% {

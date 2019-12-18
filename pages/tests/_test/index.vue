@@ -13,6 +13,7 @@
                   :enunciado="question.enunciado"
                   :answers="question.answer_wrong"
                   :correct="question.answers_correct"
+                  :numero="i"
                   @selectAnswer="selectAnswer"
                 />
               </v-row>
@@ -29,7 +30,7 @@ import API from '~/services/api'
 import Question from '~/components/Question'
 
 export default {
-  layout: 'basic',
+  layout: 'test',
   components: {
     Question
   },

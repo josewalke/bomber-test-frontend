@@ -2,6 +2,13 @@
   <v-form ref="form" lazy-validation>
     <v-card fixed flat>
       <v-card-text>
+        <button>
+          <img
+            id="google"
+            src="../static/assets/loggoogle.png"
+            alt="google login"
+          />
+        </button>
         <v-text-field
           v-model="name"
           label="Nombre"
@@ -89,4 +96,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+#google {
+  width: 200px;
+}
+</style>
