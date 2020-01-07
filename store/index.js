@@ -258,5 +258,21 @@ export const actions = {
         commit('saveUpdate', response2)
       }
     }
+  },
+  async updateSuscription({ commit, state }, newSuscription) {
+    console.log(state.userId)
+    let data = {
+      userId: state.userId,
+      newSuscription: newSuscription
+    }
+
+    const response = await API.updateSuscription(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+      }
+    }
   }
 }

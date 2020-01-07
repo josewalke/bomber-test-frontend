@@ -58,5 +58,13 @@ export default {
     return axios
       .put('users/' + data.userId, body)
       .then(response => response.data)
+  },
+  updateSuscription(data) {
+    let body = {
+      suscription_type: data.newSuscription
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
   }
 }

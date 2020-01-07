@@ -38,6 +38,17 @@
         @click:append="updatePhone"
       />
     </div>
+    <div>
+      <v-overflow-btn
+        id="selector"
+        v-model="seleccion"
+        class="my-2"
+        :items="dropdown_font"
+        append-icon="mdi-pencil"
+        label="Suscripcion"
+        @click:append="updateSuscription"
+      ></v-overflow-btn>
+    </div>
   </div>
 </template>
 
@@ -56,7 +67,9 @@ export default {
           return pattern.test(value) || 'Email no valido'
         },
         phone: v => v.length > 8 || 'introduca todos los digitos'
-      }
+      },
+      dropdown_font: ['basic', 'pro', 'premium'],
+      seleccion: ''
     }
   },
   computed: {
@@ -91,6 +104,14 @@ export default {
         console.log('esta vacio')
       } else {
         await this.$store.dispatch('updatePhone', this.phone)
+      }
+    },
+    async updateSuscription() {
+      console.log(this.seleccion)
+      if (this.seleccion.length === 0) {
+        console.log('esta vacio')
+      } else {
+        await this.$store.dispatch('updateSuscription', this.seleccion)
       }
     }
   }
