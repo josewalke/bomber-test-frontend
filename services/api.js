@@ -26,5 +26,13 @@ export default {
   },
   signup(user) {
     return axios.post('auth/signup', user).then(response => response.data)
+  },
+  updateName(data) {
+    let body = {
+      name: data.newName
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
   }
 }
