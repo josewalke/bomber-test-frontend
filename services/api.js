@@ -34,5 +34,13 @@ export default {
     return axios
       .put('users/' + data.userId, body)
       .then(response => response.data)
+  },
+  updateLastName(data) {
+    let body = {
+      lastName: data.newLastName
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
   }
 }

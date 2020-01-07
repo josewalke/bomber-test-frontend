@@ -210,9 +210,23 @@ export const actions = {
         commit('saveUpdate', response2)
         console.log(response2)
       }
-    } else {
-      console.log('no funciona')
     }
-    // commit('prueba', newName)
+  },
+  async updateLastName({ commit, state }, newLastName) {
+    console.log(state.userId + ' hola')
+    let data = {
+      userId: state.userId,
+      newLastName: newLastName
+    }
+
+    const response = await API.updateLastName(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+        console.log(response2)
+      }
+    }
   }
 }

@@ -8,11 +8,15 @@
         append-icon="mdi-pencil"
         @click:append="updateName"
       >
-        <v-icon large color="green darken-2">mdi-domain</v-icon>
       </v-text-field>
     </div>
     <div>
-      <v-text-field v-model="lastName" label="Apellido" validate-on-blur />
+      <v-text-field
+        v-model="lastName"
+        label="Apellido"
+        append-icon="mdi-pencil"
+        @click:append="updateLastName"
+      />
     </div>
     <div>
       <v-text-field v-model="email" label="Email" validate-on-blur />
@@ -44,6 +48,13 @@ export default {
         console.log('esta vacio')
       } else {
         await this.$store.dispatch('updateName', this.name)
+      }
+    },
+    async updateLastName() {
+      if (this.lastName.length === 0) {
+        console.log('esta vacio')
+      } else {
+        await this.$store.dispatch('updateLastName', this.lastName)
       }
     }
   }
