@@ -26,7 +26,7 @@
         <v-text-field
           v-model="phone"
           label="Telefono"
-          :rules="[rules.required]"
+          :rules="[rules.required, rules.phone]"
           validate-on-blur
         />
 
@@ -70,7 +70,8 @@ export default {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(value) || 'Email no valido'
         },
-        password: v => v.length > 5 || 'Contraseña demasiado corta'
+        password: v => v.length > 5 || 'Contraseña demasiado corta',
+        phone: v => v.length > 8 || 'introduca todos los digitos'
       }
     }
   },

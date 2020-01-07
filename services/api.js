@@ -42,5 +42,21 @@ export default {
     return axios
       .put('users/' + data.userId, body)
       .then(response => response.data)
+  },
+  updateEmail(data) {
+    let body = {
+      email: data.newEmail
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
+  },
+  updatePhone(data) {
+    let body = {
+      phone: data.newPhone
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
   }
 }
