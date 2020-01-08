@@ -115,6 +115,38 @@ export const mutations = {
     state.phone = ''
     state.img_url = ''
     localStorage.clear()
+  },
+  saveUpdate(
+    state,
+    {
+      name,
+      lastName,
+      email,
+      role,
+      _id,
+      phone,
+      img_url,
+      mensajes,
+      MensajesTotales,
+      aprobados,
+      suspendidos,
+      total,
+      suscription_type
+    }
+  ) {
+    state.firstName = name
+    state.lastName = lastName
+    state.email = email
+    state.role = role
+    state.userId = _id
+    state.phone = phone
+    state.img_url = img_url
+    state.mensajes = mensajes
+    state.MensajesTotales = MensajesTotales
+    state.aprobados = aprobados
+    state.suspendidos = suspendidos
+    state.total = total
+    state.suscription_type = suscription_type
   }
 }
 
@@ -162,5 +194,85 @@ export const actions = {
       }
     }
     // console.log(responseBody, respuesta, enunciado, correcta)
+  },
+  async updateName({ commit, state }, newName) {
+    console.log(state.userId)
+    let data = {
+      userId: state.userId,
+      newName: newName
+    }
+
+    const response = await API.updateName(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+      }
+    }
+  },
+  async updateLastName({ commit, state }, newLastName) {
+    console.log(state.userId)
+    let data = {
+      userId: state.userId,
+      newLastName: newLastName
+    }
+
+    const response = await API.updateLastName(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+      }
+    }
+  },
+  async updateEmail({ commit, state }, newEmail) {
+    console.log(state.userId)
+    let data = {
+      userId: state.userId,
+      newEmail: newEmail
+    }
+
+    const response = await API.updateEmail(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+      }
+    }
+  },
+  async updatePhone({ commit, state }, newPhone) {
+    console.log(state.userId)
+    let data = {
+      userId: state.userId,
+      newPhone: newPhone
+    }
+
+    const response = await API.updatePhone(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+      }
+    }
+  },
+  async updateSuscription({ commit, state }, newSuscription) {
+    console.log(state.userId)
+    let data = {
+      userId: state.userId,
+      newSuscription: newSuscription
+    }
+
+    const response = await API.updateSuscription(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+      }
+    }
   }
 }

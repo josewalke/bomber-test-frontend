@@ -26,5 +26,45 @@ export default {
   },
   signup(user) {
     return axios.post('auth/signup', user).then(response => response.data)
+  },
+  updateName(data) {
+    let body = {
+      name: data.newName
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
+  },
+  updateLastName(data) {
+    let body = {
+      lastName: data.newLastName
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
+  },
+  updateEmail(data) {
+    let body = {
+      email: data.newEmail
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
+  },
+  updatePhone(data) {
+    let body = {
+      phone: data.newPhone
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
+  },
+  updateSuscription(data) {
+    let body = {
+      suscription_type: data.newSuscription
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
   }
 }
