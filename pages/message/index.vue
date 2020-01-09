@@ -9,8 +9,6 @@
           <tr>
             <th class="text-left">Pregunta</th>
             <th class="text-left">Leido</th>
-            <th class="text-left">Fallos</th>
-            <th class="text-left">Nota</th>
           </tr>
         </thead>
         <tbody>
