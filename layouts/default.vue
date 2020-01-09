@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer absolute permanent left app>
+    <v-navigation-drawer permanent left app>
       <v-list-item two-line>
         <v-list-item-avatar width="100px" height="100px">
           <img :src="image_url" />
