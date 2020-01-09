@@ -23,8 +23,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  async fetch({ params, idx }) {
-    console.log(idx)
+  async fetch({ params }) {
     console.log(params.message)
     // const response = await API.getQuestionById(params.message)
     // if (!response.error) {
