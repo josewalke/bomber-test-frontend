@@ -16,7 +16,9 @@ export const state = () => ({
   total: '',
   suscription_type: '',
   tests: [],
-  currentTest: {}
+  messages: [],
+  currentTest: {},
+  question: {}
 })
 
 export const getters = {
@@ -32,6 +34,9 @@ export const getters = {
   tests(state) {
     return state.tests
   },
+  messages(state) {
+    return state.messages
+  },
   image_url(state) {
     return state.img_url
   },
@@ -43,6 +48,9 @@ export const getters = {
   },
   currentTest(state) {
     return state.currentTest
+  },
+  question(state) {
+    return state.question
   },
   mensajes(state) {
     return state.mensajes
@@ -102,8 +110,14 @@ export const mutations = {
   saveTests(state, tests) {
     state.tests = tests
   },
+  saveMessage(state, mensajes) {
+    state.messages = mensajes
+  },
   saveCurrentTest(state, test) {
     state.currentTest = test
+  },
+  saveQuestion(state, question) {
+    state.question = question
   },
   clearToken(state) {
     state.token = ''
@@ -157,6 +171,8 @@ export const actions = {
       commit('saveToken', response)
       const tests = await API.getAllTest(state.userId)
       commit('saveTests', tests)
+      const mensajes = await API.getAllMessage(state.userId)
+      commit('saveMessage', mensajes)
     }
     return response
   },

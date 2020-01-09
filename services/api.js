@@ -7,6 +7,10 @@ export default {
   getUserById(prueba) {
     return axios.get('users/' + prueba).then(response => response.data)
   },
+  getQuestionById(pregunta_id) {
+    return axios.get('questions/' + pregunta_id).then(response => response.data)
+    // console.log(pregunta_id)
+  },
   getAllQuestions() {
     return axios.get('questions').then(response => response.data)
   },
@@ -17,6 +21,9 @@ export default {
   },
   getAllTest(userId) {
     return axios.get('tests/user/' + userId).then(response => response.data)
+  },
+  getAllMessage(userId) {
+    return axios.get('messages/' + userId).then(response => response.data)
   },
   getTest(testId) {
     return axios.get('tests/' + testId).then(response => response.data)

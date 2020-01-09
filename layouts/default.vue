@@ -43,6 +43,7 @@ export default {
       items: [
         { title: 'Perfil', icon: 'mdi-account', page: '/user' },
         { title: 'Test', icon: 'mdi-file-document-box', page: '/tests' },
+        { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
         { title: 'Configuracion', icon: 'mdi-settings', page: '/settings' }
       ]
     }

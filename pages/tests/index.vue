@@ -45,19 +45,6 @@
           </tbody>
         </template>
       </v-simple-table>
-
-      <!-- <v-data-table
-        fixed-header
-        :headers="headers"
-        :items="tests"
-        :items-per-page="10"
-        class="elevation-1"
-        @click:row="goToTest()"
-      >
-        <template v-slot:item.action="{ item }">
-          <v-btn>{{ item }}</v-btn>
-        </template>
-      </v-data-table> -->
     </div>
   </div>
 </template>
@@ -103,7 +90,5 @@ export default {
 .header-wraper {
   display: flex;
   justify-content: space-between;
-}
-.red {
 }
 </style>
