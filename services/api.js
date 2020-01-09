@@ -50,6 +50,14 @@ export default {
       .put('users/' + data.userId, body)
       .then(response => response.data)
   },
+  updateNickName(data) {
+    let body = {
+      nickName: data.newNickName
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
+  },
   updateEmail(data) {
     let body = {
       email: data.newEmail

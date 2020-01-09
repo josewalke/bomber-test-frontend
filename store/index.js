@@ -2,6 +2,7 @@ import API from '~/services/api'
 
 export const state = () => ({
   token: '',
+  nickName: '',
   firstName: '',
   lastName: '',
   email: '',
@@ -23,6 +24,9 @@ export const state = () => ({
 })
 
 export const getters = {
+  nickName(state) {
+    return state.nickName
+  },
   userName(state) {
     return `${state.firstName} ${state.lastName}`
   },
@@ -80,6 +84,7 @@ export const mutations = {
   saveToken(
     state,
     {
+      nickName,
       firstName,
       lastName,
       email,
@@ -97,6 +102,7 @@ export const mutations = {
     }
   ) {
     state.token = token
+    state.nickName = nickName
     state.firstName = firstName
     state.lastName = lastName
     state.email = email
@@ -137,6 +143,7 @@ export const mutations = {
   saveUpdate(
     state,
     {
+      nickName,
       name,
       lastName,
       email,
@@ -152,6 +159,7 @@ export const mutations = {
       suscription_type
     }
   ) {
+    state.nickName = nickName
     state.firstName = name
     state.lastName = lastName
     state.email = email
@@ -242,6 +250,22 @@ export const actions = {
     }
 
     const response = await API.updateLastName(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+      }
+    }
+  },
+  async updateNickName({ commit, state }, newNickName) {
+    console.log(state.userId)
+    let data = {
+      userId: state.userId,
+      newNickName: newNickName
+    }
+
+    const response = await API.updateNickName(data)
 
     if (!response.error) {
       const response2 = await API.getUserById(state.userId)

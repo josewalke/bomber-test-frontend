@@ -10,6 +10,8 @@
           <!-- <v-img :src="image_url" height="100px"></v-img> -->
           <v-card-title>
             {{ userName }}
+            <br />
+            {{ nickName }}
           </v-card-title>
 
           <v-card-subtitle>
@@ -68,6 +70,7 @@ export default {
   computed: {
     ...mapGetters([
       'tests',
+      'nickName',
       'userName',
       'image_url',
       'email',
