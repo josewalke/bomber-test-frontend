@@ -44,18 +44,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
   computed: {
     ...mapGetters(['messages'])
   },
   methods: {
-    async testGeneration() {
-      await this.$store.dispatch('createTest')
-      this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
-    },
     goToQuestion(question, idx) {
-      // console.log(idx)
-      this.$router.push(`/message/${question}`, idx)
+      console.log(question)
+      this.$store.dispatch('savePosition', idx)
+      this.$router.push(`/message/${question}`)
     }
   }
 }

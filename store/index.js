@@ -18,7 +18,8 @@ export const state = () => ({
   tests: [],
   messages: [],
   currentTest: {},
-  question: {}
+  question: {},
+  position: ''
 })
 
 export const getters = {
@@ -69,6 +70,9 @@ export const getters = {
   },
   suscription_type(state) {
     return state.suscription_type
+  },
+  position(state) {
+    return state.position
   }
 }
 
@@ -161,6 +165,9 @@ export const mutations = {
     state.suspendidos = suspendidos
     state.total = total
     state.suscription_type = suscription_type
+  },
+  savePosition(state, position) {
+    state.position = position
   }
 }
 
@@ -290,5 +297,8 @@ export const actions = {
         commit('saveUpdate', response2)
       }
     }
+  },
+  async savePosition({ commit }, position) {
+    commit('savePosition', position)
   }
 }
