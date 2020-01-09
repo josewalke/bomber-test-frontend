@@ -22,6 +22,17 @@
     </div>
     <div>
       <v-text-field
+        v-model="nickName"
+        label="Nombre de usuario"
+        validate-on-blur
+        append-icon="mdi-pencil"
+        :rules="[rules.required]"
+        @click:append="updateNickName"
+      >
+      </v-text-field>
+    </div>
+    <div>
+      <v-text-field
         v-model="email"
         label="Email"
         append-icon="mdi-pencil"
@@ -90,6 +101,13 @@ export default {
         console.log('esta vacio')
       } else {
         await this.$store.dispatch('updateLastName', this.lastName)
+      }
+    },
+    async updateNickName() {
+      if (this.nickName.length === 0) {
+        console.log('esta vacio')
+      } else {
+        await this.$store.dispatch('updateNickName', this.nickName)
       }
     },
     async updateEmail() {

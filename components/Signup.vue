@@ -22,6 +22,12 @@
           :rules="[rules.required]"
           validate-on-blur
         />
+        <v-text-field
+          v-model="nickName"
+          label="Nombre de usuario"
+          :rules="[rules.required]"
+          validate-on-blur
+        />
 
         <v-text-field
           v-model="phone"
@@ -61,6 +67,7 @@ export default {
       email: '',
       password: '',
       name: '',
+      nickName: '',
       lastName: '',
       phone: '',
       showPassword: false,
@@ -79,6 +86,7 @@ export default {
     async signup() {
       const user = {
         name: this.name,
+        nickName: this.nickName,
         email: this.email,
         password: this.password,
         lastName: this.lastName,

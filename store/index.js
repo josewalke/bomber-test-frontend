@@ -2,6 +2,7 @@ import API from '~/services/api'
 
 export const state = () => ({
   token: '',
+  nickName: '',
   firstName: '',
   lastName: '',
   email: '',
@@ -16,10 +17,16 @@ export const state = () => ({
   total: '',
   suscription_type: '',
   tests: [],
-  currentTest: {}
+  messages: [],
+  currentTest: {},
+  question: {},
+  position: ''
 })
 
 export const getters = {
+  nickName(state) {
+    return state.nickName
+  },
   userName(state) {
     return `${state.firstName} ${state.lastName}`
   },
@@ -32,6 +39,9 @@ export const getters = {
   tests(state) {
     return state.tests
   },
+  messages(state) {
+    return state.messages
+  },
   image_url(state) {
     return state.img_url
   },
@@ -43,6 +53,9 @@ export const getters = {
   },
   currentTest(state) {
     return state.currentTest
+  },
+  question(state) {
+    return state.question
   },
   mensajes(state) {
     return state.mensajes
@@ -61,6 +74,9 @@ export const getters = {
   },
   suscription_type(state) {
     return state.suscription_type
+  },
+  position(state) {
+    return state.position
   }
 }
 
@@ -68,6 +84,7 @@ export const mutations = {
   saveToken(
     state,
     {
+      nickName,
       firstName,
       lastName,
       email,
@@ -85,6 +102,7 @@ export const mutations = {
     }
   ) {
     state.token = token
+    state.nickName = nickName
     state.firstName = firstName
     state.lastName = lastName
     state.email = email
@@ -102,8 +120,14 @@ export const mutations = {
   saveTests(state, tests) {
     state.tests = tests
   },
+  saveMessage(state, mensajes) {
+    state.messages = mensajes
+  },
   saveCurrentTest(state, test) {
     state.currentTest = test
+  },
+  saveQuestion(state, question) {
+    state.question = question
   },
   clearToken(state) {
     state.token = ''
@@ -119,6 +143,7 @@ export const mutations = {
   saveUpdate(
     state,
     {
+      nickName,
       name,
       lastName,
       email,
@@ -134,6 +159,7 @@ export const mutations = {
       suscription_type
     }
   ) {
+    state.nickName = nickName
     state.firstName = name
     state.lastName = lastName
     state.email = email
@@ -147,6 +173,9 @@ export const mutations = {
     state.suspendidos = suspendidos
     state.total = total
     state.suscription_type = suscription_type
+  },
+  savePosition(state, position) {
+    state.position = position
   }
 }
 
@@ -157,6 +186,8 @@ export const actions = {
       commit('saveToken', response)
       const tests = await API.getAllTest(state.userId)
       commit('saveTests', tests)
+      const mensajes = await API.getAllMessage(state.userId)
+      commit('saveMessage', mensajes)
     }
     return response
   },
@@ -227,6 +258,22 @@ export const actions = {
       }
     }
   },
+  async updateNickName({ commit, state }, newNickName) {
+    console.log(state.userId)
+    let data = {
+      userId: state.userId,
+      newNickName: newNickName
+    }
+
+    const response = await API.updateNickName(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+      }
+    }
+  },
   async updateEmail({ commit, state }, newEmail) {
     console.log(state.userId)
     let data = {
@@ -274,5 +321,8 @@ export const actions = {
         commit('saveUpdate', response2)
       }
     }
+  },
+  async savePosition({ commit }, position) {
+    commit('savePosition', position)
   }
 }

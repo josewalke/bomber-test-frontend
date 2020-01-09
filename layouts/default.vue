@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer absolute permanent left app>
+    <v-navigation-drawer permanent left app>
       <v-list-item two-line>
         <v-list-item-avatar width="100px" height="100px">
           <img :src="image_url" />
@@ -43,6 +43,7 @@ export default {
       items: [
         { title: 'Perfil', icon: 'mdi-account', page: '/user' },
         { title: 'Test', icon: 'mdi-file-document-box', page: '/tests' },
+        { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
         { title: 'Configuracion', icon: 'mdi-settings', page: '/settings' }
       ]
     }
