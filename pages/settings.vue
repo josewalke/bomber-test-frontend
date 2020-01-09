@@ -60,6 +60,7 @@
         @click:append="updateSuscription"
       ></v-overflow-btn>
     </div>
+    <v-btn @click="sendAll">Guardar</v-btn>
   </div>
 </template>
 
@@ -68,6 +69,7 @@ export default {
   data() {
     return {
       name: '',
+      nickName: '',
       lastName: '',
       email: '',
       phone: '',
@@ -125,7 +127,39 @@ export default {
       }
     },
     async updateSuscription() {
-      console.log(this.seleccion)
+      if (this.seleccion.length === 0) {
+        console.log('esta vacio')
+      } else {
+        await this.$store.dispatch('updateSuscription', this.seleccion)
+      }
+    },
+    async sendAll() {
+      if (this.name.length === 0) {
+        console.log('esta vacio')
+      } else {
+        this.updateName()
+        console.log('hola dentro')
+      }
+      if (this.lastName.length === 0) {
+        console.log('esta vacio')
+      } else {
+        await this.$store.dispatch('updateLastName', this.lastName)
+      }
+      if (this.nickName.length === 0) {
+        console.log('esta vacio')
+      } else {
+        await this.$store.dispatch('updateNickName', this.nickName)
+      }
+      if (this.email.length === 0) {
+        console.log('esta vacio')
+      } else {
+        await this.$store.dispatch('updateEmail', this.email)
+      }
+      if (this.phone.length === 0) {
+        console.log('esta vacio')
+      } else {
+        await this.$store.dispatch('updatePhone', this.phone)
+      }
       if (this.seleccion.length === 0) {
         console.log('esta vacio')
       } else {
@@ -135,5 +169,4 @@ export default {
   }
 }
 </script>
-
 <style></style>
