@@ -84,5 +84,11 @@ export default {
     return axios
       .put('users/' + data.userId, body)
       .then(response => response.data)
+  },
+  newTema(titulo) {
+    var body = {
+      name: titulo
+    }
+    return axios.post('temario', body).then(response => response.data)
   }
 }

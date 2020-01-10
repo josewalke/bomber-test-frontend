@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Temario</h1>
     <v-data-table
       fixed-header
       :headers="headers"
