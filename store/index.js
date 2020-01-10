@@ -51,6 +51,9 @@ export const getters = {
   phone(state) {
     return state.phone
   },
+  role(state) {
+    return state.role
+  },
   currentTest(state) {
     return state.currentTest
   },

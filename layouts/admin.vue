@@ -40,9 +40,9 @@ export default {
   data() {
     return {
       items: [
-        { title: 'Alumnos', icon: 'mdi-account', view: 'user/alumnos' },
-        { title: 'Temas', icon: 'mdi-file-document-box', view: 'user/temas' },
-        { title: 'Mensaje', icon: 'mdi-email', view: 'user/mensaje' },
+        { title: 'Alumnos', icon: 'mdi-account', view: '/dashboard' },
+        { title: 'Temas', icon: 'mdi-file-document-box', view: '/temas' },
+        { title: 'Mensaje', icon: 'mdi-email', view: '/mensajes' },
         { title: 'Configuracion', icon: 'mdi-settings' }
       ]
     }
