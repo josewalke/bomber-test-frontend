@@ -67,7 +67,7 @@ export default {
         { title: 'Alumnos', icon: 'mdi-account', page: '/dashboard' },
         { title: 'Temas', icon: 'mdi-file-document-box', page: '/temas' },
         { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
-        { title: 'Preguntas', icon: 'mdi-playlist-edit' }
+        { title: 'Preguntas', icon: 'mdi-playlist-edit', page: '/question' }
       ]
     }
   },
