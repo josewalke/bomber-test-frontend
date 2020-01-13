@@ -90,5 +90,8 @@ export default {
       name: titulo
     }
     return axios.post('temario', body).then(response => response.data)
+  },
+  deleteTema(temaId) {
+    return axios.delete(`temario/${temaId}`).then(response => response.data)
   }
 }

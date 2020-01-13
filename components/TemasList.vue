@@ -1,17 +1,28 @@
 <template>
   <div>
-    <v-data-table
-      fixed-header
-      :headers="headers"
-      :items="items"
-      :items-per-page="10"
-      class="elevation-1"
-    >
-    </v-data-table>
+    <v-simple-table>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">Tema</th>
+            <th class="text-left"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in items" :key="item._id">
+            <td>{{ item.name }}</td>
+            <td>
+              <v-btn color="error" @click="deleteTema(item)">Eliminar</v-btn>
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
   </div>
 </template>
 
 <script>
+import API from '~/services/api'
 export default {
   name: 'TemasList',
   props: {
@@ -32,6 +43,12 @@ export default {
           value: 'name'
         }
       ]
+    }
+  },
+  methods: {
+    deleteTema(tema) {
+      API.deleteTema(tema._id)
+      location.reload()
     }
   }
 }
