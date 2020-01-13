@@ -9,8 +9,25 @@
 
       <v-divider></v-divider>
 
-      <v-list dense>
+      <v-list v-if="role === 'cliente'" dense>
         <v-list-item v-for="item in items" :key="item.title">
+          <v-list-item-content>
+            <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
+              <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
+            </v-btn>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item>
+          <v-list-item-content>
+            <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
+              <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
+            </v-btn>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list v-else dense>
+        <v-list-item v-for="item in admin" :key="item.title">
           <v-list-item-content>
             <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
               <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
@@ -45,11 +62,17 @@ export default {
         { title: 'Test', icon: 'mdi-file-document-box', page: '/tests' },
         { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
         { title: 'Configuracion', icon: 'mdi-settings', page: '/settings' }
+      ],
+      admin: [
+        { title: 'Alumnos', icon: 'mdi-account', page: '/dashboard' },
+        { title: 'Temas', icon: 'mdi-file-document-box', page: '/temas' },
+        { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
+        { title: 'Configuracion', icon: 'mdi-settings' }
       ]
     }
   },
   computed: {
-    ...mapGetters(['userName', 'image_url'])
+    ...mapGetters(['userName', 'image_url', 'role'])
   },
   methods: {
     logout() {

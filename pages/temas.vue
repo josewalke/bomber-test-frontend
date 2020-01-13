@@ -16,7 +16,6 @@
 import API from '~/services/api'
 import TemasList from '~/components/TemasList.vue'
 export default {
-  layout: 'admin',
   components: {
     TemasList
   },

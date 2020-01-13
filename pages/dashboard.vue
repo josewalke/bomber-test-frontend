@@ -12,8 +12,7 @@ export default {
   async asyncData() {
     const users = await API.getAllUsers()
     return { users }
-  },
-  layout: 'admin'
+  }
 }
 </script>
 <style lang="scss" scoped></style>

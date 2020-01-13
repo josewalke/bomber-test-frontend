@@ -25,7 +25,7 @@ export default {
   getAllTest(userId) {
     return axios.get('tests/user/' + userId).then(response => response.data)
   },
-  getAllMessage(userId) {
+  getAllMessageById(userId) {
     return axios.get('messages/' + userId).then(response => response.data)
   },
   getTest(testId) {

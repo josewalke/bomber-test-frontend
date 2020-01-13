@@ -23,6 +23,12 @@
       <h1>Respuesta del profesor</h1>
       {{ messages[position].respuesta }}
     </div>
+    <div v-if="role === 'admin'">
+      <div>
+        {{ messages[position] }}
+        <h1>hola</h1>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -41,7 +47,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['question', 'messages', 'position'])
+    ...mapGetters(['question', 'messages', 'position', 'role'])
   }
 }
 </script>

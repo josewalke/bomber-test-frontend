@@ -189,7 +189,7 @@ export const actions = {
       commit('saveToken', response)
       const tests = await API.getAllTest(state.userId)
       commit('saveTests', tests)
-      const mensajes = await API.getAllMessage(state.userId)
+      const mensajes = await API.getAllMessageById(state.userId)
       commit('saveMessage', mensajes)
     }
     return response
@@ -327,5 +327,10 @@ export const actions = {
   },
   async savePosition({ commit }, position) {
     commit('savePosition', position)
+  },
+  async saveMessageAdmin({ commit, state }) {
+    console.log('administrador')
+    const mensajes = await API.getAllMessageAdmin(state.userId)
+    commit('saveMessage', mensajes)
   }
 }
