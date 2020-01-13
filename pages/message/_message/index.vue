@@ -25,7 +25,6 @@
     </div>
     <div v-if="role === 'admin'">
       <div>
-        {{ messages[position] }}
         <h1>hola</h1>
       </div>
     </div>

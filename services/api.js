@@ -28,6 +28,9 @@ export default {
   getAllMessageById(userId) {
     return axios.get('messages/' + userId).then(response => response.data)
   },
+  getAllMessageAdmin() {
+    return axios.get('messages/').then(response => response.data)
+  },
   getTest(testId) {
     return axios.get('tests/' + testId).then(response => response.data)
   },

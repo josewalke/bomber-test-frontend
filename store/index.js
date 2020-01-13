@@ -328,9 +328,9 @@ export const actions = {
   async savePosition({ commit }, position) {
     commit('savePosition', position)
   },
-  async saveMessageAdmin({ commit, state }) {
+  async saveMessageAdmin({ commit }) {
     console.log('administrador')
-    const mensajes = await API.getAllMessageAdmin(state.userId)
+    const mensajes = await API.getAllMessageAdmin()
     commit('saveMessage', mensajes)
   }
 }
