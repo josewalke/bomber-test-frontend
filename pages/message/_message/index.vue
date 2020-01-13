@@ -19,13 +19,15 @@
       <h1>Pregunta del estudiante</h1>
       {{ messages[position].pregunta }}
     </div>
-    <div>
+    <div v-if="role === 'cliente'">
       <h1>Respuesta del profesor</h1>
       {{ messages[position].respuesta }}
     </div>
     <div v-if="role === 'admin'">
       <div>
-        <h1>hola</h1>
+        <h1>Responder duda</h1>
+        <v-textarea v-model="respuesta" auto-grow solo></v-textarea>
+        <v-btn @click="reply(messages[position])">Enviar</v-btn>
       </div>
     </div>
   </div>
@@ -47,6 +49,21 @@ export default {
   },
   computed: {
     ...mapGetters(['question', 'messages', 'position', 'role'])
+  },
+  data() {
+    return {
+      respuesta: ''
+    }
+  },
+  methods: {
+    reply(message) {
+      const reply = {
+        id: message._id,
+        respuesta: this.respuesta
+      }
+      this.$store.dispatch('reply', reply)
+      this.$router.push('/message')
+    }
   }
 }
 </script>

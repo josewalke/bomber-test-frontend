@@ -179,6 +179,9 @@ export const mutations = {
   },
   savePosition(state, position) {
     state.position = position
+  },
+  prueba() {
+    console.log('console de prueba')
   }
 }
 
@@ -332,5 +335,12 @@ export const actions = {
     console.log('administrador')
     const mensajes = await API.getAllMessageAdmin()
     commit('saveMessage', mensajes)
+  },
+  async reply({ commit }, reply) {
+    const response = await API.reply(reply)
+    if (!response.error) {
+      const mensajes = await API.getAllMessageAdmin()
+      commit('saveMessage', mensajes)
+    }
   }
 }

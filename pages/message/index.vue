@@ -2,7 +2,6 @@
   <div>
     <div class="header-wraper">
       <h1>Mensajes</h1>
-      {{ role }}
     </div>
     <v-simple-table v-if="role === 'cliente'">
       <template v-slot:default>
@@ -78,7 +77,6 @@ export default {
   },
   methods: {
     goToQuestion(question, idx) {
-      console.log(question)
       this.$store.dispatch('savePosition', idx)
       this.$router.push(`/message/${question}`)
     }

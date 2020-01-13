@@ -96,5 +96,15 @@ export default {
   },
   deleteTema(temaId) {
     return axios.delete(`temario/${temaId}`).then(response => response.data)
+  },
+  reply(reply) {
+    console.log(reply)
+    const body = {
+      respuesta_leida: true,
+      respuesta: reply.respuesta
+    }
+    return axios
+      .put(`messages/${reply.id}`, body)
+      .then(response => response.data)
   }
 }
