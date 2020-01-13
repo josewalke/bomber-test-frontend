@@ -47,13 +47,13 @@ export default {
       console.log('mal')
     }
   },
-  computed: {
-    ...mapGetters(['question', 'messages', 'position', 'role'])
-  },
   data() {
     return {
       respuesta: ''
     }
+  },
+  computed: {
+    ...mapGetters(['question', 'messages', 'position', 'role'])
   },
   methods: {
     reply(message) {
