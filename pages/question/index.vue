@@ -1,7 +1,11 @@
 <template>
   <div>
-    <h1>Enunciado</h1>
-    <v-textarea v-model="enunciado" auto-grow solo></v-textarea>
+    <v-container>
+      <h1>Enunciado</h1>
+      <div class="box">
+        <v-textarea v-model="enunciado" auto-grow solo></v-textarea>
+      </div>
+    </v-container>
     <h1>Posibles respuestas</h1>
     <v-textarea v-model="opcion1" auto-grow solo label="Opcion1"></v-textarea>
     <v-textarea v-model="opcion2" auto-grow solo label="Opcion2"></v-textarea>
@@ -12,7 +16,7 @@
       v-model="seleccion"
       class="my-2"
       :items="nombre"
-      label="Suscripcion"
+      label="Tema"
     ></v-overflow-btn>
     <v-overflow-btn
       v-model="seleccion2"
@@ -28,6 +32,37 @@
     ></v-overflow-btn>
 
     <v-btn @click="crearQuestion">pulsame</v-btn>
+
+    <v-simple-table>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">Enunciado</th>
+            <th class="text-left">Temario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, idx) in preguntas" :key="idx">
+            <td
+              class="text-truncate"
+              style="max-width: 150px;"
+              @click="goToQuestion(item._id, item)"
+            >
+              <p>{{ item.enunciado }}</p>
+            </td>
+
+            <td class="text-truncate" style="max-width: 150px;">
+              <p v-for="(tema, index) in temas" :key="index">
+                <span v-if="tema._id === item.tema_id">{{ tema.name }}</span>
+              </p>
+            </td>
+            <td v-if="item.respuesta_leida === false">
+              <v-icon>mdi-check</v-icon>
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
   </div>
 </template>
 
@@ -42,8 +77,8 @@ export default {
       nombre.push(temas[i].name)
       id.push(temas[i]._id)
     }
-
-    return { nombre, id }
+    const preguntas = await API.getAllQuestions()
+    return { nombre, id, preguntas, temas }
   },
   data() {
     return {
@@ -63,16 +98,29 @@ export default {
     crearQuestion() {
       const newQuestion = {
         enunciado: this.enunciado,
-        answer_wrong: [this.opcion1, this.opcion2, this.opcion3, this.correcta],
+        answers_wrong: [
+          this.opcion1,
+          this.opcion2,
+          this.opcion3,
+          this.correcta
+        ],
         answers_correct: this.correcta,
         tema_id: this.id[this.nombre.indexOf(this.seleccion)],
         category: this.seleccion2,
-        dificulty: this.seleccion3
+        difficulty: this.seleccion3
       }
-      console.log(newQuestion)
+      API.crearQuestion(newQuestion)
+      location.reload()
+    },
+    goToQuestion(question) {
+      this.$router.push(`/question/${question}`)
     }
   }
 }
 </script>
 
-<style></style>
+<style>
+.box {
+  width: 600px;
+}
+</style>
