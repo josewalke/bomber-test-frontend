@@ -27,12 +27,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      // email: 'BRUNO.Herrera@gmail.com',
-      // password: '12345',
-      email: 'jose@gmail.com',
+      email: 'admin@gmail.com',
       password: '123456',
       showPassword: false,
       rules: {
@@ -44,6 +43,9 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['role'])
+  },
   methods: {
     async login() {
       const user = {
@@ -54,7 +56,14 @@ export default {
       const response = await this.$store.dispatch('login', user)
 
       if (!response.error) {
-        this.$router.push('/user')
+        if (this.role === 'cliente') {
+          this.$router.push('/user')
+        } else {
+          const res_admin = await this.$store.dispatch('saveMessageAdmin')
+          if (!res_admin) {
+            this.$router.push('/dashboard')
+          }
+        }
       } else {
         alert(response.error)
       }

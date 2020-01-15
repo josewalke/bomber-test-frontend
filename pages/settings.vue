@@ -85,11 +85,6 @@ export default {
       seleccion: ''
     }
   },
-  computed: {
-    Name() {
-      return this.name.length
-    }
-  },
   methods: {
     async updateName() {
       if (this.name.length === 0) {

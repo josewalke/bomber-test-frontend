@@ -4,12 +4,14 @@ export default {
   getAllUsers() {
     return axios.get('users').then(response => response.data)
   },
+  getAllTemas() {
+    return axios.get('temario').then(response => response.data)
+  },
   getUserById(prueba) {
     return axios.get('users/' + prueba).then(response => response.data)
   },
   getQuestionById(pregunta_id) {
     return axios.get('questions/' + pregunta_id).then(response => response.data)
-    // console.log(pregunta_id)
   },
   getAllQuestions() {
     return axios.get('questions').then(response => response.data)
@@ -22,8 +24,11 @@ export default {
   getAllTest(userId) {
     return axios.get('tests/user/' + userId).then(response => response.data)
   },
-  getAllMessage(userId) {
+  getAllMessageById(userId) {
     return axios.get('messages/' + userId).then(response => response.data)
+  },
+  getAllMessageAdmin() {
+    return axios.get('messages/').then(response => response.data)
   },
   getTest(testId) {
     return axios.get('tests/' + testId).then(response => response.data)
@@ -80,6 +85,80 @@ export default {
     }
     return axios
       .put('users/' + data.userId, body)
+      .then(response => response.data)
+  },
+  newTema(titulo) {
+    var body = {
+      name: titulo
+    }
+    return axios.post('temario', body).then(response => response.data)
+  },
+  deleteTema(temaId) {
+    return axios.delete(`temario/${temaId}`).then(response => response.data)
+  },
+  reply(reply) {
+    console.log(reply)
+    const body = {
+      respuesta_leida: true,
+      respuesta: reply.respuesta
+    }
+    return axios
+      .put(`messages/${reply.id}`, body)
+      .then(response => response.data)
+  },
+  crearQuestion(newQuestion) {
+    return axios.post(`questions/`, newQuestion).then(response => response.data)
+  },
+  updateEnunciado(newEnunciado) {
+    // console.log(newEnunciado)
+    const body = {
+      enunciado: newEnunciado.enunciado
+    }
+
+    return axios
+      .put('questions/' + newEnunciado.id, body)
+      .then(response => response.data)
+  },
+  updateOpcion(newOpcion) {
+    // console.log(newEnunciado)
+    const body = {
+      answers_wrong: newOpcion.answers_wrong
+    }
+
+    return axios
+      .put('questions/' + newOpcion.id, body)
+      .then(response => response.data)
+  },
+  updateCorrect(correct) {
+    const body = {
+      answers_correct: correct.answers_correct
+    }
+    return axios
+      .put('questions/' + correct.id, body)
+      .then(response => response.data)
+  },
+  updateCategory(category) {
+    const body = {
+      category: category.category
+    }
+    return axios
+      .put('questions/' + category.id, body)
+      .then(response => response.data)
+  },
+  updateDifficulty(difficulty) {
+    const body = {
+      difficulty: difficulty.difficulty
+    }
+    return axios
+      .put('questions/' + difficulty.id, body)
+      .then(response => response.data)
+  },
+  updateTema(tema) {
+    const body = {
+      tema_id: tema.tema_id
+    }
+    return axios
+      .put('questions/' + tema.id, body)
       .then(response => response.data)
   }
 }

@@ -1,0 +1,192 @@
+<template>
+  <div>
+    <h1>Enunciado</h1>
+    {{ updatePregunta.enunciado }}
+    <v-textarea v-model="newEnunciado" auto-grow solo></v-textarea>
+    <v-btn @click="updateEnunciado">Actualizar</v-btn>
+    <h1>Opcion1</h1>
+    {{ updatePregunta.answers_wrong[0] }}
+    <v-textarea v-model="opcion1" auto-grow solo></v-textarea>
+    <v-btn @click="updateOpcion1">Actualizar</v-btn>
+    <h1>Opcion2</h1>
+    {{ updatePregunta.answers_wrong[1] }}
+    <v-textarea v-model="opcion2" auto-grow solo></v-textarea>
+    <v-btn @click="updateOpcion2">Actualizar</v-btn>
+    <h1>Opcion3</h1>
+    {{ updatePregunta.answers_wrong[2] }}
+    <v-textarea v-model="opcion3" auto-grow solo></v-textarea>
+    <v-btn @click="updateOpcion3">Actualizar</v-btn>
+    <h1>Respuesta correcta</h1>
+    {{ updatePregunta.answers_correct }}
+    <v-textarea v-model="correcta" auto-grow solo></v-textarea>
+    <v-btn @click="updateCorrecta">Actualizar</v-btn>
+    <h1>Categoria</h1>
+    {{ updatePregunta.category }}
+    <v-overflow-btn
+      v-model="seleccion"
+      class="my-2"
+      :items="categoria"
+      label="Categoria"
+    ></v-overflow-btn>
+    <v-btn @click="updateCategoria">Actualizar</v-btn>
+    <h1>Dificultad</h1>
+    {{ updatePregunta.difficulty }}
+    <v-overflow-btn
+      v-model="seleccion2"
+      class="my-2"
+      :items="dificultad"
+      label="Dificultad"
+    ></v-overflow-btn>
+    <v-btn @click="updateDificultad">Actualizar</v-btn>
+    <h1>Tema</h1>
+    <p v-if="ver">{{ temas[posicion].name }}</p>
+    <p v-else>{{ seleccion3 }}</p>
+    <v-overflow-btn
+      v-model="seleccion3"
+      class="my-2"
+      :items="nombre"
+      label="Tema"
+    ></v-overflow-btn>
+    <v-btn @click="updateTema">Actualizar</v-btn>
+  </div>
+</template>
+
+<script>
+import API from '~/services/api'
+import { mapGetters } from 'vuex'
+export default {
+  async asyncData({ params, store }) {
+    const pregunta = await API.getQuestionById(params.question)
+    const temas = await API.getAllTemas()
+    store.dispatch('updateQuestion', pregunta)
+
+    let posicion = ''
+    const nombre = []
+    const id = []
+    for (let i = 0; i < temas.length; i++) {
+      if (pregunta.tema_id === temas[i]._id) {
+        posicion = i
+      }
+      nombre.push(temas[i].name)
+      id.push(temas[i]._id)
+    }
+
+    return { temas, posicion, nombre, id }
+  },
+  data() {
+    return {
+      newEnunciado: '',
+      opcion1: '',
+      opcion2: '',
+      opcion3: '',
+      correcta: '',
+      categoria: ['bomberil', 'legislacion'],
+      seleccion: '',
+      dificultad: ['Facil', 'Medio', 'Dificil'],
+      seleccion2: '',
+      seleccion3: '',
+      ver: true
+    }
+  },
+  computed: {
+    ...mapGetters(['updatePregunta'])
+  },
+  methods: {
+    updateEnunciado() {
+      if (this.newEnunciado.length > 0) {
+        const body = {
+          id: this.updatePregunta._id,
+          enunciado: this.newEnunciado
+        }
+        this.$store.dispatch('updateEnunciado', body)
+      }
+    },
+    updateOpcion1() {
+      if (this.opcion1.length > 0) {
+        const body = {
+          id: this.updatePregunta._id,
+          answers_wrong: [
+            this.opcion1,
+            this.updatePregunta.answers_wrong[1],
+            this.updatePregunta.answers_wrong[2],
+            this.updatePregunta.answers_correct
+          ]
+        }
+        this.$store.dispatch('updateOpcion', body)
+      }
+    },
+    updateOpcion2() {
+      if (this.opcion2.length > 0) {
+        const body = {
+          id: this.updatePregunta._id,
+          answers_wrong: [
+            this.updatePregunta.answers_wrong[0],
+            this.opcion2,
+            this.updatePregunta.answers_wrong[2],
+            this.updatePregunta.answers_correct
+          ]
+        }
+        this.$store.dispatch('updateOpcion', body)
+      }
+    },
+    updateOpcion3() {
+      if (this.opcion3.length > 0) {
+        const body = {
+          id: this.updatePregunta._id,
+          answers_wrong: [
+            this.updatePregunta.answers_wrong[0],
+            this.updatePregunta.answers_wrong[1],
+            this.opcion3,
+            this.updatePregunta.answers_correct
+          ]
+        }
+        this.$store.dispatch('updateOpcion', body)
+      }
+    },
+    updateCorrecta() {
+      if (this.correcta.length > 0) {
+        const body = {
+          id: this.updatePregunta._id,
+          answers_wrong: [
+            this.updatePregunta.answers_wrong[0],
+            this.updatePregunta.answers_wrong[1],
+            this.updatePregunta.answers_wrong[2],
+            this.correcta
+          ]
+        }
+        const correct = {
+          id: this.updatePregunta._id,
+          answers_correct: this.correcta
+        }
+
+        API.updateCorrect(correct)
+        this.$store.dispatch('updateOpcion', body)
+      }
+    },
+    updateCategoria() {
+      const body = {
+        id: this.updatePregunta._id,
+        category: this.seleccion
+      }
+      this.$store.dispatch('updateCategoria', body)
+    },
+    updateDificultad() {
+      const body = {
+        id: this.updatePregunta._id,
+        difficulty: this.seleccion2
+      }
+      this.$store.dispatch('updateDifficulty', body)
+    },
+    updateTema() {
+      const body = {
+        id: this.updatePregunta._id,
+        tema_id: this.id[this.nombre.indexOf(this.seleccion3)]
+      }
+      this.$store.dispatch('updateTema', body)
+      this.ver = false
+    }
+  }
+}
+</script>
+
+<style></style>

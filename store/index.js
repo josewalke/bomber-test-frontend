@@ -20,7 +20,8 @@ export const state = () => ({
   messages: [],
   currentTest: {},
   question: {},
-  position: ''
+  position: '',
+  updatePregunta: {}
 })
 
 export const getters = {
@@ -51,6 +52,9 @@ export const getters = {
   phone(state) {
     return state.phone
   },
+  role(state) {
+    return state.role
+  },
   currentTest(state) {
     return state.currentTest
   },
@@ -77,6 +81,9 @@ export const getters = {
   },
   position(state) {
     return state.position
+  },
+  updatePregunta(state) {
+    return state.updatePregunta
   }
 }
 
@@ -176,6 +183,12 @@ export const mutations = {
   },
   savePosition(state, position) {
     state.position = position
+  },
+  saveUpdatePregunta(state, pregunta) {
+    state.updatePregunta = pregunta
+  },
+  prueba() {
+    console.log('console de prueba')
   }
 }
 
@@ -186,7 +199,7 @@ export const actions = {
       commit('saveToken', response)
       const tests = await API.getAllTest(state.userId)
       commit('saveTests', tests)
-      const mensajes = await API.getAllMessage(state.userId)
+      const mensajes = await API.getAllMessageById(state.userId)
       commit('saveMessage', mensajes)
     }
     return response
@@ -307,7 +320,6 @@ export const actions = {
     }
   },
   async updateSuscription({ commit, state }, newSuscription) {
-    console.log(state.userId)
     let data = {
       userId: state.userId,
       newSuscription: newSuscription
@@ -324,5 +336,64 @@ export const actions = {
   },
   async savePosition({ commit }, position) {
     commit('savePosition', position)
+  },
+  async saveMessageAdmin({ commit }) {
+    const mensajes = await API.getAllMessageAdmin()
+    commit('saveMessage', mensajes)
+  },
+  async reply({ commit }, reply) {
+    const response = await API.reply(reply)
+    if (!response.error) {
+      const mensajes = await API.getAllMessageAdmin()
+      commit('saveMessage', mensajes)
+    }
+  },
+  async updateQuestion({ commit }, pregunta) {
+    commit('saveUpdatePregunta', pregunta)
+  },
+  async updateEnunciado({ commit }, body) {
+    const response = await API.updateEnunciado(body)
+    if (!response.error) {
+      const pregunta = await API.getQuestionById(body.id)
+      if (!pregunta.error) {
+        commit('saveUpdatePregunta', pregunta)
+      }
+    }
+  },
+  async updateOpcion({ commit }, body) {
+    const response = await API.updateOpcion(body)
+    if (!response.error) {
+      const pregunta = await API.getQuestionById(body.id)
+      if (!pregunta.error) {
+        commit('saveUpdatePregunta', pregunta)
+      }
+    }
+  },
+  async updateCategoria({ commit }, body) {
+    const response = await API.updateCategory(body)
+    if (!response.error) {
+      const pregunta = await API.getQuestionById(body.id)
+      if (!pregunta.error) {
+        commit('saveUpdatePregunta', pregunta)
+      }
+    }
+  },
+  async updateDifficulty({ commit }, body) {
+    const response = await API.updateDifficulty(body)
+    if (!response.error) {
+      const pregunta = await API.getQuestionById(body.id)
+      if (!pregunta.error) {
+        commit('saveUpdatePregunta', pregunta)
+      }
+    }
+  },
+  async updateTema({ commit }, body) {
+    const response = await API.updateTema(body)
+    if (!response.error) {
+      const pregunta = await API.getQuestionById(body.id)
+      if (!pregunta.error) {
+        commit('saveUpdatePregunta', pregunta)
+      }
+    }
   }
 }

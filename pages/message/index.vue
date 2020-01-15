@@ -3,12 +3,12 @@
     <div class="header-wraper">
       <h1>Mensajes</h1>
     </div>
-    <v-simple-table>
+    <v-simple-table v-if="role === 'cliente'">
       <template v-slot:default>
         <thead>
           <tr>
             <th class="text-left">Pregunta</th>
-            <th class="text-left">Leido</th>
+            <th class="text-left">Respondido</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +37,34 @@
         </tbody>
       </template>
     </v-simple-table>
+    <v-simple-table v-else>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">Pregunta</th>
+            <th class="text-left">Respondido</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(item, idx) in messages"
+            :key="item._id"
+            @click="goToQuestion(item.pregunta_id, idx)"
+          >
+            <td
+              v-if="item.respuesta_leida === false"
+              class="text-truncate"
+              style="max-width: 150px;"
+            >
+              {{ item.pregunta }}
+            </td>
+            <td v-if="item.respuesta_leida === false">
+              <v-icon>mdi-check</v-icon>
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
   </div>
 </template>
 
@@ -45,11 +73,10 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['messages'])
+    ...mapGetters(['messages', 'role'])
   },
   methods: {
     goToQuestion(question, idx) {
-      console.log(question)
       this.$store.dispatch('savePosition', idx)
       this.$router.push(`/message/${question}`)
     }
