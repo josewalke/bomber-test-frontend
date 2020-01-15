@@ -6,10 +6,10 @@
     </div>
     <div>
       <h1>Opciones</h1>
-      {{ question.answer_wrong[0] }}<br />
-      {{ question.answer_wrong[1] }}<br />
-      {{ question.answer_wrong[2] }}<br />
-      {{ question.answer_wrong[3] }}<br />
+      {{ question.answers_wrong[0] }}<br />
+      {{ question.answers_wrong[1] }}<br />
+      {{ question.answers_wrong[2] }}<br />
+      {{ question.answers_wrong[3] }}<br />
     </div>
     <div>
       <h1>Respuesta correcta</h1>
@@ -38,7 +38,7 @@ import API from '~/services/api'
 import { mapGetters } from 'vuex'
 
 export default {
-  async fetch({ params, store }) {
+  async asyncData({ params, store }) {
     // console.log(params.message)
     const response = await API.getQuestionById(params.message)
     if (!response.error) {
