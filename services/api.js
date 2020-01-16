@@ -21,6 +21,11 @@ export default {
       .post('tests', null, { headers: { token } })
       .then(response => response.data)
   },
+  generateConfigTest(token) {
+    return axios
+      .post('tests/congif', null, { headers: { token } })
+      .then(response => response.data)
+  },
   getAllTest(userId) {
     return axios.get('tests/user/' + userId).then(response => response.data)
   },
@@ -32,6 +37,18 @@ export default {
   },
   getTest(testId) {
     return axios.get('tests/' + testId).then(response => response.data)
+  },
+  getAllTemasNames() {
+    return axios
+      .get('temario')
+      .then(response => response.data)
+      .then(temas => {
+        var temaName = []
+        temas.forEach(tema => {
+          temaName.push(tema.name)
+        })
+        return temaName.sort()
+      })
   },
   login(user) {
     return axios.post('auth/login', user).then(response => response.data)

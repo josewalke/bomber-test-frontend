@@ -3,16 +3,28 @@
     <div>
       <div class="header-wraper">
         <h1>Mis Tests</h1>
-        <v-btn
-          class="ma-2"
-          outlined
-          fab
-          small
-          color="#DA3E3E"
-          @click="testGeneration"
-        >
-          <v-icon>mdi-plus-thick</v-icon>
-        </v-btn>
+        <div>
+          <v-btn
+            class="ma-2"
+            outlined
+            fab
+            small
+            color="#DA3E3E"
+            @click="testGeneration"
+          >
+            <v-icon>mdi-plus-thick</v-icon>
+          </v-btn>
+          <v-btn
+            class="ma-2"
+            outlined
+            fab
+            small
+            color="#DA3E3E"
+            @click="goToTestConfig"
+          >
+            <v-icon>mdi-tune</v-icon>
+          </v-btn>
+        </div>
       </div>
       <v-simple-table>
         <template v-slot:default>
@@ -53,21 +65,6 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  // data() {
-  //   return {
-  //     headers: [
-  //       {
-  //         text: 'Titulo',
-  //         align: 'left',
-  //         sortable: true,
-  //         value: 'title'
-  //       },
-  //       { text: 'Aciertos', value: 'aciertos_num' },
-  //       { text: 'Fallos', value: 'fallos_num' },
-  //       { text: 'Nota', value: 'nota' }
-  //     ]
-  //   }
-  // },
   computed: {
     ...mapGetters(['tests'])
   },
@@ -81,6 +78,9 @@ export default {
     },
     goToTest(id) {
       this.$router.push(`/tests/${id}`)
+    },
+    goToTestConfig() {
+      this.$router.push(`/tests/config`)
     }
   }
 }
