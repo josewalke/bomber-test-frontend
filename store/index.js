@@ -201,7 +201,17 @@ export const actions = {
     return response
   },
   async createTest({ commit, state }) {
+    console.log('random')
+
     const newTest = await API.generateTest(state.token)
+    commit('saveCurrentTest', newTest)
+    const tests = await API.getAllTest(state.userId)
+    commit('saveTests', tests)
+  },
+  async createTestConfig({ commit, state }) {
+    console.log('config font')
+
+    const newTest = await API.generateConfigTest(state.token)
     commit('saveCurrentTest', newTest)
     const tests = await API.getAllTest(state.userId)
     commit('saveTests', tests)

@@ -32,8 +32,8 @@ export default {
     return {
       // email: 'BRUNO.Herrera@gmail.com',
       // password: '12345',
-      email: 'jose@gmail.com',
-      password: '123456',
+      email: '',
+      password: '',
       showPassword: false,
       rules: {
         required: v => !!v || 'Item is required',
