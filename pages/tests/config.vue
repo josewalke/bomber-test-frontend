@@ -12,7 +12,7 @@ export default {
     TestsConfig
   },
   async asyncData() {
-    const tema = await API.getAllTemas()
+    const tema = await API.getAllTemasNames()
     return { tema }
   }
 }
