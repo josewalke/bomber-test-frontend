@@ -5,12 +5,14 @@
         <thead>
           <tr>
             <th class="text-left">Tema</th>
+            <th class="text-left">Categoria</th>
             <th class="text-left"></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in items" :key="item._id">
             <td>{{ item.name }}</td>
+            <td>{{ item.category }}</td>
             <td>
               <v-btn color="error" @click="deleteTema(item)">Eliminar</v-btn>
             </td>
