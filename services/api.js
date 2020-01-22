@@ -160,5 +160,21 @@ export default {
     return axios
       .put('questions/' + tema.id, body)
       .then(response => response.data)
+  },
+  change_active(change) {
+    console.log(change)
+    const body = {
+      active: change.active
+    }
+
+    return axios.put('users/' + change.id, body).then(response => response.data)
+  },
+  change_suscription(change) {
+    console.log(change)
+    const body = {
+      suscription_type: change.suscription_type
+    }
+
+    return axios.put('users/' + change.id, body).then(response => response.data)
   }
 }
