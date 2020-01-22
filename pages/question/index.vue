@@ -40,7 +40,10 @@
     ></v-overflow-btn>
 
     <v-btn @click="crearQuestion">pulsame</v-btn> -->
-
+    {{ temas }}
+    <v-text-field v-model="f_tema" label="Tema"></v-text-field>
+    <v-text-field v-model="f_categoria" label="Categoria"></v-text-field>
+    <v-btn @click="filtrar">Filtrar</v-btn>
     <v-simple-table>
       <template v-slot:default>
         <thead>
@@ -50,7 +53,7 @@
             <th class="text-left">Categoria</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="filtro">
           <tr v-for="(item, idx) in preguntas" :key="idx">
             <td
               class="text-truncate"
@@ -70,6 +73,27 @@
               </p>
             </td>
             <td @click="goToQuestion(item._id, item)">{{ item.category }}</td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr v-for="(item, idx) in preguntas" :key="idx">
+            <td
+              v-if="item.category === f_categoria"
+              class="text-truncate"
+              style="max-width: 150px;"
+            >
+              <p>{{ item.enunciado }}</p>
+            </td>
+            <td v-if="item.category === f_categoria">
+              <span v-for="(tema, index) in temas" :key="index">
+                <span v-if="tema._id === item.tema_id">
+                  {{ tema.name }}
+                </span>
+              </span>
+            </td>
+            <td v-if="item.category === f_categoria">
+              {{ item.category }}
+            </td>
           </tr>
         </tbody>
       </template>
@@ -110,7 +134,10 @@ export default {
       seleccion2: '',
       dificultad: ['Facil', 'Medio', 'Dificil'],
       seleccion3: '',
-      seleccion4: ''
+      seleccion4: '',
+      f_tema: '',
+      f_categoria: '',
+      filtro: true
     }
   },
   methods: {
@@ -151,6 +178,9 @@ export default {
     },
     goToQuestion(question) {
       this.$router.push(`/question/${question}`)
+    },
+    filtrar() {
+      this.filtro = false
     }
   }
 }
