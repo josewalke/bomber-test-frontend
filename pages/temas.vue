@@ -7,6 +7,11 @@
       validate-on-blur
       append-icon="mdi-pencil"
     ></v-text-field>
+    <v-select
+      v-model="seleccion"
+      :items="items"
+      :label="'Categoria'"
+    ></v-select>
     <v-btn @click="crearTema">Crear</v-btn>
     <TemasList :items="temas"></TemasList>
   </div>
@@ -25,15 +30,20 @@ export default {
   },
   data() {
     return {
-      newTema: ''
+      newTema: '',
+      items: ['bomberil', 'legislacion'],
+      seleccion: ''
     }
   },
   methods: {
     crearTema() {
-      console.log(this.newTema)
-      API.newTema(this.newTema)
+      const body = {
+        name: this.newTema,
+        category: this.seleccion
+      }
+      console.log(body)
+      API.newTema(body)
       location.reload()
-      // this.$router.push('/temas')
     }
   }
 }

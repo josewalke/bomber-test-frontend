@@ -80,7 +80,8 @@ export default {
       'aprobados',
       'suspendidos',
       'total',
-      'suscription_type'
+      'suscription_type',
+      'active'
     ])
   }
 }
