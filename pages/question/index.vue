@@ -40,8 +40,7 @@
     ></v-overflow-btn>
 
     <v-btn @click="crearQuestion">pulsame</v-btn> -->
-    {{ temas }}
-    <v-text-field v-model="f_tema" label="Tema"></v-text-field>
+
     <v-text-field v-model="f_categoria" label="Categoria"></v-text-field>
     <v-btn @click="filtrar">Filtrar</v-btn>
     <v-simple-table>
@@ -84,14 +83,17 @@
             >
               <p>{{ item.enunciado }}</p>
             </td>
-            <td v-if="item.category === f_categoria">
-              <span v-for="(tema, index) in temas" :key="index">
-                <span v-if="tema._id === item.tema_id">
-                  {{ tema.name }}
-                </span>
-              </span>
+            <td
+              v-if="item.category === f_categoria"
+              class="text-truncate"
+              style="max-width: 150px;"
+              @click="goToQuestion(item._id, item)"
+            >
+              <p v-for="(tema, index) in temas" :key="index">
+                <span v-if="tema._id === item.tema_id">{{ tema.name }}</span>
+              </p>
             </td>
-            <td v-if="item.category === f_categoria">
+            <td v-if="item.category === f_categoria" class="text-truncate">
               {{ item.category }}
             </td>
           </tr>
@@ -120,6 +122,7 @@ export default {
       }
     }
     const preguntas = await API.getAllQuestions()
+
     return { nombre, id, preguntas, temas, nombre2, id2 }
   },
   data() {
