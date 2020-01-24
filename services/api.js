@@ -17,14 +17,16 @@ export default {
     return axios.get('questions').then(response => response.data)
   },
   generateTest(token) {
-    return axios
-      .post('tests', null, { headers: { token } })
-      .then(response => response.data)
+    return axios.post('tests', null, { headers: { token } }).then(response => {
+      return response.data
+    })
   },
-  generateConfigTest(token) {
+  generateConfigTest(token, test) {
     return axios
-      .post('tests/congif', null, { headers: { token } })
-      .then(response => response.data)
+      .post('tests/config', test, { headers: { token } })
+      .then(response => {
+        return response.data
+      })
   },
   getAllTest(userId) {
     return axios.get('tests/user/' + userId).then(response => response.data)
@@ -45,7 +47,8 @@ export default {
       .then(temas => {
         var temaName = []
         temas.forEach(tema => {
-          temaName.push(tema.name)
+          let temaData = { name: tema.name, id: tema._id }
+          temaName.push(temaData)
         })
         return temaName.sort()
       })

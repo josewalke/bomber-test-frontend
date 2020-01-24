@@ -1,6 +1,7 @@
 <template>
   <v-row>
     <v-col>
+      <h1>{{ $store.state.currentTest.title }}</h1>
       <template>
         <v-carousel hide-delimiters height="100vh">
           <v-carousel-item
@@ -10,6 +11,7 @@
             <v-sheet color="white" height="100%" tile>
               <v-row class="fill-height" align="center" justify="center">
                 <Question
+                  :id="question._id"
                   :enunciado="question.enunciado"
                   :answers="question.answer_wrong"
                   :correct="question.answers_correct"

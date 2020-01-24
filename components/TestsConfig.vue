@@ -1,22 +1,6 @@
 <template>
   <div>
     <v-form>
-      <div id="alert" class="text-center">
-        <v-dialog v-model="dialog" width="500">
-          <v-card>
-            <v-card-text>
-              <div class="text-center" align-content="center">
-                <br />
-                <br />
-                <h2>⚠️ Recuerda, como máximo 5 temas. ⚠️</h2>
-              </div>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </div>
       <h1>Configuración de test</h1>
       <v-card fixd flat>
         <v-row>
@@ -44,11 +28,12 @@
         </v-row>
         <v-row>
           <v-col class="d-flex" cols="12" sm="6">
-            {{ selectedCheck() }}
+            <!-- {{ selectedCheck() }} -->
             <v-select
               v-model="selected"
               :items="temas"
-              label="Seleccionar temas ( max 5 )"
+              item-text="name"
+              item-value="id"
               outlined
               multiple
             ></v-select>
@@ -85,7 +70,7 @@ export default {
       correction: false,
       formula: '',
       persentages: [],
-      numQuestions: [10, 15, 20, 25, 30, 35, 40, 45, 50],
+      numQuestions: [1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
       numSelected: 0,
       selected: [],
       alert: '',
@@ -108,13 +93,13 @@ export default {
   },
 
   methods: {
-    selectedCheck() {
-      if (this.selected.length > 5) {
-        this.dialog = true
-      } else {
-        this.dialog = false
-      }
-    },
+    // selectedCheck() {
+    //   if (this.selected.length > 5) {
+    //     this.dialog = true
+    //   } else {
+    //     this.dialog = false
+    //   }
+    // },
     correctionOn() {
       if (this.correctorSwitch === true) {
         this.switchStatus = 'activada'
@@ -123,12 +108,14 @@ export default {
       }
     },
     async testGeneration() {
+      console.log('hello hello')
       const test = {
         name: this.testName,
         number: this.numSelected,
         temas: this.selected,
         correction: this.correctorSwitch
       }
+      console.log(test)
       await this.$store.dispatch('createTestConfig', test)
       this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
     }

@@ -221,19 +221,12 @@ export const actions = {
     const tests = await API.getAllTest(state.userId)
     commit('saveTests', tests)
   },
-  async createTestConfig({ commit, state }) {
-    console.log('config font')
-
-    const newTest = await API.generateConfigTest(state.token)
+  async createTestConfig({ commit, state }, testData) {
+    const newTest = await API.generateConfigTest(state.token, testData)
     commit('saveCurrentTest', newTest)
     const tests = await API.getAllTest(state.userId)
     commit('saveTests', tests)
   },
-  // async loadTest({ commit, state }) {
-  //   const tests = await API.getAllTest(state.userId)
-  //   commit('saveTests', tests)
-  //   ESTO ESTA MEJOR
-  // }
   async verRespuesta({ state }, responseBody) {
     const respuesta =
       state.currentTest.no_contestadas[0].answer_wrong[responseBody.number]
