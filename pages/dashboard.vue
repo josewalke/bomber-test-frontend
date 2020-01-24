@@ -1,5 +1,5 @@
 <template>
-  <StudentsList :items="users"></StudentsList>
+  <StudentsList :student="users"></StudentsList>
 </template>
 
 <script>

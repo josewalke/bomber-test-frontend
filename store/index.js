@@ -16,6 +16,7 @@ export const state = () => ({
   suspendidos: '',
   total: '',
   suscription_type: '',
+  active: '',
   tests: [],
   messages: [],
   currentTest: {},
@@ -79,6 +80,9 @@ export const getters = {
   suscription_type(state) {
     return state.suscription_type
   },
+  active(state) {
+    return state.active
+  },
   position(state) {
     return state.position
   },
@@ -105,7 +109,8 @@ export const mutations = {
       aprobados,
       suspendidos,
       total,
-      suscription_type
+      suscription_type,
+      active
     }
   ) {
     state.token = token
@@ -123,6 +128,7 @@ export const mutations = {
     state.suspendidos = suspendidos
     state.total = total
     state.suscription_type = suscription_type
+    state.active = active
   },
   saveTests(state, tests) {
     state.tests = tests

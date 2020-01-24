@@ -107,10 +107,7 @@ export default {
       .put('users/' + data.userId, body)
       .then(response => response.data)
   },
-  newTema(titulo) {
-    var body = {
-      name: titulo
-    }
+  newTema(body) {
     return axios.post('temario', body).then(response => response.data)
   },
   deleteTema(temaId) {
@@ -180,5 +177,21 @@ export default {
     return axios
       .put('questions/' + tema.id, body)
       .then(response => response.data)
+  },
+  change_active(change) {
+    console.log(change)
+    const body = {
+      active: change.active
+    }
+
+    return axios.put('users/' + change.id, body).then(response => response.data)
+  },
+  change_suscription(change) {
+    console.log(change)
+    const body = {
+      suscription_type: change.suscription_type
+    }
+
+    return axios.put('users/' + change.id, body).then(response => response.data)
   }
 }
