@@ -1,13 +1,23 @@
 <template>
   <v-container>
     <div class="infoQ">
-      <h2>Pregunta {{ numero + 1 }}/20</h2>
+      <div>
+        <h2>{{ $store.state.currentTest.no_contestadas.length }}</h2>
+        <h2>{{ $store.state.currentTest.aciertos }}</h2>
+        <h2>{{ $store.state.currentTest.fallos }}</h2>
+      </div>
       <v-spacer />
+      <h2>
+        Pregunta {{ numero + 1 }}/{{
+          $store.state.currentTest.no_contestadas.length
+        }}&nbsp;&nbsp;
+      </h2>
       <v-btn color="#da3e3e" to="/tests"><v-icon>mdi-close</v-icon></v-btn>
     </div>
     <v-row>
       <v-col>
         <h1>{{ enunciado }}</h1>
+        <h2>{{ id }}</h2>
       </v-col>
     </v-row>
     <v-row>
@@ -48,6 +58,12 @@ export default {
     correct: {
       type: String,
       default: ''
+    },
+    id: {
+      type: Object,
+      default: () => {
+        return 0
+      }
     }
   },
   data() {
@@ -61,6 +77,7 @@ export default {
   methods: {
     selectAnswer(answer, idx) {
       if (!this.answered) {
+        this.colores.splice(idx, 1, answer === this.correct ? 'green' : 'red')
         this.colores.splice(idx, 1, answer === this.correct ? 'green' : 'red')
         this.prueba.splice(
           idx,

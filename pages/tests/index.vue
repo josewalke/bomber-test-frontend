@@ -31,6 +31,7 @@
           <thead>
             <tr>
               <th class="text-left">Titulo</th>
+              <th class="text-left">Preguntas</th>
               <th class="text-left">Aciertos</th>
               <th class="text-left">Fallos</th>
               <th class="text-left">Nota</th>
@@ -43,6 +44,13 @@
               @click="goToTest(item._id)"
             >
               <td>{{ item.title }}</td>
+              <td>
+                {{
+                  item.no_contestadas.length -
+                    item.aciertos_num -
+                    item.fallos_num
+                }}
+              </td>
               <td>{{ item.aciertos_num }}</td>
               <td>{{ item.fallos_num }}</td>
               <td>
@@ -67,9 +75,6 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters(['tests'])
-  },
-  mounted() {
-    // this.$store.dispatch('loadTest')
   },
   methods: {
     async testGeneration() {
