@@ -42,9 +42,17 @@
     <p v-if="ver">{{ temas[posicion].name }}</p>
     <p v-else>{{ seleccion3 }}</p>
     <v-overflow-btn
+      v-if="seleccion === 'bomberil'"
       v-model="seleccion3"
       class="my-2"
       :items="nombre"
+      label="Tema"
+    ></v-overflow-btn>
+    <v-overflow-btn
+      v-if="seleccion === 'legislacion'"
+      v-model="seleccion4"
+      class="my-2"
+      :items="nombre2"
       label="Tema"
     ></v-overflow-btn>
     <v-btn @click="updateTema">Actualizar</v-btn>
@@ -63,15 +71,22 @@ export default {
     let posicion = ''
     const nombre = []
     const id = []
+    const nombre2 = []
+    const id2 = []
     for (let i = 0; i < temas.length; i++) {
       if (pregunta.tema_id === temas[i]._id) {
         posicion = i
       }
-      nombre.push(temas[i].name)
-      id.push(temas[i]._id)
+      if (temas[i].category === 'bomberil') {
+        nombre.push(temas[i].name)
+        id.push(temas[i]._id)
+      } else {
+        nombre2.push(temas[i].name)
+        id2.push(temas[i]._id)
+      }
     }
 
-    return { temas, posicion, nombre, id }
+    return { temas, posicion, nombre, id, nombre2, id2 }
   },
   data() {
     return {
@@ -85,6 +100,7 @@ export default {
       dificultad: ['Facil', 'Medio', 'Dificil'],
       seleccion2: '',
       seleccion3: '',
+      seleccion4: '',
       ver: true
     }
   },
@@ -178,12 +194,22 @@ export default {
       this.$store.dispatch('updateDifficulty', body)
     },
     updateTema() {
-      const body = {
-        id: this.updatePregunta._id,
-        tema_id: this.id[this.nombre.indexOf(this.seleccion3)]
+      if (this.seleccion === 'bomberil') {
+        const body = {
+          id: this.updatePregunta._id,
+          tema_id: this.id[this.nombre.indexOf(this.seleccion3)]
+        }
+        this.$store.dispatch('updateTema', body)
+        this.ver = false
       }
-      this.$store.dispatch('updateTema', body)
-      this.ver = false
+      if (this.seleccion === 'legislacion') {
+        const body = {
+          id: this.updatePregunta._id,
+          tema_id: this.id2[this.nombre2.indexOf(this.seleccion4)]
+        }
+        this.$store.dispatch('updateTema', body)
+        this.ver = false
+      }
     }
   }
 }
