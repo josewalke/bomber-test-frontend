@@ -27,9 +27,9 @@
             <!-- <td>{{ item.suscription_type }}</td> -->
             <td>
               <v-select
-                v-model="seleccion"
                 :items="items"
                 :label="item.suscription_type"
+                @input="setSelected"
                 @change="change_suscription(idx)"
               ></v-select>
             </td>
@@ -89,7 +89,12 @@
                   (item.name === f_nombre && item.lastName === f_apellido)
               "
             >
-              {{ item.suscription_type }}
+              <v-select
+                :items="items"
+                :label="item.suscription_type"
+                @input="setSelected"
+                @change="change_suscription(idx)"
+              ></v-select>
             </td>
             <td
               v-if="
@@ -149,6 +154,12 @@ export default {
         suscription_type: this.seleccion
       }
       API.change_suscription(body)
+      console.log(idx)
+      console.log(this.seleccion)
+    },
+    setSelected(value) {
+      this.seleccion = value
+      console.log(this.seleccion)
     }
   }
 }
