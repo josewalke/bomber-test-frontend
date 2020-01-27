@@ -1,7 +1,7 @@
 <template>
   <div>
     <template>
-      <v-card>
+      <v-card width="600px" class="mx-auto">
         <v-form>
           <v-container>
             <v-row>
@@ -55,27 +55,7 @@
           </v-container>
         </v-form>
         <v-divider></v-divider>
-        <v-card-actions>
-          <v-switch
-            v-model="autoUpdate"
-            :disabled="isUpdating"
-            class="mt-0"
-            color="green lighten-2"
-            hide-details
-            label="Auto Update"
-          ></v-switch>
-          <v-spacer></v-spacer>
-          <v-btn
-            :disabled="autoUpdate"
-            :loading="isUpdating"
-            color="blue-grey darken-3"
-            depressed
-            @click="isUpdating = true"
-          >
-            <v-icon left>mdi-update</v-icon>
-            Update Now
-          </v-btn>
-        </v-card-actions>
+        <v-card-actions><v-btn>Actualizar</v-btn> </v-card-actions>
       </v-card>
     </template>
   </div>
