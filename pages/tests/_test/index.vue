@@ -13,7 +13,7 @@
                 <Question
                   :id="question._id"
                   :enunciado="question.enunciado"
-                  :answers="question.answer_wrong"
+                  :answers="question.answers_wrong"
                   :correct="question.answers_correct"
                   :numero="i"
                   @selectAnswer="selectAnswer"
