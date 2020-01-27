@@ -1,66 +1,80 @@
 <template>
   <div>
-    <div>
-      <v-text-field
-        v-model="name"
-        label="Nombre"
-        validate-on-blur
-        append-icon="mdi-pencil"
-        :rules="[rules.required]"
-        @click:append="updateName"
-      >
-      </v-text-field>
-    </div>
-    <div>
-      <v-text-field
-        v-model="lastName"
-        label="Apellido"
-        append-icon="mdi-pencil"
-        :rules="[rules.required]"
-        @click:append="updateLastName"
-      />
-    </div>
-    <div>
-      <v-text-field
-        v-model="nickName"
-        label="Nombre de usuario"
-        validate-on-blur
-        append-icon="mdi-pencil"
-        :rules="[rules.required]"
-        @click:append="updateNickName"
-      >
-      </v-text-field>
-    </div>
-    <div>
-      <v-text-field
-        v-model="email"
-        label="Email"
-        append-icon="mdi-pencil"
-        :rules="[rules.required, rules.email]"
-        @click:append="updateEmail"
-      />
-    </div>
-    <div>
-      <v-text-field
-        v-model="phone"
-        label="Telefono"
-        append-icon="mdi-pencil"
-        :rules="[rules.required, rules.phone]"
-        @click:append="updatePhone"
-      />
-    </div>
-    <div>
-      <v-overflow-btn
-        id="selector"
-        v-model="seleccion"
-        class="my-2"
-        :items="dropdown_font"
-        append-icon="mdi-pencil"
-        label="Suscripcion"
-        @click:append="updateSuscription"
-      ></v-overflow-btn>
-    </div>
-    <v-btn @click="sendAll">Guardar</v-btn>
+    <template>
+      <v-card width="600px" class="mx-auto">
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="name"
+                  label="Nombre"
+                  validate-on-blur
+                  append-icon="mdi-pencil"
+                  :rules="[rules.required]"
+                  @click:append="updateName"
+                >
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="lastName"
+                  label="Apellido"
+                  append-icon="mdi-pencil"
+                  :rules="[rules.required]"
+                  @click:append="updateLastName"
+                />
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="nickName"
+                  label="Nombre de usuario"
+                  validate-on-blur
+                  append-icon="mdi-pencil"
+                  :rules="[rules.required]"
+                  @click:append="updateNickName"
+                >
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="phone"
+                  label="Telefono"
+                  append-icon="mdi-pencil"
+                  :rules="[rules.required, rules.phone]"
+                  @click:append="updatePhone"
+                />
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="email"
+                  label="Email"
+                  append-icon="mdi-pencil"
+                  :rules="[rules.required, rules.email]"
+                  @click:append="updateEmail"
+                />
+              </v-col>
+              <v-col cols="12">
+                <v-overflow-btn
+                  id="selector"
+                  v-model="seleccion"
+                  class="my-2"
+                  :items="dropdown_font"
+                  append-icon="mdi-pencil"
+                  label="Suscripcion"
+                  @click:append="updateSuscription"
+                ></v-overflow-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="sendAll">Guardar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </template>
   </div>
 </template>
 
@@ -133,35 +147,44 @@ export default {
         console.log('esta vacio')
       } else {
         this.updateName()
-        console.log('hola dentro')
+        this.name = ''
       }
       if (this.lastName.length === 0) {
         console.log('esta vacio')
       } else {
         await this.$store.dispatch('updateLastName', this.lastName)
+        this.lastName = ''
       }
       if (this.nickName.length === 0) {
         console.log('esta vacio')
       } else {
         await this.$store.dispatch('updateNickName', this.nickName)
+        this.nickName = ''
       }
       if (this.email.length === 0) {
         console.log('esta vacio')
       } else {
         await this.$store.dispatch('updateEmail', this.email)
+        this.email = ''
       }
       if (this.phone.length === 0) {
         console.log('esta vacio')
       } else {
         await this.$store.dispatch('updatePhone', this.phone)
+        this.phone = ''
       }
       if (this.seleccion.length === 0) {
         console.log('esta vacio')
       } else {
         await this.$store.dispatch('updateSuscription', this.seleccion)
+        this.seleccion = ''
       }
     }
   }
 }
 </script>
-<style></style>
+<style scoped>
+.v-card {
+  margin-top: 100px;
+}
+</style>
