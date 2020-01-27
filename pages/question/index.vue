@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <v-container>
+    <v-container>
       <h1>Enunciado</h1>
       <div class="box">
         <v-textarea v-model="enunciado" auto-grow solo></v-textarea>
@@ -39,7 +39,7 @@
       label="Dificultad"
     ></v-overflow-btn>
 
-    <v-btn @click="crearQuestion">pulsame</v-btn> -->
+    <v-btn @click="crearQuestion">pulsame</v-btn>
 
     <v-text-field v-model="f_categoria" label="Categoria"></v-text-field>
     <v-btn @click="filtrar">Filtrar</v-btn>

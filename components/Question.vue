@@ -78,7 +78,6 @@ export default {
     selectAnswer(answer, idx) {
       if (!this.answered) {
         this.colores.splice(idx, 1, answer === this.correct ? 'green' : 'red')
-        this.colores.splice(idx, 1, answer === this.correct ? 'green' : 'red')
         this.solucion.splice(
           idx,
           1,
