@@ -31,8 +31,8 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      email: '',
-      password: '',
+      email: 'admin@gmail.com',
+      password: '123456',
       showPassword: false,
       rules: {
         required: v => !!v || 'Item is required',
