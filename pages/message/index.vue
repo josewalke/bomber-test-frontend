@@ -9,6 +9,7 @@
           <tr>
             <th class="text-left">Pregunta</th>
             <th class="text-left">Respondido</th>
+            <th class="text-left">Mensaje Nuevo</th>
           </tr>
         </thead>
         <tbody>
@@ -23,6 +24,13 @@
             <td>
               <v-icon v-if="!item.respuesta_leida">mdi-check</v-icon>
               <v-icon v-else color="green">mdi-check-all</v-icon>
+            </td>
+            <td>
+              <span v-if="item.respuesta_leida && !item.verificada">
+                <v-icon color="green">
+                  mdi-flag
+                </v-icon>
+              </span>
             </td>
           </tr>
         </tbody>
