@@ -134,6 +134,12 @@ export const mutations = {
     state.tests = tests
   },
   saveMessage(state, mensajes) {
+    for (let i = 0; i < mensajes.length; i++) {
+      if (!mensajes[i].verificada) {
+        state.mensajes++
+      }
+    }
+    console.log('guardado')
     state.messages = mensajes
   },
   saveCurrentTest(state, test) {
@@ -151,7 +157,24 @@ export const mutations = {
     state.userId = ''
     state.phone = ''
     state.img_url = ''
+    state.nickName = ''
+    state.mensajes = ''
+    state.MensajesTotales = ''
+    state.aprobados = ''
+    state.suspendidos = ''
+    state.total = ''
+    state.suscription_type = ''
+    state.active = ''
+    state.tests = []
+    state.messages = []
+    state.currentTest = {}
+    state.question = {}
+    state.position = ''
+    state.updatePregunta = {}
     localStorage.clear()
+  },
+  clearMessage(state) {
+    state.mensajes = 0
   },
   saveUpdate(
     state,
@@ -403,6 +426,14 @@ export const actions = {
       if (!pregunta.error) {
         commit('saveUpdatePregunta', pregunta)
       }
+    }
+  },
+  async updateVerificada({ commit, state }, id) {
+    const response = await API.updateVerificada(id)
+    if (!response.error) {
+      commit('clearMessage')
+      const mensajes = await API.getAllMessageById(state.userId)
+      commit('saveMessage', mensajes)
     }
   }
 }

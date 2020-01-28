@@ -1,48 +1,85 @@
 <template>
   <div>
     <v-container>
-      <h1>Enunciado</h1>
-      <div class="box">
+      <div v-if="crear">
+        <h1>Enunciado</h1>
         <v-textarea v-model="enunciado" auto-grow solo></v-textarea>
+        <h1>Posibles respuestas</h1>
+        <v-textarea
+          v-model="opcion1"
+          auto-grow
+          solo
+          label="Opcion1"
+        ></v-textarea>
+        <v-textarea
+          v-model="opcion2"
+          auto-grow
+          solo
+          label="Opcion2"
+        ></v-textarea>
+        <v-textarea
+          v-model="opcion3"
+          auto-grow
+          solo
+          label="Opcion3"
+        ></v-textarea>
+        <h1>Respuesta correcta</h1>
+        <v-textarea
+          v-model="correcta"
+          auto-grow
+          solo
+          label="Correcta"
+        ></v-textarea>
+        <v-row>
+          <v-col cols="4">
+            <v-overflow-btn
+              v-model="seleccion3"
+              class="my-2"
+              :items="dificultad"
+              label="Dificultad"
+            ></v-overflow-btn>
+          </v-col>
+          <v-col cols="4">
+            <v-overflow-btn
+              v-model="seleccion2"
+              class="my-2"
+              :items="categoria"
+              label="Categoria"
+            ></v-overflow-btn>
+          </v-col>
+          <v-col cols="4">
+            <v-overflow-btn
+              v-if="seleccion2 === 'bomberil'"
+              v-model="seleccion"
+              class="my-2"
+              :items="nombre"
+              label="Tema"
+            ></v-overflow-btn>
+            <v-overflow-btn
+              v-if="seleccion2 === 'legislacion'"
+              v-model="seleccion4"
+              class="my-2"
+              :items="nombre2"
+              label="Tema"
+            ></v-overflow-btn>
+          </v-col>
+          <v-col cols="4">
+            <br />
+            <v-btn @click="crearQuestion">Crear</v-btn>
+          </v-col>
+        </v-row>
       </div>
+      <v-row>
+        <v-col cols="6">
+          <v-text-field v-model="f_categoria" label="Categoria"></v-text-field>
+        </v-col>
+        <v-col cols="6">
+          <br />
+          <v-btn @click="filtrar">Filtrar</v-btn>
+          <v-btn @click="change_crear">Crear Pregunta</v-btn>
+        </v-col>
+      </v-row>
     </v-container>
-    <h1>Posibles respuestas</h1>
-    <v-textarea v-model="opcion1" auto-grow solo label="Opcion1"></v-textarea>
-    <v-textarea v-model="opcion2" auto-grow solo label="Opcion2"></v-textarea>
-    <v-textarea v-model="opcion3" auto-grow solo label="Opcion3"></v-textarea>
-    <h1>Respuesta correcta</h1>
-    <v-textarea v-model="correcta" auto-grow solo label="Correcta"></v-textarea>
-    <v-overflow-btn
-      v-model="seleccion2"
-      class="my-2"
-      :items="categoria"
-      label="Categoria"
-    ></v-overflow-btn>
-    <v-overflow-btn
-      v-if="seleccion2 === 'bomberil'"
-      v-model="seleccion"
-      class="my-2"
-      :items="nombre"
-      label="Tema"
-    ></v-overflow-btn>
-    <v-overflow-btn
-      v-if="seleccion2 === 'legislacion'"
-      v-model="seleccion4"
-      class="my-2"
-      :items="nombre2"
-      label="Tema"
-    ></v-overflow-btn>
-    <v-overflow-btn
-      v-model="seleccion3"
-      class="my-2"
-      :items="dificultad"
-      label="Dificultad"
-    ></v-overflow-btn>
-
-    <v-btn @click="crearQuestion">pulsame</v-btn>
-
-    <v-text-field v-model="f_categoria" label="Categoria"></v-text-field>
-    <v-btn @click="filtrar">Filtrar</v-btn>
     <v-simple-table>
       <template v-slot:default>
         <thead>
@@ -140,7 +177,8 @@ export default {
       seleccion4: '',
       f_tema: '',
       f_categoria: '',
-      filtro: true
+      filtro: true,
+      crear: false
     }
   },
   methods: {
@@ -184,6 +222,9 @@ export default {
     },
     filtrar() {
       this.filtro = false
+    },
+    change_crear() {
+      this.crear = true
     }
   }
 }

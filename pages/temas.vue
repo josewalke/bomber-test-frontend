@@ -1,18 +1,27 @@
 <template>
   <div>
     <h1>Temario</h1>
-    <v-text-field
-      v-model="newTema"
-      label="Crear Nuevo Tema"
-      validate-on-blur
-      append-icon="mdi-pencil"
-    ></v-text-field>
-    <v-select
-      v-model="seleccion"
-      :items="items"
-      :label="'Categoria'"
-    ></v-select>
-    <v-btn @click="crearTema">Crear</v-btn>
+    <v-row>
+      <v-col cols="4">
+        <v-text-field
+          v-model="newTema"
+          label="Crear Nuevo Tema"
+          validate-on-blur
+          append-icon="mdi-pencil"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="4">
+        <v-select
+          v-model="seleccion"
+          :items="items"
+          :label="'Seleccionar Categoria'"
+        ></v-select>
+      </v-col>
+      <v-col cols="4">
+        <br />
+        <v-btn @click="crearTema">Crear</v-btn>
+      </v-col>
+    </v-row>
     <TemasList :items="temas"></TemasList>
   </div>
 </template>

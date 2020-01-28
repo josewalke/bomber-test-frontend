@@ -24,15 +24,6 @@
               <v-icon v-if="!item.respuesta_leida">mdi-check</v-icon>
               <v-icon v-else color="green">mdi-check-all</v-icon>
             </td>
-            <td>{{ item.fallos_num }}</td>
-            <td>
-              <span v-if="item.nota === 'Suspendido'" class="red--text">{{
-                item.nota
-              }}</span>
-              <span v-if="item.nota === 'Aprobado'" class="green--text">{{
-                item.nota
-              }}</span>
-            </td>
           </tr>
         </tbody>
       </template>
@@ -77,6 +68,9 @@ export default {
   },
   methods: {
     goToQuestion(question, idx) {
+      if (this.messages[idx].respuesta_leida) {
+        this.$store.dispatch('updateVerificada', this.messages[idx]._id)
+      }
       this.$store.dispatch('savePosition', idx)
       this.$router.push(`/message/${question}`)
     }
