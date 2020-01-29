@@ -20,42 +20,52 @@
     {{ updatePregunta.answers_correct }}
     <v-textarea v-model="correcta" auto-grow solo></v-textarea>
     <v-btn @click="updateCorrecta">Actualizar</v-btn>
-    <h1>Categoria</h1>
-    {{ updatePregunta.category }}
-    <v-overflow-btn
-      v-model="seleccion"
-      class="my-2"
-      :items="categoria"
-      label="Categoria"
-    ></v-overflow-btn>
-    <v-btn @click="updateCategoria">Actualizar</v-btn>
-    <h1>Dificultad</h1>
-    {{ updatePregunta.difficulty }}
-    <v-overflow-btn
-      v-model="seleccion2"
-      class="my-2"
-      :items="dificultad"
-      label="Dificultad"
-    ></v-overflow-btn>
-    <v-btn @click="updateDificultad">Actualizar</v-btn>
-    <h1>Tema</h1>
-    <p v-if="ver">{{ temas[posicion].name }}</p>
-    <p v-else>{{ seleccion3 }}</p>
-    <v-overflow-btn
-      v-if="seleccion === 'bomberil'"
-      v-model="seleccion3"
-      class="my-2"
-      :items="nombre"
-      label="Tema"
-    ></v-overflow-btn>
-    <v-overflow-btn
-      v-if="seleccion === 'legislacion'"
-      v-model="seleccion4"
-      class="my-2"
-      :items="nombre2"
-      label="Tema"
-    ></v-overflow-btn>
-    <v-btn @click="updateTema">Actualizar</v-btn>
+    <!-- ============================================ -->
+    <v-row>
+      <v-col cols="4">
+        <h1>Dificultad</h1>
+        <p>{{ updatePregunta.difficulty }}</p>
+        <v-overflow-btn
+          v-model="seleccion2"
+          class="my-2"
+          :items="dificultad"
+          label="Dificultad"
+        ></v-overflow-btn>
+        <v-btn @click="updateDificultad">Actualizar</v-btn>
+      </v-col>
+      <v-col cols="4">
+        <h1>Categoria</h1>
+        <p>{{ updatePregunta.category }}</p>
+        <v-overflow-btn
+          v-model="seleccion"
+          class="my-2"
+          :items="categoria"
+          label="Categoria"
+        ></v-overflow-btn>
+        <v-btn @click="updateCategoria">Actualizar</v-btn>
+      </v-col>
+      <v-col cols="4">
+        <h1>Tema</h1>
+        <p v-if="ver">{{ temas[posicion].name }}</p>
+        <p v-else>{{ seleccion3 }}</p>
+        <v-overflow-btn
+          v-if="seleccion === 'bomberil'"
+          v-model="seleccion3"
+          class="my-2"
+          :items="nombre"
+          label="Tema"
+        ></v-overflow-btn>
+        <v-overflow-btn
+          v-else-if="seleccion === 'legislacion'"
+          v-model="seleccion4"
+          class="my-2"
+          :items="nombre2"
+          label="Tema"
+        ></v-overflow-btn>
+        <v-overflow-btn v-else class="my-2" label="Tema"></v-overflow-btn>
+        <v-btn @click="updateTema">Actualizar</v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 

@@ -1,9 +1,18 @@
 <template>
   <div>
     <h1>Alumnos</h1>
-    <v-text-field v-model="f_nombre" label="Nombre"></v-text-field>
-    <v-text-field v-model="f_apellido" label="Apellido"></v-text-field>
-    <v-btn @click="filtrar">Filtrar</v-btn>
+    <v-row>
+      <v-col cols="4">
+        <v-text-field v-model="f_nombre" label="Nombre"></v-text-field>
+      </v-col>
+      <v-col cols="4">
+        <v-text-field v-model="f_apellido" label="Apellido"></v-text-field>
+      </v-col>
+      <v-col cols="4">
+        <br />
+        <v-btn @click="filtrar">Filtrar</v-btn>
+      </v-col>
+    </v-row>
     <v-simple-table>
       <template v-slot:default>
         <thead>

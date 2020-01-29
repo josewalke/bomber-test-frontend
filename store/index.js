@@ -134,6 +134,11 @@ export const mutations = {
     state.tests = tests
   },
   saveMessage(state, mensajes) {
+    for (let i = 0; i < mensajes.length; i++) {
+      if (!mensajes[i].verificada) {
+        state.mensajes++
+      }
+    }
     state.messages = mensajes
   },
   saveCurrentTest(state, test) {
@@ -151,7 +156,24 @@ export const mutations = {
     state.userId = ''
     state.phone = ''
     state.img_url = ''
+    state.nickName = ''
+    state.mensajes = ''
+    state.MensajesTotales = ''
+    state.aprobados = ''
+    state.suspendidos = ''
+    state.total = ''
+    state.suscription_type = ''
+    state.active = ''
+    state.tests = []
+    state.messages = []
+    state.currentTest = {}
+    state.question = {}
+    state.position = ''
+    state.updatePregunta = {}
     localStorage.clear()
+  },
+  clearMessage(state) {
+    state.mensajes = 0
   },
   saveUpdate(
     state,
@@ -195,6 +217,16 @@ export const mutations = {
   },
   prueba() {
     console.log('console de prueba')
+  },
+  evaluar(state) {
+    console.log(state.tests)
+    for (let i = 0; i < state.tests.length; i++) {
+      if (state.tests[i].nota === 'aprobado') {
+        state.aprobados++
+      } else {
+        state.suspendidos++
+      }
+    }
   }
 }
 
@@ -205,6 +237,7 @@ export const actions = {
       commit('saveToken', response)
       const tests = await API.getAllTest(state.userId)
       commit('saveTests', tests)
+      commit('evaluar')
       const mensajes = await API.getAllMessageById(state.userId)
       commit('saveMessage', mensajes)
     }
@@ -403,6 +436,14 @@ export const actions = {
       if (!pregunta.error) {
         commit('saveUpdatePregunta', pregunta)
       }
+    }
+  },
+  async updateVerificada({ commit, state }, id) {
+    const response = await API.updateVerificada(id)
+    if (!response.error) {
+      commit('clearMessage')
+      const mensajes = await API.getAllMessageById(state.userId)
+      commit('saveMessage', mensajes)
     }
   }
 }

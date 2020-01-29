@@ -193,5 +193,15 @@ export default {
     }
 
     return axios.put('users/' + change.id, body).then(response => response.data)
+  },
+  updateVerificada(id) {
+    const body = { verificada: true }
+
+    return axios.put(`messages/${id}`, body).then(response => response.data)
+  },
+  crearExamen(test) {
+    return axios.post('tests/exam', test).then(response => {
+      return response.data
+    })
   }
 }

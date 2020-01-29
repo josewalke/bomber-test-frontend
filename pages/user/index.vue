@@ -34,7 +34,7 @@
             {{ mensajes }}
             mensajes nuevos
           </v-card-title>
-          <v-card-subtitle> de {{ MensajesTotales }} mensajes </v-card-subtitle>
+          <v-card-subtitle> de {{ messages.length }} mensajes </v-card-subtitle>
         </v-card>
       </v-col>
       <v-col cols="5">
@@ -50,12 +50,12 @@
       <v-col cols="10" offset="1">
         <v-card color="green" class="mt-2">
           <v-card-subtitle class="white--text">
-            {{ aprobados }} tests aprobados de {{ total }}
+            {{ aprobados }} tests aprobados de {{ tests.length }}
           </v-card-subtitle>
         </v-card>
         <v-card color="error" class="mt-2">
           <v-card-subtitle class="white--text">
-            {{ suspendidos }} tests suspendidos de {{ total }}
+            {{ suspendidos }} tests suspendidos de {{ tests.length }}
           </v-card-subtitle>
         </v-card>
       </v-col>
@@ -81,7 +81,9 @@ export default {
       'suspendidos',
       'total',
       'suscription_type',
-      'active'
+      'active',
+      'messages',
+      'tests'
     ])
   }
 }
