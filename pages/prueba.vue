@@ -1,52 +1,93 @@
 <template>
-  <v-row>
-    <v-col cols="4">
-      <h1>Titulo1</h1>
-      <p>subtitulo</p>
-      <v-text-field v-model="prueba" label="Nombre"></v-text-field>
-      <v-btn>pulsame nene</v-btn>
-    </v-col>
-    <v-col cols="4">
-      <h1>Titulo2</h1>
-      <p>subtitulo</p>
-      <v-text-field label="Apellido"></v-text-field>
-      <v-btn>pulsame nene</v-btn>
-    </v-col>
-    <v-col cols="4">
-      <span v-if="prueba === 'a'">
-        <h1>Titulo3</h1>
-        <p>subtitulo</p>
-        <v-text-field label="Nombre"></v-text-field>
-        <v-btn>pulsame nene</v-btn>
-      </span>
-      <span v-else-if="prueba === 'b'">
-        <h1>Titulo4</h1>
-        <p>subtitulo</p>
-        <v-text-field label="Nombre"></v-text-field>
-        <v-btn>pulsame nene</v-btn>
-      </span>
-      <span v-else>
-        <h1>Titulo5</h1>
-        <p>subtitulo</p>
-        <v-select></v-select>
-        <v-btn>pulsame nene</v-btn>
-      </span>
-    </v-col>
-  </v-row>
+  <div>
+    <v-card>
+      <v-card-title>
+        Bomberil
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search_question"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+        v-model="select_question"
+        :search="search"
+        :headers="headers_question"
+        :items="bomberil"
+        :single-select="singleSelect"
+        item-key="enunciado"
+        show-select
+        class="elevation-1"
+      >
+      </v-data-table>
+      <v-card-title>
+        Legislacion
+        <v-spacer></v-spacer>
+      </v-card-title>
+      <v-data-table
+        v-model="select_question"
+        :search="search_question"
+        :headers="headers_question"
+        :items="legislacion"
+        :single-select="singleSelect"
+        item-key="enunciado"
+        show-select
+        class="elevation-1"
+      >
+      </v-data-table>
+    </v-card>
+  </div>
 </template>
 
 <script>
+import API from '~/services/api'
 export default {
+  async asyncData() {
+    const student = await API.getAllUsers()
+    const temas = await API.getAllTemas()
+    const preguntas = await API.getAllQuestions()
+    const bomberil = []
+    const legislacion = []
+
+    for (let i = 0; i < preguntas.length; i++) {
+      for (let x = 0; x < temas.length; x++) {
+        if (preguntas[i].tema_id === temas[x]._id) {
+          preguntas[i].tema_id = temas[x].name
+          if (preguntas[i].category === 'bomberil') {
+            bomberil.push(preguntas[i])
+          } else {
+            legislacion.push(preguntas[i])
+          }
+        }
+      }
+    }
+
+    return { student, temas, bomberil, legislacion }
+  },
   data() {
     return {
-      prueba: ''
+      search_question: '',
+      singleSelect: false,
+      selected: [],
+      headers_question: [
+        {
+          text: 'Enunciado',
+          align: 'left',
+          sortable: false,
+          value: 'enunciado'
+        },
+        { text: 'Tema', value: 'tema_id' }
+      ]
+    }
+  },
+  methods: {
+    prueba() {
+      console.log('funciona')
     }
   }
 }
 </script>
 
-<style scoped>
-.v-card {
-  margin-top: 100px;
-}
-</style>
+<style scoped></style>

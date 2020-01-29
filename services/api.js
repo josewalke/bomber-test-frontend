@@ -198,5 +198,10 @@ export default {
     const body = { verificada: true }
 
     return axios.put(`messages/${id}`, body).then(response => response.data)
+  },
+  crearExamen(test) {
+    return axios.post('tests/exam', test).then(response => {
+      return response.data
+    })
   }
 }
