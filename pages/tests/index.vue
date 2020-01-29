@@ -54,10 +54,10 @@
               <td>{{ item.aciertos_num }}</td>
               <td>{{ item.fallos_num }}</td>
               <td>
-                <span v-if="item.nota === 'Suspendido'" class="red--text">{{
+                <span v-if="item.nota === 'suspendido'" class="red--text">{{
                   item.nota
                 }}</span>
-                <span v-if="item.nota === 'Aprobado'" class="green--text">{{
+                <span v-if="item.nota === 'aprobado'" class="green--text">{{
                   item.nota
                 }}</span>
               </td>

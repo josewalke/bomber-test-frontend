@@ -139,7 +139,6 @@ export const mutations = {
         state.mensajes++
       }
     }
-    console.log('guardado')
     state.messages = mensajes
   },
   saveCurrentTest(state, test) {
@@ -218,6 +217,16 @@ export const mutations = {
   },
   prueba() {
     console.log('console de prueba')
+  },
+  evaluar(state) {
+    console.log(state.tests)
+    for (let i = 0; i < state.tests.length; i++) {
+      if (state.tests[i].nota === 'aprobado') {
+        state.aprobados++
+      } else {
+        state.suspendidos++
+      }
+    }
   }
 }
 
@@ -228,6 +237,7 @@ export const actions = {
       commit('saveToken', response)
       const tests = await API.getAllTest(state.userId)
       commit('saveTests', tests)
+      commit('evaluar')
       const mensajes = await API.getAllMessageById(state.userId)
       commit('saveMessage', mensajes)
     }

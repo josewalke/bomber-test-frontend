@@ -31,7 +31,8 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      email: 'admin@gmail.com',
+      // email: 'admin@gmail.com',
+      email: 'jose@gmail.com',
       password: '123456',
       showPassword: false,
       rules: {
