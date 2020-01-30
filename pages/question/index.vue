@@ -90,29 +90,29 @@
           </tr>
         </thead>
         <tbody v-if="filtro">
-          <tr v-for="(item, idx) in preguntas" :key="idx">
-            <td
-              class="text-truncate"
-              style="max-width: 150px;"
-              @click="goToQuestion(item._id, item)"
-            >
+          <tr
+            v-for="(item, idx) in preguntas"
+            :key="idx"
+            @click="goToQuestion(item._id, item)"
+          >
+            <td class="text-truncate" style="max-width: 150px;">
               <p>{{ item.enunciado }}</p>
             </td>
 
-            <td
-              class="text-truncate"
-              style="max-width: 150px;"
-              @click="goToQuestion(item._id, item)"
-            >
+            <td class="text-truncate" style="max-width: 150px;">
               <p v-for="(tema, index) in temas" :key="index">
                 <span v-if="tema._id === item.tema_id">{{ tema.name }}</span>
               </p>
             </td>
-            <td @click="goToQuestion(item._id, item)">{{ item.category }}</td>
+            <td>{{ item.category }}</td>
           </tr>
         </tbody>
         <tbody v-else>
-          <tr v-for="(item, idx) in preguntas" :key="idx">
+          <tr
+            v-for="(item, idx) in preguntas"
+            :key="idx"
+            @click="goToQuestion(item._id, item)"
+          >
             <td
               v-if="item.category === f_categoria"
               class="text-truncate"
@@ -124,7 +124,6 @@
               v-if="item.category === f_categoria"
               class="text-truncate"
               style="max-width: 150px;"
-              @click="goToQuestion(item._id, item)"
             >
               <p v-for="(tema, index) in temas" :key="index">
                 <span v-if="tema._id === item.tema_id">{{ tema.name }}</span>
