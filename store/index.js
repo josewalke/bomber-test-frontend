@@ -220,8 +220,6 @@ export const actions = {
     return response
   },
   async createTest({ commit, state }) {
-    console.log('random')
-
     const newTest = await API.generateTest(state.token)
     commit('saveCurrentTest', newTest)
     const tests = await API.getAllTest(state.userId)
@@ -232,6 +230,16 @@ export const actions = {
     commit('saveCurrentTest', newTest)
     const tests = await API.getAllTest(state.userId)
     commit('saveTests', tests)
+  },
+
+  async updateTest({ state }, testData) {
+    let data = {
+      testId: state.currentTest._id,
+      correct: testData.correct,
+      incorrect: testData.incorrect
+    }
+    API.updateTest(state.token, data)
+    // const updatedTest = await API.updateTest(state.token, data)
   },
   async verRespuesta({ state }, responseBody) {
     const respuesta =
@@ -246,7 +254,7 @@ export const actions = {
         return console.log(false)
       }
     }
-    // console.log(responseBody, respuesta, enunciado, correcta)
+    console.log(responseBody, respuesta, enunciado, correcta)
   },
   async updateName({ commit, state }, newName) {
     console.log(state.userId)

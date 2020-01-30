@@ -13,9 +13,10 @@
                 <Question
                   :id="question._id"
                   :enunciado="question.enunciado"
-                  :answers="question.answers_wrong"
-                  :correct="question.answers_correct"
+                  :answers="question.answers"
+                  :tema="question.tema_id"
                   :numero="i"
+                  :temas="temas"
                   @selectAnswer="selectAnswer"
                 />
               </v-row>
@@ -39,6 +40,10 @@ export default {
   async fetch({ params, store }) {
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
+  },
+  async asyncData() {
+    const temas = await API.getAllTemasNames()
+    return { temas }
   },
   methods: {
     async selectAnswer(number) {
