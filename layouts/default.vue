@@ -61,6 +61,11 @@ export default {
         { title: 'Perfil', icon: 'mdi-account', page: '/user' },
         { title: 'Test', icon: 'mdi-file-document-box', page: '/tests' },
         { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
+        {
+          title: 'Clasificatoria',
+          icon: 'mdi-playlist-star',
+          page: '/clasificacion'
+        },
         { title: 'Configuracion', icon: 'mdi-settings', page: '/settings' }
       ],
       admin: [
@@ -68,7 +73,7 @@ export default {
         { title: 'Temas', icon: 'mdi-file-document-box', page: '/temas' },
         { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
         { title: 'Preguntas', icon: 'mdi-playlist-edit', page: '/question' },
-        { title: 'Test', icon: 'mdi-playlist-edit', page: '/examen' }
+        { title: 'Test', icon: 'mdi-ballot', page: '/examen' }
       ]
     }
   },

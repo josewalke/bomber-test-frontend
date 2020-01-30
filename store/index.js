@@ -235,7 +235,7 @@ export const actions = {
     const response = await API.login(userData)
     if (!response.error) {
       commit('saveToken', response)
-      const tests = await API.getAllTest(state.userId)
+      const tests = await API.getAllTestById(state.userId)
       commit('saveTests', tests)
       commit('evaluar')
       const mensajes = await API.getAllMessageById(state.userId)
@@ -247,7 +247,7 @@ export const actions = {
     const response = await API.signup(userData)
     if (!response.error) {
       commit('saveToken', response)
-      const tests = await API.getAllTest(state.userId)
+      const tests = await API.getAllTestById(state.userId)
       commit('saveTests', tests)
     }
     return response
@@ -257,13 +257,13 @@ export const actions = {
 
     const newTest = await API.generateTest(state.token)
     commit('saveCurrentTest', newTest)
-    const tests = await API.getAllTest(state.userId)
+    const tests = await API.getAllTestById(state.userId)
     commit('saveTests', tests)
   },
   async createTestConfig({ commit, state }, testData) {
     const newTest = await API.generateConfigTest(state.token, testData)
     commit('saveCurrentTest', newTest)
-    const tests = await API.getAllTest(state.userId)
+    const tests = await API.getAllTestById(state.userId)
     commit('saveTests', tests)
   },
   async verRespuesta({ state }, responseBody) {
