@@ -55,14 +55,6 @@ export default {
     }
 
     return { clasificacion }
-  },
-  data() {
-    return {}
-  },
-  methods: {
-    prueba() {
-      console.log('funciona')
-    }
   }
 }
 </script>

@@ -7,6 +7,9 @@ export default {
   getAllTemas() {
     return axios.get('temario').then(response => response.data)
   },
+  getAllTest() {
+    return axios.get('tests/').then(response => response.data)
+  },
   getUserById(prueba) {
     return axios.get('users/' + prueba).then(response => response.data)
   },
@@ -28,7 +31,7 @@ export default {
         return response.data
       })
   },
-  getAllTest(userId) {
+  getAllTestById(userId) {
     return axios.get('tests/user/' + userId).then(response => response.data)
   },
   getAllMessageById(userId) {
