@@ -31,8 +31,18 @@ export default {
         return response.data
       })
   },
-  getAllTestById(userId) {
-    return axios.get('tests/user/' + userId).then(response => response.data)
+  updateTest(token, data) {
+    console.log('UpDateData')
+    let body = {
+      aciertos: data.correct[0],
+      fallos: data.incorrect
+    }
+    console.log('body')
+    console.log(body)
+    console.log('axios')
+    return axios
+      .put('tests/' + data.testId, body, { headers: { token } })
+      .then(response => console.log(response))
   },
   getAllMessageById(userId) {
     return axios.get('messages/' + userId).then(response => response.data)
@@ -73,6 +83,16 @@ export default {
   updateLastName(data) {
     let body = {
       lastName: data.newLastName
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
+  },
+  updatePhoto(data) {
+    console.log('api')
+    console.log(data.newPhoto)
+    let body = {
+      img_url: data.newPhoto
     }
     return axios
       .put('users/' + data.userId, body)

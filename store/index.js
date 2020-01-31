@@ -253,8 +253,6 @@ export const actions = {
     return response
   },
   async createTest({ commit, state }) {
-    console.log('random')
-
     const newTest = await API.generateTest(state.token)
     commit('saveCurrentTest', newTest)
     const tests = await API.getAllTestById(state.userId)
@@ -265,6 +263,16 @@ export const actions = {
     commit('saveCurrentTest', newTest)
     const tests = await API.getAllTestById(state.userId)
     commit('saveTests', tests)
+  },
+
+  async updateTest({ state }, testData) {
+    let data = {
+      testId: state.currentTest._id,
+      correct: testData.correct,
+      incorrect: testData.incorrect
+    }
+    API.updateTest(state.token, data)
+    // const updatedTest = await API.updateTest(state.token, data)
   },
   async verRespuesta({ state }, responseBody) {
     const respuesta =
@@ -279,7 +287,7 @@ export const actions = {
         return console.log(false)
       }
     }
-    // console.log(responseBody, respuesta, enunciado, correcta)
+    console.log(responseBody, respuesta, enunciado, correcta)
   },
   async updateName({ commit, state }, newName) {
     console.log(state.userId)
@@ -305,6 +313,24 @@ export const actions = {
     }
 
     const response = await API.updateLastName(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+      }
+    }
+  },
+  async updatePhoto({ commit, state }, newPhoto) {
+    console.log(state.userId)
+    console.log('index aqui')
+    console.log(newPhoto)
+    let data = {
+      userId: state.userId,
+      newPhoto: newPhoto
+    }
+
+    const response = await API.updatePhoto(data)
 
     if (!response.error) {
       const response2 = await API.getUserById(state.userId)

@@ -5,6 +5,8 @@
         <h2>{{ $store.state.currentTest.no_contestadas.length }}</h2>
         <h2>{{ $store.state.currentTest.aciertos }}</h2>
         <h2>{{ $store.state.currentTest.fallos }}</h2>
+        <h1>temas</h1>
+        <h2>{{ temas }}</h2>
       </div>
       <v-spacer />
       <h2>
@@ -17,6 +19,7 @@
     <v-row>
       <v-col>
         <h1>{{ enunciado }}</h1>
+        <h4>{{ findTemaName }}</h4>
         <h2>{{ id }}</h2>
       </v-col>
     </v-row>
@@ -29,7 +32,8 @@
           :class="solucion[idx]"
           @click="selectAnswer(answer, idx)"
         >
-          <h3>{{ answer }}</h3>
+          <h3>{{ answer.respuesta }}</h3>
+          <h3>{{ id }}</h3>
         </v-card>
       </v-col>
     </v-row>
@@ -64,6 +68,18 @@ export default {
       default: () => {
         return 0
       }
+    },
+    tema: {
+      type: String,
+      default: () => {
+        return []
+      }
+    },
+    temas: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   data() {
@@ -73,24 +89,58 @@ export default {
       solucion: ['none', 'none', 'none', 'none']
     }
   },
+  computed: {
+    findTemaName() {
+      var temaName = this.temas.filter(elem => elem.id == this.tema)
+      return temaName[0].name
+    }
+  },
 
   methods: {
     selectAnswer(answer, idx) {
+      console.log(answer)
       if (!this.answered) {
-        this.colores.splice(idx, 1, answer === this.correct ? 'green' : 'red')
+        console.log('AQUI')
+        console.log(answer.correcta)
+        this.colores.splice(idx, 1, answer.correcta === true ? 'green' : 'red')
         this.solucion.splice(
           idx,
           1,
-          answer === this.correct ? 'correct' : 'error'
+          answer.correcta === true ? 'correct' : 'error'
         )
         this.answered = true
       }
+      this.testUpdate(answer)
+    },
+    async testUpdate(answer) {
+      console.log('this is answer')
+      console.log(answer)
+      let goodAnswer = []
+      let badAnswer = []
+      let questionId = this.id
+      answer.correcta === true
+        ? (goodAnswer = questionId)
+        : (badAnswer = [questionId, answer])
+      console.log(goodAnswer)
+      console.log(badAnswer)
+      const test = {
+        correct: goodAnswer,
+        incorrect: badAnswer
+      }
+      await this.$store.dispatch('updateTest', test)
+      this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
+      console.log(test)
     }
   }
 }
 </script>
 
 <style scoped>
+h4,
+h5,
+h6 {
+  color: red;
+}
 .enunciado {
   margin: 150px auto;
 }

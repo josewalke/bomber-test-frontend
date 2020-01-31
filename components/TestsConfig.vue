@@ -60,7 +60,7 @@ export default {
     temas: {
       type: Array,
       default: () => {
-        return ['vacio', 'caca']
+        return []
       }
     }
   },
@@ -93,13 +93,6 @@ export default {
   },
 
   methods: {
-    // selectedCheck() {
-    //   if (this.selected.length > 5) {
-    //     this.dialog = true
-    //   } else {
-    //     this.dialog = false
-    //   }
-    // },
     correctionOn() {
       if (this.correctorSwitch === true) {
         this.switchStatus = 'activada'
@@ -108,14 +101,12 @@ export default {
       }
     },
     async testGeneration() {
-      console.log('hello hello')
       const test = {
         name: this.testName,
         number: this.numSelected,
         temas: this.selected,
         correction: this.correctorSwitch
       }
-      console.log(test)
       await this.$store.dispatch('createTestConfig', test)
       this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
     }
