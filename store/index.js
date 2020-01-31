@@ -288,6 +288,24 @@ export const actions = {
       }
     }
   },
+  async updatePhoto({ commit, state }, newPhoto) {
+    console.log(state.userId)
+    console.log('index aqui')
+    console.log(newPhoto)
+    let data = {
+      userId: state.userId,
+      newPhoto: newPhoto
+    }
+
+    const response = await API.updatePhoto(data)
+
+    if (!response.error) {
+      const response2 = await API.getUserById(state.userId)
+      if (!response2.error) {
+        commit('saveUpdate', response2)
+      }
+    }
+  },
   async updateNickName({ commit, state }, newNickName) {
     console.log(state.userId)
     let data = {

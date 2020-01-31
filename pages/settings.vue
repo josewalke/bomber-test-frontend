@@ -26,6 +26,17 @@
                 />
               </v-col>
               <v-col cols="12" md="6">
+                <!-- <v-text-field
+                  v-model="photo"
+                  label="Photo"
+                  validate-on-blur
+                  append-icon="mdi-pencil"
+                  :rules="[rules.required]"
+                  @click:append="updatePhoto"
+                >
+                </v-text-field> -->
+              </v-col>
+              <v-col cols="12" md="6">
                 <v-text-field
                   v-model="nickName"
                   label="Nombre de usuario"
@@ -71,6 +82,7 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
+          <v-btn @click="uploadPhoto">Photo</v-btn>
           <v-btn @click="sendAll">Guardar</v-btn>
         </v-card-actions>
       </v-card>
@@ -87,6 +99,7 @@ export default {
       lastName: '',
       email: '',
       phone: '',
+      photo: '',
       rules: {
         required: v => !!v || 'Campo Obligatorio',
         email: value => {
@@ -112,6 +125,14 @@ export default {
         console.log('esta vacio')
       } else {
         await this.$store.dispatch('updateLastName', this.lastName)
+      }
+    },
+    async updatePhoto() {
+      if (this.photo.length === 0) {
+        console.log('esta vacio')
+      } else {
+        console.log(this.photo.length)
+        await this.$store.dispatch('updatePhoto', this.photo)
       }
     },
     async updateNickName() {
@@ -155,6 +176,12 @@ export default {
         await this.$store.dispatch('updateLastName', this.lastName)
         this.lastName = ''
       }
+      if (this.photo.length === 0) {
+        console.log('esta vacio')
+      } else {
+        await this.$store.dispatch('updatePhoto', this.photo)
+        this.photo = ''
+      }
       if (this.nickName.length === 0) {
         console.log('esta vacio')
       } else {
@@ -179,6 +206,40 @@ export default {
         await this.$store.dispatch('updateSuscription', this.seleccion)
         this.seleccion = ''
       }
+    },
+    photoUploader() {
+      // eslint-disable-next-line no-undef
+      const newWidget = cloudinary.createUploadWidget(
+        {
+          cloudName: 'dea2xlykc',
+          uploadPreset: 'profileAvatar',
+          multiple: false,
+          maxFiles: 1,
+          cropping: true,
+          croppingAspectRatio: 1,
+          croppingCordinateMode: 'face',
+          clientAllowedFormats: ['png', 'gif', 'jpeg']
+        },
+        (error, result) => {
+          if (!error && result && result.event === 'success') {
+            const newUrl = result.info.url
+            console.log('aqui')
+            console.log(newUrl)
+            this.photo = newUrl
+            console.log(this.photo)
+          }
+        }
+      )
+      return newWidget
+    },
+    uploadPhoto() {
+      const widget = this.photoUploader()
+      widget.open()
+    }
+  },
+  head() {
+    return {
+      script: [{ src: 'https://widget.cloudinary.com/v2.0/global/all.js' }]
     }
   }
 }

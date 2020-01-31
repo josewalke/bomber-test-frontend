@@ -88,6 +88,16 @@ export default {
       .put('users/' + data.userId, body)
       .then(response => response.data)
   },
+  updatePhoto(data) {
+    console.log('api')
+    console.log(data.newPhoto)
+    let body = {
+      img_url: data.newPhoto
+    }
+    return axios
+      .put('users/' + data.userId, body)
+      .then(response => response.data)
+  },
   updateNickName(data) {
     let body = {
       nickName: data.newNickName
