@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TestsConfig :temas="tema" />
+    <TestsConfig :temas="temas" />
   </div>
 </template>
 
@@ -12,8 +12,8 @@ export default {
     TestsConfig
   },
   async asyncData() {
-    const tema = await API.getAllTemasNames()
-    return { tema }
+    const temas = await API.getAllTemasNames()
+    return { temas }
   }
 }
 </script>
