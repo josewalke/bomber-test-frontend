@@ -221,7 +221,6 @@ export const mutations = {
     console.log('console de prueba')
   },
   evaluar(state) {
-    console.log(state.tests)
     for (let i = 0; i < state.tests.length; i++) {
       if (state.tests[i].nota === 'aprobado') {
         state.aprobados++
