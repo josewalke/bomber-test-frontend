@@ -135,8 +135,10 @@ export const mutations = {
   },
   saveMessage(state, mensajes) {
     for (let i = 0; i < mensajes.length; i++) {
-      if (!mensajes[i].verificada) {
-        state.mensajes++
+      if (mensajes[i].respuesta_leida) {
+        if (!mensajes[i].verificada) {
+          state.mensajes++
+        }
       }
     }
     state.messages = mensajes
