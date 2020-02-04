@@ -206,5 +206,10 @@ export default {
     return axios.post('tests/exam', test).then(response => {
       return response.data
     })
+  },
+  deleteDesafio() {
+    return axios.delete('tests/desafio').then(response => {
+      return response.data
+    })
   }
 }

@@ -228,6 +228,21 @@ export const mutations = {
         state.suspendidos++
       }
     }
+  },
+  deleteDesafio() {
+    var f = new Date()
+    var diasSemana = new Array(
+      'Domingo',
+      'Lunes',
+      'Martes',
+      'Miércoles',
+      'Jueves',
+      'Viernes',
+      'Sábado'
+    )
+    if (diasSemana[f.getDay()] === 'Martes') {
+      API.deleteDesafio()
+    }
   }
 }
 
@@ -236,6 +251,7 @@ export const actions = {
     const response = await API.login(userData)
     if (!response.error) {
       commit('saveToken', response)
+      commit('deleteDesafio')
       const tests = await API.getAllTestById(state.userId)
       commit('saveTests', tests)
       commit('evaluar')

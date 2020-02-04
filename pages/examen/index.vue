@@ -19,6 +19,13 @@
           v-model="correctorSwitch"
           :label="`Corrección instantánea ${switchStatus}`"
           correction-on-
+          color="primary"
+        ></v-switch>
+        <v-switch
+          v-model="desafio"
+          label="Desafio de la semana"
+          correction-on-
+          color="primary"
         ></v-switch>
       </v-form>
       <v-card fixd flat>
@@ -149,7 +156,9 @@ export default {
           value: 'enunciado'
         },
         { text: 'Tema', value: 'tema_id' }
-      ]
+      ],
+      // desafio de la semana
+      desafio: false
     }
   },
   methods: {
@@ -161,10 +170,6 @@ export default {
       }
     },
     crearExamen() {
-      // console.log(this.testName)
-      // console.log(this.correctorSwitch)
-      // console.log(this.select_student)
-      // console.log(this.select_question)
       const id_questions = []
       const now = new Date()
       let date =
@@ -192,7 +197,8 @@ export default {
           fallos: [],
           fallos_num: 0,
           nota: 0,
-          mostrar_solucion: this.correctorSwitch
+          mostrar_solucion: this.correctorSwitch,
+          desafio: this.desafio
         }
         API.crearExamen(test)
       }

@@ -43,17 +43,57 @@
               :key="item._id"
               @click="goToTest(item._id)"
             >
-              <td>{{ item.title }}</td>
-              <td>
+              <td v-if="!item.desafio">{{ item.title }}</td>
+              <td v-if="!item.desafio">
                 {{
                   item.no_contestadas.length -
                     item.aciertos_num -
                     item.fallos_num
                 }}
               </td>
-              <td>{{ item.aciertos_num }}</td>
-              <td>{{ item.fallos_num }}</td>
-              <td>
+              <td v-if="!item.desafio">{{ item.aciertos_num }}</td>
+              <td v-if="!item.desafio">{{ item.fallos_num }}</td>
+              <td v-if="!item.desafio">
+                <span v-if="item.nota === 'suspendido'" class="red--text">{{
+                  item.nota
+                }}</span>
+                <span v-if="item.nota === 'aprobado'" class="green--text">{{
+                  item.nota
+                }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+      <h1>Desafio de la semana</h1>
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">Titulo</th>
+              <th class="text-left">Preguntas</th>
+              <th class="text-left">Aciertos</th>
+              <th class="text-left">Fallos</th>
+              <th class="text-left">Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="item in tests"
+              :key="item._id"
+              @click="goToTest(item._id)"
+            >
+              <td v-if="item.desafio">{{ item.title }}</td>
+              <td v-if="item.desafio">
+                {{
+                  item.no_contestadas.length -
+                    item.aciertos_num -
+                    item.fallos_num
+                }}
+              </td>
+              <td v-if="item.desafio">{{ item.aciertos_num }}</td>
+              <td v-if="item.desafio">{{ item.fallos_num }}</td>
+              <td v-if="item.desafio">
                 <span v-if="item.nota === 'suspendido'" class="red--text">{{
                   item.nota
                 }}</span>
