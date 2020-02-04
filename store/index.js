@@ -240,7 +240,7 @@ export const mutations = {
       'Viernes',
       'Sábado'
     )
-    if (diasSemana[f.getDay()] === 'Martes') {
+    if (diasSemana[f.getDay()] === 'Domingo') {
       API.deleteDesafio()
     }
   }
