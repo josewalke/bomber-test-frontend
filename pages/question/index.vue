@@ -5,31 +5,57 @@
         <h1>Enunciado</h1>
         <v-textarea v-model="enunciado" auto-grow solo></v-textarea>
         <h1>Posibles respuestas</h1>
+        <v-checkbox
+          v-model="checkbox1"
+          label="Respuesta correcta"
+          color="primary"
+        ></v-checkbox>
         <v-textarea
           v-model="opcion1"
           auto-grow
           solo
           label="Opcion1"
         ></v-textarea>
+        <v-checkbox
+          v-model="checkbox2"
+          label="Respuesta correcta"
+          color="primary"
+        ></v-checkbox>
         <v-textarea
           v-model="opcion2"
           auto-grow
           solo
           label="Opcion2"
         ></v-textarea>
+        <v-checkbox
+          v-model="checkbox3"
+          label="Respuesta correcta"
+          color="primary"
+        ></v-checkbox>
         <v-textarea
           v-model="opcion3"
           auto-grow
           solo
           label="Opcion3"
         ></v-textarea>
-        <h1>Respuesta correcta</h1>
+        <v-checkbox
+          v-model="checkbox4"
+          label="Respuesta correcta"
+          color="primary"
+        ></v-checkbox>
+        <v-textarea
+          v-model="opcion4"
+          auto-grow
+          solo
+          label="Opcion4"
+        ></v-textarea>
+        <!-- <h1>Respuesta correcta</h1>
         <v-textarea
           v-model="correcta"
           auto-grow
           solo
           label="Correcta"
-        ></v-textarea>
+        ></v-textarea> -->
         <v-row>
           <v-col cols="4">
             <v-overflow-btn
@@ -167,6 +193,11 @@ export default {
       opcion1: '',
       opcion2: '',
       opcion3: '',
+      opcion4: '',
+      checkbox1: false,
+      checkbox2: false,
+      checkbox3: false,
+      checkbox4: false,
       correcta: '',
       seleccion: '',
       categoria: ['bomberil', 'legislacion'],
@@ -182,39 +213,67 @@ export default {
   },
   methods: {
     crearQuestion() {
-      if (this.seleccion > 0) {
+      if (this.seleccion.length > 0) {
         const newQuestion = {
           enunciado: this.enunciado,
-          answers_wrong: [
-            this.opcion1,
-            this.opcion2,
-            this.opcion3,
-            this.correcta
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
           ],
-          answers_correct: this.correcta,
           tema_id: this.id[this.nombre.indexOf(this.seleccion)],
           category: this.seleccion2,
           difficulty: this.seleccion3
         }
+        console.log(newQuestion)
         API.crearQuestion(newQuestion)
-        location.reload()
-      } else {
-        const newQuestion = {
-          enunciado: this.enunciado,
-          answers_wrong: [
-            this.opcion1,
-            this.opcion2,
-            this.opcion3,
-            this.correcta
-          ],
-          answers_correct: this.correcta,
-          tema_id: this.id2[this.nombre2.indexOf(this.seleccion4)],
-          category: this.seleccion2,
-          difficulty: this.seleccion3
-        }
-        API.crearQuestion(newQuestion)
-        location.reload()
       }
+      // if (this.seleccion > 0) {
+      //   const newQuestion = {
+      //     enunciado: this.enunciado,
+      //     answers_wrong: [
+      //       this.opcion1,
+      //       this.opcion2,
+      //       this.opcion3,
+      //       this.correcta
+      //     ],
+      //     answers_correct: this.correcta,
+      //     tema_id: this.id[this.nombre.indexOf(this.seleccion)],
+      //     category: this.seleccion2,
+      //     difficulty: this.seleccion3
+      //   }
+      //   API.crearQuestion(newQuestion)
+      //   location.reload()
+      // } else {
+      //   const newQuestion = {
+      //     enunciado: this.enunciado,
+      //     answers_wrong: [
+      //       this.opcion1,
+      //       this.opcion2,
+      //       this.opcion3,
+      //       this.correcta
+      //     ],
+      //     answers_correct: this.correcta,
+      //     tema_id: this.id2[this.nombre2.indexOf(this.seleccion4)],
+      //     category: this.seleccion2,
+      //     difficulty: this.seleccion3
+      //   }
+      //   API.crearQuestion(newQuestion)
+      //   location.reload()
+      // }
     },
     goToQuestion(question) {
       this.$router.push(`/question/${question}`)
