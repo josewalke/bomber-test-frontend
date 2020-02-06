@@ -140,11 +140,11 @@ export default {
       .then(response => response.data)
   },
   updateOpcion(newOpcion) {
-    // console.log(newEnunciado)
+    // console.log(newOpcion)
     const body = {
-      answers_wrong: newOpcion.answers_wrong
+      answers: newOpcion.answers
     }
-
+    console.log(body)
     return axios
       .put('questions/' + newOpcion.id, body)
       .then(response => response.data)
