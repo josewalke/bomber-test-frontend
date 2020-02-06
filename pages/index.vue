@@ -79,7 +79,37 @@
             <li>200 Preguntas</li>
             <li>5 Consultas /mes</li>
             <li>1 Clase Teórica /mes</li>
-            <li class="grey"><a href="#" class="button">Registrate</a></li>
+            <li class="grey">
+              <v-dialog max-width="500">
+                <template v-slot:activator="{ on }">
+                  <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                </template>
+                <v-card>
+                  <v-row align="center" justify="center">
+                    <v-col cols="12" md="6">
+                      <v-tabs v-model="tab">
+                        <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                        <v-tab key="2" :href="`#tab-2`">Login</v-tab>
+                        <v-tab-item key="1" value="tab-1">
+                          <v-row class="py-2">
+                            <v-col cols="12">
+                              <Signup />
+                            </v-col>
+                          </v-row>
+                        </v-tab-item>
+                        <v-tab-item key="2" value="tab-2">
+                          <v-row class="py-2">
+                            <v-col>
+                              <Login />
+                            </v-col>
+                          </v-row>
+                        </v-tab-item>
+                      </v-tabs>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-dialog>
+            </li>
           </ul>
         </div>
         <div class="columns">
@@ -90,7 +120,37 @@
             <li>1000 Preguntas</li>
             <li>20 Consultas /mes</li>
             <li>4 Clases Teórica /mes</li>
-            <li class="grey"><a href="#" class="button">Registrate</a></li>
+            <li class="grey">
+              <v-dialog max-width="500">
+                <template v-slot:activator="{ on }">
+                  <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                </template>
+                <v-card>
+                  <v-row align="center" justify="center">
+                    <v-col cols="12" md="6">
+                      <v-tabs v-model="tab">
+                        <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                        <v-tab key="2" :href="`#tab-2`">Login</v-tab>
+                        <v-tab-item key="1" value="tab-1">
+                          <v-row class="py-2">
+                            <v-col cols="12">
+                              <Signup />
+                            </v-col>
+                          </v-row>
+                        </v-tab-item>
+                        <v-tab-item key="2" value="tab-2">
+                          <v-row class="py-2">
+                            <v-col>
+                              <Login />
+                            </v-col>
+                          </v-row>
+                        </v-tab-item>
+                      </v-tabs>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-dialog>
+            </li>
           </ul>
         </div>
         <div class="columns">
@@ -101,7 +161,37 @@
             <li>2000+ Preguntas</li>
             <li>Consultas ilimitadas</li>
             <li>Clases Teóricas ilimitadas</li>
-            <li class="grey"><a href="#" class="button">Registrate</a></li>
+            <li class="grey">
+              <v-dialog max-width="500">
+                <template v-slot:activator="{ on }">
+                  <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                </template>
+                <v-card>
+                  <v-row align="center" justify="center">
+                    <v-col cols="12" md="6">
+                      <v-tabs v-model="tab">
+                        <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                        <v-tab key="2" :href="`#tab-2`">Login</v-tab>
+                        <v-tab-item key="1" value="tab-1">
+                          <v-row class="py-2">
+                            <v-col cols="12">
+                              <Signup />
+                            </v-col>
+                          </v-row>
+                        </v-tab-item>
+                        <v-tab-item key="2" value="tab-2">
+                          <v-row class="py-2">
+                            <v-col>
+                              <Login />
+                            </v-col>
+                          </v-row>
+                        </v-tab-item>
+                      </v-tabs>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-dialog>
+            </li>
           </ul>
         </div>
       </div>

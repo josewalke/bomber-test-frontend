@@ -221,13 +221,27 @@ export const mutations = {
     console.log('console de prueba')
   },
   evaluar(state) {
-    console.log(state.tests)
     for (let i = 0; i < state.tests.length; i++) {
       if (state.tests[i].nota === 'aprobado') {
         state.aprobados++
       } else {
         state.suspendidos++
       }
+    }
+  },
+  deleteDesafio() {
+    var f = new Date()
+    var diasSemana = new Array(
+      'Domingo',
+      'Lunes',
+      'Martes',
+      'Miércoles',
+      'Jueves',
+      'Viernes',
+      'Sábado'
+    )
+    if (diasSemana[f.getDay()] === 'Domingo') {
+      API.deleteDesafio()
     }
   }
 }
@@ -237,6 +251,7 @@ export const actions = {
     const response = await API.login(userData)
     if (!response.error) {
       commit('saveToken', response)
+      commit('deleteDesafio')
       const tests = await API.getAllTestById(state.userId)
       commit('saveTests', tests)
       commit('evaluar')

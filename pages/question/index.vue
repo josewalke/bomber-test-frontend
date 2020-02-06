@@ -96,10 +96,13 @@
         </v-row>
       </div>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="4">
           <v-text-field v-model="f_categoria" label="Categoria"></v-text-field>
         </v-col>
-        <v-col cols="6">
+        <v-col cols="4">
+          <v-text-field v-model="f_tema" label="Tema"></v-text-field>
+        </v-col>
+        <v-col cols="4">
           <br />
           <v-btn @click="filtrar">Filtrar</v-btn>
           <v-btn @click="change_crear">Crear Pregunta</v-btn>
@@ -126,9 +129,7 @@
             </td>
 
             <td class="text-truncate" style="max-width: 150px;">
-              <p v-for="(tema, index) in temas" :key="index">
-                <span v-if="tema._id === item.tema_id">{{ tema.name }}</span>
-              </p>
+              {{ item.tema_id }}
             </td>
             <td>{{ item.category }}</td>
           </tr>
@@ -140,22 +141,35 @@
             @click="goToQuestion(item._id, item)"
           >
             <td
-              v-if="item.category === f_categoria"
+              v-if="
+                item.category === f_categoria ||
+                  item.tema_id === f_tema ||
+                  (item.category === f_categoria && item.tema_id === f_tema)
+              "
               class="text-truncate"
               style="max-width: 150px;"
             >
               <p>{{ item.enunciado }}</p>
             </td>
             <td
-              v-if="item.category === f_categoria"
+              v-if="
+                item.category === f_categoria ||
+                  item.tema_id === f_tema ||
+                  (item.category === f_categoria && item.tema_id === f_tema)
+              "
               class="text-truncate"
               style="max-width: 150px;"
             >
-              <p v-for="(tema, index) in temas" :key="index">
-                <span v-if="tema._id === item.tema_id">{{ tema.name }}</span>
-              </p>
+              {{ item.tema_id }}
             </td>
-            <td v-if="item.category === f_categoria" class="text-truncate">
+            <td
+              v-if="
+                item.category === f_categoria ||
+                  item.tema_id === f_tema ||
+                  (item.category === f_categoria && item.tema_id === f_tema)
+              "
+              class="text-truncate"
+            >
               {{ item.category }}
             </td>
           </tr>
@@ -184,6 +198,13 @@ export default {
       }
     }
     const preguntas = await API.getAllQuestions()
+    for (let i = 0; i < preguntas.length; i++) {
+      for (let x = 0; x < temas.length; x++) {
+        if (preguntas[i].tema_id === temas[x]._id) {
+          preguntas[i].tema_id = temas[x].name
+        }
+      }
+    }
 
     return { nombre, id, preguntas, temas, nombre2, id2 }
   },
@@ -238,42 +259,58 @@ export default {
           category: this.seleccion2,
           difficulty: this.seleccion3
         }
-        console.log(newQuestion)
         API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion = ''
+      } else {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.id[this.nombre.indexOf(this.seleccion4)],
+          category: this.seleccion2,
+          difficulty: this.seleccion3
+        }
+        API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion4 = ''
       }
-      // if (this.seleccion > 0) {
-      //   const newQuestion = {
-      //     enunciado: this.enunciado,
-      //     answers_wrong: [
-      //       this.opcion1,
-      //       this.opcion2,
-      //       this.opcion3,
-      //       this.correcta
-      //     ],
-      //     answers_correct: this.correcta,
-      //     tema_id: this.id[this.nombre.indexOf(this.seleccion)],
-      //     category: this.seleccion2,
-      //     difficulty: this.seleccion3
-      //   }
-      //   API.crearQuestion(newQuestion)
-      //   location.reload()
-      // } else {
-      //   const newQuestion = {
-      //     enunciado: this.enunciado,
-      //     answers_wrong: [
-      //       this.opcion1,
-      //       this.opcion2,
-      //       this.opcion3,
-      //       this.correcta
-      //     ],
-      //     answers_correct: this.correcta,
-      //     tema_id: this.id2[this.nombre2.indexOf(this.seleccion4)],
-      //     category: this.seleccion2,
-      //     difficulty: this.seleccion3
-      //   }
-      //   API.crearQuestion(newQuestion)
-      //   location.reload()
-      // }
     },
     goToQuestion(question) {
       this.$router.push(`/question/${question}`)

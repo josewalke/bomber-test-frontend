@@ -4,22 +4,54 @@
     {{ updatePregunta.enunciado }}
     <v-textarea v-model="newEnunciado" auto-grow solo></v-textarea>
     <v-btn @click="updateEnunciado">Actualizar</v-btn>
-    <h1>Opcion1</h1>
-    {{ updatePregunta.answers_wrong[0] }}
+    <h1
+      :class="
+        updatePregunta.answers[0].correcta === true
+          ? `green--text`
+          : `black--text`
+      "
+    >
+      Opcion1
+    </h1>
+    {{ updatePregunta.answers[0].respuesta }}
     <v-textarea v-model="opcion1" auto-grow solo></v-textarea>
     <v-btn @click="updateOpcion1">Actualizar</v-btn>
-    <h1>Opcion2</h1>
-    {{ updatePregunta.answers_wrong[1] }}
+    <h1
+      :class="
+        updatePregunta.answers[1].correcta === true
+          ? `green--text`
+          : `black--text`
+      "
+    >
+      Opcion2
+    </h1>
+    {{ updatePregunta.answers[1].respuesta }}
     <v-textarea v-model="opcion2" auto-grow solo></v-textarea>
     <v-btn @click="updateOpcion2">Actualizar</v-btn>
-    <h1>Opcion3</h1>
-    {{ updatePregunta.answers_wrong[2] }}
+    <h1
+      :class="
+        updatePregunta.answers[2].correcta === true
+          ? `green--text`
+          : `black--text`
+      "
+    >
+      Opcion3
+    </h1>
+    {{ updatePregunta.answers[2].respuesta }}
     <v-textarea v-model="opcion3" auto-grow solo></v-textarea>
     <v-btn @click="updateOpcion3">Actualizar</v-btn>
-    <h1>Respuesta correcta</h1>
-    {{ updatePregunta.answers_correct }}
-    <v-textarea v-model="correcta" auto-grow solo></v-textarea>
-    <v-btn @click="updateCorrecta">Actualizar</v-btn>
+    <h1
+      :class="
+        updatePregunta.answers[3].correcta === true
+          ? `green--text`
+          : `black--text`
+      "
+    >
+      Opcion4
+    </h1>
+    {{ updatePregunta.answers[3].respuesta }}
+    <v-textarea v-model="opcion4" auto-grow solo></v-textarea>
+    <v-btn @click="updateOpcion4">Actualizar</v-btn>
     <!-- ============================================ -->
     <v-row>
       <v-col cols="4">
@@ -104,6 +136,7 @@ export default {
       opcion1: '',
       opcion2: '',
       opcion3: '',
+      opcion4: '',
       correcta: '',
       categoria: ['bomberil', 'legislacion'],
       seleccion: '',
@@ -131,11 +164,23 @@ export default {
       if (this.opcion1.length > 0) {
         const body = {
           id: this.updatePregunta._id,
-          answers_wrong: [
-            this.opcion1,
-            this.updatePregunta.answers_wrong[1],
-            this.updatePregunta.answers_wrong[2],
-            this.updatePregunta.answers_correct
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.updatePregunta.answers[0].correcta
+            },
+            {
+              respuesta: this.updatePregunta.answers[1].respuesta,
+              correcta: this.updatePregunta.answers[1].correcta
+            },
+            {
+              respuesta: this.updatePregunta.answers[2].respuesta,
+              correcta: this.updatePregunta.answers[2].correcta
+            },
+            {
+              respuesta: this.updatePregunta.answers[3].respuesta,
+              correcta: this.updatePregunta.answers[3].correcta
+            }
           ]
         }
         this.$store.dispatch('updateOpcion', body)
@@ -145,11 +190,23 @@ export default {
       if (this.opcion2.length > 0) {
         const body = {
           id: this.updatePregunta._id,
-          answers_wrong: [
-            this.updatePregunta.answers_wrong[0],
-            this.opcion2,
-            this.updatePregunta.answers_wrong[2],
-            this.updatePregunta.answers_correct
+          answers: [
+            {
+              respuesta: this.updatePregunta.answers[0].respuesta,
+              correcta: this.updatePregunta.answers[0].correcta
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.updatePregunta.answers[1].correcta
+            },
+            {
+              respuesta: this.updatePregunta.answers[2].respuesta,
+              correcta: this.updatePregunta.answers[2].correcta
+            },
+            {
+              respuesta: this.updatePregunta.answers[3].respuesta,
+              correcta: this.updatePregunta.answers[3].correcta
+            }
           ]
         }
         this.$store.dispatch('updateOpcion', body)
@@ -159,33 +216,51 @@ export default {
       if (this.opcion3.length > 0) {
         const body = {
           id: this.updatePregunta._id,
-          answers_wrong: [
-            this.updatePregunta.answers_wrong[0],
-            this.updatePregunta.answers_wrong[1],
-            this.opcion3,
-            this.updatePregunta.answers_correct
+          answers: [
+            {
+              respuesta: this.updatePregunta.answers[0].respuesta,
+              correcta: this.updatePregunta.answers[0].correcta
+            },
+            {
+              respuesta: this.updatePregunta.answers[1].respuesta,
+              correcta: this.updatePregunta.answers[1].correcta
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.updatePregunta.answers[2].correcta
+            },
+            {
+              respuesta: this.updatePregunta.answers[3].respuesta,
+              correcta: this.updatePregunta.answers[3].correcta
+            }
           ]
         }
         this.$store.dispatch('updateOpcion', body)
       }
     },
-    updateCorrecta() {
-      if (this.correcta.length > 0) {
+    updateOpcion4() {
+      if (this.opcion3.length > 0) {
         const body = {
           id: this.updatePregunta._id,
-          answers_wrong: [
-            this.updatePregunta.answers_wrong[0],
-            this.updatePregunta.answers_wrong[1],
-            this.updatePregunta.answers_wrong[2],
-            this.correcta
+          answers: [
+            {
+              respuesta: this.updatePregunta.answers[0].respuesta,
+              correcta: this.updatePregunta.answers[0].correcta
+            },
+            {
+              respuesta: this.updatePregunta.answers[1].respuesta,
+              correcta: this.updatePregunta.answers[1].correcta
+            },
+            {
+              respuesta: this.updatePregunta.answers[2].respuesta,
+              correcta: this.updatePregunta.answers[2].correcta
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.updatePregunta.answers[3].correcta
+            }
           ]
         }
-        const correct = {
-          id: this.updatePregunta._id,
-          answers_correct: this.correcta
-        }
-
-        API.updateCorrect(correct)
         this.$store.dispatch('updateOpcion', body)
       }
     },
