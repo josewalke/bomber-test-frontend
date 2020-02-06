@@ -113,7 +113,7 @@ export default {
       this.testUpdate(answer)
     },
     async testUpdate(answer) {
-      console.log('this is answer')
+      console.log('this is answer 1')
       console.log(answer)
       let goodAnswer = []
       let badAnswer = []
@@ -128,7 +128,7 @@ export default {
         incorrect: badAnswer
       }
       await this.$store.dispatch('updateTest', test)
-      this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
+      // this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
       console.log(test)
     }
   }
