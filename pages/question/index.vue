@@ -238,42 +238,58 @@ export default {
           category: this.seleccion2,
           difficulty: this.seleccion3
         }
-        console.log(newQuestion)
         API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion = ''
+      } else {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.id[this.nombre.indexOf(this.seleccion4)],
+          category: this.seleccion2,
+          difficulty: this.seleccion3
+        }
+        API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion4 = ''
       }
-      // if (this.seleccion > 0) {
-      //   const newQuestion = {
-      //     enunciado: this.enunciado,
-      //     answers_wrong: [
-      //       this.opcion1,
-      //       this.opcion2,
-      //       this.opcion3,
-      //       this.correcta
-      //     ],
-      //     answers_correct: this.correcta,
-      //     tema_id: this.id[this.nombre.indexOf(this.seleccion)],
-      //     category: this.seleccion2,
-      //     difficulty: this.seleccion3
-      //   }
-      //   API.crearQuestion(newQuestion)
-      //   location.reload()
-      // } else {
-      //   const newQuestion = {
-      //     enunciado: this.enunciado,
-      //     answers_wrong: [
-      //       this.opcion1,
-      //       this.opcion2,
-      //       this.opcion3,
-      //       this.correcta
-      //     ],
-      //     answers_correct: this.correcta,
-      //     tema_id: this.id2[this.nombre2.indexOf(this.seleccion4)],
-      //     category: this.seleccion2,
-      //     difficulty: this.seleccion3
-      //   }
-      //   API.crearQuestion(newQuestion)
-      //   location.reload()
-      // }
     },
     goToQuestion(question) {
       this.$router.push(`/question/${question}`)
