@@ -98,10 +98,7 @@ export default {
 
   methods: {
     selectAnswer(answer, idx) {
-      console.log(answer)
       if (!this.answered) {
-        console.log('AQUI')
-        console.log(answer.correcta)
         this.colores.splice(idx, 1, answer.correcta === true ? 'green' : 'red')
         this.solucion.splice(
           idx,
@@ -113,7 +110,7 @@ export default {
       this.testUpdate(answer)
     },
     async testUpdate(answer) {
-      console.log('this is answer')
+      console.log('this is answer 1')
       console.log(answer)
       let goodAnswer = []
       let badAnswer = []
@@ -128,7 +125,7 @@ export default {
         incorrect: badAnswer
       }
       await this.$store.dispatch('updateTest', test)
-      this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
+      // this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
       console.log(test)
     }
   }

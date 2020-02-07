@@ -47,7 +47,7 @@
         ></v-switch>
       </v-card>
       <v-btn class="ma-2" outlined color="error" @click="testGeneration"
-        >Outlined Button</v-btn
+        >INICIAR TEST</v-btn
       >
     </v-form>
   </div>
