@@ -187,6 +187,12 @@ export default {
       for (let i = 0; i < this.select_question.length; i++) {
         id_questions.push(this.select_question[i]._id)
       }
+
+      let respuestas = []
+      id_questions.forEach(q => {
+        respuestas.push({ id: q, answered: false })
+      })
+
       for (let x = 0; x < this.select_student.length; x++) {
         const test = {
           user_id: this.select_student[x]._id,
@@ -195,6 +201,7 @@ export default {
           aciertos: [],
           aciertos_num: 0,
           fallos: [],
+          respuestas: respuestas,
           fallos_num: 0,
           nota: 0,
           mostrar_solucion: this.correctorSwitch,
