@@ -167,14 +167,10 @@ export default {
         let res = this.respuesta
         let cor = this.answers
         for (let i = 0; i < cor.length; i++) {
-          console.log(cor.length)
-          console.log(res[3])
-
           if (
             res[i].respuesta === cor[i].respuesta &&
             cor[i].correcta === true
           ) {
-            console.log(true)
             document
               .getElementById('answer-' + i)
               .classList.remove('selected-answer')
@@ -192,8 +188,6 @@ export default {
             document.getElementById('answer-' + i).classList.add('selected-red')
           }
           if (res[i] === '' && cor[i].correcta === true) {
-            console.log('empty')
-
             document
               .getElementById('answer-' + i)
               .classList.remove('selected-answer')
@@ -218,15 +212,10 @@ export default {
       }
     },
     async testUpdate(answer) {
-      console.log(this.$store.state.currentTest._id)
-      console.log('this is answer 2')
-      console.log(answer)
       const data = {
         testId: this.$store.state.currentTest._id,
         respuesta: answer
       }
-      console.log(data.testId)
-      console.log(this.id)
       await this.$store.dispatch('updateTest', data)
       // this.$router.push(`/tests/${data.testId}`)
     }
