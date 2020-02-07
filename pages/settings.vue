@@ -4,6 +4,12 @@
       <v-card width="600px" class="mx-auto">
         <v-form>
           <v-container>
+            <div class="avatar-edition" @click="uploadPhoto">
+              <div
+                class="user-card mt-5"
+                :style="{ 'background-image': `url(${$store.state.img_url})` }"
+              ></div>
+            </div>
             <v-row>
               <v-col cols="12" md="6">
                 <v-text-field
@@ -82,7 +88,6 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="uploadPhoto">Photo</v-btn>
           <v-btn @click="sendAll">Guardar</v-btn>
         </v-card-actions>
       </v-card>
@@ -223,10 +228,8 @@ export default {
         (error, result) => {
           if (!error && result && result.event === 'success') {
             const newUrl = result.info.url
-            console.log('aqui')
-            console.log(newUrl)
             this.photo = newUrl
-            console.log(this.photo)
+            this.sendAll()
           }
         }
       )
@@ -247,5 +250,18 @@ export default {
 <style scoped>
 .v-card {
   margin-top: 100px;
+}
+.user-card {
+  height: 300px;
+  width: 300px;
+  background-size: contain;
+  background-position: center;
+  margin: 0 auto;
+}
+.user-card:hover {
+  height: 300px;
+  background-size: contain;
+  background-position: center;
+  cursor: pointer;
 }
 </style>
