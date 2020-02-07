@@ -35,17 +35,14 @@ export default {
       })
   },
   updateTest(token, data) {
-    console.log('UpDateData')
     let body = {
-      aciertos: data.correct[0],
-      fallos: data.incorrect
+      respuestas: data.respuesta
     }
-    console.log('body')
-    console.log(body)
-    console.log('axios')
     return axios
       .put('tests/' + data.testId, body, { headers: { token } })
-      .then(response => console.log(response))
+      .then(response => {
+        return response.data
+      })
   },
   getAllMessageById(userId) {
     return axios.get('messages/' + userId).then(response => response.data)

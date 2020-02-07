@@ -2,11 +2,9 @@
   <v-container>
     <div class="infoQ">
       <div>
+        <h2>{{ $store.state.currentTest.respuestas[numero] }}</h2>
+        <h2>{{ $store.state.currentTest._id }}</h2>
         <h2>{{ $store.state.currentTest.no_contestadas.length }}</h2>
-        <h2>{{ $store.state.currentTest.aciertos }}</h2>
-        <h2>{{ $store.state.currentTest.fallos }}</h2>
-        <h1>temas</h1>
-        <h2>{{ temas }}</h2>
       </div>
       <v-spacer />
       <h2>
@@ -25,10 +23,6 @@
         <h2>{{ id }}</h2>
       </v-col>
     </v-row>
-    <h1>
-      aqui las tengo
-      {{ answers }}
-    </h1>
     <h1>hola</h1>
     <v-row>
       <v-col v-for="(answer, idx) in answers" :key="idx" cols="6">
@@ -40,11 +34,14 @@
         >
           <h3>{{ answer.respuesta }}</h3>
           <h3>{{ id }}</h3>
-          <h3>{{ selected }}</h3>
-          <v-btn value="'answer-' + idx" @click="testButton">Hello</v-btn>
+          <!-- <h3>{{ selected }}</h3> -->
         </v-card>
       </v-col>
     </v-row>
+    <h2>
+      {{ answers }}
+    </h2>
+    <v-btn @click="correction">Corregir</v-btn>
   </v-container>
 </template>
 
@@ -92,7 +89,10 @@ export default {
   },
   data() {
     return {
-      selected: 'cacs'
+      answered: false,
+      respuesta: [],
+      check: { true: 0, false: 0 },
+      corrected: false
     }
   },
   computed: {
@@ -101,59 +101,149 @@ export default {
       return temaName[0].name
     }
   },
+  mounted() {
+    this.respuesta = []
+    this.answered = false
+    let response = this.$store.state.currentTest.respuestas[this.numero]
+    if (response.answered === true) {
+      this.respuesta = response.respuestas
+      this.answered = true
+      this.corrected = true
+      for (let i = 0; i < response.respuestas.length; i++) {
+        if (response.respuestas[i] !== '') {
+          document
+            .getElementById('answer-' + i)
+            .classList.add('selected-answer')
+        }
+      }
+      this.correction()
+    }
+  },
 
   methods: {
-    testButton() {
-      if (
-        document
-          .getElementById('answer-1')
-          .classList.contains('selected-answer')
-      ) {
-        document.getElementById('answer-1').classList.remove('selected-answer')
+    selectAnswer(answer, idx) {
+      if (!this.corrected) {
+        if (this.respuesta.length === 0) {
+          for (let i = 0; i < this.answers.length; i++) {
+            this.respuesta.push('')
+          }
+        }
+        if (
+          document
+            .getElementById('answer-' + idx)
+            .classList.contains('selected-answer')
+        ) {
+          document
+            .getElementById('answer-' + idx)
+            .classList.remove('selected-answer')
+          if (this.respuesta[idx].correcta === true) {
+            this.check.true--
+          } else if (this.respuesta[idx].correcta === false) {
+            this.check.false--
+          }
+          this.respuesta[idx] = ''
+
+          if (this.check.true === 0 && this.check.false === 0) {
+            this.answered = false
+            this.respuesta = []
+          }
+        } else {
+          document
+            .getElementById('answer-' + idx)
+            .classList.add('selected-answer')
+          this.respuesta[idx] = this.answers[idx]
+          if (this.respuesta[idx].correcta === true) {
+            this.check.true++
+          } else if (this.respuesta[idx].correcta === false) {
+            this.check.false++
+          }
+        }
       } else {
-        document.getElementById('answer-1').classList.add('selected-answer')
+        alert('answered')
       }
     },
-    selectAnswer(answer, idx) {
-      if (!this.selected) {
-        this.selected = true
+    correction() {
+      if (this.respuesta.length > 0) {
+        let res = this.respuesta
+        let cor = this.answers
+        for (let i = 0; i < cor.length; i++) {
+          if (
+            res[i].respuesta === cor[i].respuesta &&
+            cor[i].correcta === true
+          ) {
+            document
+              .getElementById('answer-' + i)
+              .classList.remove('selected-answer')
+            document
+              .getElementById('answer-' + i)
+              .classList.add('selected-green')
+          }
+          if (
+            res[i].respuesta === cor[i].respuesta &&
+            cor[i].correcta === false
+          ) {
+            document
+              .getElementById('answer-' + i)
+              .classList.remove('selected-answer')
+            document.getElementById('answer-' + i).classList.add('selected-red')
+          }
+          if (res[i] === '' && cor[i].correcta === true) {
+            document
+              .getElementById('answer-' + i)
+              .classList.remove('selected-answer')
+            document
+              .getElementById('answer-' + i)
+              .classList.add('selected-circle')
+            res[i]
+          }
+        }
+        this.corrected = true
+        let obj = { id: this.id, answered: true, respuestas: this.respuesta }
+        if (
+          this.$store.state.currentTest.respuestas[this.numero].answered ===
+          false
+        ) {
+          let respuesta = this.$store.state.currentTest.respuestas
+          respuesta[this.numero] = obj
+          console.log(obj)
+          console.log(respuesta)
+          this.testUpdate(respuesta)
+        }
       }
-      if (this.selected) {
-        this.selected = false
-      }
-      if (!this.answered) {
-        console.log('AQUI')
-        console.log(idx)
-        console.log(answer.correcta)
-
-        this.answered = true
-      }
-      this.testUpdate(answer)
     },
     async testUpdate(answer) {
-      console.log('this is answer')
-      console.log(answer)
-      let goodAnswer = []
-      let badAnswer = []
-      let questionId = this.id
-      answer.correcta === true
-        ? (goodAnswer = questionId)
-        : (badAnswer = [questionId, answer])
-      console.log(goodAnswer)
-      console.log(badAnswer)
-      const test = {
-        correct: goodAnswer,
-        incorrect: badAnswer
+      const data = {
+        testId: this.$store.state.currentTest._id,
+        respuesta: answer
       }
-      await this.$store.dispatch('updateTest', test)
-      this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
-      console.log(test)
+      await this.$store.dispatch('updateTest', data)
+      // this.$router.push(`/tests/${data.testId}`)
     }
   }
 }
 </script>
 
 <style scoped>
+.selected-answer {
+  background-color: white;
+  color: #2f89f0;
+  border-style: solid;
+  border-color: #2f89f0;
+}
+.selected-red {
+  background-color: red;
+  color: white;
+}
+.selected-green {
+  background-color: green;
+  color: white;
+}
+.selected-circle {
+  background-color: white;
+  color: orange;
+  border-style: solid;
+  border-color: orange;
+}
 h4,
 h5,
 h6 {
