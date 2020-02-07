@@ -98,10 +98,7 @@ export default {
 
   methods: {
     selectAnswer(answer, idx) {
-      console.log(answer)
       if (!this.answered) {
-        console.log('AQUI')
-        console.log(answer.correcta)
         this.colores.splice(idx, 1, answer.correcta === true ? 'green' : 'red')
         this.solucion.splice(
           idx,
