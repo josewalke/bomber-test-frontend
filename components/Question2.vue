@@ -42,6 +42,18 @@
             <!-- <h3>{{ selected }}</h3> -->
           </v-card>
         </v-col>
+        <v-col>
+          <v-btn
+            class="ma-2"
+            outlined
+            fab
+            small
+            color="#DA3E3E"
+            @click="correct"
+          >
+            <v-icon>mdi-help</v-icon>
+          </v-btn>
+        </v-col>
       </v-row>
     </div>
     <h2>
@@ -191,21 +203,19 @@ export default {
           wrong: 0,
           blank: this.currentTest.testCheck.blank
         }
-        console.log(correctAnswers)
-        console.log(check)
-        console.log(this.guess)
         if (check.true === correctAnswers && check.false === 0) {
           this.guess = true
         }
         console.log(this.guess)
-
         if (this.guess === true) {
+          console.log(this.guess)
           testCheck.right++
           testCheck.blank--
+          console.log(testCheck)
         }
 
         if (this.guess === false) {
-          testCheck.false++
+          testCheck.wrong++
           testCheck.blank--
         }
 
@@ -246,8 +256,7 @@ export default {
           id: this.id,
           answered: true,
           respuestas: this.respuesta,
-          guess: this.guess,
-          testCheck: testCheck
+          guess: this.guess
         }
         if (
           this.$store.state.currentTest.respuestas[this.numero].answered ===
@@ -255,14 +264,16 @@ export default {
         ) {
           let respuesta = this.$store.state.currentTest.respuestas
           respuesta[this.numero] = obj
-          this.testUpdate(respuesta)
+          console.log(testCheck)
+          this.testUpdate(respuesta, testCheck)
         }
       }
     },
-    async testUpdate(answer) {
+    async testUpdate(answer, testCheck) {
       const data = {
         testId: this.$store.state.currentTest._id,
-        respuesta: answer
+        respuesta: answer,
+        testCheck: testCheck
       }
       await this.$store.dispatch('updateTest', data)
       // this.$router.push(`/tests/${data.testId}`)
