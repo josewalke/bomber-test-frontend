@@ -193,10 +193,13 @@ export default {
         respuestas.push({ id: q, answered: false })
       })
 
+      let testCheck = { right: 0, wrong: 0, blank: id_questions.length }
+
       for (let x = 0; x < this.select_student.length; x++) {
         const test = {
           user_id: this.select_student[x]._id,
           title: this.testName + ' ' + date,
+          testCheck: testCheck,
           no_contestadas: id_questions,
           aciertos: [],
           aciertos_num: 0,

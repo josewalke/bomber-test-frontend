@@ -35,6 +35,9 @@ export default {
       })
   },
   updateTest(token, data) {
+    console.log('ESTOY AQUI ---------------------------------API')
+    console.log(data)
+
     let body = {
       respuestas: data.respuesta
     }
