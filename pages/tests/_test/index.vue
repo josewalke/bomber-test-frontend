@@ -1,31 +1,40 @@
 <template>
-  <v-row>
-    <v-col>
+  <div class="main-div">
+    <div class="question-title">
       <h1>{{ $store.state.currentTest.title }}</h1>
-      <template>
-        <v-carousel hide-delimiters height="200vh">
-          <v-carousel-item
-            v-for="(question, i) in $store.state.currentTest.no_contestadas"
-            :key="i"
-          >
-            <v-sheet color="white" height="100%" tile>
-              <v-row class="fill-height" align="center" justify="center">
-                <Question2
-                  :id="question._id"
-                  :enunciado="question.enunciado"
-                  :answers="question.answers"
-                  :tema="question.tema_id"
-                  :numero="i"
-                  :temas="temas"
-                  @selectAnswer="selectAnswer"
-                />
-              </v-row>
-            </v-sheet>
-          </v-carousel-item>
-        </v-carousel>
-      </template>
-    </v-col>
-  </v-row>
+      <h1>{{ $store.state.question }}</h1>
+      <h2>{{ $store.state.currentTest.no_contestadas.length }}</h2>
+      <v-btn color="#da3e3e" to="/tests">
+        <v-icon class="white--text">mdi-close</v-icon>
+      </v-btn>
+    </div>
+    <v-row>
+      <v-col>
+        <template>
+          <v-carousel hide-delimiters height="100vh">
+            <v-carousel-item
+              v-for="(question, i) in $store.state.currentTest.no_contestadas"
+              :key="i"
+            >
+              <v-sheet color="white" height="100%" tile>
+                <v-row align="center" justify="center">
+                  <Question2
+                    :id="question._id"
+                    :enunciado="question.enunciado"
+                    :answers="question.answers"
+                    :tema="question.tema_id"
+                    :numero="i"
+                    :temas="temas"
+                    @selectAnswer="selectAnswer"
+                  />
+                </v-row>
+              </v-sheet>
+            </v-carousel-item>
+          </v-carousel>
+        </template>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
@@ -55,6 +64,13 @@ export default {
 </script>
 
 <style scoped>
+.main-div {
+  background-color: white;
+}
+.question-title {
+  margin-top: 5%;
+  margin-left: 6%;
+}
 .enunciado {
   margin: 150px auto;
 }

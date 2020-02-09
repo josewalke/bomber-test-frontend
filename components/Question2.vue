@@ -3,6 +3,7 @@
     <div class="infoQ">
       <v-spacer />
       <h2>
+        {{ $store.state.question }}
         Pregunta {{ numero + 1 }}/{{
           $store.state.currentTest.no_contestadas.length
         }}&nbsp;&nbsp;
@@ -317,12 +318,7 @@ h5,
 h6 {
   color: red;
 }
-.enunciado {
-  margin: 150px auto;
-}
-.btn-size {
-  height: 100%;
-}
+
 .v-card {
   padding: 10px;
 }
