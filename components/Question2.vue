@@ -8,9 +8,9 @@
           $store.state.currentTest.no_contestadas.length
         }}&nbsp;&nbsp;
       </h2>
-      <v-btn color="#da3e3e" to="/tests">
+      <!-- <v-btn color="#da3e3e" to="/tests">
         <v-icon>mdi-close</v-icon>
-      </v-btn>
+      </v-btn> -->
     </div>
     <div class="question-holder">
       <v-row>
