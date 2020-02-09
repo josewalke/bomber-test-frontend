@@ -1,15 +1,6 @@
 <template>
   <v-container>
     <div class="infoQ">
-      <div>
-        <h2>{{ id }}</h2>
-        <h2>guess</h2>
-        <h2>{{ guess }}</h2>
-        <h2>check</h2>
-        <h2>{{ currentTest.testCheck }}</h2>
-        <h2>answered: {{ answered }}</h2>
-        <h2>corrected: {{ corrected }}</h2>
-      </div>
       <v-spacer />
       <h2>
         Pregunta {{ numero + 1 }}/{{
@@ -25,10 +16,8 @@
         <v-col>
           <h1>{{ enunciado }}</h1>
           <h4>{{ findTemaName }}</h4>
-          <h2>{{ id }}</h2>
         </v-col>
       </v-row>
-      <h1>hola</h1>
       <v-row>
         <v-col v-for="(answer, idx) in answers" :key="idx" cols="6">
           <v-card
@@ -43,23 +32,34 @@
           </v-card>
         </v-col>
         <v-col>
-          <v-btn
-            class="ma-2"
-            outlined
-            fab
-            small
-            color="#DA3E3E"
-            @click="correct"
-          >
-            <v-icon>mdi-help</v-icon>
-          </v-btn>
+          <div id="under-buttons">
+            <v-btn
+              class="ma-2"
+              outlined
+              fab
+              small
+              color="#DA3E3E"
+              @click="correct"
+            >
+              <v-icon>mdi-help</v-icon>
+            </v-btn>
+            <v-btn
+              class="ma-2"
+              outlined
+              fab
+              small
+              color="#DA3E3E"
+              @click="correct"
+            >
+              <v-icon>mdi-check-bold</v-icon>
+            </v-btn>
+          </div>
         </v-col>
       </v-row>
     </div>
     <h2>
-      <h2>respuesta: {{ respuesta }}</h2>
+      <!-- <h2>respuesta: {{ respuesta }}</h2> -->
     </h2>
-    <v-btn @click="correction">Corregir</v-btn>
   </v-container>
 </template>
 
@@ -346,6 +346,9 @@ h2 {
   animation: move_correct 1s;
 }
 .infoQ {
+  display: flex;
+}
+#under-buttons {
   display: flex;
 }
 @keyframes move_error {
