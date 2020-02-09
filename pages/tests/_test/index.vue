@@ -5,7 +5,7 @@
       <h1>{{ $store.state.question }}</h1>
       <h2>{{ $store.state.currentTest.no_contestadas.length }}</h2>
       <v-btn color="#da3e3e" to="/tests">
-        <v-icon class="white--text">mdi-close</v-icon>
+        <!-- <v-icon class="white--text">mdi-close</v-icon> -->
       </v-btn>
     </div>
     <v-row>
