@@ -199,8 +199,8 @@ export default {
         )
 
         let testCheck = {
-          right: 0,
-          wrong: 0,
+          right: this.currentTest.testCheck.right,
+          wrong: this.currentTest.testCheck.wrong,
           blank: this.currentTest.testCheck.blank
         }
         if (check.true === correctAnswers && check.false === 0) {

@@ -43,7 +43,7 @@
           v-model="select_student"
           :headers="headers_student"
           :items="student"
-          item-key="name"
+          item-key="_id"
           show-select
           class="elevation-1"
           :search="search_student"
@@ -140,7 +140,7 @@ export default {
       headers_student: [
         {
           text: 'Nombre',
-          sortable: false,
+          sortable: true,
           value: 'name'
         },
         { text: 'Apellido', value: 'lastName' },
