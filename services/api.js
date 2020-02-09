@@ -35,11 +35,9 @@ export default {
       })
   },
   updateTest(token, data) {
-    console.log('ESTOY AQUI ---------------------------------API')
-    console.log(data)
-
     let body = {
-      respuestas: data.respuesta
+      respuestas: data.respuesta,
+      testCheck: data.testCheck
     }
     return axios
       .put('tests/' + data.testId, body, { headers: { token } })

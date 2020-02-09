@@ -34,7 +34,7 @@
               <th class="text-left">Preguntas</th>
               <th class="text-left">Aciertos</th>
               <th class="text-left">Fallos</th>
-              <th class="text-left">Nota</th>
+              <th class="text-left">% Aciertos</th>
             </tr>
           </thead>
           <tbody>
@@ -45,15 +45,12 @@
             >
               <td v-if="!item.desafio">{{ item.title }}</td>
               <td v-if="!item.desafio">
-                {{
-                  item.no_contestadas.length -
-                    item.aciertos_num -
-                    item.fallos_num
-                }}
+                {{ item.no_contestadas.length }}
               </td>
-              <td v-if="!item.desafio">{{ item.aciertos_num }}</td>
-              <td v-if="!item.desafio">{{ item.fallos_num }}</td>
+              <td v-if="!item.desafio">{{ item.testCheck.right }}</td>
+              <td v-if="!item.desafio">{{ item.testCheck.wrong }}</td>
               <td v-if="!item.desafio">
+                {{ (item.testCheck.right / item.no_contestadas.length) * 100 }}
                 <span v-if="item.nota === 'suspendido'" class="red--text">{{
                   item.nota
                 }}</span>
