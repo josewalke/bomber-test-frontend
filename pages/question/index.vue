@@ -49,13 +49,13 @@
           solo
           label="Opcion4"
         ></v-textarea>
-        <!-- <h1>Respuesta correcta</h1>
+        <h1>Explicacion de la respuesta</h1>
         <v-textarea
-          v-model="correcta"
+          v-model="explicacion"
           auto-grow
           solo
-          label="Correcta"
-        ></v-textarea> -->
+          label="Escriba la explicacion de la respuesta"
+        ></v-textarea>
         <v-row>
           <v-col cols="4">
             <v-overflow-btn
@@ -219,7 +219,7 @@ export default {
       checkbox2: false,
       checkbox3: false,
       checkbox4: false,
-      correcta: '',
+      explicacion: '',
       seleccion: '',
       categoria: ['bomberil', 'legislacion'],
       seleccion2: '',
@@ -257,7 +257,8 @@ export default {
           ],
           tema_id: this.id[this.nombre.indexOf(this.seleccion)],
           category: this.seleccion2,
-          difficulty: this.seleccion3
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion
         }
         API.crearQuestion(newQuestion)
         this.enunciado = ''
@@ -272,6 +273,7 @@ export default {
         this.seleccion2 = ''
         this.seleccion3 = ''
         this.seleccion = ''
+        this.explicacion = ''
       } else {
         const newQuestion = {
           enunciado: this.enunciado,
@@ -295,7 +297,8 @@ export default {
           ],
           tema_id: this.id[this.nombre.indexOf(this.seleccion4)],
           category: this.seleccion2,
-          difficulty: this.seleccion3
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion
         }
         API.crearQuestion(newQuestion)
         this.enunciado = ''
@@ -310,6 +313,7 @@ export default {
         this.seleccion2 = ''
         this.seleccion3 = ''
         this.seleccion4 = ''
+        this.explicacion = ''
       }
     },
     goToQuestion(question) {

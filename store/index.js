@@ -486,5 +486,14 @@ export const actions = {
       const mensajes = await API.getAllMessageById(state.userId)
       commit('saveMessage', mensajes)
     }
+  },
+  async updateExplicacion({ commit }, body) {
+    const response = await API.updateExplicacion(body)
+    if (!response.error) {
+      const pregunta = await API.getQuestionById(body.id)
+      if (!pregunta.error) {
+        commit('saveUpdatePregunta', pregunta)
+      }
+    }
   }
 }

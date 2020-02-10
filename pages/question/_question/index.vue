@@ -52,6 +52,10 @@
     {{ updatePregunta.answers[3].respuesta }}
     <v-textarea v-model="opcion4" auto-grow solo></v-textarea>
     <v-btn @click="updateOpcion4">Actualizar</v-btn>
+    <h1>Explicación</h1>
+    {{ updatePregunta.explicacion }}
+    <v-textarea v-model="explicacion" auto-grow solo></v-textarea>
+    <v-btn @click="updateExplicacion">Actualizar</v-btn>
     <!-- ============================================ -->
     <v-row>
       <v-col cols="4">
@@ -137,7 +141,7 @@ export default {
       opcion2: '',
       opcion3: '',
       opcion4: '',
-      correcta: '',
+      explicacion: '',
       categoria: ['bomberil', 'legislacion'],
       seleccion: '',
       dificultad: ['Facil', 'Medio', 'Dificil'],
@@ -294,6 +298,15 @@ export default {
         }
         this.$store.dispatch('updateTema', body)
         this.ver = false
+      }
+    },
+    updateExplicacion() {
+      if (this.explicacion.length > 0) {
+        const body = {
+          id: this.updatePregunta._id,
+          explicacion: this.explicacion
+        }
+        this.$store.dispatch('updateExplicacion', body)
       }
     }
   }

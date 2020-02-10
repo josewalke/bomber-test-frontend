@@ -14,33 +14,45 @@
     </div>
     <v-row>
       <v-col cols="5">
-        <v-card class="carta-opciones">
-          {{ question.answers_wrong[0] }}<br />
+        <v-card
+          class="carta-opciones"
+          :color="question.answers[0].correcta ? 'green' : 'red'"
+        >
+          {{ question.answers[0].respuesta }}<br />
         </v-card>
       </v-col>
       <v-col cols="5">
-        <v-card class="carta-opciones">
-          {{ question.answers_wrong[1] }}
+        <v-card
+          class="carta-opciones"
+          :color="question.answers[1].correcta ? 'green' : 'red'"
+        >
+          {{ question.answers[1].respuesta }}
         </v-card>
       </v-col>
       <v-col cols="5">
-        <v-card class="carta-opciones">
-          {{ question.answers_wrong[2] }}
+        <v-card
+          class="carta-opciones"
+          :color="question.answers[2].correcta ? 'green' : 'red'"
+        >
+          {{ question.answers[2].respuesta }}
         </v-card>
       </v-col>
       <v-col cols="5">
-        <v-card class="carta-opciones">
-          {{ question.answers_wrong[3] }}
+        <v-card
+          class="carta-opciones"
+          :color="question.answers[3].correcta ? 'green' : 'red'"
+        >
+          {{ question.answers[3].respuesta }}
         </v-card>
       </v-col>
     </v-row>
 
     <div>
-      <h1>Respuesta correcta</h1>
+      <h1>Explicación de la respuesta</h1>
       <hr class="divisor" />
       <br />
       <v-card class="carta-opciones">
-        {{ question.answers_correct }}
+        {{ question.explicacion }}
       </v-card>
     </div>
     <div>
