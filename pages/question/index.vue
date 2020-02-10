@@ -97,7 +97,6 @@
       </div>
       <v-row>
         <v-col cols="4">
-          <!-- <v-text-field v-model="f_categoria" label="Categoria"></v-text-field> -->
           <v-select
             v-model="f_categoria"
             :items="categoria"
