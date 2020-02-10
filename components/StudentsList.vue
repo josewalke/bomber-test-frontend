@@ -55,9 +55,10 @@
           <tr v-for="(item, idx) in student" :key="idx">
             <td
               v-if="
-                item.name === f_nombre ||
-                  item.lastName === f_apellido ||
-                  (item.name === f_nombre && item.lastName === f_apellido)
+                item.name.toUpperCase() === f_nombre.toUpperCase() ||
+                  item.lastName.toUpperCase() === f_apellido.toUpperCase() ||
+                  (item.name.toUpperCase() === f_nombre.toUpperCase() &&
+                    item.lastName.toUpperCase() === f_apellido.toUpperCase())
               "
               class="text-truncate"
               style="max-width: 150px;"
@@ -66,36 +67,40 @@
             </td>
             <td
               v-if="
-                item.name === f_nombre ||
-                  item.lastName === f_apellido ||
-                  (item.name === f_nombre && item.lastName === f_apellido)
+                item.name.toUpperCase() === f_nombre.toUpperCase() ||
+                  item.lastName.toUpperCase() === f_apellido.toUpperCase() ||
+                  (item.name.toUpperCase() === f_nombre.toUpperCase() &&
+                    item.lastName.toUpperCase() === f_apellido.toUpperCase())
               "
             >
               {{ item.lastName }}
             </td>
             <td
               v-if="
-                item.name === f_nombre ||
-                  item.lastName === f_apellido ||
-                  (item.name === f_nombre && item.lastName === f_apellido)
+                item.name.toUpperCase() === f_nombre.toUpperCase() ||
+                  item.lastName.toUpperCase() === f_apellido.toUpperCase() ||
+                  (item.name.toUpperCase() === f_nombre.toUpperCase() &&
+                    item.lastName.toUpperCase() === f_apellido.toUpperCase())
               "
             >
               {{ item.email }}
             </td>
             <td
               v-if="
-                item.name === f_nombre ||
-                  item.lastName === f_apellido ||
-                  (item.name === f_nombre && item.lastName === f_apellido)
+                item.name.toUpperCase() === f_nombre.toUpperCase() ||
+                  item.lastName.toUpperCase() === f_apellido.toUpperCase() ||
+                  (item.name.toUpperCase() === f_nombre.toUpperCase() &&
+                    item.lastName.toUpperCase() === f_apellido.toUpperCase())
               "
             >
               {{ item.phone }}
             </td>
             <td
               v-if="
-                item.name === f_nombre ||
-                  item.lastName === f_apellido ||
-                  (item.name === f_nombre && item.lastName === f_apellido)
+                item.name.toUpperCase() === f_nombre.toUpperCase() ||
+                  item.lastName.toUpperCase() === f_apellido.toUpperCase() ||
+                  (item.name.toUpperCase() === f_nombre.toUpperCase() &&
+                    item.lastName.toUpperCase() === f_apellido.toUpperCase())
               "
             >
               <v-select
@@ -107,9 +112,10 @@
             </td>
             <td
               v-if="
-                item.name === f_nombre ||
-                  item.lastName === f_apellido ||
-                  (item.name === f_nombre && item.lastName === f_apellido)
+                item.name.toUpperCase() === f_nombre.toUpperCase() ||
+                  item.lastName.toUpperCase() === f_apellido.toUpperCase() ||
+                  (item.name.toUpperCase() === f_nombre.toUpperCase() &&
+                    item.lastName.toUpperCase() === f_apellido.toUpperCase())
               "
             >
               <v-checkbox
