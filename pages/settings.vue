@@ -1,7 +1,7 @@
 <template>
   <div>
     <template>
-      <v-card width="600px" class="mx-auto">
+      <v-card width="600px" class="mx-auto mt-5">
         <v-form>
           <v-container>
             <div class="avatar-edition" @click="uploadPhoto">
