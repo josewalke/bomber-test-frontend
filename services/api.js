@@ -170,6 +170,14 @@ export default {
       .put('questions/' + newOpcion.id, body)
       .then(response => response.data)
   },
+  updateExplicacion(explicacion) {
+    const body = {
+      explicacion: explicacion.explicacion
+    }
+    return axios
+      .put('questions/' + explicacion.id, body)
+      .then(response => response.data)
+  },
   updateCorrect(correct) {
     const body = {
       answers_correct: correct.answers_correct
