@@ -40,7 +40,7 @@
               fab
               small
               color="#DA3E3E"
-              @click="correct"
+              @click="correction"
             >
               <v-icon>mdi-help</v-icon>
             </v-btn>
@@ -50,7 +50,7 @@
               fab
               small
               color="#DA3E3E"
-              @click="correct"
+              @click="correction"
             >
               <v-icon>mdi-check-bold</v-icon>
             </v-btn>
