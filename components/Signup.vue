@@ -51,6 +51,9 @@
           label="Contraseña"
           @click:append="showPassword = !showPassword"
         />
+        <div class="text-center">
+          <v-sheet id="alert" class="white--text" color="red"> </v-sheet>
+        </div>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -82,24 +85,36 @@ export default {
       }
     }
   },
+
   methods: {
     async signup() {
-      const user = {
-        name: this.name,
-        nickName: this.nickName,
-        email: this.email,
-        password: this.password,
-        lastName: this.lastName,
-        phone: this.phone
-      }
+      let re = /\S+@\S+\.\S+/
+      if (re.test(this.email)) {
+        const user = {
+          name: this.cap(this.name),
+          nickName: this.nickName,
+          email: this.email,
+          password: this.password,
+          lastName: this.cap(this.lastName),
+          phone: this.phone
+        }
 
-      const response = await this.$store.dispatch('signup', user)
+        const response = await this.$store.dispatch('signup', user)
 
-      if (!response.error) {
-        this.$router.push('/user/')
-      } else {
-        alert(response.error)
+        if (!response.error) {
+          this.$router.push('/user/')
+        } else {
+          let html = 'E-mail ya registrado'
+          document.getElementById('alert').innerText = html
+        }
       }
+    },
+    cap(string) {
+      return string
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
     }
   }
 }
