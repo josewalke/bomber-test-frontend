@@ -97,10 +97,23 @@
       </div>
       <v-row>
         <v-col cols="4">
-          <v-text-field v-model="f_categoria" label="Categoria"></v-text-field>
+          <!-- <v-text-field v-model="f_categoria" label="Categoria"></v-text-field> -->
+          <v-select
+            v-model="f_categoria"
+            :items="categoria"
+            label="Categoria"
+          ></v-select>
         </v-col>
         <v-col cols="4">
-          <v-text-field v-model="f_tema" label="Tema"></v-text-field>
+          <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
+            <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'bomberil'">
+            <v-select v-model="f_tema" :items="nombre" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'legislación'">
+            <v-select v-model="f_tema" :items="nombre2" label="Tema"></v-select>
+          </span>
         </v-col>
         <v-col cols="4">
           <br />
@@ -188,7 +201,9 @@ export default {
     const id = []
     const nombre2 = []
     const id2 = []
+    const temario = []
     for (let i = 0; i < temas.length; i++) {
+      temario.push(temas[i].name)
       if (temas[i].category === 'bomberil') {
         nombre.push(temas[i].name)
         id.push(temas[i]._id)
@@ -206,7 +221,7 @@ export default {
       }
     }
 
-    return { nombre, id, preguntas, temas, nombre2, id2 }
+    return { nombre, id, preguntas, temas, nombre2, id2, temario }
   },
   data() {
     return {
@@ -221,7 +236,7 @@ export default {
       checkbox4: false,
       explicacion: '',
       seleccion: '',
-      categoria: ['bomberil', 'legislacion'],
+      categoria: ['bomberil', 'legislación', 'N/A'],
       seleccion2: '',
       dificultad: ['Facil', 'Medio', 'Dificil'],
       seleccion3: '',
