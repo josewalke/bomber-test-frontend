@@ -32,17 +32,6 @@
                 />
               </v-col>
               <v-col cols="12" md="6">
-                <!-- <v-text-field
-                  v-model="photo"
-                  label="Photo"
-                  validate-on-blur
-                  append-icon="mdi-pencil"
-                  :rules="[rules.required]"
-                  @click:append="updatePhoto"
-                >
-                </v-text-field> -->
-              </v-col>
-              <v-col cols="12" md="6">
                 <v-text-field
                   v-model="nickName"
                   label="Nombre de usuario"
