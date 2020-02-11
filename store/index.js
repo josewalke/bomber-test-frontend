@@ -141,7 +141,7 @@ export const mutations = {
         }
       }
     }
-    state.messages = mensajes
+    state.messages = mensajes.reverse()
   },
   saveCurrentTest(state, test) {
     state.currentTest = test
