@@ -127,12 +127,6 @@
             solo
             @keyup="buscarText"
           ></v-textarea>
-          {{ searchText }}
-        </v-col>
-        <v-col cols="4">
-          <br />
-          <br />
-          <!-- <v-btn @click="buscarText">Buscar enunciado</v-btn> -->
         </v-col>
       </v-row>
     </v-container>
@@ -268,8 +262,7 @@ export default {
           difficulty: this.seleccion3,
           explicacion: this.explicacion
         }
-        //API.crearQuestion(newQuestion)
-        console.log(newQuestion)
+        API.crearQuestion(newQuestion)
         this.enunciado = ''
         this.opcion1 = ''
         this.opcion2 = ''
@@ -309,8 +302,7 @@ export default {
           difficulty: this.seleccion3,
           explicacion: this.explicacion
         }
-        //API.crearQuestion(newQuestion)
-        console.log(newQuestion)
+        API.crearQuestion(newQuestion)
         this.enunciado = ''
         this.opcion1 = ''
         this.opcion2 = ''
@@ -348,7 +340,6 @@ export default {
           x => x.tema_id === f_tema && x.category === f_categoria
         )
       }
-      console.log(this.filtrado)
       this.f_categoria = ''
       this.f_tema = ''
     },
@@ -358,36 +349,14 @@ export default {
     buscarText() {
       this.filtrado = []
       this.filtro = false
-      // var contador = 0
-      // var resultados = []
-      // var max = 0
       if (this.searchText.length > 0) {
         this.preguntas.forEach(p => {
-          console.log(p.enunciado)
-          console.log('a')
-          console.log(this.preguntas)
           if (
             p.enunciado.toLowerCase().includes(this.searchText.toLowerCase())
           ) {
             this.filtrado.push(p)
           }
         })
-        // for (let i = 0; i < this.preguntas.length; i++) {
-        //   for (let x = 0; x < this.searchText.length; x++) {
-        //     if (this.preguntas[i].enunciado[x] === this.searchText[x]) {
-        //       contador++
-        //     }
-        //   }
-        //   resultados.push(contador)
-        //   contador = 0
-        // }
-        // for (let i = 0; i < resultados.length; i++) {
-        //   if (resultados[i] > max) {
-        //     max = resultados[i]
-        //   }
-        // }
-        // this.filtrado.push(this.preguntas[resultados.indexOf(max)])
-        console.log(this.filtrado)
       }
       if (this.searchText.length === 0) {
         this.filtrado = this.preguntas
