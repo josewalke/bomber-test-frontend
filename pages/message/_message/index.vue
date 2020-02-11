@@ -78,6 +78,7 @@
         <br />
         <v-textarea v-model="respuesta" auto-grow solo></v-textarea>
         <v-btn @click="reply(messages[position])">Enviar</v-btn>
+        <v-btn @click="goToQuestion(question._id)">Modificar Pregunta</v-btn>
       </div>
     </div>
   </v-container>
@@ -113,6 +114,9 @@ export default {
       }
       this.$store.dispatch('reply', reply)
       this.$router.push('/message')
+    },
+    goToQuestion(id) {
+      this.$router.push(`/question/${id}`)
     }
   }
 }

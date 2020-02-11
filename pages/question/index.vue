@@ -119,6 +119,19 @@
           <v-btn @click="filtrar">Filtrar</v-btn>
           <v-btn @click="change_crear">Crear Pregunta</v-btn>
         </v-col>
+        <v-col cols="8">
+          <v-textarea
+            v-model="searchText"
+            label="Introduzca parte del enunciado con exactitud"
+            auto-grow
+            solo
+          ></v-textarea>
+        </v-col>
+        <v-col cols="4">
+          <br />
+          <br />
+          <v-btn @click="buscarText">Buscar enunciado</v-btn>
+        </v-col>
       </v-row>
     </v-container>
     <v-simple-table>
@@ -137,7 +150,7 @@
             @click="goToQuestion(item._id, item)"
           >
             <td class="text-truncate" style="max-width: 150px;">
-              <p>{{ item.enunciado }}</p>
+              {{ item.enunciado }}
             </td>
 
             <td class="text-truncate" style="max-width: 150px;">
@@ -148,40 +161,17 @@
         </tbody>
         <tbody v-else>
           <tr
-            v-for="(item, idx) in preguntas"
+            v-for="(item, idx) in filtrado"
             :key="idx"
             @click="goToQuestion(item._id, item)"
           >
-            <td
-              v-if="
-                item.category === f_categoria ||
-                  item.tema_id === f_tema ||
-                  (item.category === f_categoria && item.tema_id === f_tema)
-              "
-              class="text-truncate"
-              style="max-width: 150px;"
-            >
-              <p>{{ item.enunciado }}</p>
+            <td class="text-truncate" style="max-width: 150px;">
+              {{ item.enunciado }}
             </td>
-            <td
-              v-if="
-                item.category === f_categoria ||
-                  item.tema_id === f_tema ||
-                  (item.category === f_categoria && item.tema_id === f_tema)
-              "
-              class="text-truncate"
-              style="max-width: 150px;"
-            >
+            <td class="text-truncate" style="max-width: 150px;">
               {{ item.tema_id }}
             </td>
-            <td
-              v-if="
-                item.category === f_categoria ||
-                  item.tema_id === f_tema ||
-                  (item.category === f_categoria && item.tema_id === f_tema)
-              "
-              class="text-truncate"
-            >
+            <td class="text-truncate">
               {{ item.category }}
             </td>
           </tr>
@@ -243,7 +233,9 @@ export default {
       f_tema: '',
       f_categoria: '',
       filtro: true,
-      crear: false
+      crear: false,
+      filtrado: [],
+      searchText: ''
     }
   },
   methods: {
@@ -274,7 +266,8 @@ export default {
           difficulty: this.seleccion3,
           explicacion: this.explicacion
         }
-        API.crearQuestion(newQuestion)
+        //API.crearQuestion(newQuestion)
+        console.log(newQuestion)
         this.enunciado = ''
         this.opcion1 = ''
         this.opcion2 = ''
@@ -314,7 +307,8 @@ export default {
           difficulty: this.seleccion3,
           explicacion: this.explicacion
         }
-        API.crearQuestion(newQuestion)
+        //API.crearQuestion(newQuestion)
+        console.log(newQuestion)
         this.enunciado = ''
         this.opcion1 = ''
         this.opcion2 = ''
@@ -335,9 +329,57 @@ export default {
     },
     filtrar() {
       this.filtro = false
+      var f_categoria = this.f_categoria
+      var f_tema = this.f_tema
+
+      if (f_categoria.length > 0 && f_tema.length === 0) {
+        this.filtrado = this.preguntas.filter(x => x.category === f_categoria)
+      }
+      if (
+        (f_tema.length > 0 && f_categoria.length === 0) ||
+        (f_tema.length > 0 && f_categoria === 'N/A')
+      ) {
+        this.filtrado = this.preguntas.filter(x => x.tema_id === f_tema)
+      }
+      if (f_categoria.length > 0 && f_tema.length > 0) {
+        this.filtrado = this.preguntas.filter(
+          x => x.tema_id === f_tema && x.category === f_categoria
+        )
+      }
+      console.log(this.filtrado)
+      this.f_categoria = ''
+      this.f_tema = ''
     },
     change_crear() {
       this.crear = true
+    },
+    buscarText() {
+      this.filtrado = []
+      this.filtro = false
+      var contador = 0
+      var resultados = []
+      var max = 0
+      if (this.searchText.length > 0) {
+        for (let i = 0; i < this.preguntas.length; i++) {
+          for (let x = 0; x < this.searchText.length; x++) {
+            if (this.preguntas[i].enunciado[x] === this.searchText[x]) {
+              contador++
+            }
+          }
+          resultados.push(contador)
+          contador = 0
+        }
+        for (let i = 0; i < resultados.length; i++) {
+          if (resultados[i] > max) {
+            max = resultados[i]
+          }
+        }
+        this.filtrado.push(this.preguntas[resultados.indexOf(max)])
+        console.log(this.filtrado)
+      }
+      if (this.searchText.length === 0) {
+        this.filtrado = this.preguntas
+      }
     }
   }
 }
