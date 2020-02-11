@@ -125,12 +125,14 @@
             label="Introduzca parte del enunciado con exactitud"
             auto-grow
             solo
+            @keyup="buscarText"
           ></v-textarea>
+          {{ searchText }}
         </v-col>
         <v-col cols="4">
           <br />
           <br />
-          <v-btn @click="buscarText">Buscar enunciado</v-btn>
+          <!-- <v-btn @click="buscarText">Buscar enunciado</v-btn> -->
         </v-col>
       </v-row>
     </v-container>
@@ -356,25 +358,35 @@ export default {
     buscarText() {
       this.filtrado = []
       this.filtro = false
-      var contador = 0
-      var resultados = []
-      var max = 0
+      // var contador = 0
+      // var resultados = []
+      // var max = 0
       if (this.searchText.length > 0) {
-        for (let i = 0; i < this.preguntas.length; i++) {
-          for (let x = 0; x < this.searchText.length; x++) {
-            if (this.preguntas[i].enunciado[x] === this.searchText[x]) {
-              contador++
-            }
+        this.preguntas.forEach(p => {
+          console.log(p.enunciado)
+          console.log('a')
+          console.log(this.preguntas)
+          if (
+            p.enunciado.toLowerCase().includes(this.searchText.toLowerCase())
+          ) {
+            this.filtrado.push(p)
           }
-          resultados.push(contador)
-          contador = 0
-        }
-        for (let i = 0; i < resultados.length; i++) {
-          if (resultados[i] > max) {
-            max = resultados[i]
-          }
-        }
-        this.filtrado.push(this.preguntas[resultados.indexOf(max)])
+        })
+        // for (let i = 0; i < this.preguntas.length; i++) {
+        //   for (let x = 0; x < this.searchText.length; x++) {
+        //     if (this.preguntas[i].enunciado[x] === this.searchText[x]) {
+        //       contador++
+        //     }
+        //   }
+        //   resultados.push(contador)
+        //   contador = 0
+        // }
+        // for (let i = 0; i < resultados.length; i++) {
+        //   if (resultados[i] > max) {
+        //     max = resultados[i]
+        //   }
+        // }
+        // this.filtrado.push(this.preguntas[resultados.indexOf(max)])
         console.log(this.filtrado)
       }
       if (this.searchText.length === 0) {
