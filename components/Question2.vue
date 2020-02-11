@@ -266,7 +266,7 @@ export default {
           let respuesta = this.$store.state.currentTest.respuestas
           respuesta[this.numero] = obj
           console.log(testCheck)
-          this.testUpdate(respuesta, testCheck)
+          // this.testUpdate(respuesta, testCheck)
         }
       }
     },
