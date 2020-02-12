@@ -285,9 +285,10 @@ export const actions = {
   async updateTest({ commit, state }, testData) {
     let data = testData
     const updatedTest = await API.updateTest(state.token, data)
-    commit('saveCurrentTest', updatedTest)
-    const tests = await API.getAllTest(state.userId)
-    commit('saveTests', tests)
+    if (!updatedTest.error) {
+      const tests = await API.getAllTest(state.userId)
+      commit('saveTests', tests)
+    }
   },
   async verRespuesta({ state }, responseBody) {
     const respuesta =

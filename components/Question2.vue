@@ -3,9 +3,9 @@
     <div class="infoQ">
       <v-spacer />
       <h2>
-        {{ $store.state.question }}
+        <!-- {{ $store.state.question }} -->
         Pregunta {{ numero + 1 }}/{{
-          $store.state.currentTest.no_contestadas.length
+          currentTest.no_contestadas.length
         }}&nbsp;&nbsp;
       </h2>
       <!-- <v-btn color="#da3e3e" to="/tests">
@@ -22,7 +22,7 @@
       <v-row>
         <v-col v-for="(answer, idx) in answers" :key="idx" cols="6">
           <v-card
-            :id="'answer-' + idx"
+            :id="`${id}-` + idx"
             shaped
             min-height="200"
             @click="selectAnswer(answer, idx)"
@@ -125,7 +125,9 @@ export default {
     ...mapGetters(['currentTest'])
   },
   mounted() {
-    let response = this.$store.state.currentTest.respuestas[this.numero]
+    console.log('mounted')
+    console.log(this.currentTest)
+    let response = this.currentTest.respuestas[this.numero]
     if (response.answered === true) {
       this.respuesta = response.respuestas
       this.answered = true
@@ -133,7 +135,8 @@ export default {
       for (let i = 0; i < response.respuestas.length; i++) {
         if (response.respuestas[i] !== '') {
           document
-            .getElementById('answer-' + i)
+            // .getElementById(`${this.id}-` + i)
+            .getElementById(`${this.id}-` + i)
             .classList.add('selected-answer')
         }
       }
@@ -143,6 +146,7 @@ export default {
 
   methods: {
     selectAnswer(answer, idx) {
+      console.log(`${this.id}-` + idx)
       if (!this.corrected) {
         //initialize respuesta array
         if (this.respuesta.length === 0) {
@@ -153,17 +157,17 @@ export default {
         //respuesta selection
         if (
           document
-            .getElementById('answer-' + idx)
+            .getElementById(`${this.id}-` + idx)
             .classList.contains('selected-answer')
         ) {
           document
-            .getElementById('answer-' + idx)
+            .getElementById(`${this.id}-` + idx)
             .classList.remove('selected-answer')
           this.respuesta[idx] = ''
           this.counter--
         } else {
           document
-            .getElementById('answer-' + idx)
+            .getElementById(`${this.id}-` + idx)
             .classList.add('selected-answer')
           this.respuesta[idx] = this.answers[idx]
           this.counter++
@@ -176,7 +180,6 @@ export default {
       } else {
         alert('answered')
       }
-      console.log(this.respuesta)
     },
     correction() {
       if (this.respuesta.length > 0) {
@@ -207,12 +210,9 @@ export default {
         if (check.true === correctAnswers && check.false === 0) {
           this.guess = true
         }
-        console.log(this.guess)
         if (this.guess === true) {
-          console.log(this.guess)
           testCheck.right++
           testCheck.blank--
-          console.log(testCheck)
         }
 
         if (this.guess === false) {
@@ -221,17 +221,17 @@ export default {
         }
 
         for (let i = 0; i < cor.length; i++) {
-          document.getElementById('answer-' + i).classList.add('no-click')
+          document.getElementById(`${this.id}-` + i).classList.add('no-click')
 
           if (
             res[i].respuesta === cor[i].respuesta &&
             cor[i].correcta === true
           ) {
             document
-              .getElementById('answer-' + i)
+              .getElementById(`${this.id}-` + i)
               .classList.remove('selected-answer')
             document
-              .getElementById('answer-' + i)
+              .getElementById(`${this.id}-` + i)
               .classList.add('selected-green')
           }
           if (
@@ -239,16 +239,18 @@ export default {
             cor[i].correcta === false
           ) {
             document
-              .getElementById('answer-' + i)
+              .getElementById(`${this.id}-` + i)
               .classList.remove('selected-answer')
-            document.getElementById('answer-' + i).classList.add('selected-red')
+            document
+              .getElementById(`${this.id}-` + i)
+              .classList.add('selected-red')
           }
           if (res[i] === '' && cor[i].correcta === true) {
             document
-              .getElementById('answer-' + i)
+              .getElementById(`${this.id}-` + i)
               .classList.remove('selected-answer')
             document
-              .getElementById('answer-' + i)
+              .getElementById(`${this.id}-` + i)
               .classList.add('selected-circle')
           }
         }
@@ -259,24 +261,23 @@ export default {
           respuestas: this.respuesta,
           guess: this.guess
         }
-        if (
-          this.$store.state.currentTest.respuestas[this.numero].answered ===
-          false
-        ) {
-          let respuesta = this.$store.state.currentTest.respuestas
+        if (this.currentTest.respuestas[this.numero].answered === false) {
+          let respuesta = this.currentTest.respuestas
           respuesta[this.numero] = obj
-          console.log(testCheck)
-          // this.testUpdate(respuesta, testCheck)
+          console.log('beore update')
+          console.log(this.currentTest)
+          this.testUpdate(respuesta, testCheck)
         }
       }
     },
-    async testUpdate(answer, testCheck) {
+    testUpdate(answer, testCheck) {
       const data = {
-        testId: this.$store.state.currentTest._id,
+        testId: this.currentTest._id,
         respuesta: answer,
         testCheck: testCheck
       }
-      await this.$store.dispatch('updateTest', data)
+      // this.$store.commit('saveCurrentTest', data)
+      this.$store.dispatch('updateTest', data)
       // this.$router.push(`/tests/${data.testId}`)
     }
   }
