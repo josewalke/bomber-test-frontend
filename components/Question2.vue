@@ -28,31 +28,31 @@
             @click="selectAnswer(answer, idx)"
           >
             <h3>{{ answer.respuesta }}</h3>
-            <h3>{{ id }}</h3>
             <!-- <h3>{{ selected }}</h3> -->
           </v-card>
+          <h4 class="water-mark">© Jaime Heras</h4>
         </v-col>
         <v-col>
           <div id="under-buttons">
             <v-btn
               class="ma-2"
               outlined
-              fab
               small
               color="#DA3E3E"
               @click="correction"
             >
-              <v-icon>mdi-help</v-icon>
+              DUDA / IMPUGNAR
+              <!-- <v-icon>mdi-help</v-icon> -->
             </v-btn>
             <v-btn
               class="ma-2"
               outlined
-              fab
               small
               color="#DA3E3E"
               @click="correction"
             >
-              <v-icon>mdi-check-bold</v-icon>
+              CORREGIR
+              <!-- <v-icon>mdi-check-bold</v-icon> fab -->
             </v-btn>
           </div>
         </v-col>
@@ -285,6 +285,9 @@ export default {
 </script>
 
 <style scoped>
+.water-mark {
+  color: rgb(158, 158, 158);
+}
 .question-holder {
   -webkit-user-select: none;
   -moz-user-select: -moz-none;
@@ -332,6 +335,9 @@ h1 {
 }
 h2 {
   color: rgb(68, 68, 68);
+}
+h3 {
+  font-size: 1.5rem;
 }
 .v-icon {
   color: rgb(68, 68, 68);
