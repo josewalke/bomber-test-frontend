@@ -1,9 +1,8 @@
 <template>
   <div class="main-div">
     <div class="question-title">
-      <h1>{{ $store.state.currentTest.title }}</h1>
-      <h1>{{ $store.state.question }}</h1>
-      <h2>{{ $store.state.currentTest.no_contestadas.length }}</h2>
+      <h1>Titulo: {{ currentTest.title }}</h1>
+      <h1>Pregunta {{ question }} / {{ currentTest.no_contestadas.length }}</h1>
       <v-btn color="#da3e3e" to="/tests">
         <v-icon class="white--text">mdi-close</v-icon>
       </v-btn>
@@ -13,7 +12,7 @@
         <template>
           <v-carousel hide-delimiters height="100vh">
             <v-carousel-item
-              v-for="(question, i) in $store.state.currentTest.no_contestadas"
+              v-for="(question, i) in currentTest.no_contestadas"
               :key="i"
             >
               <v-sheet color="white" height="100%" tile>
@@ -40,6 +39,7 @@
 <script>
 import API from '~/services/api'
 import Question2 from '~/components/Question2'
+import { mapGetters } from 'vuex'
 
 export default {
   layout: 'test',
@@ -54,10 +54,12 @@ export default {
     const temas = await API.getAllTemasNames()
     return { temas }
   },
+  computed: {
+    ...mapGetters(['currentTest', 'question'])
+  },
   methods: {
     async selectAnswer(number) {
       console.log(number)
-      // await this.$store.dispatch('verRespuesta', responseBody)
     }
   }
 }
