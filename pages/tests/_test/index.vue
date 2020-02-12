@@ -2,7 +2,7 @@
   <div class="main-div">
     <div class="question-title">
       <h1>Titulo: {{ currentTest.title }}</h1>
-      <h1>Pregunta {{ numero }} / {{ currentTest.length }}</h1>
+      <h1>Pregunta {{ question }} / {{ currentTest.no_contestadas.length }}</h1>
       <v-btn color="#da3e3e" to="/tests">
         <v-icon class="white--text">mdi-close</v-icon>
       </v-btn>
@@ -55,12 +55,11 @@ export default {
     return { temas }
   },
   computed: {
-    ...mapGetters(['currentTest'])
+    ...mapGetters(['currentTest', 'question'])
   },
   methods: {
     async selectAnswer(number) {
       console.log(number)
-      // await this.$store.dispatch('verRespuesta', responseBody)
     }
   }
 }
