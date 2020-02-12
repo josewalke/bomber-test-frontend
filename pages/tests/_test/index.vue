@@ -1,9 +1,8 @@
 <template>
   <div class="main-div">
     <div class="question-title">
-      <h1>{{ currentTest.title }}</h1>
-      <!-- <h1>{{ $store.state.question }}</h1> -->
-      <!-- <h2>{{ currentTest.no_contestadas.length }}</h2> -->
+      <h1>Titulo: {{ currentTest.title }}</h1>
+      <h1>Pregunta {{ numero }} / {{ currentTest.length }}</h1>
       <v-btn color="#da3e3e" to="/tests">
         <v-icon class="white--text">mdi-close</v-icon>
       </v-btn>
