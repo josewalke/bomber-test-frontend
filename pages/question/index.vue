@@ -82,7 +82,7 @@
               label="Tema"
             ></v-overflow-btn>
             <v-overflow-btn
-              v-if="seleccion2 === 'legislacion'"
+              v-if="seleccion2 === 'legislación'"
               v-model="seleccion4"
               class="my-2"
               :items="nombre2"
