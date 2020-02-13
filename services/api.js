@@ -240,5 +240,13 @@ export default {
     return axios.delete('tests/desafio').then(response => {
       return response.data
     })
+  },
+  prueba() {
+    console.log('hola desde api.js')
+  },
+  updateQuestionById(newQuestion) {
+    return axios
+      .put('questions/' + newQuestion._id, newQuestion)
+      .then(response => response.data)
   }
 }

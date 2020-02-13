@@ -11,10 +11,35 @@
         </thead>
         <tbody>
           <tr v-for="item in items" :key="item._id">
-            <td>{{ item.name }}</td>
-            <td>{{ item.category }}</td>
-            <td>
-              <v-btn color="error" @click="deleteTema(item)">Eliminar</v-btn>
+            <td v-if="item.name != 'Sin Tema'">{{ item.name }}</td>
+            <td v-if="item.name != 'Sin Tema'">{{ item.category }}</td>
+            <td v-if="item.name != 'Sin Tema'">
+              <v-dialog max-width="500">
+                <template v-slot:activator="{ on }">
+                  <v-btn color="error" dark v-on="on">Eliminar</v-btn>
+                </template>
+                <v-card>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-title class="headline mb-1"
+                        >Atencion</v-list-item-title
+                      >
+                      <v-list-item-subtitle
+                        >Si acepta borrar este tema las preguntas relacionadas
+                        se veran afectadas.<br />
+                        ¿Esta seguro de borrarlo?
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+
+                  <v-card-actions align="center" justify="center">
+                    <v-spacer></v-spacer>
+                    <v-btn color="error" @click="deleteTema(item)"
+                      >Eliminar</v-btn
+                    >
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </td>
           </tr>
         </tbody>
@@ -24,7 +49,6 @@
 </template>
 
 <script>
-import API from '~/services/api'
 export default {
   name: 'TemasList',
   props: {
@@ -49,8 +73,7 @@ export default {
   },
   methods: {
     deleteTema(tema) {
-      API.deleteTema(tema._id)
-      location.reload()
+      this.$store.dispatch('cambiarTemas', tema)
     }
   }
 }
