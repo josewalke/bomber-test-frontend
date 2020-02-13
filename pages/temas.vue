@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       newTema: '',
-      items: ['bomberil', 'legislacion'],
+      items: ['bomberil', 'legislación'],
       seleccion: ''
     }
   },
