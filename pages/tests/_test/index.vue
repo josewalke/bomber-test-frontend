@@ -2,7 +2,7 @@
   <div class="main-div">
     <div class="question-title">
       <h1>Titulo: {{ currentTest.title }}</h1>
-      <h1>Pregunta {{ question }} / {{ currentTest.no_contestadas.length }}</h1>
+      <h1>Pregunta / {{ currentTest.no_contestadas.length }}</h1>
       <v-btn color="#da3e3e" to="/tests">
         <v-icon class="white--text">mdi-close</v-icon>
       </v-btn>
@@ -15,6 +15,7 @@
               v-for="(question, i) in currentTest.no_contestadas"
               :key="i"
             >
+              <h1>Aquí esta el {{ i + 1 }}</h1>
               <v-sheet color="white" height="100%" tile>
                 <v-row align="center" justify="center">
                   <Question2

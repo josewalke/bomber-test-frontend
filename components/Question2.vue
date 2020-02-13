@@ -199,22 +199,8 @@ export default {
           element.correcta === true ? correctAnswers++ : null
         )
 
-        let testCheck = {
-          right: this.currentTest.testCheck.right,
-          wrong: this.currentTest.testCheck.wrong,
-          blank: this.currentTest.testCheck.blank
-        }
         if (check.true === correctAnswers && check.false === 0) {
           this.guess = true
-        }
-        if (this.guess === true) {
-          testCheck.right++
-          testCheck.blank--
-        }
-
-        if (this.guess === false) {
-          testCheck.wrong++
-          testCheck.blank--
         }
 
         for (let i = 0; i < cor.length; i++) {
@@ -261,19 +247,16 @@ export default {
         if (this.currentTest.respuestas[this.numero].answered === false) {
           let respuesta = this.currentTest.respuestas
           respuesta[this.numero] = obj
-          this.testUpdate(respuesta, testCheck)
+          this.testUpdate(respuesta)
         }
       }
     },
-    testUpdate(answer, testCheck) {
+    testUpdate(answer) {
       const data = {
         testId: this.currentTest._id,
-        respuesta: answer,
-        testCheck: testCheck
+        respuesta: answer
       }
-      // this.$store.commit('saveCurrentTest', data)
       this.$store.dispatch('updateTest', data)
-      // this.$router.push(`/tests/${data.testId}`)
     }
   }
 }
@@ -333,6 +316,7 @@ h2 {
 }
 h3 {
   font-size: 1.5rem;
+  font-weight: 300;
 }
 .v-icon {
   color: rgb(68, 68, 68);
