@@ -28,31 +28,31 @@
             @click="selectAnswer(answer, idx)"
           >
             <h3>{{ answer.respuesta }}</h3>
-            <h3>{{ id }}</h3>
             <!-- <h3>{{ selected }}</h3> -->
           </v-card>
+          <h4 class="water-mark">© Jaime Heras</h4>
         </v-col>
         <v-col>
           <div id="under-buttons">
             <v-btn
               class="ma-2"
               outlined
-              fab
               small
               color="#DA3E3E"
               @click="correction"
             >
-              <v-icon>mdi-help</v-icon>
+              DUDA / IMPUGNAR
+              <!-- <v-icon>mdi-help</v-icon> -->
             </v-btn>
             <v-btn
               class="ma-2"
               outlined
-              fab
               small
               color="#DA3E3E"
               @click="correction"
             >
-              <v-icon>mdi-check-bold</v-icon>
+              CORREGIR
+              <!-- <v-icon>mdi-check-bold</v-icon> fab -->
             </v-btn>
           </div>
         </v-col>
@@ -125,8 +125,6 @@ export default {
     ...mapGetters(['currentTest'])
   },
   mounted() {
-    console.log('mounted')
-    console.log(this.currentTest)
     let response = this.currentTest.respuestas[this.numero]
     if (response.answered === true) {
       this.respuesta = response.respuestas
@@ -146,7 +144,6 @@ export default {
 
   methods: {
     selectAnswer(answer, idx) {
-      console.log(`${this.id}-` + idx)
       if (!this.corrected) {
         //initialize respuesta array
         if (this.respuesta.length === 0) {
@@ -202,22 +199,8 @@ export default {
           element.correcta === true ? correctAnswers++ : null
         )
 
-        let testCheck = {
-          right: this.currentTest.testCheck.right,
-          wrong: this.currentTest.testCheck.wrong,
-          blank: this.currentTest.testCheck.blank
-        }
         if (check.true === correctAnswers && check.false === 0) {
           this.guess = true
-        }
-        if (this.guess === true) {
-          testCheck.right++
-          testCheck.blank--
-        }
-
-        if (this.guess === false) {
-          testCheck.wrong++
-          testCheck.blank--
         }
 
         for (let i = 0; i < cor.length; i++) {
@@ -264,27 +247,25 @@ export default {
         if (this.currentTest.respuestas[this.numero].answered === false) {
           let respuesta = this.currentTest.respuestas
           respuesta[this.numero] = obj
-          console.log('beore update')
-          console.log(this.currentTest)
-          this.testUpdate(respuesta, testCheck)
+          this.testUpdate(respuesta)
         }
       }
     },
-    testUpdate(answer, testCheck) {
+    testUpdate(answer) {
       const data = {
         testId: this.currentTest._id,
-        respuesta: answer,
-        testCheck: testCheck
+        respuesta: answer
       }
-      // this.$store.commit('saveCurrentTest', data)
       this.$store.dispatch('updateTest', data)
-      // this.$router.push(`/tests/${data.testId}`)
     }
   }
 }
 </script>
 
 <style scoped>
+.water-mark {
+  color: rgb(158, 158, 158);
+}
 .question-holder {
   -webkit-user-select: none;
   -moz-user-select: -moz-none;
@@ -332,6 +313,10 @@ h1 {
 }
 h2 {
   color: rgb(68, 68, 68);
+}
+h3 {
+  font-size: 1.5rem;
+  font-weight: 300;
 }
 .v-icon {
   color: rgb(68, 68, 68);

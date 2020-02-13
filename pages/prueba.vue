@@ -1,385 +1,173 @@
 <template>
   <div>
-    <v-container>
-      <div v-if="crear">
-        <h1>Enunciado</h1>
-        <v-textarea v-model="enunciado" auto-grow solo></v-textarea>
-        <h1>Posibles respuestas</h1>
-        <v-checkbox
-          v-model="checkbox1"
-          label="Respuesta correcta"
-          color="primary"
-        ></v-checkbox>
-        <v-textarea
-          v-model="opcion1"
-          auto-grow
-          solo
-          label="Opcion1"
-        ></v-textarea>
-        <v-checkbox
-          v-model="checkbox2"
-          label="Respuesta correcta"
-          color="primary"
-        ></v-checkbox>
-        <v-textarea
-          v-model="opcion2"
-          auto-grow
-          solo
-          label="Opcion2"
-        ></v-textarea>
-        <v-checkbox
-          v-model="checkbox3"
-          label="Respuesta correcta"
-          color="primary"
-        ></v-checkbox>
-        <v-textarea
-          v-model="opcion3"
-          auto-grow
-          solo
-          label="Opcion3"
-        ></v-textarea>
-        <v-checkbox
-          v-model="checkbox4"
-          label="Respuesta correcta"
-          color="primary"
-        ></v-checkbox>
-        <v-textarea
-          v-model="opcion4"
-          auto-grow
-          solo
-          label="Opcion4"
-        ></v-textarea>
-        <h1>Explicacion de la respuesta</h1>
-        <v-textarea
-          v-model="explicacion"
-          auto-grow
-          solo
-          label="Escriba la explicacion de la respuesta"
-        ></v-textarea>
-        <v-row>
-          <v-col cols="4">
-            <v-overflow-btn
-              v-model="seleccion3"
-              class="my-2"
-              :items="dificultad"
-              label="Dificultad"
-            ></v-overflow-btn>
-          </v-col>
-          <v-col cols="4">
-            <v-overflow-btn
-              v-model="seleccion2"
-              class="my-2"
-              :items="categoria"
-              label="Categoria"
-            ></v-overflow-btn>
-          </v-col>
-          <v-col cols="4">
-            <v-overflow-btn
-              v-if="seleccion2 === 'bomberil'"
-              v-model="seleccion"
-              class="my-2"
-              :items="nombre"
-              label="Tema"
-            ></v-overflow-btn>
-            <v-overflow-btn
-              v-if="seleccion2 === 'legislacion'"
-              v-model="seleccion4"
-              class="my-2"
-              :items="nombre2"
-              label="Tema"
-            ></v-overflow-btn>
-          </v-col>
-          <v-col cols="4">
-            <br />
-            <v-btn @click="crearQuestion">Crear</v-btn>
-          </v-col>
-        </v-row>
-      </div>
-      <v-row>
-        <v-col cols="4">
-          <v-select
-            v-model="f_categoria"
-            :items="categoria"
-            label="Categoria"
-          ></v-select>
-        </v-col>
-        <v-col cols="4">
-          <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
-            <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
-          </span>
-          <span v-if="f_categoria === 'bomberil'">
-            <v-select v-model="f_tema" :items="nombre" label="Tema"></v-select>
-          </span>
-          <span v-if="f_categoria === 'legislación'">
-            <v-select v-model="f_tema" :items="nombre2" label="Tema"></v-select>
-          </span>
-        </v-col>
-        <v-col cols="4">
-          <br />
-          <v-btn @click="filtrar">Filtrar</v-btn>
-          <v-btn @click="change_crear">Crear Pregunta</v-btn>
-        </v-col>
-        <v-col cols="8">
-          <v-textarea
-            v-model="searchText"
-            label="Introduzca parte del enunciado con exactitud"
-            auto-grow
-            solo
-          ></v-textarea>
-        </v-col>
-        <v-col cols="4">
-          <br />
-          <br />
-          <v-btn @click="buscarText">Buscar enunciado</v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-simple-table>
-      <template v-slot:default>
-        <thead>
-          <tr>
-            <th class="text-left">Enunciado</th>
-            <th class="text-left">Temario</th>
-            <th class="text-left">Categoria</th>
-          </tr>
-        </thead>
-        <tbody v-if="filtro">
-          <tr
-            v-for="(item, idx) in preguntas"
-            :key="idx"
-            @click="goToQuestion(item._id, item)"
-          >
-            <td class="text-truncate" style="max-width: 150px;">
-              {{ item.enunciado }}
-            </td>
-
-            <td class="text-truncate" style="max-width: 150px;">
-              {{ item.tema_id }}
-            </td>
-            <td>{{ item.category }}</td>
-          </tr>
-        </tbody>
-        <tbody v-else>
-          <tr
-            v-for="(item, idx) in filtrado"
-            :key="idx"
-            @click="goToQuestion(item._id, item)"
-          >
-            <td class="text-truncate" style="max-width: 150px;">
-              {{ item.enunciado }}
-            </td>
-            <td class="text-truncate" style="max-width: 150px;">
-              {{ item.tema_id }}
-            </td>
-            <td class="text-truncate">
-              {{ item.category }}
-            </td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
+    <h1 style="display: 'none';">
+      Grabar vídeo de la webcam y audio del micrófono con JavaScript
+    </h1>
+    <a href="//parzibyte.me/blog" target="_blank">By Parzibyte</a>
+    <div>
+      <label for="dispositivosDeAudio">Micrófono:</label><br />
+      <select id="dispositivosDeAudio" name="dispositivosDeAudio"></select>
+      <br /><br />
+      <label for="dispositivosDeVideo">Cámara:</label><br />
+      <select id="dispositivosDeVideo" name="dispositivosDeVideo"></select>
+      <br /><br />
+      <video id="video" muted="muted"></video>
+      <br /><br />
+      <p id="duracion"></p>
+      <br />
+      <v-btn @click="comenzarAGrabar">Comenzar</v-btn>
+      <v-btn @click="detenerGrabacion">Detener</v-btn>
+    </div>
+    {{ dispositivosDeAudio }}
   </div>
 </template>
 
 <script>
-import API from '~/services/api'
 export default {
-  async asyncData() {
-    const temas = await API.getAllTemas()
-    const nombre = []
-    const id = []
-    const nombre2 = []
-    const id2 = []
-    const temario = []
-    for (let i = 0; i < temas.length; i++) {
-      temario.push(temas[i].name)
-      if (temas[i].category === 'bomberil') {
-        nombre.push(temas[i].name)
-        id.push(temas[i]._id)
-      } else {
-        nombre2.push(temas[i].name)
-        id2.push(temas[i]._id)
-      }
-    }
-    const preguntas = await API.getAllQuestions()
-    for (let i = 0; i < preguntas.length; i++) {
-      for (let x = 0; x < temas.length; x++) {
-        if (preguntas[i].tema_id === temas[x]._id) {
-          preguntas[i].tema_id = temas[x].name
-        }
-      }
-    }
-
-    return { nombre, id, preguntas, temas, nombre2, id2, temario }
-  },
+  async asyncData() {},
   data() {
     return {
-      enunciado: '',
-      opcion1: '',
-      opcion2: '',
-      opcion3: '',
-      opcion4: '',
-      checkbox1: false,
-      checkbox2: false,
-      checkbox3: false,
-      checkbox4: false,
-      explicacion: '',
-      seleccion: '',
-      categoria: ['bomberil', 'legislación', 'N/A'],
-      seleccion2: '',
-      dificultad: ['Facil', 'Medio', 'Dificil'],
-      seleccion3: '',
-      seleccion4: '',
-      f_tema: '',
-      f_categoria: '',
-      filtro: true,
-      crear: false,
-      filtrado: [],
-      searchText: ''
+      dispositivosDeAudio: document.querySelector('#dispositivosDeAudio'),
+      dispositivosDeVideo: document.querySelector('#dispositivosDeVideo'),
+      duracion: document.querySelector('#duracion'),
+      video: document.querySelector('#video'),
+      tiempoInicio: '',
+      mediaRecorder: '',
+      idIntervalo: '',
+      opcion: ''
     }
   },
+  mounted() {
+    if (typeof MediaRecorder === 'undefined' || !this.tieneSoporteUserMedia())
+      return alert(
+        'Tu navegador web no cumple los requisitos; por favor, actualiza a un navegador decente como Firefox o Google Chrome'
+      )
+    document.addEventListener('DOMContentLoaded', this.limpiarSelect)
+    document.addEventListener('DOMContentLoaded', this.llenarLista)
+  },
   methods: {
-    crearQuestion() {
-      if (this.seleccion.length > 0) {
-        const newQuestion = {
-          enunciado: this.enunciado,
-          answers: [
-            {
-              respuesta: this.opcion1,
-              correcta: this.checkbox1
-            },
-            {
-              respuesta: this.opcion2,
-              correcta: this.checkbox2
-            },
-            {
-              respuesta: this.opcion3,
-              correcta: this.checkbox3
-            },
-            {
-              respuesta: this.opcion4,
-              correcta: this.checkbox4
-            }
-          ],
-          tema_id: this.id[this.nombre.indexOf(this.seleccion)],
-          category: this.seleccion2,
-          difficulty: this.seleccion3,
-          explicacion: this.explicacion
-        }
-        //API.crearQuestion(newQuestion)
-        console.log(newQuestion)
-        this.enunciado = ''
-        this.opcion1 = ''
-        this.opcion2 = ''
-        this.opcion3 = ''
-        this.opcion4 = ''
-        this.checkbox1 = false
-        this.checkbox2 = false
-        this.checkbox3 = false
-        this.checkbox4 = false
-        this.seleccion2 = ''
-        this.seleccion3 = ''
-        this.seleccion = ''
-        this.explicacion = ''
-      } else {
-        const newQuestion = {
-          enunciado: this.enunciado,
-          answers: [
-            {
-              respuesta: this.opcion1,
-              correcta: this.checkbox1
-            },
-            {
-              respuesta: this.opcion2,
-              correcta: this.checkbox2
-            },
-            {
-              respuesta: this.opcion3,
-              correcta: this.checkbox3
-            },
-            {
-              respuesta: this.opcion4,
-              correcta: this.checkbox4
-            }
-          ],
-          tema_id: this.id[this.nombre.indexOf(this.seleccion4)],
-          category: this.seleccion2,
-          difficulty: this.seleccion3,
-          explicacion: this.explicacion
-        }
-        //API.crearQuestion(newQuestion)
-        console.log(newQuestion)
-        this.enunciado = ''
-        this.opcion1 = ''
-        this.opcion2 = ''
-        this.opcion3 = ''
-        this.opcion4 = ''
-        this.checkbox1 = false
-        this.checkbox2 = false
-        this.checkbox3 = false
-        this.checkbox4 = false
-        this.seleccion2 = ''
-        this.seleccion3 = ''
-        this.seleccion4 = ''
-        this.explicacion = ''
+    tieneSoporteUserMedia() {
+      !!navigator.mediaDevices.getUserMedia
+    },
+    limpiarSelect(elemento) {
+      for (let x = elemento.options.length - 1; x >= 0; x--) {
+        elemento.options.remove(x)
       }
     },
-    goToQuestion(question) {
-      this.$router.push(`/question/${question}`)
+    segundosATiempo(numeroDeSegundos) {
+      let horas = Math.floor(numeroDeSegundos / 60 / 60)
+      numeroDeSegundos -= horas * 60 * 60
+      let minutos = Math.floor(numeroDeSegundos / 60)
+      numeroDeSegundos -= minutos * 60
+      numeroDeSegundos = parseInt(numeroDeSegundos)
+      if (horas < 10) horas = '0' + horas
+      if (minutos < 10) minutos = '0' + minutos
+      if (numeroDeSegundos < 10) numeroDeSegundos = '0' + numeroDeSegundos
+      return `${horas}:${minutos}:${numeroDeSegundos}`
     },
-    filtrar() {
-      this.filtro = false
-      var f_categoria = this.f_categoria
-      var f_tema = this.f_tema
+    refrescar() {
+      this.duracion.textContent = this.segundosATiempo(
+        (Date.now() - this.tiempoInicio) / 1000
+      )
+    },
+    llenarLista() {
+      navigator.mediaDevices.enumerateDevices().then(dispositivos => {
+        this.limpiarSelect(this.dispositivosDeAudio)
+        this.limpiarSelect(this.dispositivosDeVideo)
+        dispositivos.forEach((dispositivo, indice) => {
+          if (dispositivo.kind === 'audioinput') {
+            this.opcion = document.createElement('option')
+            // Firefox no trae nada con label, que viva la privacidad
+            // y que muera la compatibilidad
+            this.opcion.text = dispositivo.label || `Micrófono ${indice + 1}`
+            this.opcion.value = dispositivo.deviceId
+            this.dispositivosDeAudio.appendChild(this.opcion)
+          } else if (dispositivo.kind === 'videoinput') {
+            this.opcion = document.createElement('option')
+            // Firefox no trae nada con label, que viva la privacidad
+            // y que muera la compatibilidad
+            this.opcion.text = dispositivo.label || `Cámara ${indice + 1}`
+            this.opcion.value = dispositivo.deviceId
+            this.dispositivosDeVideo.appendChild(this.opcion)
+          }
+        })
+      })
+    },
+    comenzarAContar() {
+      this.tiempoInicio = Date.now()
+      this.idIntervalo = setInterval(this.refrescar, 500)
+    },
+    comenzarAGrabar() {
+      if (!this.dispositivosDeAudio.options.length)
+        return alert('No hay micrófono')
+      if (!this.dispositivosDeVideo.options.length)
+        return alert('No hay cámara')
+      // No permitir que se grabe doblemente
+      if (this.mediaRecorder) return alert('Ya se está grabando')
 
-      if (f_categoria.length > 0 && f_tema.length === 0) {
-        this.filtrado = this.preguntas.filter(x => x.category === f_categoria)
-      }
-      if (
-        (f_tema.length > 0 && f_categoria.length === 0) ||
-        (f_tema.length > 0 && f_categoria === 'N/A')
-      ) {
-        this.filtrado = this.preguntas.filter(x => x.tema_id === f_tema)
-      }
-      if (f_categoria.length > 0 && f_tema.length > 0) {
-        this.filtrado = this.preguntas.filter(
-          x => x.tema_id === f_tema && x.category === f_categoria
-        )
-      }
-      console.log(this.filtrado)
-      this.f_categoria = ''
-      this.f_tema = ''
-    },
-    change_crear() {
-      this.crear = true
-    },
-    buscarText() {
-      this.filtrado = []
-      this.filtro = false
-      var contador = 0
-      var resultados = []
-      var max = 0
-      if (this.searchText.length > 0) {
-        for (let i = 0; i < this.preguntas.length; i++) {
-          for (let x = 0; x < this.searchText.length; x++) {
-            if (this.preguntas[i].enunciado[x] === this.searchText[x]) {
-              contador++
-            }
+      navigator.mediaDevices
+        .getUserMedia({
+          audio: {
+            deviceId: this.dispositivosDeAudio.value // Indicar dispositivo de audio
+          },
+          video: {
+            deviceId: this.dispositivosDeAudio.value // Indicar dispositivo de vídeo
           }
-          resultados.push(contador)
-          contador = 0
-        }
-        for (let i = 0; i < resultados.length; i++) {
-          if (resultados[i] > max) {
-            max = resultados[i]
-          }
-        }
-        this.filtrado.push(this.preguntas[resultados.indexOf(max)])
-        console.log(this.filtrado)
-      }
-      if (this.searchText.length === 0) {
-        this.filtrado = this.preguntas
-      }
+        })
+        .then(stream => {
+          // Poner stream en vídeo
+          this.video.srcObject = stream
+          this.video.play()
+          // Comenzar a grabar con el stream
+          this.mediaRecorder = new MediaRecorder(stream)
+          this.mediaRecorder.start()
+          this.comenzarAContar()
+          // En el arreglo pondremos los datos que traiga el evento dataavailable
+          const fragmentosDeAudio = []
+          // Escuchar cuando haya datos disponibles
+          this.mediaRecorder.addEventListener('dataavailable', evento => {
+            // Y agregarlos a los fragmentos
+            fragmentosDeAudio.push(evento.data)
+          })
+          // Cuando se detenga (haciendo click en el botón) se ejecuta esto
+          this.mediaRecorder.addEventListener('stop', () => {
+            // Pausar vídeo
+            this.video.pause()
+            // Detener el stream
+            stream.getTracks().forEach(track => track.stop())
+            // Detener la cuenta regresiva
+            this.detenerConteo()
+            // Convertir los fragmentos a un objeto binario
+            const blobVideo = new Blob(fragmentosDeAudio)
+
+            // Crear una URL o enlace para descargar
+            const urlParaDescargar = URL.createObjectURL(blobVideo)
+            // Crear un elemento <a> invisible para descargar el audio
+            let a = document.createElement('a')
+            document.body.appendChild(a)
+            a.style = 'display: none'
+            a.href = urlParaDescargar
+            a.download = 'Oposiciones_Bombero.mp4'
+            // Hacer click en el enlace
+            a.click()
+            // Y remover el objeto
+            window.URL.revokeObjectURL(urlParaDescargar)
+          })
+        })
+        .catch(error => {
+          // Aquí maneja el error, tal vez no dieron permiso
+          console.log(error)
+        })
+    },
+    detenerConteo() {
+      clearInterval(this.idIntervalo)
+      this.tiempoInicio = null
+      this.$duracion.textContent = ''
+    },
+    detenerGrabacion() {
+      if (!this.mediaRecorder) return alert('No se está grabando')
+      this.mediaRecorder.stop()
+      this.mediaRecorder = null
     }
   }
 }
