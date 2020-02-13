@@ -240,5 +240,8 @@ export default {
     return axios.delete('tests/desafio').then(response => {
       return response.data
     })
+  },
+  prueba() {
+    console.log('hola desde api.js')
   }
 }
