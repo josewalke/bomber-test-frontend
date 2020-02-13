@@ -1,28 +1,28 @@
 <template>
-  <div>
+  <div class>
     <div>
       <div class="header-wraper">
-        <h1>Mis Tests</h1>
+        <h1 class="ml-4">Los Tests de {{ userName }}</h1>
         <div>
           <v-btn
             class="ma-2"
             outlined
-            fab
             small
             color="#DA3E3E"
             @click="testGeneration"
           >
-            <v-icon>mdi-plus-thick</v-icon>
+            TEST ALEATORIO
+            <!-- <v-icon>mdi-plus-thick</v-icon> fab -->
           </v-btn>
           <v-btn
             class="ma-2"
             outlined
-            fab
             small
             color="#DA3E3E"
             @click="goToTestConfig"
           >
-            <v-icon>mdi-tune</v-icon>
+            <!-- <v-icon>mdi-tune</v-icon> fab -->
+            CONFIGURAR TEST
           </v-btn>
         </div>
       </div>
@@ -62,7 +62,7 @@
           </tbody>
         </template>
       </v-simple-table>
-      <h1>Desafio de la semana</h1>
+      <h1 class="ml-4">Desafio de la semana</h1>
       <v-simple-table>
         <template v-slot:default>
           <thead>
@@ -111,7 +111,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['tests'])
+    ...mapGetters(['tests', 'userName'])
   },
   methods: {
     async testGeneration() {

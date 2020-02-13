@@ -496,5 +496,33 @@ export const actions = {
         commit('saveUpdatePregunta', pregunta)
       }
     }
+  },
+  async cambiarTemas({ commit }, tema) {
+    const pregunta = await API.getAllQuestions()
+    commit('prueba')
+    if (!pregunta.error) {
+      const temario = await API.getAllTemas()
+      if (!temario.error) {
+        for (let i = 0; i < pregunta.length; i++) {
+          for (let x = 0; x < temario.length; x++) {
+            if (pregunta[i].tema_id === tema._id) {
+              if (
+                temario[x].category === pregunta[i].category &&
+                temario[x].name === 'Sin Tema'
+              ) {
+                pregunta[i].tema_id = temario[x]._id
+                const newQuestion = await API.updateQuestionById(pregunta[i])
+                if (!newQuestion.error) {
+                  const deleteT = await API.deleteTema(tema._id)
+                  if (!deleteT.error) {
+                    location.reload()
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
