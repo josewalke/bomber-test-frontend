@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import API from '~/services/api'
 export default {
   name: 'TemasList',
   props: {
@@ -74,10 +73,7 @@ export default {
   },
   methods: {
     deleteTema(tema) {
-      API.prueba()
       this.$store.dispatch('cambiarTemas', tema)
-      // API.deleteTema(tema._id)
-      // location.reload()
     }
   }
 }

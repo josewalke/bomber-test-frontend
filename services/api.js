@@ -243,5 +243,10 @@ export default {
   },
   prueba() {
     console.log('hola desde api.js')
+  },
+  updateQuestionById(newQuestion) {
+    return axios
+      .put('questions/' + newQuestion._id, newQuestion)
+      .then(response => response.data)
   }
 }

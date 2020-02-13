@@ -500,14 +500,25 @@ export const actions = {
   async cambiarTemas({ commit }, tema) {
     const pregunta = await API.getAllQuestions()
     commit('prueba')
-    console.log(tema)
     if (!pregunta.error) {
       const temario = await API.getAllTemas()
       if (!temario.error) {
         for (let i = 0; i < pregunta.length; i++) {
-          for (let x = 0; 0 < temario.length; x++) {
+          for (let x = 0; x < temario.length; x++) {
             if (pregunta[i].tema_id === tema._id) {
-              console.log('funciona')
+              if (
+                temario[x].category === pregunta[i].category &&
+                temario[x].name === 'Sin Tema'
+              ) {
+                pregunta[i].tema_id = temario[x]._id
+                const newQuestion = await API.updateQuestionById(pregunta[i])
+                if (!newQuestion.error) {
+                  const deleteT = await API.deleteTema(tema._id)
+                  if (!deleteT.error) {
+                    location.reload()
+                  }
+                }
+              }
             }
           }
         }
