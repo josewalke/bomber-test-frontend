@@ -125,8 +125,6 @@ export default {
     ...mapGetters(['currentTest'])
   },
   mounted() {
-    console.log('mounted')
-    console.log(this.currentTest)
     let response = this.currentTest.respuestas[this.numero]
     if (response.answered === true) {
       this.respuesta = response.respuestas
@@ -146,7 +144,6 @@ export default {
 
   methods: {
     selectAnswer(answer, idx) {
-      console.log(`${this.id}-` + idx)
       if (!this.corrected) {
         //initialize respuesta array
         if (this.respuesta.length === 0) {
@@ -264,8 +261,6 @@ export default {
         if (this.currentTest.respuestas[this.numero].answered === false) {
           let respuesta = this.currentTest.respuestas
           respuesta[this.numero] = obj
-          console.log('beore update')
-          console.log(this.currentTest)
           this.testUpdate(respuesta, testCheck)
         }
       }
