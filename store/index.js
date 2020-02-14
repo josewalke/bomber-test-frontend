@@ -20,6 +20,7 @@ export const state = () => ({
   tests: [],
   messages: [],
   currentTest: {},
+  currentTestQuestion: {},
   question: {},
   position: '',
   updatePregunta: {}
@@ -145,6 +146,9 @@ export const mutations = {
   },
   saveCurrentTest(state, test) {
     state.currentTest = test
+  },
+  saveCurrentQuestion(state, question) {
+    state.currentTestQuestion = question
   },
   saveQuestion(state, question) {
     state.question = question

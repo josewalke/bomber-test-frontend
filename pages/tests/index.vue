@@ -120,6 +120,7 @@ export default {
     },
     goToTest(id) {
       this.$router.push(`/tests/${id}`)
+      console.log(id)
     },
     goToTestConfig() {
       this.$router.push(`/tests/config`)

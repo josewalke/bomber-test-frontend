@@ -54,6 +54,10 @@ export default {
     return axios.get('messages/').then(response => response.data)
   },
   getTest(testId) {
+    console.log('🔥🔥🔥🔥    🔥🔥🔥🔥🔥🔥🔥')
+    console.log(testId)
+    console.log('🔥🔥🔥🔥    🔥🔥🔥🔥🔥🔥🔥')
+
     return axios.get('tests/' + testId).then(response => response.data)
   },
   getAllTemasNames() {

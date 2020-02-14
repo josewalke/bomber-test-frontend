@@ -125,7 +125,6 @@ export default {
         incorrect: badAnswer
       }
       await this.$store.dispatch('updateTest', test)
-      // this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
       console.log(test)
     }
   }
