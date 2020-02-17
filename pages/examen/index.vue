@@ -15,18 +15,30 @@
           </v-col>
         </v-row>
         {{ correctionOn() }}
-        <v-switch
-          v-model="correctorSwitch"
-          :label="`Corrección instantánea ${switchStatus}`"
-          correction-on-
-          color="primary"
-        ></v-switch>
-        <v-switch
-          v-model="desafio"
-          label="Desafio de la semana"
-          correction-on-
-          color="primary"
-        ></v-switch>
+        <v-row>
+          <v-col cols="3">
+            <v-switch
+              v-model="correctorSwitch"
+              :label="`Corrección instantánea ${switchStatus}`"
+              correction-on-
+              color="primary"
+            ></v-switch>
+          </v-col>
+          <v-col cols="3">
+            <v-switch
+              v-model="desafio"
+              label="Desafio de la semana"
+              correction-on-
+              color="primary"
+            ></v-switch>
+          </v-col>
+          <v-col cols="3">
+            <v-btn class="mt-4">Test Premium</v-btn>
+          </v-col>
+          <v-col cols="3">
+            <v-btn class="mt-4">Desafio Semanal</v-btn>
+          </v-col>
+        </v-row>
       </v-form>
       <v-card fixd flat>
         <v-card-title>
@@ -42,7 +54,7 @@
         <v-data-table
           v-model="select_student"
           :headers="headers_student"
-          :items="student"
+          :items="student_active"
           item-key="_id"
           show-select
           class="elevation-1"
@@ -105,6 +117,7 @@ export default {
     const preguntas = await API.getAllQuestions()
     const bomberil = []
     const legislacion = []
+    const student_active = []
     for (let i = 0; i < preguntas.length; i++) {
       for (let x = 0; x < temas.length; x++) {
         if (preguntas[i].tema_id === temas[x]._id) {
@@ -117,7 +130,12 @@ export default {
         }
       }
     }
-    return { student, temas, bomberil, legislacion }
+    for (let i = 0; i < student.length; i++) {
+      if (student[i].active === true) {
+        student_active.push(student[i])
+      }
+    }
+    return { student_active, temas, bomberil, legislacion }
   },
   data() {
     return {
@@ -212,6 +230,9 @@ export default {
         }
         API.crearExamen(test)
       }
+    },
+    prueba() {
+      console.log('prueba realizada')
     }
   }
 }
