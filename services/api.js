@@ -28,6 +28,8 @@ export default {
     })
   },
   generateConfigTest(token, test) {
+    console.log('api')
+    console.log(test)
     return axios
       .post('tests/config', test, { headers: { token } })
       .then(response => {
