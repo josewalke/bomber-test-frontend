@@ -282,13 +282,28 @@ export default {
       const testPremium = await API.testPremium()
       const student = await API.getAllUsers()
       for (let i = 0; i < student.length; i++) {
-        if (student[i].role === 'cliente') {
+        if (student[i].role === 'cliente' && student[i].active === true) {
+          let testDesafio = {
+            user_id: student[i]._id,
+            title: testPremium.title,
+            testCheck: testPremium.testCheck,
+            aciertos: testPremium.aciertos,
+            aciertos_num: testPremium.aciertos_num,
+            fallos: testPremium.fallos,
+            fallos_num: testPremium.fallos_num,
+            respuestas: testPremium.respuestas,
+            nota: testPremium.nota,
+            no_contestadas: testPremium.no_contestadas,
+            mostrar_solucion: testPremium.mostrar_solucion,
+            desafio: true
+          }
           testPremium.user_id = student[i]._id
           testPremium.desafio = true
-          API.crearExamen(testPremium)
-          location.reload()
+
+          API.crearExamen(testDesafio)
         }
       }
+      location.reload()
     }
   }
 }
