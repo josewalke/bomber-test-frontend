@@ -1,180 +1,312 @@
 <template>
   <div>
-    <h1 style="display: 'none';">
-      Grabar vídeo de la webcam y audio del micrófono con JavaScript
-    </h1>
-    <a href="//parzibyte.me/blog" target="_blank">By Parzibyte</a>
-    <div>
-      <label for="dispositivosDeAudio">Micrófono:</label><br />
-      <select id="dispositivosDeAudio" name="dispositivosDeAudio"></select>
-      <br /><br />
-      <label for="dispositivosDeVideo">Cámara:</label><br />
-      <select id="dispositivosDeVideo" name="dispositivosDeVideo"></select>
-      <br /><br />
-      <video id="video" muted="muted"></video>
-      <br /><br />
-      <p id="duracion"></p>
-      <br />
-      <v-btn @click="comenzarAGrabar">Comenzar</v-btn>
-      <v-btn @click="detenerGrabacion">Detener</v-btn>
+    <!-- Empieza Barra de inicio -->
+    <v-app-bar class="nav-bar" fixed flat>
+      <v-toolbar-title class="white--text font-weight-black" v-text="title" />
+      <v-spacer />
+      <!-- inicio modal -->
+      <v-dialog max-width="500">
+        <template v-slot:activator="{ on }">
+          <v-btn color="primary" dark v-on="on">Login/Registro</v-btn>
+        </template>
+        <v-card>
+          <v-row align="center" justify="center">
+            <v-col cols="12" xs="6">
+              <v-tabs v-model="tab">
+                <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                <v-tab key="2" :href="`#tab-2`">Login</v-tab>
+                <v-tab-item key="1" value="tab-1">
+                  <v-row class="py-2">
+                    <v-col cols="12">
+                      <Signup />
+                    </v-col>
+                  </v-row>
+                </v-tab-item>
+                <v-tab-item key="2" value="tab-2">
+                  <v-row class="py-2">
+                    <v-col>
+                      <Login />
+                    </v-col>
+                  </v-row>
+                </v-tab-item>
+              </v-tabs>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-dialog>
+      <!-- final modal -->
+    </v-app-bar>
+    <!-- Final de Barra de inicio -->
+    <!-- Inicio de Foto de bombero -->
+    <div class="hero-banner">
+      <v-layout class="banner-text" column justify-center align-center>
+        <h1>Conviertete en Bombero</h1>
+        <br />
+        <p class="subtitle">
+          La mayor Base de Datos <br />de preguntas de examen
+        </p>
+        <v-btn
+          rounded
+          height="75"
+          class="btn-big white--text"
+          color="#DA3E3E"
+          xs="4"
+          >Prueba gratis</v-btn
+        >
+      </v-layout>
     </div>
-    {{ dispositivosDeAudio }}
+    <!-- Final de la Foto de bombero -->
+    <!-- Inicio del Espacio en blanco -->
+    <div class="quotes ma-12">
+      <h1>2.000+ Preguntas de Examen</h1>
+      <p>con las que prepararte para aprobar la Oposicion de Bombero</p>
+    </div>
+    <!-- Final del Espacio en blanco -->
+    <!-- Inicio de Tabla de suscripcion -->
+    <div class="table-wraper" md="height: 550px;" xs="height: 1600px;">
+      <div class="table-container">
+        <v-row>
+          <v-col md="4" xs="12">
+            <ul class="price">
+              <li class="header">Basic</li>
+              <li class="grey">Gratis</li>
+              <li>50 Tests /mes</li>
+              <li>200 Preguntas</li>
+              <li>5 Consultas /mes</li>
+              <li>1 Clase Teórica /mes</li>
+              <li class="grey">
+                <v-dialog max-width="500">
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                  </template>
+                  <v-card>
+                    <v-row align="center" justify="center">
+                      <v-col cols="12" md="6">
+                        <v-tabs v-model="tab">
+                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                          <v-tab key="2" :href="`#tab-2`">Login</v-tab>
+                          <v-tab-item key="1" value="tab-1">
+                            <v-row class="py-2">
+                              <v-col cols="12">
+                                <Signup />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                          <v-tab-item key="2" value="tab-2">
+                            <v-row class="py-2">
+                              <v-col>
+                                <Login />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                        </v-tabs>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                </v-dialog>
+              </li>
+            </ul>
+          </v-col>
+          <v-col md="4" xs="12">
+            <ul class="price">
+              <li class="header">Pro</li>
+              <li class="grey">€ 39.99 /MES</li>
+              <li>100 Tests /mes</li>
+              <li>1000 Preguntas</li>
+              <li>20 Consultas /mes</li>
+              <li>4 Clases Teórica /mes</li>
+              <li class="grey">
+                <v-dialog max-width="500">
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                  </template>
+                  <v-card>
+                    <v-row align="center" justify="center">
+                      <v-col cols="12" md="6">
+                        <v-tabs v-model="tab">
+                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                          <v-tab key="2" :href="`#tab-2`">Login</v-tab>
+                          <v-tab-item key="1" value="tab-1">
+                            <v-row class="py-2">
+                              <v-col cols="12">
+                                <Signup />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                          <v-tab-item key="2" value="tab-2">
+                            <v-row class="py-2">
+                              <v-col>
+                                <Login />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                        </v-tabs>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                </v-dialog>
+              </li>
+            </ul>
+          </v-col>
+          <v-col md="4" xs="12">
+            <ul class="price">
+              <li class="header">Premium</li>
+              <li class="grey">€ 299.99 /MES</li>
+              <li>Tests ilimtados</li>
+              <li>2000+ Preguntas</li>
+              <li>Consultas ilimitadas</li>
+              <li>Clases Teóricas ilimitadas</li>
+              <li class="grey">
+                <v-dialog max-width="500">
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                  </template>
+                  <v-card>
+                    <v-row align="center" justify="center">
+                      <v-col cols="12" md="6">
+                        <v-tabs v-model="tab">
+                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                          <v-tab key="2" :href="`#tab-2`">Login</v-tab>
+                          <v-tab-item key="1" value="tab-1">
+                            <v-row class="py-2">
+                              <v-col cols="12">
+                                <Signup />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                          <v-tab-item key="2" value="tab-2">
+                            <v-row class="py-2">
+                              <v-col>
+                                <Login />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                        </v-tabs>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                </v-dialog>
+              </li>
+            </ul>
+          </v-col>
+        </v-row>
+      </div>
+    </div>
+    <!-- Fin de Tabla de suscripcion -->
+    <!-- Inicio del Footer -->
+    <v-footer class="text-center">
+      <v-row align="center" justify="center">
+        <v-col cols="12">
+          <h1 class="white--text">Siguenos en las redes</h1>
+        </v-col>
+        <v-col cols="4">
+          <v-icon class="white--text" x-large>mdi-instagram</v-icon>
+          <v-icon class="white--text" x-large>mdi-facebook-box</v-icon>
+          <v-icon class="white--text" x-large>mdi-twitter-box</v-icon>
+        </v-col>
+      </v-row>
+    </v-footer>
   </div>
 </template>
 
 <script>
+import Login from '~/components/Login.vue'
+import Signup from '~/components/Signup.vue'
 export default {
-  async asyncData() {},
+  components: {
+    Login,
+    Signup
+  },
   data() {
     return {
-      dispositivosDeAudio: document.querySelector('#dispositivosDeAudio'),
-      dispositivosDeVideo: document.querySelector('#dispositivosDeVideo'),
-      duracion: document.querySelector('#duracion'),
-      video: document.querySelector('#video'),
-      tiempoInicio: '',
-      mediaRecorder: '',
-      idIntervalo: '',
-      opcion: ''
+      title: 'Oposicion de Bombero',
+      items: [{ title: 'Login', to: '/auth' }],
+      tab: null
     }
   },
-  mounted() {
-    if (typeof MediaRecorder === 'undefined' || !this.tieneSoporteUserMedia())
-      return alert(
-        'Tu navegador web no cumple los requisitos; por favor, actualiza a un navegador decente como Firefox o Google Chrome'
-      )
-    document.addEventListener('DOMContentLoaded', this.limpiarSelect)
-    document.addEventListener('DOMContentLoaded', this.llenarLista)
-  },
-  methods: {
-    tieneSoporteUserMedia() {
-      !!navigator.mediaDevices.getUserMedia
-    },
-    limpiarSelect(elemento) {
-      for (let x = elemento.options.length - 1; x >= 0; x--) {
-        elemento.options.remove(x)
-      }
-    },
-    segundosATiempo(numeroDeSegundos) {
-      let horas = Math.floor(numeroDeSegundos / 60 / 60)
-      numeroDeSegundos -= horas * 60 * 60
-      let minutos = Math.floor(numeroDeSegundos / 60)
-      numeroDeSegundos -= minutos * 60
-      numeroDeSegundos = parseInt(numeroDeSegundos)
-      if (horas < 10) horas = '0' + horas
-      if (minutos < 10) minutos = '0' + minutos
-      if (numeroDeSegundos < 10) numeroDeSegundos = '0' + numeroDeSegundos
-      return `${horas}:${minutos}:${numeroDeSegundos}`
-    },
-    refrescar() {
-      this.duracion.textContent = this.segundosATiempo(
-        (Date.now() - this.tiempoInicio) / 1000
-      )
-    },
-    llenarLista() {
-      navigator.mediaDevices.enumerateDevices().then(dispositivos => {
-        this.limpiarSelect(this.dispositivosDeAudio)
-        this.limpiarSelect(this.dispositivosDeVideo)
-        dispositivos.forEach((dispositivo, indice) => {
-          if (dispositivo.kind === 'audioinput') {
-            this.opcion = document.createElement('option')
-            // Firefox no trae nada con label, que viva la privacidad
-            // y que muera la compatibilidad
-            this.opcion.text = dispositivo.label || `Micrófono ${indice + 1}`
-            this.opcion.value = dispositivo.deviceId
-            this.dispositivosDeAudio.appendChild(this.opcion)
-          } else if (dispositivo.kind === 'videoinput') {
-            this.opcion = document.createElement('option')
-            // Firefox no trae nada con label, que viva la privacidad
-            // y que muera la compatibilidad
-            this.opcion.text = dispositivo.label || `Cámara ${indice + 1}`
-            this.opcion.value = dispositivo.deviceId
-            this.dispositivosDeVideo.appendChild(this.opcion)
-          }
-        })
-      })
-    },
-    comenzarAContar() {
-      this.tiempoInicio = Date.now()
-      this.idIntervalo = setInterval(this.refrescar, 500)
-    },
-    comenzarAGrabar() {
-      if (!this.dispositivosDeAudio.options.length)
-        return alert('No hay micrófono')
-      if (!this.dispositivosDeVideo.options.length)
-        return alert('No hay cámara')
-      // No permitir que se grabe doblemente
-      if (this.mediaRecorder) return alert('Ya se está grabando')
-
-      navigator.mediaDevices
-        .getUserMedia({
-          audio: {
-            deviceId: this.dispositivosDeAudio.value // Indicar dispositivo de audio
-          },
-          video: {
-            deviceId: this.dispositivosDeAudio.value // Indicar dispositivo de vídeo
-          }
-        })
-        .then(stream => {
-          // Poner stream en vídeo
-          this.video.srcObject = stream
-          this.video.play()
-          // Comenzar a grabar con el stream
-          this.mediaRecorder = new MediaRecorder(stream)
-          this.mediaRecorder.start()
-          this.comenzarAContar()
-          // En el arreglo pondremos los datos que traiga el evento dataavailable
-          const fragmentosDeAudio = []
-          // Escuchar cuando haya datos disponibles
-          this.mediaRecorder.addEventListener('dataavailable', evento => {
-            // Y agregarlos a los fragmentos
-            fragmentosDeAudio.push(evento.data)
-          })
-          // Cuando se detenga (haciendo click en el botón) se ejecuta esto
-          this.mediaRecorder.addEventListener('stop', () => {
-            // Pausar vídeo
-            this.video.pause()
-            // Detener el stream
-            stream.getTracks().forEach(track => track.stop())
-            // Detener la cuenta regresiva
-            this.detenerConteo()
-            // Convertir los fragmentos a un objeto binario
-            const blobVideo = new Blob(fragmentosDeAudio)
-
-            // Crear una URL o enlace para descargar
-            const urlParaDescargar = URL.createObjectURL(blobVideo)
-            // Crear un elemento <a> invisible para descargar el audio
-            let a = document.createElement('a')
-            document.body.appendChild(a)
-            a.style = 'display: none'
-            a.href = urlParaDescargar
-            a.download = 'Oposiciones_Bombero.mp4'
-            // Hacer click en el enlace
-            a.click()
-            // Y remover el objeto
-            window.URL.revokeObjectURL(urlParaDescargar)
-          })
-        })
-        .catch(error => {
-          // Aquí maneja el error, tal vez no dieron permiso
-          console.log(error)
-        })
-    },
-    detenerConteo() {
-      clearInterval(this.idIntervalo)
-      this.tiempoInicio = null
-      this.$duracion.textContent = ''
-    },
-    detenerGrabacion() {
-      if (!this.mediaRecorder) return alert('No se está grabando')
-      this.mediaRecorder.stop()
-      this.mediaRecorder = null
-    }
-  }
+  layout: 'basic'
 }
 </script>
 
-<style>
-.box {
-  width: 600px;
+<style lang="scss" scoped>
+.nav-bar {
+  background-color: rgba(184, 0, 0, 1);
+}
+.hero-banner {
+  color: rgba(255, 0, 0, 1);
+  background-image: url('../static/assets/banner.jpg');
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: darken;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
+    opacity: 0;
+  }
+}
+.banner-text {
+  margin-left: 40%;
+  h1 {
+    color: #ffffff;
+    font-size: 3rem;
+    margin-top: 40%;
+    z-index: 1;
+  }
+  p {
+    color: #ffffff;
+    font-size: 2.2rem;
+    margin-top: -20px;
+    z-index: 1;
+  }
+}
+.quotes {
+  text-align: center;
+
+  h1 {
+    font-size: 3.4rem;
+    color: #da3e3e;
+  }
+  p {
+    font-size: 1.7rem;
+  }
+}
+.table-wraper {
+  margin: 0 auto;
+  background-image: url('../static/assets/table.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  padding-top: 1rem;
+}
+.table-container {
+  width: 70%;
+  margin: 0 auto;
+}
+.price {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.price .header {
+  background-color: #da3e3e;
+  color: white;
+  font-size: 25px;
+}
+.price li {
+  padding: 20px;
+  text-align: center;
+  background-color: white;
+}
+.v-footer {
+  background-color: #da3e3e;
 }
 </style>
