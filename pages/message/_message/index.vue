@@ -1,10 +1,14 @@
 <template>
   <v-container>
+    {{ resolucion() }}
     <div>
       <h1>Enunciado</h1>
       <hr class="divisor" />
       <br />
-      <v-card class="carta-enunciado">
+      <v-card
+        class="carta-enunciado"
+        :width="formato === 'movil' ? '350px' : '100%'"
+      >
         <p>{{ question.enunciado }}</p>
       </v-card>
     </div>
@@ -13,7 +17,7 @@
       <hr class="divisor" />
     </div>
     <v-row>
-      <v-col cols="5">
+      <v-col cols="11">
         <v-card
           class="carta-opciones"
           :color="question.answers[0].correcta ? 'green' : 'red'"
@@ -21,7 +25,7 @@
           {{ question.answers[0].respuesta }}<br />
         </v-card>
       </v-col>
-      <v-col cols="5">
+      <v-col cols="11">
         <v-card
           class="carta-opciones"
           :color="question.answers[1].correcta ? 'green' : 'red'"
@@ -29,7 +33,7 @@
           {{ question.answers[1].respuesta }}
         </v-card>
       </v-col>
-      <v-col cols="5">
+      <v-col cols="11">
         <v-card
           class="carta-opciones"
           :color="question.answers[2].correcta ? 'green' : 'red'"
@@ -37,7 +41,7 @@
           {{ question.answers[2].respuesta }}
         </v-card>
       </v-col>
-      <v-col cols="5">
+      <v-col cols="11">
         <v-card
           class="carta-opciones"
           :color="question.answers[3].correcta ? 'green' : 'red'"
@@ -51,7 +55,10 @@
       <h1>Explicación de la respuesta</h1>
       <hr class="divisor" />
       <br />
-      <v-card class="carta-opciones">
+      <v-card
+        class="carta-opciones"
+        :width="formato === 'movil' ? '350px' : '100%'"
+      >
         {{ question.explicacion }}
       </v-card>
     </div>
@@ -59,7 +66,10 @@
       <h1>Pregunta del estudiante</h1>
       <hr class="divisor" />
       <br />
-      <v-card class="carta-opciones">
+      <v-card
+        class="carta-opciones"
+        :width="formato === 'movil' ? '350px' : '100%'"
+      >
         {{ messages[position].pregunta }}
       </v-card>
     </div>
@@ -67,7 +77,10 @@
       <h1>Respuesta del profesor</h1>
       <hr class="divisor" />
       <br />
-      <v-card class="carta-opciones">
+      <v-card
+        class="carta-opciones"
+        :width="formato === 'movil' ? '350px' : '100%'"
+      >
         {{ messages[position].respuesta }}
       </v-card>
     </div>
@@ -100,13 +113,21 @@ export default {
   },
   data() {
     return {
-      respuesta: ''
+      respuesta: '',
+      formato: ''
     }
   },
   computed: {
     ...mapGetters(['question', 'messages', 'position', 'role'])
   },
   methods: {
+    resolucion() {
+      if (window.screen.width < 600) {
+        this.formato = 'movil'
+      } else {
+        this.formato = 'ordenador'
+      }
+    },
     reply(message) {
       const reply = {
         id: message._id,
@@ -124,7 +145,7 @@ export default {
 
 <style scoped>
 .divisor {
-  width: 800px;
+  width: 50%;
   border: 2px solid;
   border-radius: 5px;
 }
