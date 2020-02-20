@@ -1,312 +1,175 @@
 <template>
-  <div>
-    <!-- Empieza Barra de inicio -->
-    <v-app-bar class="nav-bar" fixed flat>
-      <v-toolbar-title class="white--text font-weight-black" v-text="title" />
-      <v-spacer />
-      <!-- inicio modal -->
-      <v-dialog max-width="500">
-        <template v-slot:activator="{ on }">
-          <v-btn color="primary" dark v-on="on">Login/Registro</v-btn>
-        </template>
-        <v-card>
-          <v-row align="center" justify="center">
-            <v-col cols="12" xs="6">
-              <v-tabs v-model="tab">
-                <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
-                <v-tab key="2" :href="`#tab-2`">Login</v-tab>
-                <v-tab-item key="1" value="tab-1">
-                  <v-row class="py-2">
-                    <v-col cols="12">
-                      <Signup />
-                    </v-col>
-                  </v-row>
-                </v-tab-item>
-                <v-tab-item key="2" value="tab-2">
-                  <v-row class="py-2">
-                    <v-col>
-                      <Login />
-                    </v-col>
-                  </v-row>
-                </v-tab-item>
-              </v-tabs>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-dialog>
-      <!-- final modal -->
-    </v-app-bar>
-    <!-- Final de Barra de inicio -->
-    <!-- Inicio de Foto de bombero -->
-    <div class="hero-banner">
-      <v-layout class="banner-text" column justify-center align-center>
-        <h1>Conviertete en Bombero</h1>
-        <br />
-        <p class="subtitle">
-          La mayor Base de Datos <br />de preguntas de examen
-        </p>
-        <v-btn
-          rounded
-          height="75"
-          class="btn-big white--text"
-          color="#DA3E3E"
-          xs="4"
-          >Prueba gratis</v-btn
-        >
-      </v-layout>
+  <v-app>
+    {{ resolucion() }}
+    <div v-if="formato === 'default'">
+      <v-sheet>
+        <v-icon large class="ma-4" @click.stop="drawer = !drawer">
+          mdi-format-align-justify
+        </v-icon>
+
+        <v-navigation-drawer v-model="drawer" left app>
+          <v-list-item two-line>
+            <v-list-item-avatar width="100px" height="100px">
+              <img :src="image_url" />
+            </v-list-item-avatar>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
+          <v-list v-if="role === 'cliente'" dense>
+            <v-list-item v-for="item in items" :key="item.title">
+              <v-list-item-content>
+                <v-btn
+                  text
+                  class="justify-start"
+                  color="#6b6b6b"
+                  :to="item.page"
+                >
+                  <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
+                </v-btn>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn
+                  text
+                  class="justify-start"
+                  color="#6b6b6b"
+                  @click="logout"
+                >
+                  <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
+                </v-btn>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-list v-else dense>
+            <v-list-item v-for="item in admin" :key="item.title">
+              <v-list-item-content>
+                <v-btn
+                  text
+                  class="justify-start"
+                  color="#6b6b6b"
+                  :to="item.page"
+                >
+                  <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
+                </v-btn>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn
+                  text
+                  class="justify-start"
+                  color="#6b6b6b"
+                  @click="logout"
+                >
+                  <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
+                </v-btn>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
+      </v-sheet>
     </div>
-    <!-- Final de la Foto de bombero -->
-    <!-- Inicio del Espacio en blanco -->
-    <div class="quotes ma-12">
-      <h1>2.000+ Preguntas de Examen</h1>
-      <p>con las que prepararte para aprobar la Oposicion de Bombero</p>
+    <div v-else>
+      <v-navigation-drawer permanent left app>
+        <v-list-item two-line>
+          <v-list-item-avatar width="100px" height="100px">
+            <img :src="image_url" />
+          </v-list-item-avatar>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list v-if="role === 'cliente'" dense>
+          <v-list-item v-for="item in items" :key="item.title">
+            <v-list-item-content>
+              <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
+                <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
+              </v-btn>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-content>
+              <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
+                <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
+              </v-btn>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-list v-else dense>
+          <v-list-item v-for="item in admin" :key="item.title">
+            <v-list-item-content>
+              <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
+                <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
+              </v-btn>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-content>
+              <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
+                <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
+              </v-btn>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
     </div>
-    <!-- Final del Espacio en blanco -->
-    <!-- Inicio de Tabla de suscripcion -->
-    <div class="table-wraper" md="height: 550px;" xs="height: 1600px;">
-      <div class="table-container">
-        <v-row>
-          <v-col md="4" xs="12">
-            <ul class="price">
-              <li class="header">Basic</li>
-              <li class="grey">Gratis</li>
-              <li>50 Tests /mes</li>
-              <li>200 Preguntas</li>
-              <li>5 Consultas /mes</li>
-              <li>1 Clase Teórica /mes</li>
-              <li class="grey">
-                <v-dialog max-width="500">
-                  <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
-                  </template>
-                  <v-card>
-                    <v-row align="center" justify="center">
-                      <v-col cols="12" md="6">
-                        <v-tabs v-model="tab">
-                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
-                          <v-tab key="2" :href="`#tab-2`">Login</v-tab>
-                          <v-tab-item key="1" value="tab-1">
-                            <v-row class="py-2">
-                              <v-col cols="12">
-                                <Signup />
-                              </v-col>
-                            </v-row>
-                          </v-tab-item>
-                          <v-tab-item key="2" value="tab-2">
-                            <v-row class="py-2">
-                              <v-col>
-                                <Login />
-                              </v-col>
-                            </v-row>
-                          </v-tab-item>
-                        </v-tabs>
-                      </v-col>
-                    </v-row>
-                  </v-card>
-                </v-dialog>
-              </li>
-            </ul>
-          </v-col>
-          <v-col md="4" xs="12">
-            <ul class="price">
-              <li class="header">Pro</li>
-              <li class="grey">€ 39.99 /MES</li>
-              <li>100 Tests /mes</li>
-              <li>1000 Preguntas</li>
-              <li>20 Consultas /mes</li>
-              <li>4 Clases Teórica /mes</li>
-              <li class="grey">
-                <v-dialog max-width="500">
-                  <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
-                  </template>
-                  <v-card>
-                    <v-row align="center" justify="center">
-                      <v-col cols="12" md="6">
-                        <v-tabs v-model="tab">
-                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
-                          <v-tab key="2" :href="`#tab-2`">Login</v-tab>
-                          <v-tab-item key="1" value="tab-1">
-                            <v-row class="py-2">
-                              <v-col cols="12">
-                                <Signup />
-                              </v-col>
-                            </v-row>
-                          </v-tab-item>
-                          <v-tab-item key="2" value="tab-2">
-                            <v-row class="py-2">
-                              <v-col>
-                                <Login />
-                              </v-col>
-                            </v-row>
-                          </v-tab-item>
-                        </v-tabs>
-                      </v-col>
-                    </v-row>
-                  </v-card>
-                </v-dialog>
-              </li>
-            </ul>
-          </v-col>
-          <v-col md="4" xs="12">
-            <ul class="price">
-              <li class="header">Premium</li>
-              <li class="grey">€ 299.99 /MES</li>
-              <li>Tests ilimtados</li>
-              <li>2000+ Preguntas</li>
-              <li>Consultas ilimitadas</li>
-              <li>Clases Teóricas ilimitadas</li>
-              <li class="grey">
-                <v-dialog max-width="500">
-                  <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
-                  </template>
-                  <v-card>
-                    <v-row align="center" justify="center">
-                      <v-col cols="12" md="6">
-                        <v-tabs v-model="tab">
-                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
-                          <v-tab key="2" :href="`#tab-2`">Login</v-tab>
-                          <v-tab-item key="1" value="tab-1">
-                            <v-row class="py-2">
-                              <v-col cols="12">
-                                <Signup />
-                              </v-col>
-                            </v-row>
-                          </v-tab-item>
-                          <v-tab-item key="2" value="tab-2">
-                            <v-row class="py-2">
-                              <v-col>
-                                <Login />
-                              </v-col>
-                            </v-row>
-                          </v-tab-item>
-                        </v-tabs>
-                      </v-col>
-                    </v-row>
-                  </v-card>
-                </v-dialog>
-              </li>
-            </ul>
-          </v-col>
-        </v-row>
-      </div>
-    </div>
-    <!-- Fin de Tabla de suscripcion -->
-    <!-- Inicio del Footer -->
-    <v-footer class="text-center">
-      <v-row align="center" justify="center">
-        <v-col cols="12">
-          <h1 class="white--text">Siguenos en las redes</h1>
-        </v-col>
-        <v-col cols="4">
-          <v-icon class="white--text" x-large>mdi-instagram</v-icon>
-          <v-icon class="white--text" x-large>mdi-facebook-box</v-icon>
-          <v-icon class="white--text" x-large>mdi-twitter-box</v-icon>
-        </v-col>
-      </v-row>
-    </v-footer>
-  </div>
+
+    <v-content>
+      <nuxt />
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import Login from '~/components/Login.vue'
-import Signup from '~/components/Signup.vue'
+import { mapGetters } from 'vuex'
 export default {
-  components: {
-    Login,
-    Signup
-  },
   data() {
     return {
-      title: 'Oposicion de Bombero',
-      items: [{ title: 'Login', to: '/auth' }],
-      tab: null
+      drawer: null,
+      items: [
+        { title: 'Perfil', icon: 'mdi-account', page: '/user' },
+        { title: 'Test', icon: 'mdi-file-document-box', page: '/tests' },
+        { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
+        {
+          title: 'Clasificatoria',
+          icon: 'mdi-playlist-star',
+          page: '/clasificacion'
+        },
+        { title: 'Configuracion', icon: 'mdi-settings', page: '/settings' }
+      ],
+      admin: [
+        { title: 'Alumnos', icon: 'mdi-account', page: '/dashboard' },
+        { title: 'Temas', icon: 'mdi-file-document-box', page: '/temas' },
+        { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
+        { title: 'Preguntas', icon: 'mdi-playlist-edit', page: '/question' },
+        { title: 'Test', icon: 'mdi-ballot', page: '/examen' }
+      ],
+      formato: ''
     }
   },
-  layout: 'basic'
+  computed: {
+    ...mapGetters(['userName', 'image_url', 'role'])
+  },
+  methods: {
+    resolucion() {
+      if (window.screen.width < 600) {
+        this.formato = 'default'
+      } else {
+        this.formato = 'basic'
+      }
+    },
+    logout() {
+      this.$store.commit('clearToken')
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 
-<style lang="scss" scoped>
-.nav-bar {
-  background-color: rgba(184, 0, 0, 1);
-}
-.hero-banner {
-  color: rgba(255, 0, 0, 1);
-  background-image: url('../static/assets/banner.jpg');
-  width: 100vw;
-  height: 100vh;
-  background-position: center;
-  background-size: cover;
-  background-blend-mode: darken;
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
-    opacity: 0;
-  }
-}
-.banner-text {
-  margin-left: 40%;
-  h1 {
-    color: #ffffff;
-    font-size: 3rem;
-    margin-top: 40%;
-    z-index: 1;
-  }
-  p {
-    color: #ffffff;
-    font-size: 2.2rem;
-    margin-top: -20px;
-    z-index: 1;
-  }
-}
-.quotes {
-  text-align: center;
-
-  h1 {
-    font-size: 3.4rem;
-    color: #da3e3e;
-  }
-  p {
-    font-size: 1.7rem;
-  }
-}
-.table-wraper {
-  margin: 0 auto;
-  background-image: url('../static/assets/table.jpg');
-  background-size: cover;
-  background-position: center;
-  width: 100%;
-  padding-top: 1rem;
-}
-.table-container {
-  width: 70%;
-  margin: 0 auto;
-}
-.price {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-.price .header {
-  background-color: #da3e3e;
-  color: white;
-  font-size: 25px;
-}
-.price li {
-  padding: 20px;
-  text-align: center;
-  background-color: white;
-}
-.v-footer {
-  background-color: #da3e3e;
-}
-</style>
+<style></style>

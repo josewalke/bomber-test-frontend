@@ -47,7 +47,7 @@
       </v-col>
     </v-row>
 
-    <div>
+    <div v-if="question.explicacion">
       <h1>Explicación de la respuesta</h1>
       <hr class="divisor" />
       <br />
