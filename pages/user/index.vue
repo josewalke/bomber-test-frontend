@@ -130,7 +130,4 @@ export default {
   background-size: contain;
   background-position: center;
 }
-.prueba {
-  font-size: 20px;
-}
 </style>
