@@ -251,7 +251,6 @@ export const actions = {
     const response = await API.login(userData)
     if (!response.error) {
       commit('saveToken', response)
-      commit('deleteDesafio')
       const tests = await API.getAllTestById(state.userId)
       commit('saveTests', tests)
       commit('evaluar')
@@ -304,10 +303,8 @@ export const actions = {
         return console.log(false)
       }
     }
-    console.log(responseBody, respuesta, enunciado, correcta)
   },
   async updateName({ commit, state }, newName) {
-    console.log(state.userId)
     let data = {
       userId: state.userId,
       newName: newName
@@ -323,7 +320,6 @@ export const actions = {
     }
   },
   async updateLastName({ commit, state }, newLastName) {
-    console.log(state.userId)
     let data = {
       userId: state.userId,
       newLastName: newLastName
@@ -339,9 +335,6 @@ export const actions = {
     }
   },
   async updatePhoto({ commit, state }, newPhoto) {
-    console.log(state.userId)
-    console.log('index aqui')
-    console.log(newPhoto)
     let data = {
       userId: state.userId,
       newPhoto: newPhoto
@@ -357,7 +350,6 @@ export const actions = {
     }
   },
   async updateNickName({ commit, state }, newNickName) {
-    console.log(state.userId)
     let data = {
       userId: state.userId,
       newNickName: newNickName
@@ -389,7 +381,6 @@ export const actions = {
     }
   },
   async updatePhone({ commit, state }, newPhone) {
-    console.log(state.userId)
     let data = {
       userId: state.userId,
       newPhone: newPhone

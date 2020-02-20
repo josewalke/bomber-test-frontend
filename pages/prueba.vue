@@ -1,175 +1,133 @@
 <template>
-  <v-app>
+  <div>
     {{ resolucion() }}
-    <div v-if="formato === 'default'">
-      <v-sheet>
-        <v-icon large class="ma-4" @click.stop="drawer = !drawer">
-          mdi-format-align-justify
-        </v-icon>
+    <v-row>
+      <v-col cols="10" offset="1">
+        <v-card class="mx-auto pt-5">
+          <div
+            class="user-card mt-5"
+            :style="{ 'background-image': `url(${image_url})` }"
+          ></div>
+          <!-- <v-img :src="image_url" height="100px"></v-img> -->
+          <v-card-title>
+            {{ userName }}
+            <br />
+            {{ nickName }}
+          </v-card-title>
 
-        <v-navigation-drawer v-model="drawer" left app>
-          <v-list-item two-line>
-            <v-list-item-avatar width="100px" height="100px">
-              <img :src="image_url" />
-            </v-list-item-avatar>
-          </v-list-item>
-
-          <v-divider></v-divider>
-
-          <v-list v-if="role === 'cliente'" dense>
-            <v-list-item v-for="item in items" :key="item.title">
-              <v-list-item-content>
-                <v-btn
-                  text
-                  class="justify-start"
-                  color="#6b6b6b"
-                  :to="item.page"
-                >
-                  <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
-                </v-btn>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item>
-              <v-list-item-content>
-                <v-btn
-                  text
-                  class="justify-start"
-                  color="#6b6b6b"
-                  @click="logout"
-                >
-                  <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
-                </v-btn>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-          <v-list v-else dense>
-            <v-list-item v-for="item in admin" :key="item.title">
-              <v-list-item-content>
-                <v-btn
-                  text
-                  class="justify-start"
-                  color="#6b6b6b"
-                  :to="item.page"
-                >
-                  <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
-                </v-btn>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item>
-              <v-list-item-content>
-                <v-btn
-                  text
-                  class="justify-start"
-                  color="#6b6b6b"
-                  @click="logout"
-                >
-                  <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
-                </v-btn>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-navigation-drawer>
-      </v-sheet>
-    </div>
-    <div v-else>
-      <v-navigation-drawer permanent left app>
-        <v-list-item two-line>
-          <v-list-item-avatar width="100px" height="100px">
-            <img :src="image_url" />
-          </v-list-item-avatar>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
-        <v-list v-if="role === 'cliente'" dense>
-          <v-list-item v-for="item in items" :key="item.title">
-            <v-list-item-content>
-              <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
-                <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
-              </v-btn>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-content>
-              <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
-                <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
-              </v-btn>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-        <v-list v-else dense>
-          <v-list-item v-for="item in admin" :key="item.title">
-            <v-list-item-content>
-              <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
-                <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
-              </v-btn>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-content>
-              <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
-                <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
-              </v-btn>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-    </div>
-
-    <v-content>
-      <nuxt />
-    </v-content>
-  </v-app>
+          <v-card-subtitle>
+            <div>
+              <font-awesome-icon icon="envelope" />
+              {{ email }}
+            </div>
+            <div>
+              <font-awesome-icon icon="phone-square" />
+              {{ phone }}
+            </div>
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row v-if="formato != 'movil'">
+      <v-col md="5" offset="1">
+        <v-card>
+          <v-card-title>
+            {{ mensajes }}
+            mensajes nuevos
+          </v-card-title>
+          <v-card-subtitle> de {{ messages.length }} mensajes </v-card-subtitle>
+        </v-card>
+      </v-col>
+      <v-col md="5">
+        <v-card>
+          <v-card-title> Suscripción {{ suscription_type }}.</v-card-title>
+          <v-card-subtitle>
+            válida hasta el 31 de enero de 2020
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row v-if="formato === 'movil'">
+      <v-col cols="10" offset="1">
+        <v-card>
+          <v-card-title>
+            {{ mensajes }}
+            mensajes nuevos
+          </v-card-title>
+          <v-card-subtitle> de {{ messages.length }} mensajes </v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row v-if="formato === 'movil'">
+      <v-col cols="10" offset="1">
+        <v-card>
+          <v-card-title> Suscripción {{ suscription_type }}.</v-card-title>
+          <v-card-subtitle>
+            válida hasta el 31 de enero de 2020
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="10" offset="1">
+        <v-card color="green" class="mt-2">
+          <v-card-subtitle class="white--text">
+            {{ aprobados }} tests aprobados de {{ tests.length }}
+          </v-card-subtitle>
+        </v-card>
+        <v-card color="error" class="mt-2">
+          <v-card-subtitle class="white--text">
+            {{ suspendidos }} tests suspendidos de {{ tests.length }}
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
-      drawer: null,
-      items: [
-        { title: 'Perfil', icon: 'mdi-account', page: '/user' },
-        { title: 'Test', icon: 'mdi-file-document-box', page: '/tests' },
-        { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
-        {
-          title: 'Clasificatoria',
-          icon: 'mdi-playlist-star',
-          page: '/clasificacion'
-        },
-        { title: 'Configuracion', icon: 'mdi-settings', page: '/settings' }
-      ],
-      admin: [
-        { title: 'Alumnos', icon: 'mdi-account', page: '/dashboard' },
-        { title: 'Temas', icon: 'mdi-file-document-box', page: '/temas' },
-        { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
-        { title: 'Preguntas', icon: 'mdi-playlist-edit', page: '/question' },
-        { title: 'Test', icon: 'mdi-ballot', page: '/examen' }
-      ],
       formato: ''
     }
   },
   computed: {
-    ...mapGetters(['userName', 'image_url', 'role'])
+    ...mapGetters([
+      'tests',
+      'nickName',
+      'userName',
+      'image_url',
+      'email',
+      'phone',
+      'mensajes',
+      'MensajesTotales',
+      'aprobados',
+      'suspendidos',
+      'total',
+      'suscription_type',
+      'active',
+      'messages',
+      'tests'
+    ])
   },
   methods: {
     resolucion() {
       if (window.screen.width < 600) {
-        this.formato = 'default'
+        this.formato = 'movil'
       } else {
-        this.formato = 'basic'
+        this.formato = 'ordenador'
       }
-    },
-    logout() {
-      this.$store.commit('clearToken')
-      this.$router.push('/')
     }
   }
 }
 </script>
-
-<style></style>
+<style lang="scss" scoped>
+.user-card {
+  height: 200px;
+  background-size: contain;
+  background-position: center;
+}
+</style>
