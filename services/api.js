@@ -37,12 +37,8 @@ export default {
       })
   },
   updateTest(token, data) {
-    let body = {
-      respuestas: data.respuesta,
-      testCheck: data.testCheck
-    }
     return axios
-      .put('tests/' + data.testId, body, { headers: { token } })
+      .put('tests/' + data.testId, data, { headers: { token } })
       .then(response => {
         return response.data
       })
@@ -54,10 +50,6 @@ export default {
     return axios.get('messages/').then(response => response.data)
   },
   getTest(testId) {
-    console.log('🔥🔥🔥🔥    🔥🔥🔥🔥🔥🔥🔥')
-    console.log(testId)
-    console.log('🔥🔥🔥🔥    🔥🔥🔥🔥🔥🔥🔥')
-
     return axios.get('tests/' + testId).then(response => response.data)
   },
   getAllTemasNames() {

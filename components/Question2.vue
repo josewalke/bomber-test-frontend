@@ -1,20 +1,9 @@
 <template>
   <v-container>
-    <div class="infoQ">
-      <v-spacer />
-      <h2>
-        <!-- {{ $store.state.question }} -->
-        Pregunta {{ numero + 1 }}/{{
-          currentTest.no_contestadas.length
-        }}&nbsp;&nbsp;
-      </h2>
-      <!-- <v-btn color="#da3e3e" to="/tests">
-        <v-icon>mdi-close</v-icon>
-      </v-btn> -->
-    </div>
     <div class="question-holder">
       <v-row>
         <v-col>
+          <h1>{{ numero }}</h1>
           <h1>{{ enunciado }}</h1>
           <h4>{{ findTemaName }}</h4>
         </v-col>
@@ -23,11 +12,11 @@
         <v-col v-for="(answer, idx) in answers" :key="idx" cols="6">
           <v-card
             :id="`${id}-` + idx"
-            shaped
             min-height="200"
             @click="selectAnswer(answer, idx)"
           >
             <h3>{{ answer.respuesta }}</h3>
+            <h3>{{ answer.correcta }}</h3>
             <!-- <h3>{{ selected }}</h3> -->
           </v-card>
           <h4 class="water-mark">© Jaime Heras</h4>
@@ -110,8 +99,8 @@ export default {
   },
   data() {
     return {
-      answered: false,
       respuesta: [],
+      respuestas: [],
       corrected: false,
       guess: 'blank',
       counter: 0
@@ -122,72 +111,114 @@ export default {
       var temaName = this.temas.filter(elem => elem.id == this.tema)
       return temaName[0].name
     },
-    ...mapGetters(['currentTest'])
+    // testCheck() {
+    //   let testCheck = { right: 0, wrong: 0, blank: 0 }
+    //   this.currentTest.respuestas.forEach(resp => {
+    //     if (resp.guess === true) {
+    //       testCheck.right++
+    //     } else if (resp.guess === false) {
+    //       testCheck.wrong++
+    //     } else {
+    //       testCheck.blank++
+    //     }
+    //   })
+    //   return testCheck
+    // },
+    ...mapGetters(['currentTest', 'currentTestQuestion'])
   },
   mounted() {
     let response = this.currentTest.respuestas[this.numero]
     if (response.answered === true) {
       this.respuesta = response.respuestas
-      this.answered = true
-      this.corrected = true
+      this.answered = response.answered
       for (let i = 0; i < response.respuestas.length; i++) {
         if (response.respuestas[i] !== '') {
           document
-            // .getElementById(`${this.id}-` + i)
             .getElementById(`${this.id}-` + i)
             .classList.add('selected-answer')
         }
       }
-      this.correction()
+      // this.correction()
     }
   },
 
   methods: {
     selectAnswer(answer, idx) {
-      if (!this.corrected) {
-        //initialize respuesta array
-        if (this.respuesta.length === 0) {
-          for (let i = 0; i < this.answers.length; i++) {
-            this.respuesta.push('')
-          }
+      //initialize respuesta array
+      if (this.respuesta.length === 0) {
+        for (let i = 0; i < this.answers.length; i++) {
+          this.respuesta.push('')
         }
-        //respuesta selection
+      }
+      //respuesta selection
+      if (
+        document
+          .getElementById(`${this.id}-` + idx)
+          .classList.contains('selected-answer')
+      ) {
+        document
+          .getElementById(`${this.id}-` + idx)
+          .classList.remove('selected-answer')
+        this.respuesta[idx] = ''
+        this.counter--
+      } else {
+        document
+          .getElementById(`${this.id}-` + idx)
+          .classList.add('selected-answer')
+        this.respuesta[idx] = this.answers[idx]
+        this.counter++
+      }
+      //reset respuesta empty object
+      if (this.counter === 0) {
+        this.respuesta = []
+        this.guess = 'blank'
+      }
+      this.correction()
+    },
+
+    paintCorrection() {
+      for (let i = 0; i < this.answers.length; i++) {
+        document.getElementById(`${this.id}-` + i).classList.add('no-click')
+
         if (
-          document
-            .getElementById(`${this.id}-` + idx)
-            .classList.contains('selected-answer')
+          this.respuesta[i].respuesta === this.answers[i].respuesta &&
+          this.answers[i].correcta === true
         ) {
           document
-            .getElementById(`${this.id}-` + idx)
+            .getElementById(`${this.id}-` + i)
             .classList.remove('selected-answer')
-          this.respuesta[idx] = ''
-          this.counter--
-        } else {
           document
-            .getElementById(`${this.id}-` + idx)
-            .classList.add('selected-answer')
-          this.respuesta[idx] = this.answers[idx]
-          this.counter++
+            .getElementById(`${this.id}-` + i)
+            .classList.add('selected-green')
         }
-        //reset respuesta empty object
-        if (this.counter === 0) {
-          this.respuesta = []
-          this.guess = 'blank'
+        if (
+          this.respuesta[i].respuesta === this.answers[i].respuesta &&
+          this.answers[i].correcta === false
+        ) {
+          document
+            .getElementById(`${this.id}-` + i)
+            .classList.remove('selected-answer')
+          document
+            .getElementById(`${this.id}-` + i)
+            .classList.add('selected-red')
         }
-      } else {
-        alert('answered')
+        if (this.respuesta[i] === '' && this.answers[i].correcta === true) {
+          document
+            .getElementById(`${this.id}-` + i)
+            .classList.remove('selected-answer')
+          document
+            .getElementById(`${this.id}-` + i)
+            .classList.add('selected-circle')
+        }
       }
     },
+
     correction() {
       if (this.respuesta.length > 0) {
         let check = { true: 0, false: 0 }
-        let res = this.respuesta
-        let cor = this.answers
         let correctAnswers = 0
 
-        this.guess = false
-
-        res.forEach(element => {
+        this.respuesta.forEach(element => {
           if (element.correcta === true) {
             check.true++
           }
@@ -195,49 +226,27 @@ export default {
             check.false++
           }
         })
-        cor.forEach(element =>
+        this.answers.forEach(element =>
           element.correcta === true ? correctAnswers++ : null
         )
 
         if (check.true === correctAnswers && check.false === 0) {
           this.guess = true
+        } else {
+          this.guess = false
         }
 
-        for (let i = 0; i < cor.length; i++) {
-          document.getElementById(`${this.id}-` + i).classList.add('no-click')
+        // let testCheck = this.testCheck
 
-          if (
-            res[i].respuesta === cor[i].respuesta &&
-            cor[i].correcta === true
-          ) {
-            document
-              .getElementById(`${this.id}-` + i)
-              .classList.remove('selected-answer')
-            document
-              .getElementById(`${this.id}-` + i)
-              .classList.add('selected-green')
-          }
-          if (
-            res[i].respuesta === cor[i].respuesta &&
-            cor[i].correcta === false
-          ) {
-            document
-              .getElementById(`${this.id}-` + i)
-              .classList.remove('selected-answer')
-            document
-              .getElementById(`${this.id}-` + i)
-              .classList.add('selected-red')
-          }
-          if (res[i] === '' && cor[i].correcta === true) {
-            document
-              .getElementById(`${this.id}-` + i)
-              .classList.remove('selected-answer')
-            document
-              .getElementById(`${this.id}-` + i)
-              .classList.add('selected-circle')
-          }
-        }
-        this.corrected = true
+        // if (this.guess === true) {
+        //   testCheck.right++
+        //   testCheck.blank--
+        // }
+        // if (this.guess === false) {
+        //   testCheck.wrong++
+        //   testCheck.blank--
+        // }
+
         let obj = {
           id: this.id,
           answered: true,
@@ -245,24 +254,40 @@ export default {
           guess: this.guess
         }
         if (this.currentTest.respuestas[this.numero].answered === false) {
-          let respuesta = this.currentTest.respuestas
-          respuesta[this.numero] = obj
+          let respuesta = obj
+
           this.testUpdate(respuesta)
+          this.autoNext()
         }
       }
     },
+
     testUpdate(answer) {
       const data = {
         testId: this.currentTest._id,
+        numero: this.numero,
         respuesta: answer
       }
       this.$store.dispatch('updateTest', data)
+    },
+
+    autoNext() {
+      if (this.numero + 2 <= this.currentTest.no_contestadas.length) {
+        this.$router.push(`/tests/${this.currentTest._id}/${this.numero + 2}`)
+      } else {
+        this.$router.push(`/tests/${this.currentTest._id}/`)
+        this.$router.push(`/tests/${this.currentTest._id}/`)
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+.buttons-box {
+  z-index: 1;
+  position: absolute;
+}
 .water-mark {
   color: rgb(158, 158, 158);
 }

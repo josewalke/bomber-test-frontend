@@ -1,8 +1,9 @@
 <template>
   <div class>
     <div>
+      <div class="ml-4 mt-5 overline">Los Tests de</div>
+      <div class="ml-4 mb-4 grey--text display-1 ">{{ userName }}</div>
       <div class="header-wraper">
-        <h1 class="ml-4">Los Tests de {{ userName }}</h1>
         <div>
           <v-btn
             class="ma-2"
@@ -30,10 +31,11 @@
         <template v-slot:default>
           <thead>
             <tr>
-              <th class="text-left">Titulo</th>
+              <th class="text-left">Título</th>
               <th class="text-left">Preguntas</th>
               <th class="text-left">Aciertos</th>
               <th class="text-left">Fallos</th>
+              <th class="text-left">En Blanco</th>
               <th class="text-left">% Aciertos</th>
             </tr>
           </thead>
@@ -49,6 +51,7 @@
               </td>
               <td v-if="!item.desafio">{{ item.testCheck.right }}</td>
               <td v-if="!item.desafio">{{ item.testCheck.wrong }}</td>
+              <td v-if="!item.desafio">{{ item.testCheck.blank }}</td>
               <td v-if="!item.desafio">
                 {{ (item.testCheck.right / item.no_contestadas.length) * 100 }}
                 <span v-if="item.nota === 'suspendido'" class="red--text">{{
@@ -107,21 +110,35 @@
 </template>
 
 <script>
+import API from '~/services/api'
 import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['tests', 'userName'])
+    ...mapGetters(['tests', 'userName', 'nickName', 'currentTest'])
   },
   methods: {
     async testGeneration() {
       await this.$store.dispatch('createTest')
       this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
     },
-    goToTest(id) {
-      this.$router.push(`/tests/${id}`)
-      console.log(id)
+    async goToTest(id) {
+      const test = await API.getTest(id)
+      this.$store.commit('saveCurrentTest', test)
+      let q = 0
+      if (this.currentTest.testCheck.blank > 0) {
+        while (q === 0) {
+          for (let i = 0; i < this.currentTest.no_contestadas.length; i++) {
+            this.currentTest.respuestas.answered === false
+              ? (q = i + 1)
+              : (q = 0)
+          }
+          console.log(q)
+        }
+        console.log(q)
+      }
     },
+
     goToTestConfig() {
       this.$router.push(`/tests/config`)
     }

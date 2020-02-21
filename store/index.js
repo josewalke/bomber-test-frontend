@@ -60,6 +60,9 @@ export const getters = {
   currentTest(state) {
     return state.currentTest
   },
+  currentTestQuestion(state) {
+    return state.currentTestQuestion
+  },
   question(state) {
     return state.question
   },
