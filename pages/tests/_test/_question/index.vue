@@ -13,29 +13,29 @@
       </div>
     </div>
     <div class="question-title d-flex justify-space-between">
-      <h1>Titulo: {{ currentTest.title }}</h1>
-      <div clas="question-title d-flex justify-space-between">
-        <h1>
+      <div class="headline">{{ currentTest.title }}</div>
+      <div class="headline">
+        <div class="d-inline-flex">
           Pregunta {{ questionNumber }}/
           {{ currentTest.no_contestadas.length }}
-        </h1>
+        </div>
         <v-btn color="#da3e3e" @click="goToTest">
           <v-icon class="white--text">mdi-close</v-icon>
         </v-btn>
       </div>
     </div>
+    <v-divider class="mt-4"></v-divider>
     <v-row>
       <v-col>
-        <template>
-          <Question2
-            :id="currentTestQuestion._id"
-            :enunciado="currentTestQuestion.enunciado"
-            :answers="currentTestQuestion.answers"
-            :tema="currentTestQuestion.tema_id"
-            :numero="questionNumber - 1"
-            :temas="temas"
-          />
-        </template>
+        <Question2
+          :id="currentTestQuestion._id"
+          :enunciado="currentTestQuestion.enunciado"
+          :answers="currentTestQuestion.answers"
+          :tema="currentTestQuestion.tema_id"
+          :numero="questionNumber - 1"
+          :temas="temas"
+          :imagen-url="currentTestQuestion.imagen_url"
+        />
       </v-col>
     </v-row>
   </div>
@@ -52,12 +52,13 @@ export default {
     Question2
   },
   async fetch({ params, store }) {
+    console.log('aqui estamos')
+    console.log(params)
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
-    store.commit(
-      'saveCurrentQuestion',
-      test.no_contestadas[params.question - 1]
-    )
+    const question = await API.getQuestionById(params.question)
+    store.commit('saveCurrentQuestion', question)
+    console.log(this.currentTestQuestion)
   },
   async asyncData() {
     const temas = await API.getAllTemasNames()
@@ -104,7 +105,7 @@ export default {
   z-index: 1;
 }
 .main-div {
-  background-color: white;
+  margin: 0 auto;
 }
 .question-title {
   margin-top: 5%;

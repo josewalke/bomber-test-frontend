@@ -112,7 +112,7 @@ export default {
   async fetch({ params, store }) {
     console.log(params)
     const question = await API.getQuestionById(params.question)
-    store.commit('saveCurrentQuestion', question)
+    store.commit('saveCurrentTestQuestion', question)
   },
   data() {
     return {

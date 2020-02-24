@@ -24,6 +24,7 @@ export default {
     this.renderChart(
       {
         title: 'ola que hace',
+        cutoutPercentage: 0,
         labels: [
           `${Math.round((this.right / this.total) * 100)}% de aciertos`,
           `${Math.round((this.wrong / this.total) * 100)}% de fallos`,
@@ -38,6 +39,7 @@ export default {
               '#f3f3f3'
             ],
             borderWidth: 1,
+            weight: 10,
             borderColor: ['rgb(102,204,0)', 'rgb(255,0,0)', 'rgb(224,224,224)'],
             data: [this.right, this.wrong, this.blank]
           }

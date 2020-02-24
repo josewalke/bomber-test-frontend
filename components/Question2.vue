@@ -3,9 +3,16 @@
     <div class="question-holder">
       <v-row>
         <v-col>
-          <h1>{{ numero }}</h1>
-          <h1>{{ enunciado }}</h1>
-          <h4>{{ findTemaName }}</h4>
+          <div v-if="imagenUrl.length > 0">
+            <div
+              class="photo-holder"
+              :style="{ 'background-image': `url(${imagenUrl})` }"
+            ></div>
+          </div>
+          <div class="overline red--text font-weight-black mt-3">
+            {{ findTemaName }}
+          </div>
+          <div class="regular">{{ enunciado }}</div>
         </v-col>
       </v-row>
       <v-row>
@@ -15,8 +22,7 @@
             min-height="200"
             @click="selectAnswer(answer, idx)"
           >
-            <h3>{{ answer.respuesta }}</h3>
-            <h3>{{ answer.correcta }}</h3>
+            <div class="title">{{ answer.respuesta }}</div>
             <!-- <h3>{{ selected }}</h3> -->
           </v-card>
           <h4 class="water-mark">© Jaime Heras</h4>
@@ -95,6 +101,10 @@ export default {
       default: () => {
         return []
       }
+    },
+    imagenUrl: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -126,21 +136,21 @@ export default {
     // },
     ...mapGetters(['currentTest', 'currentTestQuestion'])
   },
-  mounted() {
-    let response = this.currentTest.respuestas[this.numero]
-    if (response.answered === true) {
-      this.respuesta = response.respuestas
-      this.answered = response.answered
-      for (let i = 0; i < response.respuestas.length; i++) {
-        if (response.respuestas[i] !== '') {
-          document
-            .getElementById(`${this.id}-` + i)
-            .classList.add('selected-answer')
-        }
-      }
-      // this.correction()
-    }
-  },
+  // mounted() {
+  // let response = this.currentTest.respuestas[this.numero]
+  // if (response.answered === true) {
+  // this.respuesta = response.respuestas
+  // this.answered = response.answered
+  // for (let i = 0; i < response.respuestas.length; i++) {
+  // if (response.respuestas[i] !== '') {
+  // document
+  // .getElementById(`${this.id}-` + i)
+  // .classList.add('selected-answer')
+  // }
+  // }
+  // this.correction()
+  // }
+  // },
 
   methods: {
     selectAnswer(answer, idx) {
@@ -284,6 +294,13 @@ export default {
 </script>
 
 <style scoped>
+.photo-holder {
+  height: 500px;
+  width: 750px;
+  background-size: contain;
+  background-position: center;
+  margin: 0 auto;
+}
 .buttons-box {
   z-index: 1;
   position: absolute;

@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import API from '~/services/api'
+// import API from '~/services/api'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -123,20 +123,8 @@ export default {
       this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
     },
     async goToTest(id) {
-      const test = await API.getTest(id)
-      this.$store.commit('saveCurrentTest', test)
-      let q = 0
-      if (this.currentTest.testCheck.blank > 0) {
-        while (q === 0) {
-          for (let i = 0; i < this.currentTest.no_contestadas.length; i++) {
-            this.currentTest.respuestas.answered === false
-              ? (q = i + 1)
-              : (q = 0)
-          }
-          console.log(q)
-        }
-        console.log(q)
-      }
+      console.log(id)
+      this.$router.push(`/tests/${id}`)
     },
 
     goToTestConfig() {

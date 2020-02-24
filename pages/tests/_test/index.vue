@@ -1,35 +1,14 @@
 <template>
   <div>
-    <div class="display-1">Nota 5,9</div>
-    <div class="display-1">{{ currentTest.title }}</div>
+    <div class="display-1 grey--text">{{ currentTest.title }}</div>
     <v-container fluid>
       <v-row cols="12" style="height: 400px">
-        <v-row
-          cols="3"
-          align="start"
-          justify="start"
-          class="grey lighten-5"
-          style="height: 200px"
-        >
-          <v-card style="height: 200px width: 200px">
-            <Donut
-              class="donut"
-              :right="currentTest.testCheck.right"
-              :wrong="currentTest.testCheck.wrong"
-              :blank="currentTest.testCheck.blank"
-              :total="currentTest.no_contestadas.length"
-            ></Donut>
-          </v-card>
+        <v-row cols="3" align="start" justify="start" style="height: 200px">
+          <v-card style="height: 200px width: 200px"> </v-card>
         </v-row>
 
-        <v-row
-          cols="4"
-          align="start"
-          justify="start"
-          class="grey lighten-5"
-          style="height: 200px"
-        >
-          <v-card style="height: 200px width: 200px">
+        <v-row cols="4" align="start" justify="start" style="height: 200px">
+          <div style="height: 200px width: 200px">
             <Donut
               class="donut"
               :right="currentTest.testCheck.right"
@@ -37,27 +16,15 @@
               :blank="currentTest.testCheck.blank"
               :total="currentTest.no_contestadas.length"
             ></Donut>
-          </v-card>
+          </div>
         </v-row>
-        <v-row
-          cols="4"
-          align="start"
-          justify="start"
-          class="grey lighten-5"
-          style="height: 200px"
-        >
-          <v-card style="height: 200px width: 200px">
-            <Donut
-              class="donut"
-              :right="currentTest.testCheck.right"
-              :wrong="currentTest.testCheck.wrong"
-              :blank="currentTest.testCheck.blank"
-              :total="currentTest.no_contestadas.length"
-            ></Donut>
-          </v-card>
+        <v-row cols="4" align="start" justify="start" style="height: 200px">
+          <v-card style="height: 200px width: 200px"> </v-card>
         </v-row>
       </v-row>
     </v-container>
+    <v-divider></v-divider>
+
     <v-list
       v-for="(item, idx) in currentTest.no_contestadas"
       :key="item.id"
@@ -95,10 +62,10 @@ import Donut from '~/components/Doughnut.js'
 
 export default {
   components: { Donut },
-
   async fetch({ params, store }) {
-    const test = await API.getTest(params.test)
+    console.log('hello hello')
     console.log(params)
+    const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
   },
   async asyncData() {
@@ -110,11 +77,12 @@ export default {
       estado: [],
       sections: [],
       total: 10,
-      legend: ''
+      legend: '',
+      slug: this.$route.params.test
     }
   },
   computed: {
-    ...mapGetters(['currentTest', 'question']),
+    ...mapGetters(['currentTest', 'question', 'tests']),
     getQuestionSubject() {
       let questionSubject = []
       this.currentTest.no_contestadas.forEach(q => {
@@ -131,10 +99,16 @@ export default {
       return status
     }
   },
+  watch: ['/tests'],
   methods: {
-    goToQuestion(id, idx) {
-      this.$router.push(`/tests/${this.currentTest._id}/${idx + 1}`)
-      console.log(this.sections)
+    goToQuestion(item_id) {
+      this.$router.push(`/tests/${this.currentTest._id}/${item_id}`)
+      // console.log(this.sections)
+    },
+    goToQuestion2(idx) {
+      let q = this.currentTest.no_contestadas[idx]._id
+      this.$router.push(`/tests/${this.currentTest._id}/${q}`)
+      // console.log(this.sections)
     }
   }
 }
