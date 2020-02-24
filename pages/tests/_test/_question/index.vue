@@ -1,8 +1,5 @@
 <template>
   <div class="main-div">
-    <h1>aqui {{ $store.state.currentTest._id }}</h1>
-    <h1>aqui {{ currentTest._id }}</h1>
-
     <div class="buttons-box d-flex justify-space-between">
       <div>
         <v-btn @click="previousQuestion">
@@ -50,7 +47,8 @@ import Question2 from '~/components/Question2'
 import { mapGetters } from 'vuex'
 
 export default {
-  key: '_question',
+  layout: 'test',
+
   components: {
     Question2
   },

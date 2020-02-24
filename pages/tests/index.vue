@@ -114,6 +114,8 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  watchQuery: ['/pages/tests'],
+
   computed: {
     ...mapGetters(['tests', 'userName', 'nickName', 'currentTest'])
   },

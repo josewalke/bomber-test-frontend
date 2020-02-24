@@ -12,7 +12,7 @@
           <div class="overline red--text font-weight-black mt-3">
             {{ findTemaName }}
           </div>
-          <div class="regular">{{ enunciado }}</div>
+          <div class="display-1">{{ enunciado }}</div>
         </v-col>
       </v-row>
       <v-row>
@@ -23,7 +23,7 @@
             @click="selectAnswer(answer, idx)"
           >
             <div class="title">{{ answer.respuesta }}</div>
-            <div class="title">{{ answer.correcta }}</div>
+            <!-- <div class="title">{{ answer.correcta }}</div> -->
 
             <!-- <h3>{{ selected }}</h3> -->
           </v-card>

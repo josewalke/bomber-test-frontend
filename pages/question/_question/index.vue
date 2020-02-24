@@ -13,7 +13,6 @@
       ></div>
     </div>
     <v-btn @click="uploadPhoto">Elegir photo</v-btn>
-    <v-btn @click="updatePhoto">Actualizar photo</v-btn>
     <div class="photo-question">
       <div
         class="user-card mt-5"
@@ -198,6 +197,7 @@ export default {
           if (!error && result && result.event === 'success') {
             const newUrl = result.info.url
             this.photo = newUrl
+            this.updatePhoto()
           }
         }
       )
@@ -212,7 +212,7 @@ export default {
       if (this.photo.length > 0) {
         const body = {
           id: this.updatePregunta._id,
-          image_url: this.photo
+          imagen_url: this.photo
         }
         this.$store.dispatch('updateQuestionPhoto', body)
       }
