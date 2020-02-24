@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="header-wraper">
+    <v-container class="header-wraper">
       <h1>Mensajes</h1>
-    </div>
+    </v-container>
     <v-simple-table v-if="role === 'cliente'">
       <template v-slot:default>
         <thead>

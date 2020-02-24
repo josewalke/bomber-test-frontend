@@ -256,5 +256,8 @@ export default {
     return axios
       .put('questions/' + newQuestion._id, newQuestion)
       .then(response => response.data)
+  },
+  testPremium() {
+    return axios.get(`tests/premium`).then(response => response.data)
   }
 }

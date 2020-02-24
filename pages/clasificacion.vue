@@ -4,25 +4,25 @@
       <h1>
         Clasificacion del bombero mas preparado
       </h1>
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th>Clasificacion</th>
-              <th>Usuario</th>
-              <th>Puntuacion</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, idx) in clasificacion" :key="idx">
-              <td>{{ idx + 1 }}</td>
-              <td>{{ item.usuario }}</td>
-              <td>{{ item.puntuacion }}</td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
     </v-container>
+    <v-simple-table>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th>Clasificacion</th>
+            <th>Usuario</th>
+            <th>Puntuacion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, idx) in clasificacion" :key="idx">
+            <td>{{ idx + 1 }}</td>
+            <td>{{ item.usuario }}</td>
+            <td>{{ item.puntuacion }}</td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
   </div>
 </template>
 
@@ -59,4 +59,4 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

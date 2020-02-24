@@ -1,11 +1,9 @@
 <template>
   <div>
+    <!-- Empieza Barra de inicio -->
     <v-app-bar class="nav-bar" fixed flat>
       <v-toolbar-title class="white--text font-weight-black" v-text="title" />
       <v-spacer />
-      <!-- inicio nav del ordenador -->
-      <v-btn text class="white--text btn-ordenador">Inicio</v-btn>
-      <v-btn text class="white--text btn-ordenador">Precios</v-btn>
       <!-- inicio modal -->
       <v-dialog max-width="500">
         <template v-slot:activator="{ on }">
@@ -13,7 +11,7 @@
         </template>
         <v-card>
           <v-row align="center" justify="center">
-            <v-col cols="12" md="6">
+            <v-col cols="12" xs="6">
               <v-tabs v-model="tab">
                 <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
                 <v-tab key="2" :href="`#tab-2`">Login</v-tab>
@@ -37,22 +35,9 @@
         </v-card>
       </v-dialog>
       <!-- final modal -->
-      <!-- final nav del ordenador -->
-      <!-- inicio nav del movil -->
-      <v-menu offset-y>
-        <template v-slot:activator="{ on }">
-          <v-btn text class="menu" v-on="on">
-            <v-icon class="white--text">mdi-menu</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item v-for="(item, index) in items" :key="index">
-            <v-btn text :to="item.to">{{ item.title }}</v-btn>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-      <!-- final nav del movil -->
     </v-app-bar>
+    <!-- Final de Barra de inicio -->
+    <!-- Inicio de Foto de bombero -->
     <div class="hero-banner">
       <v-layout class="banner-text" column justify-center align-center>
         <h1>Conviertete en Bombero</h1>
@@ -60,142 +45,155 @@
         <p class="subtitle">
           La mayor Base de Datos <br />de preguntas de examen
         </p>
-        <v-btn rounded height="75" class="btn-big white--text" color="#DA3E3E"
+        <v-btn
+          rounded
+          height="75"
+          class="btn-big white--text"
+          color="#DA3E3E"
+          xs="4"
           >Prueba gratis</v-btn
         >
       </v-layout>
     </div>
-    <div class="quotes">
+    <!-- Final de la Foto de bombero -->
+    <!-- Inicio del Espacio en blanco -->
+    <div class="quotes ma-12">
       <h1>2.000+ Preguntas de Examen</h1>
       <p>con las que prepararte para aprobar la Oposicion de Bombero</p>
     </div>
-    <div class="table-wraper">
+    <!-- Final del Espacio en blanco -->
+    <!-- Inicio de Tabla de suscripcion -->
+    <div class="table-wraper" md="height: 550px;" xs="height: 1600px;">
       <div class="table-container">
-        <div class="columns">
-          <ul class="price">
-            <li class="header">Basic</li>
-            <li class="grey">Gratis</li>
-            <li>50 Tests /mes</li>
-            <li>200 Preguntas</li>
-            <li>5 Consultas /mes</li>
-            <li>1 Clase Teórica /mes</li>
-            <li class="grey">
-              <v-dialog max-width="500">
-                <template v-slot:activator="{ on }">
-                  <v-btn color="primary" dark v-on="on">Registrate</v-btn>
-                </template>
-                <v-card>
-                  <v-row align="center" justify="center">
-                    <v-col cols="12" md="6">
-                      <v-tabs v-model="tab">
-                        <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
-                        <v-tab key="2" :href="`#tab-2`">Login</v-tab>
-                        <v-tab-item key="1" value="tab-1">
-                          <v-row class="py-2">
-                            <v-col cols="12">
-                              <Signup />
-                            </v-col>
-                          </v-row>
-                        </v-tab-item>
-                        <v-tab-item key="2" value="tab-2">
-                          <v-row class="py-2">
-                            <v-col>
-                              <Login />
-                            </v-col>
-                          </v-row>
-                        </v-tab-item>
-                      </v-tabs>
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </v-dialog>
-            </li>
-          </ul>
-        </div>
-        <div class="columns">
-          <ul class="price">
-            <li class="header">Pro</li>
-            <li class="grey">€ 39.99 /MES</li>
-            <li>100 Tests /mes</li>
-            <li>1000 Preguntas</li>
-            <li>20 Consultas /mes</li>
-            <li>4 Clases Teórica /mes</li>
-            <li class="grey">
-              <v-dialog max-width="500">
-                <template v-slot:activator="{ on }">
-                  <v-btn color="primary" dark v-on="on">Registrate</v-btn>
-                </template>
-                <v-card>
-                  <v-row align="center" justify="center">
-                    <v-col cols="12" md="6">
-                      <v-tabs v-model="tab">
-                        <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
-                        <v-tab key="2" :href="`#tab-2`">Login</v-tab>
-                        <v-tab-item key="1" value="tab-1">
-                          <v-row class="py-2">
-                            <v-col cols="12">
-                              <Signup />
-                            </v-col>
-                          </v-row>
-                        </v-tab-item>
-                        <v-tab-item key="2" value="tab-2">
-                          <v-row class="py-2">
-                            <v-col>
-                              <Login />
-                            </v-col>
-                          </v-row>
-                        </v-tab-item>
-                      </v-tabs>
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </v-dialog>
-            </li>
-          </ul>
-        </div>
-        <div class="columns">
-          <ul class="price">
-            <li class="header">Premium</li>
-            <li class="grey">€ 299.99 /MES</li>
-            <li>Tests ilimtados</li>
-            <li>2000+ Preguntas</li>
-            <li>Consultas ilimitadas</li>
-            <li>Clases Teóricas ilimitadas</li>
-            <li class="grey">
-              <v-dialog max-width="500">
-                <template v-slot:activator="{ on }">
-                  <v-btn color="primary" dark v-on="on">Registrate</v-btn>
-                </template>
-                <v-card>
-                  <v-row align="center" justify="center">
-                    <v-col cols="12" md="6">
-                      <v-tabs v-model="tab">
-                        <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
-                        <v-tab key="2" :href="`#tab-2`">Login</v-tab>
-                        <v-tab-item key="1" value="tab-1">
-                          <v-row class="py-2">
-                            <v-col cols="12">
-                              <Signup />
-                            </v-col>
-                          </v-row>
-                        </v-tab-item>
-                        <v-tab-item key="2" value="tab-2">
-                          <v-row class="py-2">
-                            <v-col>
-                              <Login />
-                            </v-col>
-                          </v-row>
-                        </v-tab-item>
-                      </v-tabs>
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </v-dialog>
-            </li>
-          </ul>
-        </div>
+        <v-row>
+          <v-col md="4" xs="12">
+            <ul class="price">
+              <li class="header">Basic</li>
+              <li class="grey">Gratis</li>
+              <li>50 Tests /mes</li>
+              <li>200 Preguntas</li>
+              <li>5 Consultas /mes</li>
+              <li>1 Clase Teórica /mes</li>
+              <li class="grey">
+                <v-dialog max-width="500">
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                  </template>
+                  <v-card>
+                    <v-row align="center" justify="center">
+                      <v-col cols="12" md="6">
+                        <v-tabs v-model="tab">
+                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                          <v-tab key="2" :href="`#tab-2`">Login</v-tab>
+                          <v-tab-item key="1" value="tab-1">
+                            <v-row class="py-2">
+                              <v-col cols="12">
+                                <Signup />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                          <v-tab-item key="2" value="tab-2">
+                            <v-row class="py-2">
+                              <v-col>
+                                <Login />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                        </v-tabs>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                </v-dialog>
+              </li>
+            </ul>
+          </v-col>
+          <v-col md="4" xs="12">
+            <ul class="price">
+              <li class="header">Pro</li>
+              <li class="grey">€ 39.99 /MES</li>
+              <li>100 Tests /mes</li>
+              <li>1000 Preguntas</li>
+              <li>20 Consultas /mes</li>
+              <li>4 Clases Teórica /mes</li>
+              <li class="grey">
+                <v-dialog max-width="500">
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                  </template>
+                  <v-card>
+                    <v-row align="center" justify="center">
+                      <v-col cols="12" md="6">
+                        <v-tabs v-model="tab">
+                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                          <v-tab key="2" :href="`#tab-2`">Login</v-tab>
+                          <v-tab-item key="1" value="tab-1">
+                            <v-row class="py-2">
+                              <v-col cols="12">
+                                <Signup />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                          <v-tab-item key="2" value="tab-2">
+                            <v-row class="py-2">
+                              <v-col>
+                                <Login />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                        </v-tabs>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                </v-dialog>
+              </li>
+            </ul>
+          </v-col>
+          <v-col md="4" xs="12">
+            <ul class="price">
+              <li class="header">Premium</li>
+              <li class="grey">€ 299.99 /MES</li>
+              <li>Tests ilimtados</li>
+              <li>2000+ Preguntas</li>
+              <li>Consultas ilimitadas</li>
+              <li>Clases Teóricas ilimitadas</li>
+              <li class="grey">
+                <v-dialog max-width="500">
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                  </template>
+                  <v-card>
+                    <v-row align="center" justify="center">
+                      <v-col cols="12" md="6">
+                        <v-tabs v-model="tab">
+                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                          <v-tab key="2" :href="`#tab-2`">Login</v-tab>
+                          <v-tab-item key="1" value="tab-1">
+                            <v-row class="py-2">
+                              <v-col cols="12">
+                                <Signup />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                          <v-tab-item key="2" value="tab-2">
+                            <v-row class="py-2">
+                              <v-col>
+                                <Login />
+                              </v-col>
+                            </v-row>
+                          </v-tab-item>
+                        </v-tabs>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                </v-dialog>
+              </li>
+            </ul>
+          </v-col>
+        </v-row>
       </div>
     </div>
+    <!-- Fin de Tabla de suscripcion -->
+    <!-- Inicio del Footer -->
     <v-footer class="text-center">
       <v-row align="center" justify="center">
         <v-col cols="12">
@@ -229,6 +227,7 @@ export default {
   layout: 'basic'
 }
 </script>
+
 <style lang="scss" scoped>
 .nav-bar {
   background-color: rgba(184, 0, 0, 1);
@@ -267,15 +266,9 @@ export default {
     z-index: 1;
   }
 }
-
-.btn-big {
-  // margin-left: 40%;
-  font-size: 1.4rem;
-}
 .quotes {
-  height: 400px;
   text-align: center;
-  padding-top: 7rem;
+
   h1 {
     font-size: 3.4rem;
     color: #da3e3e;
@@ -284,13 +277,11 @@ export default {
     font-size: 1.7rem;
   }
 }
-//table
 .table-wraper {
   margin: 0 auto;
   background-image: url('../static/assets/table.jpg');
   background-size: cover;
   background-position: center;
-  height: 550px;
   width: 100%;
   padding-top: 1rem;
 }
@@ -298,13 +289,6 @@ export default {
   width: 70%;
   margin: 0 auto;
 }
-
-.columns {
-  float: left;
-  width: 33.3%;
-  padding: 8px;
-}
-
 .price {
   list-style-type: none;
   margin: 0;
@@ -312,48 +296,17 @@ export default {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-
 .price .header {
   background-color: #da3e3e;
   color: white;
   font-size: 25px;
 }
-
 .price li {
   padding: 20px;
   text-align: center;
   background-color: white;
 }
-
-.button {
-  background-color: rgb(0, 129, 204);
-  border: none;
-  color: white;
-  padding: 10px 25px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 18px;
-}
-
 .v-footer {
   background-color: #da3e3e;
-}
-
-@media only screen and (max-width: 600px) {
-  .columns {
-    width: 100%;
-  }
-  .btn-ordenador {
-    display: none;
-  }
-}
-@media only screen and (min-width: 600px) {
-  .menu {
-    display: none;
-  }
-}
-.subtitle {
-  line-height: 40px;
-  margin-bottom: 40px;
 }
 </style>
