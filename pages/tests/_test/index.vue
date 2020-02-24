@@ -61,7 +61,7 @@ import { mapGetters } from 'vuex'
 import Donut from '~/components/Doughnut.js'
 
 export default {
-  watchQuery: ['/pages/tests'],
+  watchQuery: ['/tests'],
   components: { Donut },
   async fetch({ params, store }) {
     const test = await API.getTest(params.test)
