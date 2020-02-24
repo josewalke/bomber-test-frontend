@@ -3,8 +3,13 @@
     <v-container>
       <div v-if="crear">
         <h1>Enunciado</h1>
-        <h1>{{ photo }}</h1>
         <v-textarea v-model="enunciado" auto-grow solo></v-textarea>
+        <div v-if="photo.length > 0">
+          <div
+            class="photo-holder"
+            :style="{ 'background-image': `url(${photo})` }"
+          ></div>
+        </div>
         <v-btn @click="uploadPhoto">Añadir photo</v-btn>
         <div class="photo-question">
           <div
@@ -411,13 +416,12 @@ export default {
 </script>
 
 <style>
-.photo-question {
-  width: 80%;
-  height: 400px;
+.photo-holder {
+  height: 500px;
+  width: 750px;
   background-size: contain;
   background-position: center;
   margin: 0 auto;
-  /* background-color: red; */
 }
 .box {
   width: 600px;

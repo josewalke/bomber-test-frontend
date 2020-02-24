@@ -452,6 +452,15 @@ export const actions = {
       }
     }
   },
+  async updateQuestionPhoto({ commit }, body) {
+    const response = await API.updateQuestionPhoto(body)
+    if (!response.error) {
+      const pregunta = await API.getQuestionById(body.id)
+      if (!pregunta.error) {
+        commit('saveUpdatePregunta', pregunta)
+      }
+    }
+  },
   async updateOpcion({ commit }, body) {
     const response = await API.updateOpcion(body)
     if (!response.error) {

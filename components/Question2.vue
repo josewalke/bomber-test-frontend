@@ -23,6 +23,8 @@
             @click="selectAnswer(answer, idx)"
           >
             <div class="title">{{ answer.respuesta }}</div>
+            <div class="title">{{ answer.correcta }}</div>
+
             <!-- <h3>{{ selected }}</h3> -->
           </v-card>
           <h4 class="water-mark">© Jaime Heras</h4>
@@ -121,36 +123,27 @@ export default {
       var temaName = this.temas.filter(elem => elem.id == this.tema)
       return temaName[0].name
     },
-    // testCheck() {
-    //   let testCheck = { right: 0, wrong: 0, blank: 0 }
-    //   this.currentTest.respuestas.forEach(resp => {
-    //     if (resp.guess === true) {
-    //       testCheck.right++
-    //     } else if (resp.guess === false) {
-    //       testCheck.wrong++
-    //     } else {
-    //       testCheck.blank++
-    //     }
-    //   })
-    //   return testCheck
-    // },
     ...mapGetters(['currentTest', 'currentTestQuestion'])
   },
-  // mounted() {
-  // let response = this.currentTest.respuestas[this.numero]
-  // if (response.answered === true) {
-  // this.respuesta = response.respuestas
-  // this.answered = response.answered
-  // for (let i = 0; i < response.respuestas.length; i++) {
-  // if (response.respuestas[i] !== '') {
-  // document
-  // .getElementById(`${this.id}-` + i)
-  // .classList.add('selected-answer')
-  // }
-  // }
-  // this.correction()
-  // }
-  // },
+  mounted() {
+    let response = this.currentTest.respuestas[this.numero]
+    if (response.answered === true) {
+      this.respuesta = response.respuestas
+      this.answered = response.answered
+      this.showCorrection = this.currentTest.mostrar_solucion
+      for (let i = 0; i < response.respuestas.length; i++) {
+        if (response.respuestas[i] !== '') {
+          document
+            .getElementById(`${this.id}-` + i)
+            .classList.add('selected-answer')
+        }
+      }
+      this.correction()
+      if (this.showCorrection === true) {
+        this.paintCorrection()
+      }
+    }
+  },
 
   methods: {
     selectAnswer(answer, idx) {
@@ -224,6 +217,8 @@ export default {
     },
 
     correction() {
+      console.log(this.currentTest.respuestas[this.numero].answered)
+      console.log(this.$route.params)
       if (this.respuesta.length > 0) {
         let check = { true: 0, false: 0 }
         let correctAnswers = 0
@@ -246,17 +241,6 @@ export default {
           this.guess = false
         }
 
-        // let testCheck = this.testCheck
-
-        // if (this.guess === true) {
-        //   testCheck.right++
-        //   testCheck.blank--
-        // }
-        // if (this.guess === false) {
-        //   testCheck.wrong++
-        //   testCheck.blank--
-        // }
-
         let obj = {
           id: this.id,
           answered: true,
@@ -267,7 +251,10 @@ export default {
           let respuesta = obj
 
           this.testUpdate(respuesta)
-          this.autoNext()
+          if (this.currentTest.mostrar_solucion === true) {
+            this.paintCorrection()
+          }
+          // this.autoNext()
         }
       }
     },
@@ -279,6 +266,14 @@ export default {
         respuesta: answer
       }
       this.$store.dispatch('updateTest', data)
+    },
+
+    endTest() {
+      let right = this.currentTest.testCheck.right
+      let wrong = this.currentTest.testCheck.wrong
+      if (right + wrong === this.currentTest.en_blango.length) {
+        this.currentTest.time_end = Date.now
+      }
     },
 
     autoNext() {

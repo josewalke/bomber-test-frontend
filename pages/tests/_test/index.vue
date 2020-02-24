@@ -27,7 +27,7 @@
 
     <v-list
       v-for="(item, idx) in currentTest.no_contestadas"
-      :key="item.id"
+      :key="item._id"
       dense
       flat
     >
@@ -61,10 +61,9 @@ import { mapGetters } from 'vuex'
 import Donut from '~/components/Doughnut.js'
 
 export default {
+  watchQuery: ['/pages/tests'],
   components: { Donut },
   async fetch({ params, store }) {
-    console.log('hello hello')
-    console.log(params)
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
   },
@@ -103,12 +102,10 @@ export default {
   methods: {
     goToQuestion(item_id) {
       this.$router.push(`/tests/${this.currentTest._id}/${item_id}`)
-      // console.log(this.sections)
     },
     goToQuestion2(idx) {
       let q = this.currentTest.no_contestadas[idx]._id
       this.$router.push(`/tests/${this.currentTest._id}/${q}`)
-      // console.log(this.sections)
     }
   }
 }

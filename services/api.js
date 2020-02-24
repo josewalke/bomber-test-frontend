@@ -158,6 +158,16 @@ export default {
       .put('questions/' + newEnunciado.id, body)
       .then(response => response.data)
   },
+  updateQuestionPhoto(photo) {
+    console.log(photo)
+    const body = {
+      imagen_url: photo.imagen_url
+    }
+
+    return axios
+      .put('questions/' + photo.id, body)
+      .then(response => response.data)
+  },
   updateOpcion(newOpcion) {
     // console.log(newOpcion)
     const body = {

@@ -1,5 +1,8 @@
 <template>
   <div class="main-div">
+    <h1>aqui {{ $store.state.currentTest._id }}</h1>
+    <h1>aqui {{ currentTest._id }}</h1>
+
     <div class="buttons-box d-flex justify-space-between">
       <div>
         <v-btn @click="previousQuestion">
@@ -47,18 +50,15 @@ import Question2 from '~/components/Question2'
 import { mapGetters } from 'vuex'
 
 export default {
-  layout: 'test',
+  key: '_question',
   components: {
     Question2
   },
   async fetch({ params, store }) {
-    console.log('aqui estamos')
-    console.log(params)
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
     const question = await API.getQuestionById(params.question)
     store.commit('saveCurrentQuestion', question)
-    console.log(this.currentTestQuestion)
   },
   async asyncData() {
     const temas = await API.getAllTemasNames()
@@ -78,6 +78,15 @@ export default {
       return idx
     }
   },
+
+  watch: {
+    $route(to, from) {
+      console.log('watcher here')
+      console.log(this.$router)
+      console.log(to, from)
+    }
+  },
+
   methods: {
     goToTest() {
       this.$router.push(`/tests/${this.currentTest._id}`)
