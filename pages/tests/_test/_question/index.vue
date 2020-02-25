@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="question-title d-flex justify-space-between">
-      <div class="headline">{{ currentTest.title }}</div>
+      <div class="headline">{{ title }}</div>
       <div class="headline">
         <div class="d-inline-flex">
           Pregunta {{ questionNumber }}/
@@ -28,13 +28,13 @@
     <v-row>
       <v-col>
         <Question2
-          :id="currentTestQuestion._id"
-          :enunciado="currentTestQuestion.enunciado"
-          :answers="currentTestQuestion.answers"
-          :tema="currentTestQuestion.tema_id"
-          :numero="questionNumber - 1"
+          :id="id"
+          :enunciado="enunciado"
+          :answers="answers"
+          :tema="tema"
+          :numero="numero - 1"
           :temas="temas"
-          :imagen-url="currentTestQuestion.imagen_url"
+          :imagen-url="imagenUrl"
         />
       </v-col>
     </v-row>
@@ -53,6 +53,8 @@ export default {
     Question2
   },
   async fetch({ params, store }) {
+    console.log('palomero')
+    console.log(params)
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
     const question = await API.getQuestionById(params.question)
@@ -62,32 +64,48 @@ export default {
     const temas = await API.getAllTemasNames()
     return { temas }
   },
+  data() {
+    return {
+      id: '',
+      enunciado: '',
+      answers: [],
+      tema: '',
+      imagenUrl: '',
+      numero: '',
+      title: '',
+      casa: 'hola'
+    }
+  },
 
   computed: {
     ...mapGetters(['currentTest', 'question', 'currentTestQuestion']),
     questionNumber() {
-      let idx = 0
-      let q = this.currentTest.no_contestadas
-      for (let i = 0; i < q.length; i++) {
-        if (q[i].enunciado === this.currentTestQuestion.enunciado) {
-          idx = i + 1
-        }
-      }
-      return idx
+      const qs = this.currentTest.no_contestadas
+      const idx = qs.findIndex(q => q._id === this.id)
+      return idx + 1
+    },
+    notAnswered() {
+      let notAnswered = []
+      this.currentTest.respuestas.forEach(res =>
+        !res.answered ? notAnswered.push(res) : null
+      )
+      return notAnswered
     }
   },
 
-  watch: {
-    $route(to, from) {
-      console.log('watcher here')
-      console.log(this.$router)
-      console.log(to, from)
-    }
+  beforeMount() {
+    this.id = this.currentTestQuestion._id
+    this.enunciado = this.currentTestQuestion.enunciado
+    this.answers = this.currentTestQuestion.answers
+    this.tema = this.currentTestQuestion.tema_id
+    this.imagenUrl = this.currentTestQuestion.imagen_url
+    this.numero = this.questionNumber
+    this.title = this.currentTest.title
   },
 
   methods: {
     goToTest() {
-      this.$router.push(`/tests/${this.currentTest._id}`)
+      this.$router.push(`/tests/${this.$route.params.test}`)
     },
     previousQuestion() {
       let previous = this.questionNumber - 1

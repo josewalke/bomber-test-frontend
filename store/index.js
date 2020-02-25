@@ -282,7 +282,6 @@ export const actions = {
     commit('saveTests', tests)
   },
   async createTestConfig({ commit, state }, testData) {
-    console.log(testData)
     const newTest = await API.generateConfigTest(state.token, testData)
     commit('saveCurrentTest', newTest)
     const tests = await API.getAllTestById(state.userId)

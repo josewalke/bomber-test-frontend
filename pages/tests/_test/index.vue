@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="display-1 grey--text">{{ currentTest.title }}</div>
+    <div class="display-1 grey--text">{{ title }}</div>
+
     <v-container fluid>
       <v-row cols="12" style="height: 400px">
         <v-row cols="3" align="start" justify="start" style="height: 200px">
@@ -24,23 +25,19 @@
       </v-row>
     </v-container>
     <v-divider></v-divider>
-
-    <v-list
-      v-for="(item, idx) in currentTest.no_contestadas"
-      :key="item._id"
-      dense
-      flat
-    >
+    <v-list v-for="(item, idx) in questions" :key="item._id" dense flat>
       <v-row @click="goToQuestion(item._id, idx)">
         <v-col cols="8">
           <div class="overline text-uppercase red--text pl-4">
             {{ getQuestionSubject[idx] }}
           </div>
-          <div class="body-2 pl-4">{{ idx + 1 }}. {{ item.enunciado }}</div>
+          <div class="body-2 pl-4">
+            {{ questionNumber(item._id) }}. {{ item.enunciado }}
+          </div>
         </v-col>
         <v-col cols="4">
           <div
-            v-if="currentTest.respuestas[idx].answered === true"
+            v-if="respuestas[idx].answered === true"
             class="overline text-right pr-5 green--text"
           >
             contestada
@@ -61,7 +58,6 @@ import { mapGetters } from 'vuex'
 import Donut from '~/components/Doughnut.js'
 
 export default {
-  watchQuery: ['/tests'],
   components: { Donut },
   async fetch({ params, store }) {
     const test = await API.getTest(params.test)
@@ -73,18 +69,16 @@ export default {
   },
   data() {
     return {
-      estado: [],
-      sections: [],
-      total: 10,
-      legend: '',
-      slug: this.$route.params.test
+      questions: [],
+      title: '',
+      respuestas: []
     }
   },
   computed: {
     ...mapGetters(['currentTest', 'question', 'tests']),
     getQuestionSubject() {
       let questionSubject = []
-      this.currentTest.no_contestadas.forEach(q => {
+      this.questions.forEach(q => {
         let tema = this.temas.find(tema => tema.id == q.tema_id)
         questionSubject.push(tema.name)
       })
@@ -97,8 +91,19 @@ export default {
       })
       return status
     }
+    // notAnswered() {
+    //   let notAnswered = []
+    //   this.respuestas.forEach(res =>
+    //     !res.answered ? notAnswered.push(res) : null
+    //   )
+    //   return notAnswered
+    // }
   },
-  watch: ['/tests'],
+  beforeMount() {
+    this.questions = this.currentTest.no_contestadas
+    this.respuestas = this.currentTest.respuestas
+    this.title = this.currentTest.title
+  },
   methods: {
     goToQuestion(item_id) {
       this.$router.push(`/tests/${this.currentTest._id}/${item_id}`)
@@ -106,6 +111,11 @@ export default {
     goToQuestion2(idx) {
       let q = this.currentTest.no_contestadas[idx]._id
       this.$router.push(`/tests/${this.currentTest._id}/${q}`)
+    },
+    questionNumber(id) {
+      console.log(id)
+      const qNum = this.questions.findIndex(q => q._id === id)
+      return qNum + 1
     }
   }
 }

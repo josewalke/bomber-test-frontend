@@ -114,15 +114,15 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  watchQuery: ['/pages/tests'],
-
   computed: {
     ...mapGetters(['tests', 'userName', 'nickName', 'currentTest'])
   },
   methods: {
     async testGeneration() {
       await this.$store.dispatch('createTest')
-      this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
+      this.$router.push(
+        `/tests/${this.$store.state.currentTest._id}/${this.$store.state.currentTest.no_contestadas[0]._id}`
+      )
     },
     async goToTest(id) {
       console.log(id)

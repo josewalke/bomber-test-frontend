@@ -1,5 +1,7 @@
 <template>
   <v-container>
+    {{ notAnswered.length }}
+    {{ notAnswered[0].id }}
     <div class="question-holder">
       <v-row>
         <v-col>
@@ -119,11 +121,19 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['currentTest', 'currentTestQuestion']),
     findTemaName() {
       var temaName = this.temas.filter(elem => elem.id == this.tema)
       return temaName[0].name
     },
-    ...mapGetters(['currentTest', 'currentTestQuestion'])
+    notAnswered() {
+      let notAnswered = []
+      this.currentTest.respuestas.forEach(res =>
+        !res.answered ? notAnswered.push(res) : null
+      )
+
+      return notAnswered
+    }
   },
   mounted() {
     let response = this.currentTest.respuestas[this.numero]
@@ -254,7 +264,8 @@ export default {
           if (this.currentTest.mostrar_solucion === true) {
             this.paintCorrection()
           }
-          // this.autoNext()
+          this.autoNext()
+          // this.$router.push(`/tests/${this.currentTest._id}/`)
         }
       }
     },
@@ -277,10 +288,12 @@ export default {
     },
 
     autoNext() {
-      if (this.numero + 2 <= this.currentTest.no_contestadas.length) {
-        this.$router.push(`/tests/${this.currentTest._id}/${this.numero + 2}`)
+      if (this.notAnswered.length >= 1) {
+        this.$router.push(
+          `/tests/${this.currentTest._id}/${this.notAnswered[1].id}`
+        )
+        this.notAnswered.shift()
       } else {
-        this.$router.push(`/tests/${this.currentTest._id}/`)
         this.$router.push(`/tests/${this.currentTest._id}/`)
       }
     }
