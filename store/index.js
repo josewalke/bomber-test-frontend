@@ -251,6 +251,7 @@ export const actions = {
     const response = await API.login(userData)
     if (!response.error) {
       commit('saveToken', response)
+      await API.updateInactividad(state.userId)
       const tests = await API.getAllTestById(state.userId)
       commit('saveTests', tests)
       commit('evaluar')
