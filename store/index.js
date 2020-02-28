@@ -22,7 +22,8 @@ export const state = () => ({
   currentTest: {},
   question: {},
   position: '',
-  updatePregunta: {}
+  updatePregunta: {},
+  negativos: ''
 })
 
 export const getters = {
@@ -88,6 +89,9 @@ export const getters = {
   },
   updatePregunta(state) {
     return state.updatePregunta
+  },
+  negativos(state) {
+    return state.negativos
   }
 }
 
@@ -110,7 +114,8 @@ export const mutations = {
       suspendidos,
       total,
       suscription_type,
-      active
+      active,
+      negativos
     }
   ) {
     state.token = token
@@ -129,6 +134,7 @@ export const mutations = {
     state.total = total
     state.suscription_type = suscription_type
     state.active = active
+    state.negativos = negativos
   },
   saveTests(state, tests) {
     state.tests = tests
@@ -172,6 +178,7 @@ export const mutations = {
     state.question = {}
     state.position = ''
     state.updatePregunta = {}
+    state.negativos = ''
     localStorage.clear()
   },
   clearMessage(state) {
