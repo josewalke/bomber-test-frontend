@@ -289,7 +289,6 @@ export const actions = {
     const tests = await API.getAllTestById(state.userId)
     commit('saveTests', tests)
   },
-
   async updateTest({ commit, state }, testData) {
     let data = testData
     const updatedTest = await API.updateTest(state.token, data)
