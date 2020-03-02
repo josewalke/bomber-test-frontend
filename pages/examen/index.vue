@@ -274,7 +274,7 @@ export default {
             test.time_end = new Date().getTime() + 2419200000
           }
           API.crearExamen(test)
-          location.reload()
+          // location.reload()
         }
       } else {
         const students = await API.getAllUsers()
@@ -322,7 +322,7 @@ export default {
             console.log('todos los users')
             console.log(test)
             API.crearExamen(test)
-            location.reload()
+            // location.reload()
           }
         }
       }

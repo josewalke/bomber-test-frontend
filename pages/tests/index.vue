@@ -43,13 +43,49 @@
               :key="item._id"
               @click="goToTest(item._id)"
             >
-              <td v-if="!item.desafio">{{ item.title }}</td>
-              <td v-if="!item.desafio">
+              <td
+                v-if="
+                  (!item.desafio &&
+                    new Date(parseInt(item.time_end)) > new Date()) ||
+                    (!item.desafio && item.time_end === 'ilimitado')
+                "
+              >
+                {{ item.title }}
+              </td>
+              <td
+                v-if="
+                  (!item.desafio &&
+                    new Date(parseInt(item.time_end)) > new Date()) ||
+                    (!item.desafio && item.time_end === 'ilimitado')
+                "
+              >
                 {{ item.no_contestadas.length }}
               </td>
-              <td v-if="!item.desafio">{{ item.testCheck.right }}</td>
-              <td v-if="!item.desafio">{{ item.testCheck.wrong }}</td>
-              <td v-if="!item.desafio">
+              <td
+                v-if="
+                  (!item.desafio &&
+                    new Date(parseInt(item.time_end)) > new Date()) ||
+                    (!item.desafio && item.time_end === 'ilimitado')
+                "
+              >
+                {{ item.testCheck.right }}
+              </td>
+              <td
+                v-if="
+                  (!item.desafio &&
+                    new Date(parseInt(item.time_end)) > new Date()) ||
+                    (!item.desafio && item.time_end === 'ilimitado')
+                "
+              >
+                {{ item.testCheck.wrong }}
+              </td>
+              <td
+                v-if="
+                  (!item.desafio &&
+                    new Date(parseInt(item.time_end)) > new Date()) ||
+                    (!item.desafio && item.time_end === 'ilimitado')
+                "
+              >
                 {{ (item.testCheck.right / item.no_contestadas.length) * 100 }}
                 <span v-if="item.nota === 'suspendido'" class="red--text">{{
                   item.nota
@@ -80,17 +116,50 @@
               :key="item._id"
               @click="goToTest(item._id)"
             >
-              <td v-if="item.desafio">{{ item.title }}</td>
-              <td v-if="item.desafio">
-                {{
-                  item.no_contestadas.length -
-                    item.aciertos_num -
-                    item.fallos_num
-                }}
+              <td
+                v-if="
+                  (item.desafio &&
+                    new Date(parseInt(item.time_end)) > new Date()) ||
+                    (item.desafio && item.time_end === 'ilimitado')
+                "
+              >
+                {{ item.title }}
               </td>
-              <td v-if="item.desafio">{{ item.aciertos_num }}</td>
-              <td v-if="item.desafio">{{ item.fallos_num }}</td>
-              <td v-if="item.desafio">
+              <td
+                v-if="
+                  (item.desafio &&
+                    new Date(parseInt(item.time_end)) > new Date()) ||
+                    (item.desafio && item.time_end === 'ilimitado')
+                "
+              >
+                {{ item.no_contestadas.length }}
+              </td>
+              <td
+                v-if="
+                  (item.desafio &&
+                    new Date(parseInt(item.time_end)) > new Date()) ||
+                    (item.desafio && item.time_end === 'ilimitado')
+                "
+              >
+                {{ item.testCheck.right }}
+              </td>
+              <td
+                v-if="
+                  (item.desafio &&
+                    new Date(parseInt(item.time_end)) > new Date()) ||
+                    (item.desafio && item.time_end === 'ilimitado')
+                "
+              >
+                {{ item.testCheck.wrong }}
+              </td>
+              <td
+                v-if="
+                  (item.desafio &&
+                    new Date(parseInt(item.time_end)) > new Date()) ||
+                    (item.desafio && item.time_end === 'ilimitado')
+                "
+              >
+                {{ (item.testCheck.right / item.no_contestadas.length) * 100 }}
                 <span v-if="item.nota === 'suspendido'" class="red--text">{{
                   item.nota
                 }}</span>
@@ -110,6 +179,13 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  data() {
+    return {
+      dia_actual: new Date().getDay(),
+      mes_actual: new Date().getMonth() + 1,
+      año_actual: new Date().getFullYear()
+    }
+  },
   computed: {
     ...mapGetters(['tests', 'userName'])
   },
