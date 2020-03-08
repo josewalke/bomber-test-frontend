@@ -1,131 +1,52 @@
 <template>
-  <div
-    v-if="
-      currentTest.time_end !== null || currentTest.mostrar_solucion === true
-    "
-  >
-    <div>
-      <div class="display-1 grey--text pt-2 pb-4">{{ title }}</div>
-      <div class="grid-wrap mb-4">
-        <div class="grid">
-          <div style="height: 200px width: 200px background-color: #DEDEDE">
-            <Donut
-              class="donut"
-              stle="background-color:#DEDEDE"
-              :right="currentTest.testCheck.right"
-              :wrong="currentTest.testCheck.wrong"
-              :blank="currentTest.testCheck.blank"
-              :total="currentTest.no_contestadas.length"
-            ></Donut>
-          </div>
-        </div>
-        <div class="grid display-4" style="background-color: #DEDEDE">
-          {{ currentTest.no_contestadas.length }}
-        </div>
-        <div class="grid">THREE</div>
-      </div>
-      <div
-        v-if="
-          currentTest.time_end !== null || currentTest.mostrar_solucion === true
-        "
-      >
-        <div
-          v-if="notAnswered.length > 0"
-          class="grey white--text text-uppercase"
-        >
-          <div class="subtitle-2 ml-4">Sin Contestar</div>
-          <v-divider></v-divider>
-        </div>
-        <v-list
-          v-for="(item, idx) in notAnswered"
-          :key="item._id"
-          dense
-          flat
-          class="pb-0"
-        >
-          <v-row @click="goToQuestion(item._id, idx)">
-            <v-col cols="8">
-              <div class="overline text-uppercase red--text pl-4">
-                {{ getQuestionSubject[idx] }}
-              </div>
-              <div class="body-2 pl-4">{{ item.enunciado }}</div>
-            </v-col>
-            <v-col cols="4">
-              <div class="overline text-right pr-5 red--text">
-                sin contestar
-              </div>
-            </v-col>
-          </v-row>
-          <v-divider></v-divider>
-        </v-list>
-      </div>
-      <div v-if="incorrect.length > 0">
-        <div class="red white--text text-uppercase">
-          <div class="subtitle-2 ml-4">Incorrectas</div>
-          <v-divider></v-divider>
-        </div>
-        <v-list
-          v-for="(item, idx) in incorrect"
-          :key="item._id"
-          class="red lighten-4 pb-0"
-          dense
-          flat
-        >
-          <v-row @click="goToQuestion(item._id, idx)">
-            <v-col cols="8">
-              <div class="overline text-uppercase red--text pl-4">
-                {{ getQuestionSubject[idx] }}
-              </div>
-              <div class="body-2 pl-4">{{ item.enunciado }}</div>
-            </v-col>
-            <v-col cols="4">
-              <div class="overline text-right pr-5 red--text">
-                incorrecta
-              </div>
-            </v-col>
-          </v-row>
-          <v-divider></v-divider>
-        </v-list>
-      </div>
-      <div v-if="correct.length > 0">
-        <div class="green white--text">
-          <div class="subtitle-2 ml-4 text">Correctas</div>
-          <v-divider></v-divider>
-        </div>
-        <v-list
-          v-for="(item, idx) in correct"
-          :key="item._id"
-          class="green lighten-4 pb-0"
-          dense
-          flat
-        >
-          <v-row @click="goToQuestion(item._id, idx)">
-            <v-col cols="8">
-              <div class="overline text-uppercase red--text pl-4">
-                {{ getQuestionSubject[idx] }}
-              </div>
-              <div class="body-2 pl-4">{{ item.enunciado }}</div>
-            </v-col>
-            <v-col cols="4">
-              <div class="overline text-right pr-5 green--text">
-                correcta
-              </div>
-            </v-col>
-          </v-row>
-          <v-divider></v-divider>
-        </v-list>
-      </div>
+  <div class="main-div">
+    <div class="question-title">
+      <h1>Titulo: {{ currentTest.title }}</h1>
+      <h1>Pregunta / {{ currentTest.no_contestadas.length }}</h1>
+      <v-btn color="#da3e3e" to="/tests">
+        <v-icon class="white--text">mdi-close</v-icon>
+      </v-btn>
     </div>
+    <v-row>
+      <v-col>
+        <template>
+          <v-carousel hide-delimiters height="100vh">
+            <v-carousel-item
+              v-for="(question, i) in currentTest.no_contestadas"
+              :key="i"
+            >
+              <h1>Aquí esta el {{ i + 1 }}</h1>
+              <v-sheet color="white" height="100%" tile>
+                <v-row align="center" justify="center">
+                  <Question2
+                    :id="question._id"
+                    :enunciado="question.enunciado"
+                    :answers="question.answers"
+                    :tema="question.tema_id"
+                    :numero="i"
+                    :temas="temas"
+                    @selectAnswer="selectAnswer"
+                  />
+                </v-row>
+              </v-sheet>
+            </v-carousel-item>
+          </v-carousel>
+        </template>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
 import API from '~/services/api'
+import Question2 from '~/components/Question2'
 import { mapGetters } from 'vuex'
-import Donut from '~/components/Doughnut.js'
 
 export default {
-  components: { Donut },
+  layout: 'test',
+  components: {
+    Question2
+  },
   async fetch({ params, store }) {
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
@@ -134,122 +55,32 @@ export default {
     const temas = await API.getAllTemasNames()
     return { temas }
   },
-  data() {
-    return {
-      questions: [],
-      title: '',
-      respuestas: [],
-      correct: [],
-      incorrect: [],
-      notAnswered: []
-    }
-  },
   computed: {
-    ...mapGetters(['currentTest', 'question', 'tests']),
-    getQuestionSubject() {
-      let questionSubject = []
-      this.questions.forEach(q => {
-        let tema = this.temas.find(tema => tema.id == q.tema_id)
-        questionSubject.push(tema.name)
-      })
-      return questionSubject
-    }
+    ...mapGetters(['currentTest', 'question'])
   },
-  beforeMount() {
-    this.questions = this.currentTest.no_contestadas
-    this.respuestas = this.currentTest.respuestas
-    this.title = this.currentTest.title
-    this.findIfAnswered()
-    if (
-      this.currentTest.time_end === null &&
-      this.currentTest.mostrar_solucion === false
-    ) {
-      this.$router.push(
-        `/tests/${this.currentTest._id}/${this.notAnswered[0]._id}`
-      )
-    }
-  },
-  mounted() {},
   methods: {
-    goToQuestion(item_id) {
-      this.$router.push(`/tests/${this.currentTest._id}/${item_id}`)
-    },
-    goToQuestion2(idx) {
-      let q = this.currentTest.no_contestadas[idx]._id
-      this.$router.push(`/tests/${this.currentTest._id}/${q}`)
-    },
-    questionNumber(id) {
-      const qNum = this.questions.findIndex(q => q._id === id)
-      return qNum + 1
-    },
-    findIfAnswered() {
-      let correct = []
-      let incorrect = []
-      let notAnswered = []
-      this.currentTest.respuestas.forEach(res => {
-        if (res.answered && res.guess === true) {
-          let idx = this.questions.findIndex(q => q._id === res.id)
-          let q = this.questions[idx]
-          correct.push(q)
-        } else if (res.answered && res.guess === false) {
-          let idx = this.questions.findIndex(q => q._id === res.id)
-          let q = this.questions[idx]
-          incorrect.push(q)
-        } else {
-          let idx = this.questions.findIndex(q => q._id === res.id)
-          let q = this.questions[idx]
-          notAnswered.push(q)
-        }
-      })
-      this.correct = correct
-      this.incorrect = incorrect
-      this.notAnswered = notAnswered
+    async selectAnswer(number) {
+      console.log(number)
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.grid-wrap {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-gap: 1rem;
+<style scoped>
+.main-div {
+  background-color: white;
 }
-.grid {
-  padding: 1rem;
-  height: 4rem;
-  min-height: 240px;
-  min-width: 300px;
+.question-title {
+  margin-top: 5%;
+  margin-left: 6%;
 }
-.donut {
-  height: 250px;
-  width: 250px;
-  margin-top: -40px;
+.enunciado {
+  margin: 150px auto;
 }
-
-.resume {
-  height: 140px;
-  width: 100%;
-  display: flex;
-  align-content: center;
-  vertical-align: center;
+.btn-size {
+  height: 100%;
 }
-
-.questions-display {
-  min-height: 140px;
-  min-width: 140px;
-  max-height: 140px;
-  max-width: 140px;
-  border: 1px solid red;
-  border-radius: 8px;
-  text-align: center;
-  position: relative;
-}
-
-@media (min-width: 600px) {
-  .grid-wrap {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.question {
+  padding: 10px;
 }
 </style>

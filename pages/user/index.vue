@@ -31,10 +31,7 @@
     <v-row v-if="formato != 'movil'">
       <v-col md="5" offset="1">
         <v-card>
-          <v-card-title v-if="mensajes === 0">
-            sin menajes nuevo
-          </v-card-title>
-          <v-card-title v-else>
+          <v-card-title>
             {{ mensajes }}
             mensajes nuevos
           </v-card-title>
