@@ -4,21 +4,6 @@
       <div v-if="crear">
         <h1>Enunciado</h1>
         <v-textarea v-model="enunciado" auto-grow solo></v-textarea>
-        <div v-if="photo.length > 0">
-          <div
-            class="photo-holder"
-            :style="{ 'background-image': `url(${photo})` }"
-          ></div>
-        </div>
-        <v-btn @click="uploadPhoto">Añadir photo</v-btn>
-        <div class="photo-question">
-          <div
-            class="user-card mt-5"
-            :style="{
-              'background-image': `url(${photo})`
-            }"
-          ></div>
-        </div>
         <h1>Posibles respuestas</h1>
         <v-checkbox
           v-model="checkbox1"
@@ -246,8 +231,7 @@ export default {
       filtro: true,
       crear: false,
       filtrado: [],
-      searchText: '',
-      photo: ''
+      searchText: ''
     }
   },
   methods: {
@@ -276,8 +260,7 @@ export default {
           tema_id: this.id[this.nombre.indexOf(this.seleccion)],
           category: this.seleccion2,
           difficulty: this.seleccion3,
-          explicacion: this.explicacion,
-          photo: this.photo
+          explicacion: this.explicacion
         }
         API.crearQuestion(newQuestion)
         this.enunciado = ''
@@ -293,11 +276,9 @@ export default {
         this.seleccion3 = ''
         this.seleccion = ''
         this.explicacion = ''
-        this.photo = ''
       } else {
         const newQuestion = {
           enunciado: this.enunciado,
-          photo: this.photo,
           answers: [
             {
               respuesta: this.opcion1,
@@ -335,32 +316,7 @@ export default {
         this.seleccion3 = ''
         this.seleccion4 = ''
         this.explicacion = ''
-        this.photo = ''
       }
-    },
-    photoUploader() {
-      // eslint-disable-next-line no-undef
-      const newWidget = cloudinary.createUploadWidget(
-        {
-          cloudName: 'dea2xlykc',
-          uploadPreset: 'questionPhoto',
-          multiple: false,
-          maxFiles: 1,
-          cropping: true,
-          clientAllowedFormats: ['png', 'gif', 'jpeg']
-        },
-        (error, result) => {
-          if (!error && result && result.event === 'success') {
-            const newUrl = result.info.url
-            this.photo = newUrl
-          }
-        }
-      )
-      return newWidget
-    },
-    uploadPhoto() {
-      const widget = this.photoUploader()
-      widget.open()
     },
     goToQuestion(question) {
       this.$router.push(`/question/${question}`)
@@ -406,23 +362,11 @@ export default {
         this.filtrado = this.preguntas
       }
     }
-  },
-  head() {
-    return {
-      script: [{ src: 'https://widget.cloudinary.com/v2.0/global/all.js' }]
-    }
   }
 }
 </script>
 
 <style>
-.photo-holder {
-  height: 500px;
-  width: 750px;
-  background-size: contain;
-  background-position: center;
-  margin: 0 auto;
-}
 .box {
   width: 600px;
 }
