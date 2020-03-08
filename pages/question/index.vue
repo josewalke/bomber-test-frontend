@@ -129,7 +129,7 @@
             <v-select v-model="f_tema" :items="nombre2" label="Tema"></v-select>
           </span>
         </v-col>
-        <v-col cols="4">
+        <v-col md="4" xs="5">
           <br />
           <v-btn @click="filtrar">Filtrar</v-btn>
           <v-btn @click="change_crear">Crear Pregunta</v-btn>

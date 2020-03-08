@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <v-btn>Pulsame</v-btn>
-  </div>
+  <h1>hola</h1>
 </template>
 
 <script>

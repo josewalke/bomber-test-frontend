@@ -23,7 +23,8 @@ export const state = () => ({
   currentTestQuestion: {},
   question: {},
   position: '',
-  updatePregunta: {}
+  updatePregunta: {},
+  negativos: ''
 })
 
 export const getters = {
@@ -92,6 +93,9 @@ export const getters = {
   },
   updatePregunta(state) {
     return state.updatePregunta
+  },
+  negativos(state) {
+    return state.negativos
   }
 }
 
@@ -114,7 +118,8 @@ export const mutations = {
       suspendidos,
       total,
       suscription_type,
-      active
+      active,
+      negativos
     }
   ) {
     state.token = token
@@ -133,6 +138,7 @@ export const mutations = {
     state.total = total
     state.suscription_type = suscription_type
     state.active = active
+    state.negativos = negativos
   },
   saveTests(state, tests) {
     state.tests = tests
@@ -179,6 +185,7 @@ export const mutations = {
     state.question = {}
     state.position = ''
     state.updatePregunta = {}
+    state.negativos = ''
     localStorage.clear()
   },
   clearMessage(state) {
@@ -256,6 +263,7 @@ export const actions = {
     const response = await API.login(userData)
     if (!response.error) {
       commit('saveToken', response)
+      await API.updateInactividad(state.userId)
       const tests = await API.getAllTestById(state.userId)
       commit('saveTests', tests)
       commit('evaluar')
@@ -290,7 +298,6 @@ export const actions = {
     const tests = await API.getAllTestById(state.userId)
     commit('saveTests', tests)
   },
-
   async updateTest({ commit, state }, testData) {
     let data = testData
     const updatedTest = await API.updateTest(state.token, data)
