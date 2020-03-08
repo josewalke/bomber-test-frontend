@@ -37,15 +37,21 @@
               <th class="text-left">Fallos</th>
               <th class="text-left">En Blanco</th>
               <th class="text-left">% Aciertos</th>
+              <th class="text-left">Estado</th>
             </tr>
           </thead>
           <tbody>
             <tr
-              v-for="item in tests"
+              v-for="item in sorted"
               :key="item._id"
               @click="goToTest(item._id)"
             >
-              <td v-if="!item.desafio">{{ item.title }}</td>
+              <td v-if="!item.desafio">
+                {{ item.title
+                }}<span v-if="item.mostrar_solucion">
+                  <v-icon small right class="red--text">mdi-eye</v-icon></span
+                >
+              </td>
               <td v-if="!item.desafio">
                 {{ item.no_contestadas.length }}
               </td>
@@ -54,12 +60,12 @@
               <td v-if="!item.desafio">{{ item.testCheck.blank }}</td>
               <td v-if="!item.desafio">
                 {{ (item.testCheck.right / item.no_contestadas.length) * 100 }}
-                <span v-if="item.nota === 'suspendido'" class="red--text">{{
-                  item.nota
-                }}</span>
-                <span v-if="item.nota === 'aprobado'" class="green--text">{{
-                  item.nota
-                }}</span>
+              </td>
+              <td v-if="!item.desafio">
+                <div v-if="item.time_end === null">
+                  <v-icon>mdi-checkbox-blank-outline</v-icon>
+                </div>
+                <div v-else><v-icon>mdi-check-box-outline</v-icon></div>
               </td>
             </tr>
           </tbody>
@@ -114,8 +120,19 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  data() {
+    return {}
+  },
   computed: {
-    ...mapGetters(['tests', 'userName', 'nickName', 'currentTest'])
+    ...mapGetters(['tests', 'userName', 'nickName', 'currentTest']),
+    sorted() {
+      let sorted = []
+      for (let i = this.tests.length - 1; i > -1; i--) {
+        let test = this.tests[i]
+        sorted.push(test)
+      }
+      return sorted
+    }
   },
   methods: {
     async testGeneration() {
@@ -125,7 +142,6 @@ export default {
       )
     },
     async goToTest(id) {
-      console.log(id)
       this.$router.push(`/tests/${id}`)
     },
 

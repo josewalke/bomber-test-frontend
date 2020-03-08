@@ -19,8 +19,18 @@
           Pregunta {{ questionNumber }}/
           {{ currentTest.no_contestadas.length }}
         </div>
-        <v-btn color="#da3e3e" @click="goToTest">
-          <v-icon class="white--text">mdi-close</v-icon>
+        <v-btn class="ma-2" outlined small color="#DA3E3E" @click="goToTest">
+          CERRAR
+        </v-btn>
+        <v-btn
+          v-if="currentTest.time_end === null"
+          class="ma-2"
+          outlined
+          small
+          color="#DA3E3E"
+          @click="endTest"
+        >
+          Finalizar
         </v-btn>
       </div>
     </div>
@@ -35,6 +45,7 @@
           :numero="numero - 1"
           :temas="temas"
           :imagen-url="imagenUrl"
+          :not-answered="notAnswered"
         />
       </v-col>
     </v-row>
@@ -53,8 +64,6 @@ export default {
     Question2
   },
   async fetch({ params, store }) {
-    console.log('palomero')
-    console.log(params)
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
     const question = await API.getQuestionById(params.question)
@@ -73,7 +82,7 @@ export default {
       imagenUrl: '',
       numero: '',
       title: '',
-      casa: 'hola'
+      unAnswered: []
     }
   },
 
@@ -101,11 +110,21 @@ export default {
     this.imagenUrl = this.currentTestQuestion.imagen_url
     this.numero = this.questionNumber
     this.title = this.currentTest.title
+    this.unAnswered = this.currentTest.respuestas.filter(
+      q => q.answered === false
+    )
   },
 
   methods: {
     goToTest() {
-      this.$router.push(`/tests/${this.$route.params.test}`)
+      if (
+        this.currentTest.time_end === null &&
+        this.currentTest.mostrar_solucion === false
+      ) {
+        this.$router.push(`/tests/`)
+      } else {
+        this.$router.push(`/tests/${this.$route.params.test}`)
+      }
     },
     previousQuestion() {
       let previous = this.questionNumber - 1
@@ -118,6 +137,16 @@ export default {
       next <= this.currentTest.no_contestadas.length
         ? this.$router.push(`/tests/${this.currentTest._id}/${next}`)
         : this.$router.push(`/tests/${this.currentTest._id}`)
+    },
+    endTest() {
+      let timeNow = new Date()
+      const data = {
+        time_end: timeNow,
+        testId: this.currentTest._id
+      }
+      this.$store.dispatch('updateTest', data)
+      this.$store.commit('saveCurrentTest', this.currentTest)
+      this.$router.push(`/tests/${this.currentTest._id}`)
     }
   }
 }

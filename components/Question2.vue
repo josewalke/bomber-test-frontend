@@ -1,7 +1,5 @@
 <template>
   <v-container>
-    {{ notAnswered.length }}
-    {{ notAnswered[0].id }}
     <div class="question-holder">
       <v-row>
         <v-col>
@@ -25,9 +23,6 @@
             @click="selectAnswer(answer, idx)"
           >
             <div class="title">{{ answer.respuesta }}</div>
-            <!-- <div class="title">{{ answer.correcta }}</div> -->
-
-            <!-- <h3>{{ selected }}</h3> -->
           </v-card>
           <h4 class="water-mark">© Jaime Heras</h4>
         </v-col>
@@ -38,7 +33,7 @@
               outlined
               small
               color="#DA3E3E"
-              @click="correction"
+              @click="dialog = true"
             >
               DUDA / IMPUGNAR
               <!-- <v-icon>mdi-help</v-icon> -->
@@ -48,7 +43,7 @@
               outlined
               small
               color="#DA3E3E"
-              @click="correction"
+              @click="dialog = true"
             >
               CORREGIR
               <!-- <v-icon>mdi-check-bold</v-icon> fab -->
@@ -56,6 +51,9 @@
           </div>
         </v-col>
       </v-row>
+      <v-dialog v-model="dialog" max-width="500" class="pa-8 white">
+        <Message @status="changeStatus"></Message>
+      </v-dialog>
     </div>
     <h2>
       <!-- <h2>respuesta: {{ respuesta }}</h2> -->
@@ -65,8 +63,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Message from '~/components/Message'
 
 export default {
+  components: {
+    Message
+  },
   props: {
     enunciado: {
       type: String,
@@ -109,6 +111,12 @@ export default {
     imagenUrl: {
       type: String,
       default: ''
+    },
+    notAnswered: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   data() {
@@ -117,7 +125,9 @@ export default {
       respuestas: [],
       corrected: false,
       guess: 'blank',
-      counter: 0
+      counter: 0,
+      answered: [],
+      dialog: false
     }
   },
   computed: {
@@ -125,21 +135,13 @@ export default {
     findTemaName() {
       var temaName = this.temas.filter(elem => elem.id == this.tema)
       return temaName[0].name
-    },
-    notAnswered() {
-      let notAnswered = []
-      this.currentTest.respuestas.forEach(res =>
-        !res.answered ? notAnswered.push(res) : null
-      )
-
-      return notAnswered
     }
   },
+
   mounted() {
     let response = this.currentTest.respuestas[this.numero]
     if (response.answered === true) {
       this.respuesta = response.respuestas
-      this.answered = response.answered
       this.showCorrection = this.currentTest.mostrar_solucion
       for (let i = 0; i < response.respuestas.length; i++) {
         if (response.respuestas[i] !== '') {
@@ -151,6 +153,18 @@ export default {
       this.correction()
       if (this.showCorrection === true) {
         this.paintCorrection()
+      }
+    }
+    if (response.answered === false && this.currentTest.time_end !== null) {
+      console.log('pendiente')
+      console.log(this.answers.length)
+      for (let i = 0; i < this.answers.length; i++) {
+        console.log(this.answers[i])
+        document.getElementById(`${this.id}-` + i).classList.add('no-click')
+        if (this.answers[i].correcta === true)
+          document
+            .getElementById(`${this.id}-` + i)
+            .classList.add('selected-circle')
       }
     }
   },
@@ -227,8 +241,6 @@ export default {
     },
 
     correction() {
-      console.log(this.currentTest.respuestas[this.numero].answered)
-      console.log(this.$route.params)
       if (this.respuesta.length > 0) {
         let check = { true: 0, false: 0 }
         let correctAnswers = 0
@@ -264,6 +276,7 @@ export default {
           if (this.currentTest.mostrar_solucion === true) {
             this.paintCorrection()
           }
+
           this.autoNext()
           // this.$router.push(`/tests/${this.currentTest._id}/`)
         }
@@ -277,25 +290,23 @@ export default {
         respuesta: answer
       }
       this.$store.dispatch('updateTest', data)
-    },
-
-    endTest() {
-      let right = this.currentTest.testCheck.right
-      let wrong = this.currentTest.testCheck.wrong
-      if (right + wrong === this.currentTest.en_blango.length) {
-        this.currentTest.time_end = Date.now
-      }
+      this.$store.commit('saveCurrentTest', this.currentTest)
     },
 
     autoNext() {
-      if (this.notAnswered.length >= 1) {
-        this.$router.push(
-          `/tests/${this.currentTest._id}/${this.notAnswered[1].id}`
-        )
-        this.notAnswered.shift()
-      } else {
+      let counter = 0
+      if (this.notAnswered.length === 0) {
         this.$router.push(`/tests/${this.currentTest._id}/`)
+      } else {
+        counter++
+        this.$router.push(
+          `/tests/${this.currentTest._id}/${this.notAnswered[counter].id}`
+        )
       }
+    },
+    changeStatus() {
+      console.log('uyesssssss')
+      this.dialog = false
     }
   }
 }

@@ -32,7 +32,7 @@ export default {
         ],
         datasets: [
           {
-            backgroundColor: ['rgb(102,204,0)', 'rgb(255,0,0)', '#f3f3f3'],
+            backgroundColor: ['rgb(102,204,0)', 'rgb(255,0,0)', '#E0E0E0'],
             hoverBackgroundColor: [
               'rgb(102,204,0,0.4)',
               'rgb(255,0,0,0.4)',
@@ -46,14 +46,14 @@ export default {
         ]
       },
       {
-        responsive: false,
+        responsive: true,
         maintainApectRatio: false,
         layout: {
           padding: {
             left: 0,
             right: 0,
             top: 0,
-            bottom: 40
+            bottom: 0
           }
         },
         legend: {

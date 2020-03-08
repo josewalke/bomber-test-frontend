@@ -8,7 +8,7 @@
         <thead>
           <tr>
             <th class="text-left">Pregunta</th>
-            <th class="text-left">Respondido</th>
+            <th class="text-left">Estado</th>
             <th class="text-left">Mensaje Nuevo</th>
           </tr>
         </thead>
@@ -72,7 +72,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['messages', 'role'])
+    ...mapGetters(['messages', 'role', 'userId'])
   },
   methods: {
     goToQuestion(question, idx) {

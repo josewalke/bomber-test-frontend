@@ -1,54 +1,121 @@
 <template>
-  <div>
-    <div class="display-1 grey--text">{{ title }}</div>
-
-    <v-container fluid>
-      <v-row cols="12" style="height: 400px">
-        <v-row cols="3" align="start" justify="start" style="height: 200px">
-          <v-card style="height: 200px width: 200px"> </v-card>
-        </v-row>
-
-        <v-row cols="4" align="start" justify="start" style="height: 200px">
-          <div style="height: 200px width: 200px">
+  <div
+    v-if="
+      currentTest.time_end !== null || currentTest.mostrar_solucion === true
+    "
+  >
+    <div>
+      <div class="display-1 grey--text pt-2 pb-4">{{ title }}</div>
+      <div class="grid-wrap mb-4">
+        <div class="grid">
+          <div style="height: 200px width: 200px background-color: #DEDEDE">
             <Donut
               class="donut"
+              stle="background-color:#DEDEDE"
               :right="currentTest.testCheck.right"
               :wrong="currentTest.testCheck.wrong"
               :blank="currentTest.testCheck.blank"
               :total="currentTest.no_contestadas.length"
             ></Donut>
           </div>
-        </v-row>
-        <v-row cols="4" align="start" justify="start" style="height: 200px">
-          <v-card style="height: 200px width: 200px"> </v-card>
-        </v-row>
-      </v-row>
-    </v-container>
-    <v-divider></v-divider>
-    <v-list v-for="(item, idx) in questions" :key="item._id" dense flat>
-      <v-row @click="goToQuestion(item._id, idx)">
-        <v-col cols="8">
-          <div class="overline text-uppercase red--text pl-4">
-            {{ getQuestionSubject[idx] }}
-          </div>
-          <div class="body-2 pl-4">
-            {{ questionNumber(item._id) }}. {{ item.enunciado }}
-          </div>
-        </v-col>
-        <v-col cols="4">
-          <div
-            v-if="respuestas[idx].answered === true"
-            class="overline text-right pr-5 green--text"
-          >
-            contestada
-          </div>
-          <div v-else class="overline text-right pr-5 red--text">
-            sin contestar
-          </div>
-        </v-col>
-      </v-row>
-      <v-divider></v-divider>
-    </v-list>
+        </div>
+        <div class="grid display-4" style="background-color: #DEDEDE">
+          {{ currentTest.no_contestadas.length }}
+        </div>
+        <div class="grid">THREE</div>
+      </div>
+      <div
+        v-if="
+          currentTest.time_end !== null || currentTest.mostrar_solucion === true
+        "
+      >
+        <div
+          v-if="notAnswered.length > 0"
+          class="grey white--text text-uppercase"
+        >
+          <div class="subtitle-2 ml-4">Sin Contestar</div>
+          <v-divider></v-divider>
+        </div>
+        <v-list
+          v-for="(item, idx) in notAnswered"
+          :key="item._id"
+          dense
+          flat
+          class="pb-0"
+        >
+          <v-row @click="goToQuestion(item._id, idx)">
+            <v-col cols="8">
+              <div class="overline text-uppercase red--text pl-4">
+                {{ getQuestionSubject[idx] }}
+              </div>
+              <div class="body-2 pl-4">{{ item.enunciado }}</div>
+            </v-col>
+            <v-col cols="4">
+              <div class="overline text-right pr-5 red--text">
+                sin contestar
+              </div>
+            </v-col>
+          </v-row>
+          <v-divider></v-divider>
+        </v-list>
+      </div>
+      <div v-if="incorrect.length > 0">
+        <div class="red white--text text-uppercase">
+          <div class="subtitle-2 ml-4">Incorrectas</div>
+          <v-divider></v-divider>
+        </div>
+        <v-list
+          v-for="(item, idx) in incorrect"
+          :key="item._id"
+          class="red lighten-4 pb-0"
+          dense
+          flat
+        >
+          <v-row @click="goToQuestion(item._id, idx)">
+            <v-col cols="8">
+              <div class="overline text-uppercase red--text pl-4">
+                {{ getQuestionSubject[idx] }}
+              </div>
+              <div class="body-2 pl-4">{{ item.enunciado }}</div>
+            </v-col>
+            <v-col cols="4">
+              <div class="overline text-right pr-5 red--text">
+                incorrecta
+              </div>
+            </v-col>
+          </v-row>
+          <v-divider></v-divider>
+        </v-list>
+      </div>
+      <div v-if="correct.length > 0">
+        <div class="green white--text">
+          <div class="subtitle-2 ml-4 text">Correctas</div>
+          <v-divider></v-divider>
+        </div>
+        <v-list
+          v-for="(item, idx) in correct"
+          :key="item._id"
+          class="green lighten-4 pb-0"
+          dense
+          flat
+        >
+          <v-row @click="goToQuestion(item._id, idx)">
+            <v-col cols="8">
+              <div class="overline text-uppercase red--text pl-4">
+                {{ getQuestionSubject[idx] }}
+              </div>
+              <div class="body-2 pl-4">{{ item.enunciado }}</div>
+            </v-col>
+            <v-col cols="4">
+              <div class="overline text-right pr-5 green--text">
+                correcta
+              </div>
+            </v-col>
+          </v-row>
+          <v-divider></v-divider>
+        </v-list>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -71,7 +138,10 @@ export default {
     return {
       questions: [],
       title: '',
-      respuestas: []
+      respuestas: [],
+      correct: [],
+      incorrect: [],
+      notAnswered: []
     }
   },
   computed: {
@@ -83,27 +153,23 @@ export default {
         questionSubject.push(tema.name)
       })
       return questionSubject
-    },
-    findIfAnswered() {
-      let status = []
-      this.currentTest.respuestas.forEach(res => {
-        res.answered ? status.push('Contestada') : status.push('No contestada')
-      })
-      return status
     }
-    // notAnswered() {
-    //   let notAnswered = []
-    //   this.respuestas.forEach(res =>
-    //     !res.answered ? notAnswered.push(res) : null
-    //   )
-    //   return notAnswered
-    // }
   },
   beforeMount() {
     this.questions = this.currentTest.no_contestadas
     this.respuestas = this.currentTest.respuestas
     this.title = this.currentTest.title
+    this.findIfAnswered()
+    if (
+      this.currentTest.time_end === null &&
+      this.currentTest.mostrar_solucion === false
+    ) {
+      this.$router.push(
+        `/tests/${this.currentTest._id}/${this.notAnswered[0]._id}`
+      )
+    }
   },
+  mounted() {},
   methods: {
     goToQuestion(item_id) {
       this.$router.push(`/tests/${this.currentTest._id}/${item_id}`)
@@ -113,20 +179,55 @@ export default {
       this.$router.push(`/tests/${this.currentTest._id}/${q}`)
     },
     questionNumber(id) {
-      console.log(id)
       const qNum = this.questions.findIndex(q => q._id === id)
       return qNum + 1
+    },
+    findIfAnswered() {
+      let correct = []
+      let incorrect = []
+      let notAnswered = []
+      this.currentTest.respuestas.forEach(res => {
+        if (res.answered && res.guess === true) {
+          let idx = this.questions.findIndex(q => q._id === res.id)
+          let q = this.questions[idx]
+          correct.push(q)
+        } else if (res.answered && res.guess === false) {
+          let idx = this.questions.findIndex(q => q._id === res.id)
+          let q = this.questions[idx]
+          incorrect.push(q)
+        } else {
+          let idx = this.questions.findIndex(q => q._id === res.id)
+          let q = this.questions[idx]
+          notAnswered.push(q)
+        }
+      })
+      this.correct = correct
+      this.incorrect = incorrect
+      this.notAnswered = notAnswered
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.pruebas {
-  height: 200px;
-  width: 200px;
-  background-color: blue;
+.grid-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 1rem;
 }
+.grid {
+  padding: 1rem;
+  height: 4rem;
+  min-height: 240px;
+  min-width: 300px;
+}
+.donut {
+  height: 250px;
+  width: 250px;
+  margin-top: -40px;
+}
+
 .resume {
   height: 140px;
   width: 100%;
@@ -144,5 +245,11 @@ export default {
   border-radius: 8px;
   text-align: center;
   position: relative;
+}
+
+@media (min-width: 600px) {
+  .grid-wrap {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>
