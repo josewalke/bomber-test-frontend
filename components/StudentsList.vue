@@ -1,6 +1,8 @@
 <template>
   <div>
     <h1>Alumnos</h1>
+    {{ switch1 }}
+    {{ switch2 }}
     <v-row>
       <v-col cols="2">
         <v-switch

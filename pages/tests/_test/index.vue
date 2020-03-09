@@ -19,10 +19,20 @@
             ></Donut>
           </div>
         </div>
-        <div class="grid display-4" style="background-color: #DEDEDE">
-          {{ currentTest.no_contestadas.length }}
+        <div class="grid display-2" style="background-color: #DEDEDE">
+          {{ currentTest.no_contestadas.length }} Preguntas
         </div>
-        <div class="grid">THREE</div>
+        <div
+          class="grid display-2 ml-3 rounded"
+          style="background-color: #ffffff"
+        >
+          <div class="text--red">
+            Nota
+          </div>
+          <div>
+            8
+          </div>
+        </div>
       </div>
       <div
         v-if="
@@ -164,9 +174,14 @@ export default {
       this.currentTest.time_end === null &&
       this.currentTest.mostrar_solucion === false
     ) {
-      this.$router.push(
-        `/tests/${this.currentTest._id}/${this.notAnswered[0]._id}`
-      )
+      if (this.notAnswered.length > 0) {
+        this.$router.push(
+          `/tests/${this.currentTest._id}/${this.notAnswered[0]._id}`
+        )
+      } else {
+        this.endTest()
+        this.$router.push(`/tests/${this.currentTest._id}/`)
+      }
     }
   },
   mounted() {},
@@ -204,6 +219,16 @@ export default {
       this.correct = correct
       this.incorrect = incorrect
       this.notAnswered = notAnswered
+    },
+    endTest() {
+      let timeNow = new Date()
+      const data = {
+        time_end: timeNow,
+        testId: this.currentTest._id
+      }
+      this.$store.dispatch('updateTest', data)
+      this.$store.commit('saveCurrentTest', this.currentTest)
+      this.$router.push(`/tests/${this.currentTest._id}`)
     }
   }
 }
