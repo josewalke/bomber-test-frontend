@@ -70,27 +70,8 @@ export default {
       correction: false,
       formula: '',
       persentages: [],
-      numQuestions: [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        15,
-        20,
-        25,
-        30,
-        35,
-        40,
-        45,
-        50
-      ],
-      numSelected: 0,
+      numQuestions: [10, 15, 20, 25, 30, 35, 40, 45, 50],
+      numSelected: 10,
       selected: [],
       alert: '',
       dialog: true,
@@ -127,7 +108,9 @@ export default {
         correction: this.correctorSwitch
       }
       await this.$store.dispatch('createTestConfig', test)
-      this.$router.push(`/tests/${this.$store.state.currentTest._id}`)
+      this.$router.push(
+        `/tests/${this.$store.state.currentTest._id}/${this.$store.state.currentTest.no_contestadas[0]._id}`
+      )
     }
   }
 }

@@ -28,8 +28,6 @@ export default {
     })
   },
   generateConfigTest(token, test) {
-    console.log('api')
-    console.log(test)
     return axios
       .post('tests/config', test, { headers: { token } })
       .then(response => {
@@ -37,12 +35,8 @@ export default {
       })
   },
   updateTest(token, data) {
-    let body = {
-      respuestas: data.respuesta,
-      testCheck: data.testCheck
-    }
     return axios
-      .put('tests/' + data.testId, body, { headers: { token } })
+      .put('tests/' + data.testId, data, { headers: { token } })
       .then(response => {
         return response.data
       })
@@ -52,6 +46,13 @@ export default {
   },
   getAllMessageAdmin() {
     return axios.get('messages/').then(response => response.data)
+  },
+  newMessage(token, data) {
+    return axios
+      .post('messages/', data, { headers: { token } })
+      .then(response => {
+        return response.data
+      })
   },
   getTest(testId) {
     return axios.get('tests/' + testId).then(response => response.data)
@@ -92,8 +93,6 @@ export default {
       .then(response => response.data)
   },
   updatePhoto(data) {
-    console.log('api')
-    console.log(data.newPhoto)
     let body = {
       img_url: data.newPhoto
     }
@@ -140,7 +139,6 @@ export default {
     return axios.delete(`temario/${temaId}`).then(response => response.data)
   },
   reply(reply) {
-    console.log(reply)
     const body = {
       respuesta_leida: true,
       respuesta: reply.respuesta
@@ -153,7 +151,6 @@ export default {
     return axios.post(`questions/`, newQuestion).then(response => response.data)
   },
   updateEnunciado(newEnunciado) {
-    // console.log(newEnunciado)
     const body = {
       enunciado: newEnunciado.enunciado
     }
@@ -162,12 +159,19 @@ export default {
       .put('questions/' + newEnunciado.id, body)
       .then(response => response.data)
   },
+  updateQuestionPhoto(photo) {
+    const body = {
+      imagen_url: photo.imagen_url
+    }
+
+    return axios
+      .put('questions/' + photo.id, body)
+      .then(response => response.data)
+  },
   updateOpcion(newOpcion) {
-    // console.log(newOpcion)
     const body = {
       answers: newOpcion.answers
     }
-    console.log(body)
     return axios
       .put('questions/' + newOpcion.id, body)
       .then(response => response.data)
@@ -213,7 +217,6 @@ export default {
       .then(response => response.data)
   },
   change_active(change) {
-    console.log(change)
     const body = {
       active: change.active
     }
@@ -221,7 +224,6 @@ export default {
     return axios.put('users/' + change.id, body).then(response => response.data)
   },
   change_suscription(change) {
-    console.log(change)
     const body = {
       suscription_type: change.suscription_type
     }
@@ -243,19 +245,11 @@ export default {
       return response.data
     })
   },
-  prueba() {
-    console.log('hola desde api.js')
-  },
+  prueba() {},
   updateQuestionById(newQuestion) {
     return axios
       .put('questions/' + newQuestion._id, newQuestion)
       .then(response => response.data)
-  },
-  updateInactividad(userId) {
-    const body = {
-      inactividad: new Date().getTime()
-    }
-    return axios.put(`users/${userId}`, body).then(response => response.data)
   },
   testPremium() {
     return axios.get(`tests/premium`).then(response => response.data)

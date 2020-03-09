@@ -1,28 +1,34 @@
 <template>
   <v-container>
+    <div class="infoQ">
+      <v-spacer />
+      <h2>
+        <!-- {{ $store.state.question }} -->
+        Pregunta {{ numero + 1 }}/{{
+          currentTest.no_contestadas.length
+        }}&nbsp;&nbsp;
+      </h2>
+      <!-- <v-btn color="#da3e3e" to="/tests">
+        <v-icon>mdi-close</v-icon>
+      </v-btn> -->
+    </div>
     <div class="question-holder">
       <v-row>
         <v-col>
-          <div v-if="imagenUrl.length > 0">
-            <div
-              class="photo-holder"
-              :style="{ 'background-image': `url(${imagenUrl})` }"
-            ></div>
-          </div>
-          <div class="overline red--text font-weight-black mt-3">
-            {{ findTemaName }}
-          </div>
-          <div class="display-1">{{ enunciado }}</div>
+          <h1>{{ enunciado }}</h1>
+          <h4>{{ findTemaName }}</h4>
         </v-col>
       </v-row>
       <v-row>
         <v-col v-for="(answer, idx) in answers" :key="idx" cols="6">
           <v-card
             :id="`${id}-` + idx"
+            shaped
             min-height="200"
             @click="selectAnswer(answer, idx)"
           >
-            <div class="title">{{ answer.respuesta }}</div>
+            <h3>{{ answer.respuesta }}</h3>
+            <!-- <h3>{{ selected }}</h3> -->
           </v-card>
           <h4 class="water-mark">© Jaime Heras</h4>
         </v-col>
@@ -33,7 +39,7 @@
               outlined
               small
               color="#DA3E3E"
-              @click="dialog = true"
+              @click="correction"
             >
               DUDA / IMPUGNAR
               <!-- <v-icon>mdi-help</v-icon> -->
@@ -43,7 +49,7 @@
               outlined
               small
               color="#DA3E3E"
-              @click="dialog = true"
+              @click="correction"
             >
               CORREGIR
               <!-- <v-icon>mdi-check-bold</v-icon> fab -->
@@ -51,9 +57,6 @@
           </div>
         </v-col>
       </v-row>
-      <v-dialog v-model="dialog" max-width="500" class="pa-8 white">
-        <Message @status="changeStatus"></Message>
-      </v-dialog>
     </div>
     <h2>
       <!-- <h2>respuesta: {{ respuesta }}</h2> -->
@@ -62,13 +65,10 @@
 </template>
 
 <script>
+import API from '~/services/api'
 import { mapGetters } from 'vuex'
-import Message from '~/components/Message'
 
 export default {
-  components: {
-    Message
-  },
   props: {
     enunciado: {
       type: String,
@@ -107,145 +107,93 @@ export default {
       default: () => {
         return []
       }
-    },
-    imagenUrl: {
-      type: String,
-      default: ''
-    },
-    notAnswered: {
-      type: Array,
-      default: () => {
-        return []
-      }
     }
+  },
+  async fetch({ params, store }) {
+    console.log(params)
+    const question = await API.getQuestionById(params.question)
+    store.commit('saveCurrentTestQuestion', question)
   },
   data() {
     return {
+      answered: false,
       respuesta: [],
-      respuestas: [],
       corrected: false,
       guess: 'blank',
-      counter: 0,
-      answered: [],
-      dialog: false
+      counter: 0
     }
   },
   computed: {
-    ...mapGetters(['currentTest', 'currentTestQuestion']),
     findTemaName() {
       var temaName = this.temas.filter(elem => elem.id == this.tema)
       return temaName[0].name
-    }
+    },
+    ...mapGetters(['currentTest'])
   },
-
   mounted() {
     let response = this.currentTest.respuestas[this.numero]
     if (response.answered === true) {
       this.respuesta = response.respuestas
-      this.showCorrection = this.currentTest.mostrar_solucion
+      this.answered = true
+      this.corrected = true
       for (let i = 0; i < response.respuestas.length; i++) {
         if (response.respuestas[i] !== '') {
           document
+            // .getElementById(`${this.id}-` + i)
             .getElementById(`${this.id}-` + i)
             .classList.add('selected-answer')
         }
       }
       this.correction()
-      if (this.showCorrection === true) {
-        this.paintCorrection()
-      }
-    }
-    if (response.answered === false && this.currentTest.time_end !== null) {
-      console.log('pendiente')
-      console.log(this.answers.length)
-      for (let i = 0; i < this.answers.length; i++) {
-        console.log(this.answers[i])
-        document.getElementById(`${this.id}-` + i).classList.add('no-click')
-        if (this.answers[i].correcta === true)
-          document
-            .getElementById(`${this.id}-` + i)
-            .classList.add('selected-circle')
-      }
     }
   },
 
   methods: {
     selectAnswer(answer, idx) {
-      //initialize respuesta array
-      if (this.respuesta.length === 0) {
-        for (let i = 0; i < this.answers.length; i++) {
-          this.respuesta.push('')
+      if (!this.corrected) {
+        //initialize respuesta array
+        if (this.respuesta.length === 0) {
+          for (let i = 0; i < this.answers.length; i++) {
+            this.respuesta.push('')
+          }
         }
-      }
-      //respuesta selection
-      if (
-        document
-          .getElementById(`${this.id}-` + idx)
-          .classList.contains('selected-answer')
-      ) {
-        document
-          .getElementById(`${this.id}-` + idx)
-          .classList.remove('selected-answer')
-        this.respuesta[idx] = ''
-        this.counter--
+        //respuesta selection
+        if (
+          document
+            .getElementById(`${this.id}-` + idx)
+            .classList.contains('selected-answer')
+        ) {
+          document
+            .getElementById(`${this.id}-` + idx)
+            .classList.remove('selected-answer')
+          this.respuesta[idx] = ''
+          this.counter--
+        } else {
+          document
+            .getElementById(`${this.id}-` + idx)
+            .classList.add('selected-answer')
+          this.respuesta[idx] = this.answers[idx]
+          this.counter++
+        }
+        //reset respuesta empty object
+        if (this.counter === 0) {
+          this.respuesta = []
+          this.guess = 'blank'
+        }
       } else {
-        document
-          .getElementById(`${this.id}-` + idx)
-          .classList.add('selected-answer')
-        this.respuesta[idx] = this.answers[idx]
-        this.counter++
-      }
-      //reset respuesta empty object
-      if (this.counter === 0) {
-        this.respuesta = []
-        this.guess = 'blank'
-      }
-      this.correction()
-    },
-
-    paintCorrection() {
-      for (let i = 0; i < this.answers.length; i++) {
-        document.getElementById(`${this.id}-` + i).classList.add('no-click')
-
-        if (
-          this.respuesta[i].respuesta === this.answers[i].respuesta &&
-          this.answers[i].correcta === true
-        ) {
-          document
-            .getElementById(`${this.id}-` + i)
-            .classList.remove('selected-answer')
-          document
-            .getElementById(`${this.id}-` + i)
-            .classList.add('selected-green')
-        }
-        if (
-          this.respuesta[i].respuesta === this.answers[i].respuesta &&
-          this.answers[i].correcta === false
-        ) {
-          document
-            .getElementById(`${this.id}-` + i)
-            .classList.remove('selected-answer')
-          document
-            .getElementById(`${this.id}-` + i)
-            .classList.add('selected-red')
-        }
-        if (this.respuesta[i] === '' && this.answers[i].correcta === true) {
-          document
-            .getElementById(`${this.id}-` + i)
-            .classList.remove('selected-answer')
-          document
-            .getElementById(`${this.id}-` + i)
-            .classList.add('selected-circle')
-        }
+        alert('answered')
       }
     },
-
     correction() {
       if (this.respuesta.length > 0) {
         let check = { true: 0, false: 0 }
+        let res = this.respuesta
+        let cor = this.answers
         let correctAnswers = 0
 
-        this.respuesta.forEach(element => {
+        this.guess = false
+
+        res.forEach(element => {
           if (element.correcta === true) {
             check.true++
           }
@@ -253,16 +201,49 @@ export default {
             check.false++
           }
         })
-        this.answers.forEach(element =>
+        cor.forEach(element =>
           element.correcta === true ? correctAnswers++ : null
         )
 
         if (check.true === correctAnswers && check.false === 0) {
           this.guess = true
-        } else {
-          this.guess = false
         }
 
+        for (let i = 0; i < cor.length; i++) {
+          document.getElementById(`${this.id}-` + i).classList.add('no-click')
+
+          if (
+            res[i].respuesta === cor[i].respuesta &&
+            cor[i].correcta === true
+          ) {
+            document
+              .getElementById(`${this.id}-` + i)
+              .classList.remove('selected-answer')
+            document
+              .getElementById(`${this.id}-` + i)
+              .classList.add('selected-green')
+          }
+          if (
+            res[i].respuesta === cor[i].respuesta &&
+            cor[i].correcta === false
+          ) {
+            document
+              .getElementById(`${this.id}-` + i)
+              .classList.remove('selected-answer')
+            document
+              .getElementById(`${this.id}-` + i)
+              .classList.add('selected-red')
+          }
+          if (res[i] === '' && cor[i].correcta === true) {
+            document
+              .getElementById(`${this.id}-` + i)
+              .classList.remove('selected-answer')
+            document
+              .getElementById(`${this.id}-` + i)
+              .classList.add('selected-circle')
+          }
+        }
+        this.corrected = true
         let obj = {
           id: this.id,
           answered: true,
@@ -270,60 +251,24 @@ export default {
           guess: this.guess
         }
         if (this.currentTest.respuestas[this.numero].answered === false) {
-          let respuesta = obj
-
+          let respuesta = this.currentTest.respuestas
+          respuesta[this.numero] = obj
           this.testUpdate(respuesta)
-          if (this.currentTest.mostrar_solucion === true) {
-            this.paintCorrection()
-          }
-
-          this.autoNext()
-          // this.$router.push(`/tests/${this.currentTest._id}/`)
         }
       }
     },
-
     testUpdate(answer) {
       const data = {
         testId: this.currentTest._id,
-        numero: this.numero,
         respuesta: answer
       }
       this.$store.dispatch('updateTest', data)
-      this.$store.commit('saveCurrentTest', this.currentTest)
-    },
-
-    autoNext() {
-      let counter = 0
-      if (this.notAnswered.length === 0) {
-        this.$router.push(`/tests/${this.currentTest._id}/`)
-      } else {
-        counter++
-        this.$router.push(
-          `/tests/${this.currentTest._id}/${this.notAnswered[counter].id}`
-        )
-      }
-    },
-    changeStatus() {
-      console.log('uyesssssss')
-      this.dialog = false
     }
   }
 }
 </script>
 
 <style scoped>
-.photo-holder {
-  height: 500px;
-  width: 750px;
-  background-size: contain;
-  background-position: center;
-  margin: 0 auto;
-}
-.buttons-box {
-  z-index: 1;
-  position: absolute;
-}
 .water-mark {
   color: rgb(158, 158, 158);
 }

@@ -1,66 +1,34 @@
 <template>
   <div>
     <h1>Alumnos</h1>
-    <v-row v-if="!movil">
-      <v-col xs="12" md="3">
-        <v-text-field
-          v-model="f_nombre"
-          label="Nombre"
-          @keyup="filtrar"
-        ></v-text-field>
-      </v-col>
-      <v-col xs="12" md="3">
-        <v-text-field
-          v-model="f_apellido"
-          label="Apellido"
-          @keyup="filtrar"
-        ></v-text-field>
-      </v-col>
-      <v-col md="2" xs="5">
+    <v-row>
+      <v-col cols="2">
         <v-switch
           v-model="switch1"
           :label="`activos: ${switch1.toString()}`"
           @change="solo_activos"
         ></v-switch>
       </v-col>
-      <v-col md="2" xs="5">
+      <v-col cols="2">
         <v-switch
           v-model="switch2"
           :label="`inactivos: ${switch2.toString()}`"
           @change="solo_inactivos"
         ></v-switch>
       </v-col>
-    </v-row>
-    <v-row v-if="movil">
-      <v-col xs="12">
+      <v-col cols="2">
         <v-text-field
           v-model="f_nombre"
           label="Nombre"
           @keyup="filtrar"
         ></v-text-field>
       </v-col>
-      <v-col xs="12">
+      <v-col cols="2">
         <v-text-field
           v-model="f_apellido"
           label="Apellido"
           @keyup="filtrar"
         ></v-text-field>
-      </v-col>
-    </v-row>
-    <v-row v-if="movil">
-      <v-col xs="12">
-        <v-switch
-          v-model="switch1"
-          :label="`activos: ${switch1.toString()}`"
-          @change="solo_activos"
-        ></v-switch>
-      </v-col>
-      <v-col v="12">
-        <v-switch
-          v-model="switch2"
-          :label="`inactivos: ${switch2.toString()}`"
-          @change="solo_inactivos"
-        ></v-switch>
       </v-col>
     </v-row>
     <v-row>
@@ -138,9 +106,6 @@ export default {
       default: () => {
         return []
       }
-    },
-    movil: {
-      type: Boolean
     }
   },
   data() {

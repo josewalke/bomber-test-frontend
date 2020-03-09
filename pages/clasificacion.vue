@@ -18,7 +18,7 @@
           <tr v-for="(item, idx) in clasificacion" :key="idx">
             <td>{{ idx + 1 }}</td>
             <td>{{ item.usuario }}</td>
-            <td>{{ item.puntuacion + item.negativos }}</td>
+            <td>{{ item.puntuacion }}</td>
           </tr>
         </tbody>
       </template>
@@ -28,15 +28,13 @@
 
 <script>
 import API from '~/services/api'
-import { mapGetters } from 'vuex'
 export default {
   async asyncData() {
     const student = await API.getAllUsers()
     const tests = await API.getAllTest()
     let plantilla = {
       usuario: '',
-      puntuacion: '',
-      negativos: 0
+      puntuacion: ''
     }
     let contador = 0
     let clasificacion = []
@@ -49,8 +47,7 @@ export default {
         }
         plantilla = {
           usuario: student[i].nickName,
-          puntuacion: contador,
-          negativos: student[i].negativos
+          puntuacion: contador
         }
       }
       clasificacion.push(plantilla)
@@ -58,9 +55,6 @@ export default {
     }
 
     return { clasificacion }
-  },
-  computed: {
-    ...mapGetters(['negativos'])
   }
 }
 </script>

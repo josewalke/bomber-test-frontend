@@ -13,18 +13,10 @@
               :rules="[rules.required]"
             ></v-text-field>
           </v-col>
-          <v-col sm="3">
-            <v-select
-              v-model="limit_time"
-              :items="semana"
-              outlined
-              label="Tiempo Limite"
-            ></v-select>
-          </v-col>
         </v-row>
         {{ correctionOn() }}
         <v-row>
-          <v-col md="3" xs="4">
+          <v-col cols="3">
             <v-switch
               v-model="correctorSwitch"
               :label="`Corrección instantánea ${switchStatus}`"
@@ -32,7 +24,7 @@
               color="primary"
             ></v-switch>
           </v-col>
-          <v-col md="3" xs="4">
+          <v-col cols="3">
             <v-switch
               v-model="desafio"
               label="Desafio de la semana"
@@ -40,10 +32,10 @@
               color="primary"
             ></v-switch>
           </v-col>
-          <v-col md="3" xs="3">
+          <v-col cols="3">
             <v-btn class="mt-4" @click="testPremium">Test Premium</v-btn>
           </v-col>
-          <v-col md="3" xs="2">
+          <v-col cols="3">
             <v-btn class="mt-4" @click="testDesafio">Desafio Semanal</v-btn>
           </v-col>
         </v-row>
@@ -193,10 +185,7 @@ export default {
         { text: 'Tema', value: 'tema_id' }
       ],
       // desafio de la semana
-      desafio: false,
-      // Tiempo de duracion del test
-      semana: ['ilimitado', '1 semana', '2 semanas', '3 semanas', '1 mes'],
-      limit_time: ''
+      desafio: false
     }
   },
   methods: {
@@ -246,35 +235,10 @@ export default {
             fallos_num: 0,
             nota: 0,
             mostrar_solucion: this.correctorSwitch,
-            desafio: this.desafio,
-            time_end: ''
-          }
-          if (this.limit_time === 'ilimitado') {
-            console.log(test)
-            test.time_end = 'ilimitado'
-          }
-          if (this.limit_time === '') {
-            console.log(test)
-            test.time_end = 'ilimitado'
-          }
-          if (this.limit_time === '1 semana') {
-            console.log('1semanita')
-            test.time_end = new Date().getTime() + 604800000
-          }
-          if (this.limit_time === '2 semanas') {
-            console.log('2semanitas')
-            test.time_end = new Date().getTime() + 1209600000
-          }
-          if (this.limit_time === '3 semanas') {
-            console.log('3semanitas')
-            test.time_end = new Date().getTime() + 1814400000
-          }
-          if (this.limit_time === '1 mes') {
-            console.log('1mes')
-            test.time_end = new Date().getTime() + 2419200000
+            desafio: this.desafio
           }
           API.crearExamen(test)
-          // location.reload()
+          location.reload()
         }
       } else {
         const students = await API.getAllUsers()
@@ -292,37 +256,10 @@ export default {
               fallos_num: 0,
               nota: 0,
               mostrar_solucion: this.correctorSwitch,
-              desafio: this.desafio,
-              time_end: ''
+              desafio: this.desafio
             }
-            if (this.limit_time === 'ilimitado') {
-              console.log(test)
-              test.time_end = 'ilimitado'
-            }
-            if (this.limit_time === '') {
-              console.log(test)
-              test.time_end = 'ilimitado'
-            }
-            if (this.limit_time === '1 semana') {
-              console.log('1semanita')
-              test.time_end = new Date().getTime() + 604800000
-            }
-            if (this.limit_time === '2 semanas') {
-              console.log('2semanitas')
-              test.time_end = new Date().getTime() + 1209600000
-            }
-            if (this.limit_time === '3 semanas') {
-              console.log('3semanitas')
-              test.time_end = new Date().getTime() + 1814400000
-            }
-            if (this.limit_time === '1 mes') {
-              console.log('1mes')
-              test.time_end = new Date().getTime() + 2419200000
-            }
-            console.log('todos los users')
-            console.log(test)
             API.crearExamen(test)
-            // location.reload()
+            location.reload()
           }
         }
       }
