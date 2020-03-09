@@ -279,6 +279,7 @@ export default {
 
           this.autoNext()
           // this.$router.push(`/tests/${this.currentTest._id}/`)
+          // this.$router.push(`/tests/${this.currentTest._id}/`)
         }
       }
     },
