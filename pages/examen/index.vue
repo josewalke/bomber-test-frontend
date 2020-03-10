@@ -44,7 +44,7 @@
             <v-btn class="mt-4" @click="testPremium">Test Premium</v-btn>
           </v-col>
           <v-col md="3" xs="2">
-            <v-btn class="mt-4" @click="testDesafio">Desafio Semanal</v-btn>
+            <v-btn class="mt-4" @click="testDesafio">Desafio Automatico</v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -119,6 +119,8 @@
         </v-data-table>
       </v-card>
     </div>
+    <br />
+    <h1>{{ select_question.length }} preguntas seleccionadas</h1>
     <br />
     <v-btn @click="crearExamen">Crear Examen</v-btn>
   </v-container>

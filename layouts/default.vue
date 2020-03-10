@@ -126,7 +126,13 @@ export default {
         { title: 'Temas', icon: 'mdi-file-document-box', page: '/temas' },
         { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
         { title: 'Preguntas', icon: 'mdi-playlist-edit', page: '/question' },
-        { title: 'Test', icon: 'mdi-ballot', page: '/examen' }
+        { title: 'Test', icon: 'mdi-ballot', page: '/examen' },
+        {
+          title: 'Clasificatoria',
+          icon: 'mdi-playlist-star',
+          page: '/clasificacion'
+        },
+        { title: 'Configuracion', icon: 'mdi-settings', page: '/settings2' }
       ],
       formato: ''
     }
