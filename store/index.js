@@ -23,7 +23,8 @@ export const state = () => ({
   question: {},
   position: '',
   updatePregunta: {},
-  negativos: ''
+  negativos: '',
+  suscripciones: ''
 })
 
 export const getters = {
@@ -92,6 +93,9 @@ export const getters = {
   },
   negativos(state) {
     return state.negativos
+  },
+  suscripciones(state) {
+    return state.suscripciones
   }
 }
 
@@ -250,6 +254,9 @@ export const mutations = {
     if (diasSemana[f.getDay()] === 'Domingo') {
       API.deleteDesafio()
     }
+  },
+  saveSuscription(state, suscripciones) {
+    state.suscripciones = suscripciones
   }
 }
 
@@ -264,6 +271,8 @@ export const actions = {
       commit('evaluar')
       const mensajes = await API.getAllMessageById(state.userId)
       commit('saveMessage', mensajes)
+      const suscripciones = await API.getAllSuscription()
+      commit('saveSuscription', suscripciones)
     }
     return response
   },
@@ -522,6 +531,14 @@ export const actions = {
           }
         }
       }
+    }
+  },
+  async putSuscription({ commit }, body) {
+    commit('prueba')
+    const response = await API.putSuscription(body)
+    if (!response.error) {
+      const suscripciones = await API.getAllSuscription()
+      commit('saveSuscription', suscripciones)
     }
   }
 }

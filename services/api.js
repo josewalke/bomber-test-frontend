@@ -259,5 +259,21 @@ export default {
   },
   testPremium() {
     return axios.get(`tests/premium`).then(response => response.data)
+  },
+  getAllSuscription() {
+    return axios.get(`suscription/`).then(response => response.data)
+  },
+  putSuscription(update) {
+    let body = {
+      name: update.name,
+      precio: update.precio,
+      apartado1: update.apartado1,
+      apartado2: update.apartado2,
+      apartado3: update.apartado3,
+      apartado4: update.apartado3
+    }
+    return axios
+      .put(`suscription/${update.id}`, body)
+      .then(response => response.data)
   }
 }
