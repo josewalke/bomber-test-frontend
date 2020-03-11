@@ -196,21 +196,23 @@
     <!-- Inicio del Footer -->
     <v-footer class="text-center">
       <v-row align="center" justify="center">
-        <v-col cols="12">
+        <v-col md="6" xs="12">
           <h1 class="white--text">Siguenos en las redes</h1>
+          <v-col align="center" justify="center">
+            <v-icon class="white--text" x-large>mdi-instagram</v-icon>
+            <v-icon class="white--text" x-large>mdi-facebook</v-icon>
+            <v-icon class="white--text" x-large>mdi-twitter</v-icon>
+          </v-col>
         </v-col>
-        <v-col cols="4">
-          <v-icon class="white--text" x-large>mdi-instagram</v-icon>
-          <v-icon class="white--text" x-large>mdi-facebook</v-icon>
-          <v-icon class="white--text" x-large>mdi-twitter</v-icon>
-        </v-col>
-        <v-col cols="12">
+        <v-col md="6" xs="12">
           <h1 class="white--text">Localizanos</h1>
-        </v-col>
-        <v-col cols="4">
-          <v-icon class="white--text" x-large>mdi-instagram</v-icon>
-          <v-icon class="white--text" x-large>mdi-facebook</v-icon>
-          <v-icon class="white--text" x-large>mdi-twitter</v-icon>
+          <v-col align="center" justify="center">
+            <h3 class="white--text">Telefono:{{ localizacion[0].telefono }}</h3>
+            <h3 class="white--text">Correo:{{ localizacion[0].correo }}</h3>
+            <h3 class="white--text">
+              Direccion:{{ localizacion[0].direccion }}
+            </h3>
+          </v-col>
         </v-col>
       </v-row>
     </v-footer>
@@ -228,8 +230,9 @@ export default {
   },
   async asyncData() {
     const suscripcion = await API.getAllSuscription()
+    const localizacion = await API.getAllLocalizacion()
 
-    return { suscripcion }
+    return { suscripcion, localizacion }
   },
   data() {
     return {

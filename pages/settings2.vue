@@ -1,5 +1,27 @@
 <template>
   <v-container>
+    <h1>Localizacion</h1>
+    <v-card class="mx-auto">
+      <v-list-item three-line>
+        <v-list-item-content>
+          <v-list-item-title class="headline mb-1">
+            <v-text-field
+              v-model="upt_telefono"
+              label="Telefono"
+            ></v-text-field>
+            <v-text-field v-model="upt_correo" label="Correo"></v-text-field>
+            <v-text-field
+              v-model="upt_direccion"
+              label="Direccion"
+            ></v-text-field>
+          </v-list-item-title>
+          <v-card-actions>
+            <v-btn @click="update_localizacion">Guardar</v-btn>
+          </v-card-actions>
+        </v-list-item-content>
+      </v-list-item>
+    </v-card>
+    <h1>Ofertas de suscripcion</h1>
     <v-row class="d-flex justify-center">
       <v-col md="4" xs="12">
         <ul class="price">
@@ -115,8 +137,14 @@
 </template>
 
 <script>
+import API from '~/services/api'
 import { mapGetters } from 'vuex'
 export default {
+  async asyncData() {
+    const localizacion = await API.getAllLocalizacion()
+
+    return { localizacion }
+  },
   data() {
     return {
       seleccion1: '',
@@ -136,7 +164,10 @@ export default {
       seleccion15: '',
       seleccion16: '',
       seleccion17: '',
-      seleccion18: ''
+      seleccion18: '',
+      upt_telefono: '',
+      upt_correo: '',
+      upt_direccion: ''
     }
   },
   computed: {
@@ -286,6 +317,33 @@ export default {
       this.seleccion16 = ''
       this.seleccion17 = ''
       this.seleccion18 = ''
+    },
+    async update_localizacion() {
+      let body = {
+        id: this.localizacion[0]._id,
+        telefono: '',
+        correo: '',
+        direccion: ''
+      }
+      if (this.upt_telefono.length > 0) {
+        body.telefono = this.upt_telefono
+      } else {
+        body.telefono = this.localizacion[0].telefono
+      }
+      if (this.upt_correo.length > 0) {
+        body.correo = this.upt_correo
+      } else {
+        body.correo = this.localizacion[0].correo
+      }
+      if (this.upt_direccion.length > 0) {
+        body.direccion = this.upt_direccion
+      } else {
+        body.direccion = this.localizacion[0].direccion
+      }
+      await API.putLocalizacion(body)
+      this.upt_telefono = ''
+      this.upt_correo = ''
+      this.upt_direccion = ''
     }
   }
 }
@@ -308,5 +366,8 @@ export default {
   padding: 20px;
   text-align: center;
   background-color: white;
+}
+.v-card {
+  width: 350px;
 }
 </style>

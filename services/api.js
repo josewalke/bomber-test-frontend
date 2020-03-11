@@ -275,5 +275,18 @@ export default {
     return axios
       .put(`suscription/${update.id}`, body)
       .then(response => response.data)
+  },
+  getAllLocalizacion() {
+    return axios.get(`localizacion/`).then(response => response.data)
+  },
+  putLocalizacion(localizacion) {
+    const body = {
+      telefono: localizacion.telefono,
+      correo: localizacion.correo,
+      direccion: localizacion.direccion
+    }
+    return axios
+      .put(`localizacion/${localizacion.id}`, body)
+      .then(response => response.data)
   }
 }
