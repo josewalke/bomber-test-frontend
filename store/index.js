@@ -534,7 +534,6 @@ export const actions = {
     }
   },
   async putSuscription({ commit }, body) {
-    commit('prueba')
     const response = await API.putSuscription(body)
     if (!response.error) {
       const suscripciones = await API.getAllSuscription()

@@ -270,7 +270,7 @@ export default {
       apartado1: update.apartado1,
       apartado2: update.apartado2,
       apartado3: update.apartado3,
-      apartado4: update.apartado3
+      apartado4: update.apartado4
     }
     return axios
       .put(`suscription/${update.id}`, body)

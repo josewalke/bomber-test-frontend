@@ -68,12 +68,12 @@
         <v-row>
           <v-col md="4" xs="12">
             <ul class="price">
-              <li class="header">Basic</li>
-              <li class="grey">Gratis</li>
-              <li>50 Tests /mes</li>
-              <li>200 Preguntas</li>
-              <li>5 Consultas /mes</li>
-              <li>1 Clase Teórica /mes</li>
+              <li class="header">{{ suscripcion[0].name }}</li>
+              <li class="grey">{{ suscripcion[0].precio }}</li>
+              <li>{{ suscripcion[0].apartado1 }}</li>
+              <li>{{ suscripcion[0].apartado2 }}</li>
+              <li>{{ suscripcion[0].apartado3 }}</li>
+              <li>{{ suscripcion[0].apartado4 }}</li>
               <li class="grey">
                 <v-dialog max-width="500">
                   <template v-slot:activator="{ on }">
@@ -109,12 +109,12 @@
           </v-col>
           <v-col md="4" xs="12">
             <ul class="price">
-              <li class="header">Pro</li>
-              <li class="grey">€ 39.99 /MES</li>
-              <li>100 Tests /mes</li>
-              <li>1000 Preguntas</li>
-              <li>20 Consultas /mes</li>
-              <li>4 Clases Teórica /mes</li>
+              <li class="header">{{ suscripcion[1].name }}</li>
+              <li class="grey">{{ suscripcion[1].precio }}</li>
+              <li>{{ suscripcion[1].apartado1 }}</li>
+              <li>{{ suscripcion[1].apartado2 }}</li>
+              <li>{{ suscripcion[1].apartado3 }}</li>
+              <li>{{ suscripcion[1].apartado4 }}</li>
               <li class="grey">
                 <v-dialog max-width="500">
                   <template v-slot:activator="{ on }">
@@ -150,12 +150,12 @@
           </v-col>
           <v-col md="4" xs="12">
             <ul class="price">
-              <li class="header">Premium</li>
-              <li class="grey">€ 299.99 /MES</li>
-              <li>Tests ilimtados</li>
-              <li>2000+ Preguntas</li>
-              <li>Consultas ilimitadas</li>
-              <li>Clases Teóricas ilimitadas</li>
+              <li class="header">{{ suscripcion[2].name }}</li>
+              <li class="grey">{{ suscripcion[2].precio }}</li>
+              <li>{{ suscripcion[2].apartado1 }}</li>
+              <li>{{ suscripcion[2].apartado2 }}</li>
+              <li>{{ suscripcion[2].apartado3 }}</li>
+              <li>{{ suscripcion[2].apartado4 }}</li>
               <li class="grey">
                 <v-dialog max-width="500">
                   <template v-slot:activator="{ on }">
@@ -201,8 +201,16 @@
         </v-col>
         <v-col cols="4">
           <v-icon class="white--text" x-large>mdi-instagram</v-icon>
-          <v-icon class="white--text" x-large>mdi-facebook-box</v-icon>
-          <v-icon class="white--text" x-large>mdi-twitter-box</v-icon>
+          <v-icon class="white--text" x-large>mdi-facebook</v-icon>
+          <v-icon class="white--text" x-large>mdi-twitter</v-icon>
+        </v-col>
+        <v-col cols="12">
+          <h1 class="white--text">Localizanos</h1>
+        </v-col>
+        <v-col cols="4">
+          <v-icon class="white--text" x-large>mdi-instagram</v-icon>
+          <v-icon class="white--text" x-large>mdi-facebook</v-icon>
+          <v-icon class="white--text" x-large>mdi-twitter</v-icon>
         </v-col>
       </v-row>
     </v-footer>
@@ -210,12 +218,18 @@
 </template>
 
 <script>
+import API from '~/services/api'
 import Login from '~/components/Login.vue'
 import Signup from '~/components/Signup.vue'
 export default {
   components: {
     Login,
     Signup
+  },
+  async asyncData() {
+    const suscripcion = await API.getAllSuscription()
+
+    return { suscripcion }
   },
   data() {
     return {

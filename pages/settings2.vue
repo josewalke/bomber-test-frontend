@@ -4,7 +4,7 @@
       <v-col md="4" xs="12">
         <ul class="price">
           <li class="header">{{ suscripciones[0].name }}</li>
-          <li class="grey">€ {{ suscripciones[0].precio }}</li>
+          <li class="grey">{{ suscripciones[0].precio }}</li>
           <li>{{ suscripciones[0].apartado1 }}</li>
           <li>{{ suscripciones[0].apartado2 }}</li>
           <li>{{ suscripciones[0].apartado3 }}</li>
@@ -41,7 +41,7 @@
       <v-col md="4" xs="12">
         <ul class="price">
           <li class="header">{{ suscripciones[1].name }}</li>
-          <li class="grey">€ {{ suscripciones[1].precio }}</li>
+          <li class="grey">{{ suscripciones[1].precio }}</li>
           <li>{{ suscripciones[1].apartado1 }}</li>
           <li>{{ suscripciones[1].apartado2 }}</li>
           <li>{{ suscripciones[1].apartado3 }}</li>
@@ -78,7 +78,7 @@
       <v-col md="4" xs="12">
         <ul class="price">
           <li class="header">{{ suscripciones[2].name }}</li>
-          <li class="grey">€ {{ suscripciones[2].precio }}</li>
+          <li class="grey">{{ suscripciones[2].precio }}</li>
           <li>{{ suscripciones[2].apartado1 }}</li>
           <li>{{ suscripciones[2].apartado2 }}</li>
           <li>{{ suscripciones[2].apartado3 }}</li>
