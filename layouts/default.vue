@@ -112,18 +112,18 @@ export default {
       drawer: null,
       items: [
         { title: 'Perfil', icon: 'mdi-account', page: '/user' },
-        { title: 'Test', icon: 'mdi-file-document-box', page: '/tests' },
+        { title: 'Test', icon: 'mdi-ballot', page: '/tests' },
         { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
         {
           title: 'Clasificatoria',
           icon: 'mdi-playlist-star',
           page: '/clasificacion'
         },
-        { title: 'Configuracion', icon: 'mdi-settings', page: '/settings' }
+        { title: 'Configuracion', icon: 'mdi-cogs', page: '/settings' }
       ],
       admin: [
         { title: 'Alumnos', icon: 'mdi-account', page: '/dashboard' },
-        { title: 'Temas', icon: 'mdi-file-document-box', page: '/temas' },
+        { title: 'Temas', icon: 'mdi-book-open', page: '/temas' },
         { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
         { title: 'Preguntas', icon: 'mdi-playlist-edit', page: '/question' },
         { title: 'Test', icon: 'mdi-ballot', page: '/examen' },
@@ -132,7 +132,7 @@ export default {
           icon: 'mdi-playlist-star',
           page: '/clasificacion'
         },
-        { title: 'Configuracion', icon: 'mdi-settings', page: '/settings2' }
+        { title: 'Configuracion', icon: 'mdi-cogs', page: '/settings2' }
       ],
       formato: ''
     }
