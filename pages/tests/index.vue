@@ -41,11 +41,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="item in sorted"
-              :key="item._id"
-              @click="goToTest(item._id)"
-            >
+            <tr v-for="item in sorted" :key="item._id" @click="goToTest(item)">
               <td v-if="!item.desafio">
                 {{ item.title
                 }}<span v-if="item.mostrar_solucion">
@@ -137,12 +133,15 @@ export default {
   methods: {
     async testGeneration() {
       await this.$store.dispatch('createTest')
-      this.$router.push(
-        `/tests/${this.$store.state.currentTest._id}/${this.$store.state.currentTest.no_contestadas[0]._id}`
-      )
+      this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
     },
-    async goToTest(id) {
-      this.$router.push(`/tests/${id}`)
+    async goToTest(item) {
+      console.log(item.time_end)
+      if (item.time_end === null) {
+        this.$router.push(`/tests/${item._id}`)
+      } else {
+        this.$router.push(`/tests/${item._id}/resumen`)
+      }
     },
 
     goToTestConfig() {

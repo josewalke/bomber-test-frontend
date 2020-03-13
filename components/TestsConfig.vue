@@ -108,9 +108,7 @@ export default {
         correction: this.correctorSwitch
       }
       await this.$store.dispatch('createTestConfig', test)
-      this.$router.push(
-        `/tests/${this.$store.state.currentTest._id}/${this.$store.state.currentTest.no_contestadas[0]._id}`
-      )
+      this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
     }
   }
 }

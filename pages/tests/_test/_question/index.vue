@@ -1,14 +1,19 @@
 <template>
   <div class="main-div">
-    <div class="buttons-box d-flex justify-space-between">
+    <!-- <div>
+      {{ paint }}
+    </div> -->
+    <div class="buttons-box-left">
       <div>
-        <v-btn @click="previousQuestion">
-          <v-icon>mdi-arrow-left-circle</v-icon>
+        <v-btn class="text--white" color="#DA3E3E" @click="previousQuestion">
+          <v-icon color="white">mdi-arrow-left-circle</v-icon>
         </v-btn>
       </div>
+    </div>
+    <div class="buttons-box-right">
       <div>
-        <v-btn @click="nextQuestion">
-          <v-icon>mdi-arrow-right-circle</v-icon>
+        <v-btn color="#DA3E3E" @click="answering">
+          <v-icon color="white">mdi-arrow-right-circle</v-icon>
         </v-btn>
       </div>
     </div>
@@ -39,13 +44,12 @@
       <v-col>
         <Question2
           :id="id"
-          :enunciado="enunciado"
-          :answers="answers"
-          :tema="tema"
-          :numero="numero - 1"
+          ref="q"
+          :show-question="showQuestion"
           :temas="temas"
-          :imagen-url="imagenUrl"
-          :not-answered="notAnswered"
+          :numero="numero"
+          :paint="paint"
+          @answering="answering"
         />
       </v-col>
     </v-row>
@@ -75,14 +79,17 @@ export default {
   },
   data() {
     return {
+      notAnswered: [],
+      showQuestion: [],
+      paint: false,
+      paint2: false,
       id: '',
       enunciado: '',
       answers: [],
       tema: '',
       imagenUrl: '',
       numero: '',
-      title: '',
-      unAnswered: []
+      title: ''
     }
   },
 
@@ -90,40 +97,61 @@ export default {
     ...mapGetters(['currentTest', 'question', 'currentTestQuestion']),
     questionNumber() {
       const qs = this.currentTest.no_contestadas
-      const idx = qs.findIndex(q => q._id === this.id)
+      const idx = qs.findIndex(q => q._id === this.showQuestion[0]._id)
       return idx + 1
-    },
-    notAnswered() {
-      let notAnswered = []
-      this.currentTest.respuestas.forEach(res =>
-        !res.answered ? notAnswered.push(res) : null
-      )
-      return notAnswered
     }
   },
 
   beforeMount() {
-    this.id = this.currentTestQuestion._id
-    this.enunciado = this.currentTestQuestion.enunciado
-    this.answers = this.currentTestQuestion.answers
-    this.tema = this.currentTestQuestion.tema_id
-    this.imagenUrl = this.currentTestQuestion.imagen_url
-    this.numero = this.questionNumber
-    this.title = this.currentTest.title
-    this.unAnswered = this.currentTest.respuestas.filter(
-      q => q.answered === false
-    )
+    if (this.currentTest.time_end === null) {
+      this.findIfAnswered()
+      this.showingQuestion()
+    } else {
+      this.currentTest.no_contestadas.forEach(q => this.notAnswered.push(q))
+      this.showingQuestion()
+    }
   },
 
   methods: {
-    goToTest() {
-      if (
-        this.currentTest.time_end === null &&
-        this.currentTest.mostrar_solucion === false
-      ) {
-        this.$router.push(`/tests/`)
+    suma() {
+      this.$refs.q.mensajePrint()
+    },
+    findIfAnswered() {
+      let notAnswered = []
+      this.currentTest.respuestas.forEach(res => {
+        if (res.answered === false) {
+          let idx = this.currentTest.no_contestadas.findIndex(
+            q => q._id === res.id
+          )
+          let q = this.currentTest.no_contestadas[idx]
+          notAnswered.push(q)
+        }
+      })
+      this.notAnswered = notAnswered
+    },
+    showingQuestion() {
+      this.showQuestion = []
+      if (this.currentTest.time_end !== null) {
+        this.numero = this.notAnswered.findIndex(
+          q => q._id === this.$route.params.question
+        )
+        this.showQuestion.push(this.notAnswered[this.numero])
+        this.id = this.showQuestion[0]._id
+        this.paint = true
       } else {
+        this.showQuestion.push(this.notAnswered[0])
+        this.id = this.showQuestion[0]._id
+        this.numero = this.currentTest.no_contestadas.findIndex(
+          q => q._id === this.id
+        )
+      }
+      // this.$router.push(`/tests/${this.currentTest._id}/${this.id}`)
+    },
+    goToTest() {
+      if (this.currentTest.time_end === null) {
         this.$router.push(`/tests/${this.$route.params.test}`)
+      } else {
+        this.$router.push(`/tests/${this.$route.params.test}/resumen`)
       }
     },
     previousQuestion() {
@@ -147,15 +175,34 @@ export default {
       this.$store.dispatch('updateTest', data)
       this.$store.commit('saveCurrentTest', this.currentTest)
       this.$router.push(`/tests/${this.currentTest._id}`)
+    },
+    answering() {
+      if (this.currentTest.time_end === null) {
+        this.notAnswered = this.notAnswered.splice(1, this.notAnswered.length)
+        if (this.notAnswered.length === 0) {
+          this.endTest()
+          this.$router.push(`/tests/${this.currentTest._id}/resumen`)
+        } else {
+          this.$refs.q.cleanAnswers()
+          this.showingQuestion()
+        }
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.buttons-box {
-  position: absolute;
+.buttons-box-left {
+  position: fixed;
   margin-top: 50vh;
+  left: 5%;
+  z-index: 1;
+}
+.buttons-box-right {
+  position: fixed;
+  margin-top: 50vh;
+  right: 5%;
   z-index: 1;
 }
 .main-div {

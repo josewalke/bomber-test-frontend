@@ -63,6 +63,9 @@ export const getters = {
   currentTestQuestion(state) {
     return state.currentTestQuestion
   },
+  currentNotAnswered(state) {
+    return state.currentNotAnswered
+  },
   question(state) {
     return state.question
   },
@@ -114,7 +117,8 @@ export const mutations = {
       suspendidos,
       total,
       suscription_type,
-      active
+      active,
+      currentNotAnswered
     }
   ) {
     state.token = token
@@ -133,6 +137,7 @@ export const mutations = {
     state.total = total
     state.suscription_type = suscription_type
     state.active = active
+    state.currentNotAnswered = currentNotAnswered
   },
   saveTests(state, tests) {
     state.tests = tests
@@ -155,6 +160,9 @@ export const mutations = {
   },
   saveQuestion(state, question) {
     state.question = question
+  },
+  saveNotAnswered(state, currentNotAnswered) {
+    state.currentNotAnswered = currentNotAnswered
   },
   clearToken(state) {
     state.token = ''

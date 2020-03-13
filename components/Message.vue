@@ -72,7 +72,7 @@ export default {
         this.snackbar = true
         this.snackbarText = 'Elige un tipo de mensaje'
       } else {
-        this.$emit('status', 'false')
+        this.$emit('status')
         console.log('dentro')
         const message = {
           userId: this.userId,
