@@ -1,8 +1,8 @@
 <template>
   <div class="main-div">
-    <!-- <div>
-      {{ paint }}
-    </div> -->
+    <div>
+      {{ notAgainAlert }}
+    </div>
     <div class="buttons-box-left">
       <div>
         <v-btn class="text--white" color="#DA3E3E" @click="previousQuestion">
@@ -12,7 +12,7 @@
     </div>
     <div class="buttons-box-right">
       <div>
-        <v-btn color="#DA3E3E" @click="answering">
+        <v-btn color="#DA3E3E" @click="nextQuestion">
           <v-icon color="white">mdi-arrow-right-circle</v-icon>
         </v-btn>
       </div>
@@ -53,19 +53,24 @@
         />
       </v-col>
     </v-row>
+    <v-dialog v-model="blankAlert" max-width="500" class="pa-8 white">
+      <BlankAlert @blank="manageBlankAlert"></BlankAlert>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import API from '~/services/api'
 import Question2 from '~/components/Question2'
+import BlankAlert from '~/components/BlankAlert'
 import { mapGetters } from 'vuex'
 
 export default {
   layout: 'test',
 
   components: {
-    Question2
+    Question2,
+    BlankAlert
   },
   async fetch({ params, store }) {
     const test = await API.getTest(params.test)
@@ -89,7 +94,10 @@ export default {
       tema: '',
       imagenUrl: '',
       numero: '',
-      title: ''
+      title: '',
+      blankAlert: false,
+      notAgainAlert: false,
+      response: false
     }
   },
 
@@ -104,19 +112,16 @@ export default {
 
   beforeMount() {
     if (this.currentTest.time_end === null) {
-      this.findIfAnswered()
-      this.showingQuestion()
+      this.findNotAnswered()
+      this.showThisQuestion()
     } else {
       this.currentTest.no_contestadas.forEach(q => this.notAnswered.push(q))
-      this.showingQuestion()
+      this.showThisQuestion()
     }
   },
 
   methods: {
-    suma() {
-      this.$refs.q.mensajePrint()
-    },
-    findIfAnswered() {
+    findNotAnswered() {
       let notAnswered = []
       this.currentTest.respuestas.forEach(res => {
         if (res.answered === false) {
@@ -129,7 +134,7 @@ export default {
       })
       this.notAnswered = notAnswered
     },
-    showingQuestion() {
+    showThisQuestion() {
       this.showQuestion = []
       if (this.currentTest.time_end !== null) {
         this.numero = this.notAnswered.findIndex(
@@ -161,10 +166,11 @@ export default {
         : this.$router.push(`/tests/${this.currentTest._id}/`)
     },
     nextQuestion() {
-      let next = this.questionNumber + 1
-      next <= this.currentTest.no_contestadas.length
-        ? this.$router.push(`/tests/${this.currentTest._id}/${next}`)
-        : this.$router.push(`/tests/${this.currentTest._id}`)
+      if (this.notAgainAlert === false) {
+        this.blankAlert = true
+      } else {
+        this.answering()
+      }
     },
     endTest() {
       let timeNow = new Date()
@@ -184,8 +190,23 @@ export default {
           this.$router.push(`/tests/${this.currentTest._id}/resumen`)
         } else {
           this.$refs.q.cleanAnswers()
-          this.showingQuestion()
+          this.showThisQuestion()
         }
+      }
+    },
+    manageBlankAlert(status, again) {
+      console.log(again === true)
+      console.log(status)
+      console.log('again')
+      console.log(again)
+      if (again === true) {
+        this.notAgainAlert = true
+      }
+      if (status === true) {
+        this.answering()
+        this.blankAlert = false
+      } else {
+        this.blankAlert = false
       }
     }
   }

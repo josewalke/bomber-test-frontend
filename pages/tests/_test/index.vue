@@ -60,7 +60,7 @@
           v-if="notAnswered.length === currentTest.no_contestadas.length"
           outlined
           rounded
-          class="red--text text--darken-1 ma-2"
+          class="red--text text--en-1 ma-2"
           @click="startTest"
           >Comenzar test</v-btn
         >

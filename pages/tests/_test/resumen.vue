@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="display-1 grey--text pt-2 pb-4">{{ title }}</div>
+      <div class="display-1 grey--text pt-2 pb-4">Test:{{ title }}</div>
       <div class="grid-wrap mb-4">
         <div class="grid">
           <div style="height: 200px width: 200px background-color: #DEDEDE">

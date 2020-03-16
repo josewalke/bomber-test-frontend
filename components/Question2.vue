@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    {{ respuesta.length }}
     <div class="question-holder">
       <v-row>
         <v-col>
@@ -15,7 +16,7 @@
             {{ findTemaName }}
           </div>
           <div class="overline red--text font-weight-black">
-            {{ paint }}
+            {{ numero }}
           </div>
           <div class="headline grey--text text--darken-1">
             {{ showQuestion[0].enunciado }}
@@ -45,7 +46,7 @@
               outlined
               small
               color="#DA3E3E"
-              @click="dialog = true"
+              @click="message = true"
             >
               DUDA / IMPUGNAR
             </v-btn>
@@ -54,15 +55,15 @@
               outlined
               small
               color="#DA3E3E"
-              @click="dialog = true"
+              @click="message = true"
             >
               CORREGIR
             </v-btn>
           </div>
         </v-col>
       </v-row>
-      <v-dialog v-model="dialog" max-width="500" class="pa-8 white">
-        <Message @status="changeStatus"></Message>
+      <v-dialog v-model="message" max-width="500" class="pa-8 white">
+        <Message @status="messageOff"></Message>
       </v-dialog>
     </div>
   </v-container>
@@ -114,10 +115,10 @@ export default {
   data() {
     return {
       respuesta: [],
-      corrected: false,
+      response: false,
       guess: 'blank',
       counter: 0,
-      dialog: false
+      message: false
     }
   },
   computed: {
@@ -161,7 +162,7 @@ export default {
       //reset respuesta empty object
       if (this.counter === 0) {
         this.respuesta = []
-        this.guess = 'blank'
+        this.guess = false
       }
       this.correction()
       if (this.currentTest.mostrar_solucion === false) {
@@ -226,46 +227,46 @@ export default {
     },
 
     correction() {
-      if (this.respuesta.length > 0) {
-        let check = { true: 0, false: 0 }
-        let correctAnswers = 0
+      // if (this.respuesta.length > 0) {
+      let check = { true: 0, false: 0 }
+      let correctAnswers = 0
 
-        this.respuesta.forEach(element => {
-          if (element.correcta === true) {
-            check.true++
-          }
-          if (element.correcta === false) {
-            check.false++
-          }
-        })
-        this.showQuestion[0].answers.forEach(element =>
-          element.correcta === true ? correctAnswers++ : null
-        )
-
-        if (check.true === correctAnswers && check.false === 0) {
-          this.guess = true
-        } else {
-          this.guess = false
+      this.respuesta.forEach(element => {
+        if (element.correcta === true) {
+          check.true++
         }
-
-        let obj = {
-          id: this.id,
-          answered: true,
-          respuestas: this.respuesta,
-          guess: this.guess
+        if (element.correcta === false) {
+          check.false++
         }
-        if (this.currentTest.respuestas[this.numero].answered === false) {
-          let respuesta = obj
+      })
+      this.showQuestion[0].answers.forEach(element =>
+        element.correcta === true ? correctAnswers++ : null
+      )
 
-          this.testUpdate(respuesta)
-          if (this.currentTest.mostrar_solucion === true) {
-            this.paintCorrection()
-          }
-
-          this.respuesta = []
-          this.counter = 0
-        }
+      if (check.true === correctAnswers && check.false === 0) {
+        this.guess = true
+      } else {
+        this.guess = false
       }
+
+      let obj = {
+        id: this.id,
+        answered: true,
+        respuestas: this.respuesta,
+        guess: this.guess
+      }
+      if (this.currentTest.respuestas[this.numero].answered === false) {
+        let respuesta = obj
+
+        this.testUpdate(respuesta)
+        if (this.currentTest.mostrar_solucion === true) {
+          this.paintCorrection()
+        }
+
+        this.respuesta = []
+        this.counter = 0
+      }
+      // }
     },
 
     testUpdate(answer) {
@@ -278,8 +279,8 @@ export default {
       this.$store.commit('saveCurrentTest', this.currentTest)
     },
 
-    changeStatus() {
-      this.dialog = false
+    messageOff() {
+      this.message = false
     }
   }
 }

@@ -27,19 +27,6 @@
         </v-btn>
       </v-snackbar>
     </div>
-    <!-- <v-alert
-      v-model="snackbar"
-      top
-      color="red"
-      dense
-      class="overline yellow--text"
-    >
-      <v-icon color="yellow">mdi-alert</v-icon>
-      {{ snackbarText }}
-      <v-btn color="red" text class="yellow--text" @click="snackbar = false">
-        Close
-      </v-btn>
-    </v-alert> -->
   </div>
 </template>
 
@@ -53,7 +40,7 @@ export default {
       type: '',
       snackbar: false,
       snackbarText: '',
-      timeout: 1400,
+      timeout: 2000,
       message: ''
     }
   },
