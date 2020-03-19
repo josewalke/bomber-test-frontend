@@ -288,5 +288,8 @@ export default {
     return axios
       .put(`localizacion/${localizacion.id}`, body)
       .then(response => response.data)
+  },
+  paymentSuscription() {
+    return axios.get('/paymentStripe').then(response => response.data)
   }
 }

@@ -539,5 +539,13 @@ export const actions = {
       const suscripciones = await API.getAllSuscription()
       commit('saveSuscription', suscripciones)
     }
+  },
+  async prueba() {
+    const stripe = require('stripe')(
+      'sk_test_I9y5Cytv97AlhMQIOCqNoVrF00Q2NJqGZ2'
+    )
+
+    stripe.terminal.connectionTokens.create()
+    console.log(stripe)
   }
 }

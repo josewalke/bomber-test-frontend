@@ -3,6 +3,9 @@ process.stdout.write('\x1Bc')
 const express = require('express')
 const app = express()
 
+// STRIPE
+// const stripe = require('stripe')('sk_test_I9y5Cytv97AlhMQIOCqNoVrF00Q2NJqGZ2')
+
 /******************************************************
  * NUXT-EXPRESS CONFIGURATION (don't touch)
  *****************************************************/
