@@ -28,6 +28,49 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row v-if="active">
+      <v-col v-if="formato != 'movil'" md="6" offset="3">
+        <v-card v-if="suscription_type === 'basic'">
+          <v-card-title>
+            <h4>Pago de Suscripción</h4>
+          </v-card-title>
+          <StripeBasic></StripeBasic>
+        </v-card>
+        <v-card v-if="suscription_type === 'pro'">
+          <v-card-title>
+            <h4>Pago de Suscripción</h4>
+          </v-card-title>
+          <StripePro></StripePro>
+        </v-card>
+        <v-card v-if="suscription_type === 'premium'">
+          <v-card-title>
+            <h4>Pago de Suscripción</h4>
+          </v-card-title>
+          <StripePremium></StripePremium>
+        </v-card>
+      </v-col>
+      <v-col v-if="formato != 'ordenador'" cols="10" offset="1">
+        <v-card v-if="suscription_type === 'basic'">
+          <v-card-title>
+            <h4>Pago de Suscripción</h4>
+          </v-card-title>
+          <StripeBasic></StripeBasic>
+        </v-card>
+        <v-card v-if="suscription_type === 'pro'">
+          <v-card-title>
+            <h4>Pago de Suscripción</h4>
+          </v-card-title>
+          <StripePro></StripePro>
+        </v-card>
+        <v-card v-if="suscription_type === 'premium'">
+          <v-card-title>
+            <h4>Pago de Suscripción</h4>
+          </v-card-title>
+          <StripePremium></StripePremium>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <v-row v-if="formato != 'movil'">
       <v-col md="5" offset="1">
         <v-card>
@@ -88,7 +131,15 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import StripeBasic from '~/components/StripeBasic.vue'
+import StripePro from '~/components/StripePro.vue'
+import StripePremium from '~/components/StripePremium.vue'
 export default {
+  components: {
+    StripeBasic,
+    StripePro,
+    StripePremium
+  },
   data() {
     return {
       formato: ''

@@ -51,7 +51,7 @@ export default {
     async setUpStripe() {
       this.stripe = this.$stripe.import()
 
-      this.clientSecret = (await API.paymentBasic()).client_secret
+      this.clientSecret = (await API.paymentPro()).client_secret
 
       const elements = this.stripe.elements()
       const card = elements.create('card')

@@ -289,7 +289,13 @@ export default {
       .put(`localizacion/${localizacion.id}`, body)
       .then(response => response.data)
   },
-  paymentSuscription() {
-    return axios.get('/paymentStripe').then(response => response.data)
+  paymentBasic() {
+    return axios.get('/paymentStripe/basic').then(response => response.data)
+  },
+  paymentPro() {
+    return axios.get('/paymentStripe/pro').then(response => response.data)
+  },
+  paymentPremium() {
+    return axios.get('/paymentStripe/premium').then(response => response.data)
   }
 }
