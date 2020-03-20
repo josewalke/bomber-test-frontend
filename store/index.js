@@ -96,6 +96,9 @@ export const getters = {
   },
   suscripciones(state) {
     return state.suscripciones
+  },
+  suscription_end_active(state) {
+    return state.suscription_end_active
   }
 }
 
@@ -119,7 +122,8 @@ export const mutations = {
       total,
       suscription_type,
       active,
-      negativos
+      negativos,
+      suscription_end_active
     }
   ) {
     state.token = token
@@ -139,6 +143,7 @@ export const mutations = {
     state.suscription_type = suscription_type
     state.active = active
     state.negativos = negativos
+    state.suscription_end_active = suscription_end_active
   },
   saveTests(state, tests) {
     state.tests = tests
@@ -183,6 +188,7 @@ export const mutations = {
     state.position = ''
     state.updatePregunta = {}
     state.negativos = ''
+    state.suscription_end_active = ''
     localStorage.clear()
   },
   clearMessage(state) {
@@ -257,6 +263,9 @@ export const mutations = {
   },
   saveSuscription(state, suscripciones) {
     state.suscripciones = suscripciones
+  },
+  suscription_end_active(state) {
+    state.active = true
   }
 }
 
@@ -540,12 +549,8 @@ export const actions = {
       commit('saveSuscription', suscripciones)
     }
   },
-  async prueba() {
-    const stripe = require('stripe')(
-      'sk_test_I9y5Cytv97AlhMQIOCqNoVrF00Q2NJqGZ2'
-    )
-
-    stripe.terminal.connectionTokens.create()
-    console.log(stripe)
+  async suscription_end_active({ commit }, body) {
+    commit('suscription_end_active')
+    API.suscription_end_active(body)
   }
 }

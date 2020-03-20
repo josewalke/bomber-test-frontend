@@ -85,6 +85,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -105,6 +106,9 @@ export default {
       dropdown_font: ['basic', 'pro', 'premium'],
       seleccion: ''
     }
+  },
+  computed: {
+    ...mapGetters(['suscription_end_active'])
   },
   methods: {
     async updateName() {
@@ -154,7 +158,11 @@ export default {
       if (this.seleccion.length === 0) {
         console.log('esta vacio')
       } else {
-        await this.$store.dispatch('updateSuscription', this.seleccion)
+        if (!parseInt(this.suscription_end_active) > new Date().getTime()) {
+          await this.$store.dispatch('updateSuscription', this.seleccion)
+        } else {
+          alert('Su suscripción todavia no ha caducado')
+        }
       }
     },
     async sendAll() {
@@ -197,8 +205,11 @@ export default {
       if (this.seleccion.length === 0) {
         console.log('esta vacio')
       } else {
-        await this.$store.dispatch('updateSuscription', this.seleccion)
-        this.seleccion = ''
+        if (!parseInt(this.suscription_end_active) > new Date().getTime()) {
+          await this.$store.dispatch('updateSuscription', this.seleccion)
+        } else {
+          alert('Su suscripción todavia no ha caducado')
+        }
       }
     },
     photoUploader() {

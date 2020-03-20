@@ -213,7 +213,6 @@ export default {
       .then(response => response.data)
   },
   change_active(change) {
-    console.log(change)
     const body = {
       active: change.active
     }
@@ -297,5 +296,13 @@ export default {
   },
   paymentPremium() {
     return axios.get('/paymentStripe/premium').then(response => response.data)
+  },
+  suscription_end_active(change) {
+    const body = {
+      active: change.active,
+      suscription_end_active: new Date().getTime() + 2629800000
+    }
+
+    return axios.put('users/' + change.id, body).then(response => response.data)
   }
 }
