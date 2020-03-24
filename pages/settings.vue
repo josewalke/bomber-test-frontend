@@ -62,6 +62,7 @@
               </v-col>
               <v-col cols="12">
                 <v-overflow-btn
+                  v-if="role === 'cliente'"
                   id="selector"
                   v-model="seleccion"
                   class="my-2"
@@ -108,7 +109,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['suscription_end_active'])
+    ...mapGetters(['suscription_end_active', 'role'])
   },
   methods: {
     async updateName() {

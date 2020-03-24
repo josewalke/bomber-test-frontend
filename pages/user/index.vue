@@ -71,6 +71,17 @@
       </v-col>
     </v-row>
 
+    <v-row>
+      <v-col md="10" offset="1">
+        <v-card>
+          <h1>Clases por Streaming</h1>
+          <v-card-subtitle>
+            <a href="https://opocan.milaulas.com/">Asistir a una clase</a>
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <v-row v-if="formato != 'movil'">
       <v-col md="5" offset="1">
         <v-card>

@@ -45,14 +45,36 @@
         <p class="subtitle">
           La mayor Base de Datos <br />de preguntas de examen
         </p>
-        <v-btn
-          rounded
-          height="75"
-          class="btn-big white--text"
-          color="#DA3E3E"
-          xs="4"
-          >Prueba gratis</v-btn
-        >
+        <v-dialog max-width="500">
+          <template v-slot:activator="{ on }">
+            <v-btn
+              rounded
+              height="75"
+              class="btn-big white--text"
+              color="#DA3E3E"
+              xs="4"
+              dark
+              v-on="on"
+              >Prueba gratis</v-btn
+            >
+          </template>
+          <v-card>
+            <v-row align="center" justify="center">
+              <v-col cols="12" md="6">
+                <v-tabs v-model="tab">
+                  <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                  <v-tab-item key="1" value="tab-1">
+                    <v-row class="py-2">
+                      <v-col cols="12">
+                        <SignupPrueba />
+                      </v-col>
+                    </v-row>
+                  </v-tab-item>
+                </v-tabs>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-dialog>
       </v-layout>
     </div>
     <!-- Final de la Foto de bombero -->
@@ -223,10 +245,12 @@
 import API from '~/services/api'
 import Login from '~/components/Login.vue'
 import Signup from '~/components/Signup.vue'
+import SignupPrueba from '~/components/SignupPrueba.vue'
 export default {
   components: {
     Login,
-    Signup
+    Signup,
+    SignupPrueba
   },
   async asyncData() {
     const suscripcion = await API.getAllSuscription()

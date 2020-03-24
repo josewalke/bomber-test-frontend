@@ -299,6 +299,7 @@ export default {
   },
   suscription_end_active(change) {
     const body = {
+      role: 'cliente',
       active: change.active,
       suscription_end_active: new Date().getTime() + 2629800000
     }
