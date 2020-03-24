@@ -61,7 +61,7 @@
 
         <v-divider></v-divider>
 
-        <v-list v-if="role === 'cliente'" dense>
+        <v-list v-if="role === 'cliente' || role === 'prueba'" dense>
           <v-list-item v-for="item in items" :key="item.title">
             <v-list-item-content>
               <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">

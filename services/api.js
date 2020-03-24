@@ -213,7 +213,6 @@ export default {
       .then(response => response.data)
   },
   change_active(change) {
-    console.log(change)
     const body = {
       active: change.active
     }
@@ -288,5 +287,23 @@ export default {
     return axios
       .put(`localizacion/${localizacion.id}`, body)
       .then(response => response.data)
+  },
+  paymentBasic() {
+    return axios.get('/paymentStripe/basic').then(response => response.data)
+  },
+  paymentPro() {
+    return axios.get('/paymentStripe/pro').then(response => response.data)
+  },
+  paymentPremium() {
+    return axios.get('/paymentStripe/premium').then(response => response.data)
+  },
+  suscription_end_active(change) {
+    const body = {
+      role: 'cliente',
+      active: change.active,
+      suscription_end_active: new Date().getTime() + 2629800000
+    }
+
+    return axios.put('users/' + change.id, body).then(response => response.data)
   }
 }

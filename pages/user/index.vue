@@ -28,6 +28,60 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row v-if="!active">
+      <v-col v-if="formato != 'movil'" md="6" offset="3">
+        <v-card v-if="suscription_type === 'basic'">
+          <v-card-title>
+            <h4>Pago de Suscripción BASIC</h4>
+          </v-card-title>
+          <StripeBasic></StripeBasic>
+        </v-card>
+        <v-card v-if="suscription_type === 'pro'">
+          <v-card-title>
+            <h4>Pago de Suscripción PRO</h4>
+          </v-card-title>
+          <StripePro></StripePro>
+        </v-card>
+        <v-card v-if="suscription_type === 'premium'">
+          <v-card-title>
+            <h4>Pago de Suscripción PREMIUM</h4>
+          </v-card-title>
+          <StripePremium></StripePremium>
+        </v-card>
+      </v-col>
+      <v-col v-if="formato != 'ordenador'" cols="10" offset="1">
+        <v-card v-if="suscription_type === 'basic'">
+          <v-card-title>
+            <h4>Pago de Suscripción BASICO</h4>
+          </v-card-title>
+          <StripeBasic></StripeBasic>
+        </v-card>
+        <v-card v-if="suscription_type === 'pro'">
+          <v-card-title>
+            <h4>Pago de Suscripción PRO</h4>
+          </v-card-title>
+          <StripePro></StripePro>
+        </v-card>
+        <v-card v-if="suscription_type === 'premium'">
+          <v-card-title>
+            <h4>Pago de Suscripción PREMIUM</h4>
+          </v-card-title>
+          <StripePremium></StripePremium>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col md="10" offset="1">
+        <v-card>
+          <h1>Clases por Streaming</h1>
+          <v-card-subtitle>
+            <a href="https://opocan.milaulas.com/">Asistir a una clase</a>
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <v-row v-if="formato != 'movil'">
       <v-col md="5" offset="1">
         <v-card>
@@ -42,7 +96,11 @@
         <v-card>
           <v-card-title> Suscripción {{ suscription_type }}.</v-card-title>
           <v-card-subtitle>
-            válida hasta el 31 de enero de 2020
+            válida hasta el
+            {{ new Date(parseInt(suscription_end_active)).getDate() }} de
+            {{ meses[new Date(parseInt(suscription_end_active)).getMonth()] }}
+            de
+            {{ new Date(parseInt(suscription_end_active)).getFullYear() }}
           </v-card-subtitle>
         </v-card>
       </v-col>
@@ -63,7 +121,11 @@
         <v-card>
           <v-card-title> Suscripción {{ suscription_type }}.</v-card-title>
           <v-card-subtitle>
-            válida hasta el 31 de enero de 2020
+            válida hasta el
+            {{ new Date(parseInt(suscription_end_active)).getDate() }} de
+            {{ meses[new Date(parseInt(suscription_end_active)).getMonth()] }}
+            de
+            {{ new Date(parseInt(suscription_end_active)).getFullYear() }}
           </v-card-subtitle>
         </v-card>
       </v-col>
@@ -88,10 +150,32 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import StripeBasic from '~/components/StripeBasic.vue'
+import StripePro from '~/components/StripePro.vue'
+import StripePremium from '~/components/StripePremium.vue'
 export default {
+  components: {
+    StripeBasic,
+    StripePro,
+    StripePremium
+  },
   data() {
     return {
-      formato: ''
+      formato: '',
+      meses: [
+        'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre'
+      ]
     }
   },
   computed: {
@@ -110,7 +194,8 @@ export default {
       'suscription_type',
       'active',
       'messages',
-      'tests'
+      'tests',
+      'suscription_end_active'
     ])
   },
   methods: {

@@ -51,7 +51,7 @@ export default {
     async setUpStripe() {
       this.stripe = this.$stripe.import()
 
-      this.clientSecret = (await API.paymentBasic()).client_secret
+      this.clientSecret = (await API.paymentPremium()).client_secret
 
       const elements = this.stripe.elements()
       const card = elements.create('card')
@@ -76,7 +76,11 @@ export default {
             return console.error(result.error)
           }
           if (result.paymentIntent.status === 'succeeded') {
-            // location.reload()
+            const body = {
+              id: this.userId,
+              active: true
+            }
+            this.$store.dispatch('suscription_end_active', body)
             console.log('Transferencia Relealizada')
           }
         } catch (e) {

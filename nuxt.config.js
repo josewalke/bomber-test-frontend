@@ -53,8 +53,13 @@ module.exports = {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    'nuxt-fontawesome'
+    'nuxt-fontawesome',
+    'nuxt-stripe-module'
   ],
+  stripe: {
+    version: 'v3',
+    publishableKey: 'pk_test_nQsrNLrkYw7lxkhRpIEVSynD00mvlxpBub'
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
