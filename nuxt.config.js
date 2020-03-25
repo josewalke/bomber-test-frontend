@@ -35,7 +35,11 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: '~/plugins/localStorage.js', ssr: false }],
+  plugins: [
+    { src: '~/plugins/localStorage.js', ssr: false },
+    { src: '~/plugins/vue-css-donut-chart.js', ssr: false },
+    { src: '~/plugins/vue-css-donut-chart.js', ssr: false }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
