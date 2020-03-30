@@ -24,7 +24,6 @@
         >No</v-btn
       >
       <v-checkbox v-model="askAgain" label="No volver a preguntar"></v-checkbox>
-      {{ askAgain }}
     </div>
     <div></div>
   </div>

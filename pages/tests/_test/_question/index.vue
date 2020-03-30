@@ -1,24 +1,21 @@
 <template>
   <div class="main-div">
-    <div>
-      {{ notAgainAlert }}
-    </div>
-    <div class="buttons-box-left">
+    <!-- <div class="buttons-box-left">
       <div>
         <v-btn class="text--white" color="#DA3E3E" @click="previousQuestion">
           <v-icon color="white">mdi-arrow-left-circle</v-icon>
         </v-btn>
       </div>
-    </div>
-    <div class="buttons-box-right">
+    </div> -->
+    <!-- <div class="buttons-box-right">
       <div>
         <v-btn color="#DA3E3E" @click="nextQuestion">
           <v-icon color="white">mdi-arrow-right-circle</v-icon>
         </v-btn>
       </div>
-    </div>
+    </div> -->
     <div class="question-title d-flex justify-space-between">
-      <div class="headline">{{ title }}</div>
+      <v-spacer></v-spacer>
       <div class="headline">
         <div class="d-inline-flex">
           Pregunta {{ questionNumber }}/
@@ -27,6 +24,16 @@
         <v-btn class="ma-2" outlined small color="#DA3E3E" @click="goToTest">
           CERRAR
         </v-btn>
+        <v-btn
+          class="ma-2"
+          outlined
+          small
+          color="#DA3E3E"
+          @click="nextQuestion"
+        >
+          <v-icon color="red">mdi-arrow-right-circle</v-icon>
+        </v-btn>
+
         <v-btn
           v-if="currentTest.time_end === null"
           class="ma-2"
@@ -136,7 +143,7 @@ export default {
     },
     showThisQuestion() {
       this.showQuestion = []
-      if (this.currentTest.time_end !== null) {
+      if (this.currentTest.time_end2 !== null) {
         this.numero = this.notAnswered.findIndex(
           q => q._id === this.$route.params.question
         )
@@ -153,7 +160,7 @@ export default {
       // this.$router.push(`/tests/${this.currentTest._id}/${this.id}`)
     },
     goToTest() {
-      if (this.currentTest.time_end === null) {
+      if (this.currentTest.time_end2 === null) {
         this.$router.push(`/tests/${this.$route.params.test}`)
       } else {
         this.$router.push(`/tests/${this.$route.params.test}/resumen`)
@@ -178,12 +185,13 @@ export default {
         time_end: timeNow,
         testId: this.currentTest._id
       }
+
       this.$store.dispatch('updateTest', data)
       this.$store.commit('saveCurrentTest', this.currentTest)
       this.$router.push(`/tests/${this.currentTest._id}`)
     },
     answering() {
-      if (this.currentTest.time_end === null) {
+      if (this.currentTest.time_end2 === null) {
         this.notAnswered = this.notAnswered.splice(1, this.notAnswered.length)
         if (this.notAnswered.length === 0) {
           this.endTest()

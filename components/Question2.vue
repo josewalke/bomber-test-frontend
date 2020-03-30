@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    {{ respuesta.length }}
     <div class="question-holder">
       <v-row>
         <v-col>
@@ -15,9 +14,9 @@
           <div class="overline red--text font-weight-black">
             {{ findTemaName }}
           </div>
-          <div class="overline red--text font-weight-black">
+          <!-- <div class="overline red--text font-weight-black">
             {{ numero }}
-          </div>
+          </div> -->
           <div class="headline grey--text text--darken-1">
             {{ showQuestion[0].enunciado }}
           </div>
@@ -50,7 +49,7 @@
             >
               DUDA / IMPUGNAR
             </v-btn>
-            <v-btn
+            <!-- <v-btn
               class="ma-2"
               outlined
               small
@@ -58,7 +57,7 @@
               @click="message = true"
             >
               CORREGIR
-            </v-btn>
+            </v-btn> -->
           </div>
         </v-col>
       </v-row>
