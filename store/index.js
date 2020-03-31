@@ -25,7 +25,9 @@ export const state = () => ({
   position: '',
   updatePregunta: {},
   negativos: '',
-  suscripciones: ''
+  suscripciones: '',
+  pregunta_id: '',
+  test_id: ''
 })
 
 export const getters = {
@@ -106,6 +108,12 @@ export const getters = {
   },
   suscription_end_active(state) {
     return state.suscription_end_active
+  },
+  pregunta_id(state) {
+    return state.pregunta_id
+  },
+  test_id(state) {
+    return state.test_id
   }
 }
 
@@ -202,6 +210,8 @@ export const mutations = {
     state.updatePregunta = {}
     state.negativos = ''
     state.suscription_end_active = ''
+    state.pregunta_id = ''
+    state.test_id = ''
     localStorage.clear()
   },
   clearMessage(state) {
@@ -277,6 +287,10 @@ export const mutations = {
   },
   suscription_end_active(state) {
     state.active = true
+  },
+  explicacion(state, body) {
+    state.test_id = body.test
+    state.pregunta_id = body.pregunta
   }
 }
 
@@ -321,7 +335,6 @@ export const actions = {
     const tests = await API.getAllTestById(state.userId)
     commit('saveTests', tests)
   },
-
   async updateTest({ commit, state }, testData) {
     let data = testData
     const updatedTest = await API.updateTest(state.token, data)
@@ -575,5 +588,12 @@ export const actions = {
   async suscription_end_active({ commit }, body) {
     commit('suscription_end_active')
     API.suscription_end_active(body)
+  },
+  async explicacion({ commit }, body) {
+    let pregunta = await API.getQuestionById(body.pregunta)
+    if (!pregunta.error) {
+      body.pregunta = pregunta
+      commit('explicacion', body)
+    }
   }
 }

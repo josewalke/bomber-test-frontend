@@ -78,7 +78,7 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="sendAll">Guardar</v-btn>
+          <v-btn outlined color="#DA3E3E" small @click="sendAll">Guardar</v-btn>
         </v-card-actions>
       </v-card>
     </template>

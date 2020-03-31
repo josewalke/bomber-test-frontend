@@ -22,7 +22,6 @@
       <v-btn outlined color="#DA3E3E" small @click="sendMessage">Enviar</v-btn>
       <v-snackbar v-model="snackbar" :timeout="timeout" top>
         {{ snackbarText }}
-
         <v-btn color="red" text @click="snackbar = false">
           X
         </v-btn>
@@ -36,6 +35,14 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  props: {
+    idQuestion: {
+      type: String,
+      default: () => {
+        return 'lolo'
+      }
+    }
+  },
   data() {
     return {
       type: '',
@@ -66,8 +73,9 @@ export default {
           userId: this.userId,
           type: this.type,
           message: this.message,
-          questionId: this.currentTestQuestion._id
+          questionId: this.idQuestion
         }
+        console.log(message)
         // API.newMessage(this.token, message)
         await this.$store.dispatch('newMessage', message)
       }

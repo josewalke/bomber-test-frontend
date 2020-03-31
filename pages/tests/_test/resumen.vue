@@ -49,7 +49,8 @@
           flat
           class="pb-0"
         >
-          <v-row @click="goToQuestion(item._id, idx)">
+          <!-- <v-row @click="goToQuestion(item._id, idx)"> -->
+          <v-row @click="prueba(item._id, idx)">
             <v-col cols="8">
               <div class="overline text-uppercase red--text pl-4">
                 {{ getQuestionSubject[idx] }}
@@ -77,7 +78,8 @@
           dense
           flat
         >
-          <v-row @click="goToQuestion(item._id, idx)">
+          <!-- <v-row @click="goToQuestion(item._id, idx)"> -->
+          <v-row @click="prueba(item._id, idx)">
             <v-col cols="8">
               <div class="overline text-uppercase red--text pl-4">
                 {{ getQuestionSubject[idx] }}
@@ -108,7 +110,8 @@
           dense
           flat
         >
-          <v-row @click="goToQuestion(item._id, idx)">
+          <!-- <v-row @click="goToQuestion(item._id, idx)"> -->
+          <v-row @click="prueba(item._id, idx)">
             <v-col cols="8">
               <div class="overline text-uppercase red--text pl-4">
                 {{ getQuestionSubject[idx] }}
@@ -217,6 +220,18 @@ export default {
       this.$store.dispatch('updateTest', data)
       this.$store.commit('saveCurrentTest', this.currentTest)
       this.$router.push(`/tests/${this.currentTest._id}`)
+    },
+    prueba(id) {
+      var sPaginaURL = window.location.href.split('/')
+      console.log(id)
+      console.log(sPaginaURL[4])
+      let body = {
+        test: sPaginaURL[4],
+        pregunta: id
+      }
+      this.$store.dispatch('explicacion', body)
+
+      this.$router.push(`/tests/${sPaginaURL[4]}/verificar/${id}`)
     }
   }
 }
