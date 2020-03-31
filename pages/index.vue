@@ -221,9 +221,12 @@
         <v-col md="6" xs="12">
           <h1 class="white--text">Siguenos en las redes</h1>
           <v-col align="center" justify="center">
-            <v-icon class="white--text" x-large>mdi-instagram</v-icon>
-            <v-icon class="white--text" x-large>mdi-facebook</v-icon>
-            <v-icon class="white--text" x-large>mdi-twitter</v-icon>
+            <a href="https://www.instagram.com/oposicionbomberos/">
+              <v-icon class="white--text" x-large>mdi-instagram</v-icon>
+            </a>
+            <a href="https://www.facebook.com/oposicionbomberoslaspalmas/">
+              <v-icon class="white--text" x-large>mdi-facebook</v-icon>
+            </a>
           </v-col>
         </v-col>
         <v-col md="6" xs="12">
@@ -263,6 +266,11 @@ export default {
       title: 'Oposicion de Bombero',
       items: [{ title: 'Login', to: '/auth' }],
       tab: null
+    }
+  },
+  method: {
+    prueba() {
+      console.log('rube')
     }
   },
   layout: 'basic'
@@ -349,5 +357,8 @@ export default {
 }
 .v-footer {
   background-color: #da3e3e;
+}
+a {
+  text-decoration: none;
 }
 </style>
