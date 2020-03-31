@@ -1,52 +1,97 @@
 <template>
-  <div class="main-div">
-    <div class="question-title">
-      <h1>Titulo: {{ currentTest.title }}</h1>
-      <h1>Pregunta / {{ currentTest.no_contestadas.length }}</h1>
-      <v-btn color="#da3e3e" to="/tests">
-        <v-icon class="white--text">mdi-close</v-icon>
-      </v-btn>
+  <div>
+    <div class="display-1 ml-3 pt-4 mb-3 grey--text">
+      Test: {{ currentTest.title }}
     </div>
-    <v-row>
-      <v-col>
-        <template>
-          <v-carousel hide-delimiters height="100vh">
-            <v-carousel-item
-              v-for="(question, i) in currentTest.no_contestadas"
-              :key="i"
-            >
-              <h1>Aquí esta el {{ i + 1 }}</h1>
-              <v-sheet color="white" height="100%" tile>
-                <v-row align="center" justify="center">
-                  <Question2
-                    :id="question._id"
-                    :enunciado="question.enunciado"
-                    :answers="question.answers"
-                    :tema="question.tema_id"
-                    :numero="i"
-                    :temas="temas"
-                    @selectAnswer="selectAnswer"
-                  />
-                </v-row>
-              </v-sheet>
-            </v-carousel-item>
-          </v-carousel>
-        </template>
-      </v-col>
-    </v-row>
+    <div class="overline ml-4 red--text" style="text-transform: uppercase">
+      Resumen del test
+    </div>
+    <v-chip-group column class="ml-3 mb-4">
+      <v-chip> {{ currentTest.no_contestadas.length }} preguntas </v-chip>
+      <v-chip v-if="notAnswered.length > 0">
+        {{ notAnswered.length }} sin contestar
+      </v-chip>
+      <v-chip v-if="currentTest.no_contestadas.length - notAnswered.length > 0">
+        {{ currentTest.no_contestadas.length - notAnswered.length }} contestadas
+      </v-chip>
+    </v-chip-group>
+    <div class="overline ml-4 red--text" style="text-transform: uppercase">
+      Temas
+    </div>
+    <v-chip-group column class="ml-3 mb-4">
+      <v-chip v-for="subject in getQuestionSubject" :key="subject" small>
+        {{ subject }}
+      </v-chip>
+    </v-chip-group>
+    <div class="title ml-4 red--text" style="text-transform: uppercase">
+      Instrucciones
+    </div>
+    <ul class="body-1 ml-4 mt-1 grey--text text--darken-1">
+      <li>Lorem ipsm dolor sit amet consectetur, adipiscing elit netus.</li>
+      <li>
+        Inceptos vehicula dictum massa sociis auctor, nostra pretium magna
+        lacinia.
+      </li>
+      <li>
+        Pulvinar magna nec est vehicula ultricies, quis tristique congue.
+      </li>
+      <li>Nostra id justo metus posuere inceptos, etiam enim feugiat.</li>
+      <li>Class mus dictum habitant habitasse, egestas lectus.</li>
+      <li>
+        Justo phasellus netus nascetur imperdiet nisi, facilisi elementum
+        blandit.
+      </li>
+      <li>Enim augue erat odio pretium placerat, suscipit vel et aenean.</li>
+      <li>
+        Mi accumsan non lobortis rutrum aliquam, eros interdum tincidunt.
+      </li>
+      <li>
+        Ullamcorper pharetra suscipit inceptos ligula posuere, consequat litora
+        primis potenti.
+      </li>
+      <li>
+        Nisi dapibus habitasse sociosqu vestibulum parturient donec, ultricies
+        laoreet duis viverra.
+      </li>
+    </ul>
+    <div class="d-flex justify-start ml-4 mt-4">
+      <div v-if="notAnswered.length > 0">
+        <v-btn
+          v-if="notAnswered.length === currentTest.no_contestadas.length"
+          outlined
+          rounded
+          class="red--text text--en-1 ma-2"
+          @click="startTest"
+          >Comenzar test</v-btn
+        >
+        <v-btn
+          v-else
+          outlined
+          rounded
+          class="red--text text--darken-1 ma-2"
+          @click="startTest"
+          >Continuar test</v-btn
+        >
+      </div>
+      <div>
+        <v-btn
+          v-if="currentTest.time_end === null"
+          outlined
+          rounded
+          class="red--text text--darken-1 ma-2"
+          @click="endTest"
+          >Finalizar Test</v-btn
+        >
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import API from '~/services/api'
-import Question2 from '~/components/Question2'
 import { mapGetters } from 'vuex'
 
 export default {
-  layout: 'test',
-  components: {
-    Question2
-  },
   async fetch({ params, store }) {
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
@@ -55,32 +100,61 @@ export default {
     const temas = await API.getAllTemasNames()
     return { temas }
   },
+  data() {
+    return {
+      notAnswered: []
+    }
+  },
   computed: {
-    ...mapGetters(['currentTest', 'question'])
+    ...mapGetters(['currentTest', 'currentNotAnswered']),
+    getQuestionSubject() {
+      let questions = this.currentTest.no_contestadas
+      let questionsSubject = []
+      questions.forEach(q => {
+        let tema = this.temas.find(tema => tema.id == q.tema_id)
+        if (!questionsSubject.includes(tema.name)) {
+          questionsSubject.push(tema.name)
+        }
+      })
+      return questionsSubject
+    }
+  },
+  beforeMount() {
+    this.findIfAnswered()
+    this.$store.commit('saveNotAnswered', this.notAnswered)
   },
   methods: {
-    async selectAnswer(number) {
-      console.log(number)
+    findIfAnswered() {
+      let notAnswered = []
+      this.currentTest.respuestas.forEach(res => {
+        if (res.answered === false) {
+          let idx = this.currentTest.no_contestadas.findIndex(
+            q => q._id === res.id
+          )
+          let q = this.currentTest.no_contestadas[idx]
+          notAnswered.push(q)
+        }
+      })
+      this.notAnswered = notAnswered
+    },
+    startTest() {
+      console.log('start')
+      this.$router.push(
+        `/tests/${this.$store.state.currentTest._id}/${this.notAnswered[0]._id}`
+      )
+    },
+    endTest() {
+      let timeNow = new Date()
+      const data = {
+        time_end: timeNow,
+        testId: this.currentTest._id
+      }
+      this.$store.dispatch('updateTest', data)
+      this.$store.commit('saveCurrentTest', this.currentTest)
+      this.$router.push(`/tests/${this.currentTest._id}/resumen`)
     }
   }
 }
 </script>
 
-<style scoped>
-.main-div {
-  background-color: white;
-}
-.question-title {
-  margin-top: 5%;
-  margin-left: 6%;
-}
-.enunciado {
-  margin: 150px auto;
-}
-.btn-size {
-  height: 100%;
-}
-.question {
-  padding: 10px;
-}
-</style>
+<style lang="scss" scoped></style>

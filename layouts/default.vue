@@ -19,7 +19,8 @@
           <v-list-item v-for="item in items" :key="item.title">
             <v-list-item-content>
               <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
-                <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
+                <v-icon class="mr-2">{{ item.icon }}</v-icon
+                ><span></span> {{ item.title }}
               </v-btn>
             </v-list-item-content>
           </v-list-item>

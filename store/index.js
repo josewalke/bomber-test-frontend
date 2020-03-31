@@ -20,11 +20,14 @@ export const state = () => ({
   tests: [],
   messages: [],
   currentTest: {},
+  currentTestQuestion: {},
   question: {},
   position: '',
   updatePregunta: {},
   negativos: '',
-  suscripciones: ''
+  suscripciones: '',
+  pregunta_id: '',
+  test_id: ''
 })
 
 export const getters = {
@@ -60,6 +63,12 @@ export const getters = {
   },
   currentTest(state) {
     return state.currentTest
+  },
+  currentTestQuestion(state) {
+    return state.currentTestQuestion
+  },
+  currentNotAnswered(state) {
+    return state.currentNotAnswered
   },
   question(state) {
     return state.question
@@ -99,6 +108,12 @@ export const getters = {
   },
   suscription_end_active(state) {
     return state.suscription_end_active
+  },
+  pregunta_id(state) {
+    return state.pregunta_id
+  },
+  test_id(state) {
+    return state.test_id
   }
 }
 
@@ -161,8 +176,14 @@ export const mutations = {
   saveCurrentTest(state, test) {
     state.currentTest = test
   },
+  saveCurrentQuestion(state, question) {
+    state.currentTestQuestion = question
+  },
   saveQuestion(state, question) {
     state.question = question
+  },
+  saveNotAnswered(state, currentNotAnswered) {
+    state.currentNotAnswered = currentNotAnswered
   },
   clearToken(state) {
     state.token = ''
@@ -189,6 +210,8 @@ export const mutations = {
     state.updatePregunta = {}
     state.negativos = ''
     state.suscription_end_active = ''
+    state.pregunta_id = ''
+    state.test_id = ''
     localStorage.clear()
   },
   clearMessage(state) {
@@ -234,9 +257,7 @@ export const mutations = {
   saveUpdatePregunta(state, pregunta) {
     state.updatePregunta = pregunta
   },
-  prueba() {
-    console.log('console de prueba')
-  },
+  prueba() {},
   evaluar(state) {
     for (let i = 0; i < state.tests.length; i++) {
       if (state.tests[i].nota === 'aprobado') {
@@ -266,6 +287,10 @@ export const mutations = {
   },
   suscription_end_active(state) {
     state.active = true
+  },
+  explicacion(state, body) {
+    state.test_id = body.test
+    state.pregunta_id = body.pregunta
   }
 }
 
@@ -274,7 +299,6 @@ export const actions = {
     const response = await API.login(userData)
     if (!response.error) {
       commit('saveToken', response)
-      await API.updateInactividad(state.userId)
       const tests = await API.getAllTestById(state.userId)
       commit('saveTests', tests)
       commit('evaluar')
@@ -294,6 +318,11 @@ export const actions = {
     }
     return response
   },
+  async newMessage({ commit, state }, message) {
+    await API.newMessage(state.token, message)
+    const mensajes = await API.getAllMessageById(state.userId)
+    commit('saveMessage', mensajes)
+  },
   async createTest({ commit, state }) {
     const newTest = await API.generateTest(state.token)
     commit('saveCurrentTest', newTest)
@@ -301,7 +330,6 @@ export const actions = {
     commit('saveTests', tests)
   },
   async createTestConfig({ commit, state }, testData) {
-    console.log(testData)
     const newTest = await API.generateConfigTest(state.token, testData)
     commit('saveCurrentTest', newTest)
     const tests = await API.getAllTestById(state.userId)
@@ -315,20 +343,20 @@ export const actions = {
       commit('saveTests', tests)
     }
   },
-  async verRespuesta({ state }, responseBody) {
-    const respuesta =
-      state.currentTest.no_contestadas[0].answer_wrong[responseBody.number]
-    const correcta = state.currentTest.no_contestadas[0].answers_correct
-    const enunciado = state.currentTest.no_contestadas[0].enunciado
+  // async verRespuesta({ state }, responseBody) {
+  //   const respuesta =
+  //     state.currentTest.no_contestadas[0].answer_wrong[responseBody.number]
+  //   const correcta = state.currentTest.no_contestadas[0].answers_correct
+  //   const enunciado = state.currentTest.no_contestadas[0].enunciado
 
-    if (responseBody.enunciado === enunciado) {
-      if (respuesta === correcta) {
-        return console.log(true)
-      } else {
-        return console.log(false)
-      }
-    }
-  },
+  //   if (responseBody.enunciado === enunciado) {
+  //     if (respuesta === correcta) {
+  //       return console.log(true)
+  //     } else {
+  //       return console.log(false)
+  //     }
+  //   }
+  // },
   async updateName({ commit, state }, newName) {
     let data = {
       userId: state.userId,
@@ -390,7 +418,6 @@ export const actions = {
     }
   },
   async updateEmail({ commit, state }, newEmail) {
-    console.log(state.userId)
     let data = {
       userId: state.userId,
       newEmail: newEmail
@@ -454,6 +481,15 @@ export const actions = {
   },
   async updateEnunciado({ commit }, body) {
     const response = await API.updateEnunciado(body)
+    if (!response.error) {
+      const pregunta = await API.getQuestionById(body.id)
+      if (!pregunta.error) {
+        commit('saveUpdatePregunta', pregunta)
+      }
+    }
+  },
+  async updateQuestionPhoto({ commit }, body) {
+    const response = await API.updateQuestionPhoto(body)
     if (!response.error) {
       const pregunta = await API.getQuestionById(body.id)
       if (!pregunta.error) {
@@ -552,5 +588,12 @@ export const actions = {
   async suscription_end_active({ commit }, body) {
     commit('suscription_end_active')
     API.suscription_end_active(body)
+  },
+  async explicacion({ commit }, body) {
+    let pregunta = await API.getQuestionById(body.pregunta)
+    if (!pregunta.error) {
+      body.pregunta = pregunta
+      commit('explicacion', body)
+    }
   }
 }

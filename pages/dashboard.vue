@@ -1,7 +1,5 @@
 <template>
-  <v-container>
-    <StudentsList :student="users" :movil="movil"></StudentsList>
-  </v-container>
+  <StudentsList :student="users"></StudentsList>
 </template>
 
 <script>
@@ -13,11 +11,7 @@ export default {
   },
   async asyncData() {
     const users = await API.getAllUsers()
-    let movil = false
-    if (window.screen.width < 600) {
-      movil = true
-    }
-    return { users, movil }
+    return { users }
   }
 }
 </script>

@@ -2,8 +2,25 @@
   <div>
     <h1>Enunciado</h1>
     {{ updatePregunta.enunciado }}
+    {{ photo }}
     <v-textarea v-model="newEnunciado" auto-grow solo></v-textarea>
     <v-btn @click="updateEnunciado">Actualizar</v-btn>
+    <div>
+      <!-- <div v-if="updatePregunta.imagen_url > 0"> -->
+      <div
+        class="photo-holder"
+        :style="{ 'background-image': `url(${updatePregunta.imagen_url})` }"
+      ></div>
+    </div>
+    <v-btn @click="uploadPhoto">Elegir photo</v-btn>
+    <div class="photo-question">
+      <div
+        class="user-card mt-5"
+        :style="{
+          'background-image': `url(${photo})`
+        }"
+      ></div>
+    </div>
     <h1
       :class="
         updatePregunta.answers[0].correcta === true
@@ -148,7 +165,8 @@ export default {
       seleccion2: '',
       seleccion3: '',
       seleccion4: '',
-      ver: true
+      ver: true,
+      photo: ''
     }
   },
   computed: {
@@ -162,6 +180,41 @@ export default {
           enunciado: this.newEnunciado
         }
         this.$store.dispatch('updateEnunciado', body)
+      }
+    },
+    photoUploader() {
+      // eslint-disable-next-line no-undef
+      const newWidget = cloudinary.createUploadWidget(
+        {
+          cloudName: 'dea2xlykc',
+          uploadPreset: 'questionPhoto',
+          multiple: false,
+          maxFiles: 1,
+          cropping: true,
+          clientAllowedFormats: ['png', 'gif', 'jpeg']
+        },
+        (error, result) => {
+          if (!error && result && result.event === 'success') {
+            const newUrl = result.info.url
+            this.photo = newUrl
+            this.updatePhoto()
+          }
+        }
+      )
+      return newWidget
+    },
+    uploadPhoto() {
+      const widget = this.photoUploader()
+      widget.open()
+    },
+    updatePhoto() {
+      console.log(this.photo)
+      if (this.photo.length > 0) {
+        const body = {
+          id: this.updatePregunta._id,
+          imagen_url: this.photo
+        }
+        this.$store.dispatch('updateQuestionPhoto', body)
       }
     },
     updateOpcion1() {
@@ -313,4 +366,13 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.photo-holder {
+  height: 500px;
+  width: 750px;
+  background-size: contain;
+  background-position: center;
+  margin: 0 auto;
+  background-color: red;
+}
+</style>
