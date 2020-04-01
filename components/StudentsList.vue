@@ -215,7 +215,7 @@ export default {
         this.plan[1] = false
         this.plan[2] = false
         this.filter.forEach(user => {
-          if (user.suscription_type === 'Basic') {
+          if (user.suscription_type === 'basic') {
             filter.push(user)
           }
           this.filter = filter
@@ -231,7 +231,7 @@ export default {
         this.plan[0] = false
         this.plan[2] = false
         this.filter.forEach(user => {
-          if (user.suscription_type === 'Pro') {
+          if (user.suscription_type === 'pro') {
             filter.push(user)
           }
           this.filter = filter
@@ -247,7 +247,7 @@ export default {
         this.plan[0] = false
         this.plan[1] = false
         this.filter.forEach(user => {
-          if (user.suscription_type === 'Premium') {
+          if (user.suscription_type === 'premium') {
             filter.push(user)
           }
           this.filter = filter

@@ -27,7 +27,8 @@ export const state = () => ({
   negativos: '',
   suscripciones: '',
   pregunta_id: '',
-  test_id: ''
+  test_id: '',
+  provincia: ''
 })
 
 export const getters = {
@@ -138,7 +139,8 @@ export const mutations = {
       suscription_type,
       active,
       negativos,
-      suscription_end_active
+      suscription_end_active,
+      provincia
     }
   ) {
     state.token = token
@@ -159,6 +161,7 @@ export const mutations = {
     state.active = active
     state.negativos = negativos
     state.suscription_end_active = suscription_end_active
+    state.provincia = provincia
   },
   saveTests(state, tests) {
     state.tests = tests
@@ -212,6 +215,7 @@ export const mutations = {
     state.suscription_end_active = ''
     state.pregunta_id = ''
     state.test_id = ''
+    state.provincia = ''
     localStorage.clear()
   },
   clearMessage(state) {
