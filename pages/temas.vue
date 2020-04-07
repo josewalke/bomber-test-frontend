@@ -40,7 +40,12 @@ export default {
   data() {
     return {
       newTema: '',
-      items: ['bomberil', 'legislación'],
+      items: [
+        'Específico bomberos',
+        'Materias Jurídicas comunes',
+        'Geografía específica',
+        'Planes de emergencias'
+      ],
       seleccion: ''
     }
   },

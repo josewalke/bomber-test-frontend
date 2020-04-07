@@ -90,17 +90,38 @@
           </v-col>
           <v-col cols="4">
             <v-overflow-btn
-              v-if="seleccion2 === 'bomberil'"
+              v-if="seleccion2 === 'Específico bomberos'"
               v-model="seleccion"
               class="my-2"
               :items="nombre"
               label="Tema"
             ></v-overflow-btn>
             <v-overflow-btn
-              v-if="seleccion2 === 'legislación'"
+              v-if="seleccion2 === 'Materias Jurídicas comunes'"
               v-model="seleccion4"
               class="my-2"
               :items="nombre2"
+              label="Tema"
+            ></v-overflow-btn>
+            <v-overflow-btn
+              v-if="seleccion2 === 'Estatutos de autonomía'"
+              v-model="seleccion4"
+              class="my-2"
+              :items="nombre3"
+              label="Tema"
+            ></v-overflow-btn>
+            <v-overflow-btn
+              v-if="seleccion2 === 'Geografía específica'"
+              v-model="seleccion4"
+              class="my-2"
+              :items="nombre4"
+              label="Tema"
+            ></v-overflow-btn>
+            <v-overflow-btn
+              v-if="seleccion2 === 'Planes de emergencias'"
+              v-model="seleccion4"
+              class="my-2"
+              :items="nombre5"
               label="Tema"
             ></v-overflow-btn>
           </v-col>
@@ -110,6 +131,7 @@
           </v-col>
         </v-row>
       </div>
+      <!-- /////////////////////////////////////////////////////////////////////// -->
       <v-row>
         <v-col cols="4">
           <v-select
@@ -122,11 +144,20 @@
           <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
             <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
           </span>
-          <span v-if="f_categoria === 'bomberil'">
+          <span v-if="f_categoria === 'Específico bomberos'">
             <v-select v-model="f_tema" :items="nombre" label="Tema"></v-select>
           </span>
-          <span v-if="f_categoria === 'legislación'">
+          <span v-if="f_categoria === 'Materias Jurídicas comunes'">
             <v-select v-model="f_tema" :items="nombre2" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Estatutos de autonomía'">
+            <v-select v-model="f_tema" :items="nombre3" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Geografía específica'">
+            <v-select v-model="f_tema" :items="nombre4" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Planes de emergencias'">
+            <v-select v-model="f_tema" :items="nombre5" label="Tema"></v-select>
           </span>
         </v-col>
         <v-col cols="4">
@@ -201,15 +232,34 @@ export default {
     const id = []
     const nombre2 = []
     const id2 = []
+    const nombre3 = []
+    const id3 = []
+    const nombre4 = []
+    const id4 = []
+    const nombre5 = []
+    const id5 = []
     const temario = []
     for (let i = 0; i < temas.length; i++) {
       temario.push(temas[i].name)
-      if (temas[i].category === 'bomberil') {
+      if (temas[i].category === 'Específico bomberos') {
         nombre.push(temas[i].name)
         id.push(temas[i]._id)
-      } else {
+      }
+      if (temas[i].category === 'Materias Jurídicas comunes') {
         nombre2.push(temas[i].name)
         id2.push(temas[i]._id)
+      }
+      if (temas[i].category === 'Estatutos de autonomía') {
+        nombre3.push(temas[i].name)
+        id3.push(temas[i]._id)
+      }
+      if (temas[i].category === 'Geografía específica') {
+        nombre4.push(temas[i].name)
+        id4.push(temas[i]._id)
+      }
+      if (temas[i].category === 'Planes de emergencias') {
+        nombre5.push(temas[i].name)
+        id5.push(temas[i]._id)
       }
     }
     const preguntas = await API.getAllQuestions()
@@ -221,7 +271,21 @@ export default {
       }
     }
 
-    return { nombre, id, preguntas, temas, nombre2, id2, temario }
+    return {
+      nombre,
+      id,
+      preguntas,
+      temas,
+      nombre2,
+      id2,
+      nombre3,
+      id3,
+      nombre4,
+      id4,
+      nombre5,
+      id5,
+      temario
+    }
   },
   data() {
     return {
@@ -236,7 +300,14 @@ export default {
       checkbox4: false,
       explicacion: '',
       seleccion: '',
-      categoria: ['bomberil', 'legislación', 'N/A'],
+      categoria: [
+        'Específico bomberos',
+        'Materias Jurídicas comunes',
+        'Estatutos de autonomía',
+        'Geografía específica',
+        'Planes de emergencias',
+        'N/A'
+      ],
       seleccion2: '',
       dificultad: ['Facil', 'Medio', 'Dificil'],
       seleccion3: '',

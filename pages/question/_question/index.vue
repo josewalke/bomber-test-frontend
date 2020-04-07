@@ -102,17 +102,38 @@
         <p v-if="ver">{{ temas[posicion].name }}</p>
         <p v-else>{{ seleccion3 }}</p>
         <v-overflow-btn
-          v-if="seleccion === 'bomberil'"
+          v-if="seleccion === 'Específico bomberos'"
           v-model="seleccion3"
           class="my-2"
           :items="nombre"
           label="Tema"
         ></v-overflow-btn>
         <v-overflow-btn
-          v-else-if="seleccion === 'legislación'"
+          v-else-if="seleccion === 'Materias Jurídicas comunes'"
           v-model="seleccion4"
           class="my-2"
           :items="nombre2"
+          label="Tema"
+        ></v-overflow-btn>
+        <v-overflow-btn
+          v-else-if="seleccion === 'Estatutos de autonomía'"
+          v-model="seleccion5"
+          class="my-2"
+          :items="nombre3"
+          label="Tema"
+        ></v-overflow-btn>
+        <v-overflow-btn
+          v-else-if="seleccion === 'Geografía específica'"
+          v-model="seleccion6"
+          class="my-2"
+          :items="nombre4"
+          label="Tema"
+        ></v-overflow-btn>
+        <v-overflow-btn
+          v-else-if="seleccion === 'Planes de emergencias'"
+          v-model="seleccion7"
+          class="my-2"
+          :items="nombre5"
           label="Tema"
         ></v-overflow-btn>
         <v-overflow-btn v-else class="my-2" label="Tema"></v-overflow-btn>
@@ -136,20 +157,52 @@ export default {
     const id = []
     const nombre2 = []
     const id2 = []
+    const nombre3 = []
+    const id3 = []
+    const nombre4 = []
+    const id4 = []
+    const nombre5 = []
+    const id5 = []
     for (let i = 0; i < temas.length; i++) {
       if (pregunta.tema_id === temas[i]._id) {
         posicion = i
       }
-      if (temas[i].category === 'bomberil') {
+      if (temas[i].category === 'Específico bomberos') {
         nombre.push(temas[i].name)
         id.push(temas[i]._id)
-      } else {
+      }
+      if (temas[i].category === 'Materias Jurídicas comunes') {
         nombre2.push(temas[i].name)
         id2.push(temas[i]._id)
       }
+      if (temas[i].category === 'Estatutos de autonomía') {
+        nombre3.push(temas[i].name)
+        id3.push(temas[i]._id)
+      }
+      if (temas[i].category === 'Geografía específica') {
+        nombre4.push(temas[i].name)
+        id4.push(temas[i]._id)
+      }
+      if (temas[i].category === 'Planes de emergencias') {
+        nombre5.push(temas[i].name)
+        id5.push(temas[i]._id)
+      }
     }
 
-    return { temas, posicion, nombre, id, nombre2, id2 }
+    return {
+      temas,
+      posicion,
+      nombre,
+      id,
+      nombre2,
+      id2,
+      nombre3,
+      id3,
+      nombre4,
+      id4,
+      nombre5,
+      id5
+    }
   },
   data() {
     return {
@@ -159,12 +212,21 @@ export default {
       opcion3: '',
       opcion4: '',
       explicacion: '',
-      categoria: ['bomberil', 'legislacion'],
+      categoria: [
+        'Específico bomberos',
+        'Materias Jurídicas comunes',
+        'Estatutos de autonomía',
+        'Geografía específica',
+        'Planes de emergencias'
+      ],
       seleccion: '',
       dificultad: ['Facil', 'Medio', 'Dificil'],
       seleccion2: '',
       seleccion3: '',
       seleccion4: '',
+      seleccion5: '',
+      seleccion6: '',
+      seleccion7: '',
       ver: true,
       photo: ''
     }
@@ -336,7 +398,7 @@ export default {
       this.$store.dispatch('updateDifficulty', body)
     },
     updateTema() {
-      if (this.seleccion === 'bomberil') {
+      if (this.seleccion === 'Específico bomberos') {
         const body = {
           id: this.updatePregunta._id,
           tema_id: this.id[this.nombre.indexOf(this.seleccion3)]
@@ -344,10 +406,34 @@ export default {
         this.$store.dispatch('updateTema', body)
         this.ver = false
       }
-      if (this.seleccion === 'legislacion') {
+      if (this.seleccion === 'Materias Jurídicas comunes') {
         const body = {
           id: this.updatePregunta._id,
           tema_id: this.id2[this.nombre2.indexOf(this.seleccion4)]
+        }
+        this.$store.dispatch('updateTema', body)
+        this.ver = false
+      }
+      if (this.seleccion === 'Estatutos de autonomía') {
+        const body = {
+          id: this.updatePregunta._id,
+          tema_id: this.id3[this.nombre3.indexOf(this.seleccion5)]
+        }
+        this.$store.dispatch('updateTema', body)
+        this.ver = false
+      }
+      if (this.seleccion === 'Geografía específica') {
+        const body = {
+          id: this.updatePregunta._id,
+          tema_id: this.id4[this.nombre4.indexOf(this.seleccion6)]
+        }
+        this.$store.dispatch('updateTema', body)
+        this.ver = false
+      }
+      if (this.seleccion === 'Planes de emergencias') {
+        const body = {
+          id: this.updatePregunta._id,
+          tema_id: this.id5[this.nombre5.indexOf(this.seleccion7)]
         }
         this.$store.dispatch('updateTema', body)
         this.ver = false
