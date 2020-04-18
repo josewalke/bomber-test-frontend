@@ -91,7 +91,7 @@
           <v-col md="4" xs="12">
             <ul class="price">
               <li class="header">{{ suscripcion[0].name }}</li>
-              <li class="grey">{{ suscripcion[0].precio }}</li>
+              <li class="grey">{{ suscripcion[0].precio }}€/mes</li>
               <li>{{ suscripcion[0].apartado1 }}</li>
               <li>{{ suscripcion[0].apartado2 }}</li>
               <li>{{ suscripcion[0].apartado3 }}</li>
@@ -132,7 +132,7 @@
           <v-col md="4" xs="12">
             <ul class="price">
               <li class="header">{{ suscripcion[1].name }}</li>
-              <li class="grey">{{ suscripcion[1].precio }}</li>
+              <li class="grey">{{ suscripcion[1].precio }}€/mes</li>
               <li>{{ suscripcion[1].apartado1 }}</li>
               <li>{{ suscripcion[1].apartado2 }}</li>
               <li>{{ suscripcion[1].apartado3 }}</li>
@@ -173,7 +173,7 @@
           <v-col md="4" xs="12">
             <ul class="price">
               <li class="header">{{ suscripcion[2].name }}</li>
-              <li class="grey">{{ suscripcion[2].precio }}</li>
+              <li class="grey">{{ suscripcion[2].precio }}€/mes</li>
               <li>{{ suscripcion[2].apartado1 }}</li>
               <li>{{ suscripcion[2].apartado2 }}</li>
               <li>{{ suscripcion[2].apartado3 }}</li>
@@ -232,10 +232,10 @@
         <v-col md="6" xs="12">
           <h1 class="white--text">Localizanos</h1>
           <v-col align="center" justify="center">
-            <h3 class="white--text">Telefono:{{ localizacion[0].telefono }}</h3>
+            <h3 class="white--text">Teléfono:{{ localizacion[0].telefono }}</h3>
             <h3 class="white--text">Correo:{{ localizacion[0].correo }}</h3>
             <h3 class="white--text">
-              Direccion:{{ localizacion[0].direccion }}
+              Dirección:{{ localizacion[0].direccion }}
             </h3>
           </v-col>
         </v-col>

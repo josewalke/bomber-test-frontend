@@ -351,6 +351,10 @@ export default {
           photo: this.photo
         }
         API.crearQuestion(newQuestion)
+        console.log(API)
+        console.log(newQuestion)
+        console.log('holaa')
+        console.log(this.id)
         this.enunciado = ''
         this.opcion1 = ''
         this.opcion2 = ''
@@ -393,6 +397,9 @@ export default {
           explicacion: this.explicacion
         }
         API.crearQuestion(newQuestion)
+        console.log(API)
+        console.log(newQuestion)
+        console.log(this.id)
         this.enunciado = ''
         this.opcion1 = ''
         this.opcion2 = ''

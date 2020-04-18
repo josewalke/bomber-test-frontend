@@ -590,6 +590,7 @@ export const actions = {
     }
   },
   async suscription_end_active({ commit }, body) {
+    console.log('hola')
     commit('suscription_end_active')
     API.suscription_end_active(body)
   },
