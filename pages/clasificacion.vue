@@ -23,6 +23,7 @@
         </tbody>
       </template>
     </v-simple-table>
+    {{ clasificacion }}
   </div>
 </template>
 

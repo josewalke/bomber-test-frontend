@@ -81,12 +81,12 @@
           <!-- <v-row @click="goToQuestion(item._id, idx)"> -->
           <v-row @click="prueba(item._id, idx)">
             <v-col cols="8">
-              <div class="overline text-uppercase red--text pl-4">
+              <!-- <div class="overline text-uppercase red--text pl-4">
                 {{ getQuestionSubject[idx] }}
-              </div>
-              <div class="overline text-uppercase red--text pl-4">
+              </div> -->
+              <!-- <div class="overline text-uppercase red--text pl-4">
                 {{ item._id }}
-              </div>
+              </div> -->
               <div class="body-2 pl-4">{{ item.enunciado }}</div>
             </v-col>
             <v-col cols="4">
@@ -113,9 +113,9 @@
           <!-- <v-row @click="goToQuestion(item._id, idx)"> -->
           <v-row @click="prueba(item._id, idx)">
             <v-col cols="8">
-              <div class="overline text-uppercase red--text pl-4">
+              <!-- <div class="overline text-uppercase red--text pl-4">
                 {{ getQuestionSubject[idx] }}
-              </div>
+              </div> -->
               <div class="body-2 pl-4">
                 {{ item.enunciado }}
               </div>
