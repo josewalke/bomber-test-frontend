@@ -311,7 +311,8 @@ export default {
             fallos_num: 0,
             nota: 0,
             mostrar_solucion: this.correctorSwitch,
-            desafio: this.desafio
+            desafio: this.desafio,
+            deberes: false
           }
           console.log(test)
           API.crearExamen(test)
@@ -333,7 +334,8 @@ export default {
               fallos_num: 0,
               nota: 0,
               mostrar_solucion: this.correctorSwitch,
-              desafio: this.desafio
+              desafio: this.desafio,
+              deberes: false
             }
             console.log(test)
             API.crearExamen(test)
