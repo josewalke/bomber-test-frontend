@@ -16,7 +16,6 @@
 <script>
 import API from '~/services/api'
 import { mapGetters } from 'vuex'
-import stripe from '@stripe/stripe-js'
 
 export default {
   data() {
@@ -47,7 +46,6 @@ export default {
   },
   mounted: function() {
     this.setUpStripe()
-    console.log(stripe)
   },
   methods: {
     async setUpStripe() {

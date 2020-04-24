@@ -59,11 +59,15 @@ export default {
       if (!response.error) {
         if (this.role === 'cliente') {
           this.$router.push('/user')
-        } else {
+        }
+        if (this.role === 'admin') {
           const res_admin = await this.$store.dispatch('saveMessageAdmin')
           if (!res_admin) {
             this.$router.push('/dashboard')
           }
+        }
+        if (this.role === 'prueba') {
+          this.$router.push('/user')
         }
       } else {
         alert(response.error)

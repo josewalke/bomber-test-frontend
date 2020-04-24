@@ -90,12 +90,14 @@
           </v-col>
           <v-col cols="4">
             <v-overflow-btn
-              v-if="seleccion2 === 'Específico bomberos'"
+              v-if="seleccion2 === 'Especifico de bombero'"
               v-model="seleccion"
               class="my-2"
               :items="nombre"
               label="Tema"
-            ></v-overflow-btn>
+            >
+            </v-overflow-btn>
+
             <v-overflow-btn
               v-if="seleccion2 === 'Materias Jurídicas comunes'"
               v-model="seleccion4"
@@ -103,6 +105,7 @@
               :items="nombre2"
               label="Tema"
             ></v-overflow-btn>
+
             <v-overflow-btn
               v-if="seleccion2 === 'Estatutos de autonomía'"
               v-model="seleccion4"
@@ -117,6 +120,7 @@
               :items="nombre4"
               label="Tema"
             ></v-overflow-btn>
+
             <v-overflow-btn
               v-if="seleccion2 === 'Planes de emergencias'"
               v-model="seleccion4"
@@ -144,7 +148,7 @@
           <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
             <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
           </span>
-          <span v-if="f_categoria === 'Específico bomberos'">
+          <span v-if="f_categoria === 'Especifico de bombero'">
             <v-select v-model="f_tema" :items="nombre" label="Tema"></v-select>
           </span>
           <span v-if="f_categoria === 'Materias Jurídicas comunes'">
@@ -228,20 +232,21 @@ import API from '~/services/api'
 export default {
   async asyncData() {
     const temas = await API.getAllTemas()
-    const nombre = []
-    const id = []
-    const nombre2 = []
-    const id2 = []
-    const nombre3 = []
-    const id3 = []
-    const nombre4 = []
-    const id4 = []
-    const nombre5 = []
-    const id5 = []
-    const temario = []
+    let nombre = []
+    let id = []
+    let nombre2 = []
+    let id2 = []
+    let nombre3 = []
+    let id3 = []
+    let nombre4 = []
+    let id4 = []
+    let nombre5 = []
+    let id5 = []
+    let temario = []
+
     for (let i = 0; i < temas.length; i++) {
       temario.push(temas[i].name)
-      if (temas[i].category === 'Específico bomberos') {
+      if (temas[i].category === 'Especifico de bombero') {
         nombre.push(temas[i].name)
         id.push(temas[i]._id)
       }
@@ -262,6 +267,7 @@ export default {
         id5.push(temas[i]._id)
       }
     }
+
     const preguntas = await API.getAllQuestions()
     for (let i = 0; i < preguntas.length; i++) {
       for (let x = 0; x < temas.length; x++) {
@@ -301,7 +307,7 @@ export default {
       explicacion: '',
       seleccion: '',
       categoria: [
-        'Específico bomberos',
+        'Especifico de bombero',
         'Materias Jurídicas comunes',
         'Estatutos de autonomía',
         'Geografía específica',
@@ -323,7 +329,7 @@ export default {
   },
   methods: {
     crearQuestion() {
-      if (this.seleccion.length > 0) {
+      if (this.seleccion2 === 'Especifico de bombero') {
         const newQuestion = {
           enunciado: this.enunciado,
           answers: [
@@ -351,10 +357,6 @@ export default {
           photo: this.photo
         }
         API.crearQuestion(newQuestion)
-        console.log(API)
-        console.log(newQuestion)
-        console.log('holaa')
-        console.log(this.id)
         this.enunciado = ''
         this.opcion1 = ''
         this.opcion2 = ''
@@ -369,7 +371,8 @@ export default {
         this.seleccion = ''
         this.explicacion = ''
         this.photo = ''
-      } else {
+      }
+      if (this.seleccion2 === 'Materias Jurídicas comunes') {
         const newQuestion = {
           enunciado: this.enunciado,
           photo: this.photo,
@@ -391,15 +394,141 @@ export default {
               correcta: this.checkbox4
             }
           ],
-          tema_id: this.id[this.nombre.indexOf(this.seleccion4)],
+          tema_id: this.id2[this.nombre2.indexOf(this.seleccion4)],
           category: this.seleccion2,
           difficulty: this.seleccion3,
           explicacion: this.explicacion
         }
         API.crearQuestion(newQuestion)
-        console.log(API)
-        console.log(newQuestion)
-        console.log(this.id)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion4 = ''
+        this.explicacion = ''
+        this.photo = ''
+      }
+      if (this.seleccion2 === 'Estatutos de autonomía') {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          photo: this.photo,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.id3[this.nombre3.indexOf(this.seleccion4)],
+          category: this.seleccion2,
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion
+        }
+        API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion4 = ''
+        this.explicacion = ''
+        this.photo = ''
+      }
+      if (this.seleccion2 === 'Geografía específica') {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          photo: this.photo,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.id4[this.nombre4.indexOf(this.seleccion4)],
+          category: this.seleccion2,
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion
+        }
+        API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion4 = ''
+        this.explicacion = ''
+        this.photo = ''
+      }
+      if (this.seleccion2 === 'Planes de emergencias') {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          photo: this.photo,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.id5[this.nombre5.indexOf(this.seleccion4)],
+          category: this.seleccion2,
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion
+        }
+        API.crearQuestion(newQuestion)
         this.enunciado = ''
         this.opcion1 = ''
         this.opcion2 = ''

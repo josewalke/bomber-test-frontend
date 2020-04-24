@@ -26,7 +26,23 @@
             Nota
           </div>
           <div>
-            8
+            <span
+              v-if="
+                (currentTest.testCheck.right -
+                  Math.floor(currentTest.testCheck.wrong / 3) -
+                  Math.floor(currentTest.testCheck.blank / 5)) /
+                  Math.floor(currentTest.no_contestadas.length / 10) >
+                  0
+              "
+            >
+              {{
+                (currentTest.testCheck.right -
+                  Math.floor(currentTest.testCheck.wrong / 3) -
+                  Math.floor(currentTest.testCheck.blank / 5)) /
+                  Math.floor(currentTest.no_contestadas.length / 10)
+              }}
+            </span>
+            <span v-else>0</span>
           </div>
         </div>
       </div>
@@ -52,9 +68,9 @@
           <!-- <v-row @click="goToQuestion(item._id, idx)"> -->
           <v-row @click="prueba(item._id, idx)">
             <v-col cols="8">
-              <div class="overline text-uppercase red--text pl-4">
+              <!-- <div class="overline text-uppercase red--text pl-4">
                 {{ getQuestionSubject[idx] }}
-              </div>
+              </div> -->
               <div class="body-2 pl-4">{{ item.enunciado }}</div>
             </v-col>
             <v-col cols="4">
@@ -159,7 +175,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentTest', 'question', 'tests']),
+    ...mapGetters(['userId', 'currentTest', 'question', 'tests']),
     getQuestionSubject() {
       let questionSubject = []
       this.questions.forEach(q => {
@@ -175,7 +191,9 @@ export default {
     this.title = this.currentTest.title
     this.findIfAnswered()
   },
-  mounted() {},
+  mounted() {
+    this.evaluarNota()
+  },
   methods: {
     goToQuestion(item_id) {
       this.$router.push(`/tests/${this.currentTest._id}/${item_id}`)
@@ -232,6 +250,21 @@ export default {
       this.$store.dispatch('explicacion', body)
 
       this.$router.push(`/tests/${sPaginaURL[4]}/verificar/${id}`)
+    },
+    async evaluarNota() {
+      if (!this.currentTest.nota === false) {
+        console.log(this.userId)
+        let body = {
+          id: this.currentTest._id,
+          user_id: this.userId,
+          nota:
+            (this.currentTest.testCheck.right -
+              Math.floor(this.currentTest.testCheck.wrong / 3) -
+              Math.floor(this.currentTest.testCheck.blank / 5)) /
+            Math.floor(this.currentTest.no_contestadas.length / 10)
+        }
+        await this.$store.dispatch('evaluarNota', body)
+      }
     }
   }
 }

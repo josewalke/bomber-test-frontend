@@ -74,7 +74,7 @@
       <h1>Preguntas</h1>
       <v-card fixd flat>
         <v-card-title>
-          Específico bomberos
+          Específico de bombero
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search_question"
@@ -185,7 +185,7 @@ export default {
       for (let x = 0; x < temas.length; x++) {
         if (preguntas[i].tema_id === temas[x]._id) {
           preguntas[i].tema_id = temas[x].name
-          if (preguntas[i].category === 'Específico bomberos') {
+          if (preguntas[i].category === 'Especifico de bombero') {
             bomberil.push(preguntas[i])
           }
           if (preguntas[i].category === 'Materias Jurídicas comunes') {
@@ -270,6 +270,7 @@ export default {
       }
     },
     async crearExamen() {
+      console.log('hola')
       const id_questions = []
       const now = new Date()
       let date =
@@ -287,11 +288,13 @@ export default {
       for (let i = 0; i < this.select_question.length; i++) {
         id_questions.push(this.select_question[i]._id)
       }
+      // console.log(id_questions)
 
       let respuestas = []
       id_questions.forEach(q => {
         respuestas.push({ id: q, answered: false })
       })
+      console.log(respuestas)
 
       let testCheck = { right: 0, wrong: 0, blank: id_questions.length }
       if (this.allStudent === false) {
@@ -310,8 +313,9 @@ export default {
             mostrar_solucion: this.correctorSwitch,
             desafio: this.desafio
           }
+          console.log(test)
           API.crearExamen(test)
-          location.reload()
+          // location.reload()
         }
       } else {
         const students = await API.getAllUsers()
@@ -331,8 +335,9 @@ export default {
               mostrar_solucion: this.correctorSwitch,
               desafio: this.desafio
             }
+            console.log(test)
             API.crearExamen(test)
-            location.reload()
+            // location.reload()
           }
         }
       }
@@ -343,11 +348,12 @@ export default {
       for (let i = 0; i < student.length; i++) {
         if (
           student[i].role === 'cliente' &&
-          student[i].suscription_type === 'Premium'
+          student[i].suscription_type === 'premium'
         ) {
           testPremium.user_id = student[i]._id
+          // console.log(testPremium)
           API.crearExamen(testPremium)
-          location.reload()
+          // location.reload()
         }
       }
     },
@@ -368,7 +374,8 @@ export default {
             nota: testPremium.nota,
             no_contestadas: testPremium.no_contestadas,
             mostrar_solucion: testPremium.mostrar_solucion,
-            desafio: true
+            desafio: true,
+            deberes: true
           }
           testPremium.user_id = student[i]._id
           testPremium.desafio = true
@@ -376,7 +383,7 @@ export default {
           API.crearExamen(testDesafio)
         }
       }
-      location.reload()
+      // location.reload()
     }
   }
 }

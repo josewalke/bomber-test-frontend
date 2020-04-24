@@ -600,5 +600,31 @@ export const actions = {
       body.pregunta = pregunta
       commit('explicacion', body)
     }
+  },
+  async getByTestId({ commit }, id) {
+    let test = await API.getByTestId(id)
+    if (!test.error) {
+      commit('saveCurrentTest', test)
+      return true
+    }
+  },
+  async updateDeberes({ commit, state }, id) {
+    await API.updateDeberes(id)
+    let test = await API.getByTestId(id)
+    commit('saveCurrentTest', test)
+    let tests = await API.getAllTestById(state.userId)
+    commit('saveTests', tests)
+  },
+  async evaluarNota({ commit }, datos) {
+    commit('prueba')
+    console.log(datos)
+    let response = await API.updateNota(datos)
+
+    if (response) {
+      // console.log(datos.user_id)
+      const tests = await API.getAllTestById(datos.user_id)
+      console.log(tests)
+      commit('saveTests', tests)
+    }
   }
 }

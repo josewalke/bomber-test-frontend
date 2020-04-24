@@ -46,7 +46,6 @@ export default {
   },
   mounted: function() {
     this.setUpStripe()
-    console.log()
   },
   methods: {
     async setUpStripe() {

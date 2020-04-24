@@ -41,7 +41,7 @@ export default {
     return {
       newTema: '',
       items: [
-        'Específico bomberos',
+        'Especifico de bombero',
         'Materias Jurídicas comunes',
         'Geografía específica',
         'Planes de emergencias'
