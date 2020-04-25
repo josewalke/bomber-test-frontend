@@ -1,5 +1,6 @@
 <template>
   <div class="main-div">
+    <!-- {{ cronometro() }} -->
     <!-- <div class="buttons-box-left">
       <div>
         <v-btn class="text--white" color="#DA3E3E" @click="previousQuestion">
@@ -44,6 +45,7 @@
         >
           Finalizar
         </v-btn>
+        <h1>{{ minutos }}:{{ segundos }}</h1>
       </div>
     </div>
     <v-divider class="mt-4"></v-divider>
@@ -91,6 +93,8 @@ export default {
   },
   data() {
     return {
+      segundos: 59,
+      minutos: 0,
       notAnswered: [],
       showQuestion: [],
       paint: false,
@@ -104,7 +108,8 @@ export default {
       title: '',
       blankAlert: false,
       notAgainAlert: false,
-      response: false
+      response: false,
+      cronos: ''
     }
   },
 
@@ -126,7 +131,9 @@ export default {
       this.showThisQuestion()
     }
   },
-
+  mounted() {
+    this.cronometro()
+  },
   methods: {
     findNotAnswered() {
       let notAnswered = []
@@ -188,7 +195,7 @@ export default {
 
       this.$store.dispatch('updateTest', data)
       this.$store.commit('saveCurrentTest', this.currentTest)
-      this.$router.push(`/tests/${this.currentTest._id}`)
+      this.$router.push(`/tests/${this.currentTest._id}/resumen`)
     },
     answering() {
       if (this.currentTest.time_end2 === null) {
@@ -216,6 +223,27 @@ export default {
       } else {
         this.blankAlert = false
       }
+    },
+    cronometro() {
+      this.minutos = this.currentTest.no_contestadas.length - 1
+      var cronos = setInterval(() => {
+        if (this.minutos > 0) {
+          this.segundos--
+          // console.log('restando')
+          if (this.segundos === 0 && this.minutos > 0) {
+            this.segundos = 59
+            this.minutos--
+          }
+        }
+        if (this.minutos === 0 && this.segundos > 0) {
+          this.segundos--
+          if (this.minutos === 0 && this.segundos === 0) {
+            // console.log('funcionoo ')
+            this.endTest()
+            clearInterval(cronos)
+          }
+        }
+      }, 1000)
     }
   }
 }

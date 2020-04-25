@@ -8,6 +8,7 @@
         <thead>
           <tr>
             <th class="text-left">Pregunta</th>
+            <th class="text-left">tipo</th>
             <th class="text-left">Estado</th>
             <th class="text-left">Mensaje Nuevo</th>
           </tr>
@@ -21,6 +22,7 @@
             <td class="text-truncate" style="max-width: 150px;">
               {{ item.pregunta }}
             </td>
+            <td class="text-truncate">{{ item.type }}</td>
             <td>
               <v-icon v-if="!item.respuesta_leida">mdi-check</v-icon>
               <v-icon v-else color="green">mdi-check-all</v-icon>

@@ -60,12 +60,12 @@
 export default {
   data() {
     return {
-      email: '',
-      password: '',
-      name: '',
-      nickName: '',
-      lastName: '',
-      phone: '',
+      email: 'Leo@gmail.com',
+      password: '123456',
+      name: 'leo',
+      nickName: 'hotLeo',
+      lastName: 'valdez',
+      phone: '123456789',
       showPassword: false,
       rules: {
         required: v => !!v || 'Campo Obligatorio',

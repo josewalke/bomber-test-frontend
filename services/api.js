@@ -246,6 +246,7 @@ export default {
     })
   },
   prueba() {},
+
   updateQuestionById(newQuestion) {
     return axios
       .put('questions/' + newQuestion._id, newQuestion)
@@ -300,5 +301,24 @@ export default {
     }
 
     return axios.put('users/' + change.id, body).then(response => response.data)
+  },
+  getByTestId(id) {
+    return axios.get('/tests/' + id).then(response => response.data)
+  },
+  updateDeberes(id) {
+    let body = {
+      deberes: false
+    }
+    return axios
+      .put(`tests/deberes/${id}`, body)
+      .then(response => response.data)
+  },
+  updateNota(datos) {
+    let body = {
+      nota: datos.nota
+    }
+    return axios
+      .put(`tests/nota/${datos.id}`, body)
+      .then(response => response.data)
   }
 }

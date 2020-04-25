@@ -220,7 +220,7 @@ export default {
             .classList.remove('selected-answer')
           document
             .getElementById(`${this.id}-` + i)
-            .classList.add('selected-circle')
+            .classList.add('selected-green')
         }
       }
     },

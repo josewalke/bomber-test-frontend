@@ -52,7 +52,6 @@ export default {
       this.stripe = this.$stripe.import()
 
       this.clientSecret = (await API.paymentPremium()).client_secret
-
       const elements = this.stripe.elements()
       const card = elements.create('card')
       // Add an instance of the card Element into the `card-element` <div>
@@ -72,6 +71,7 @@ export default {
               }
             }
           )
+          console.log(result)
           if (result.error) {
             return console.error(result.error)
           }

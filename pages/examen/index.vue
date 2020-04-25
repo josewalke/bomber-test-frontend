@@ -74,7 +74,7 @@
       <h1>Preguntas</h1>
       <v-card fixd flat>
         <v-card-title>
-          Bomberil
+          Específico de bombero
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search_question"
@@ -94,8 +94,9 @@
           class="elevation-1"
         >
         </v-data-table>
+
         <v-card-title>
-          Legislacion
+          Materias Jurídicas comunes
           <v-spacer></v-spacer>
         </v-card-title>
         <v-data-table
@@ -103,6 +104,55 @@
           :search="search_question"
           :headers="headers_question"
           :items="legislacion"
+          :single-select="singleSelect"
+          item-key="enunciado"
+          show-select
+          class="elevation-1"
+        >
+        </v-data-table>
+
+        <v-card-title>
+          Estatutos de autonomía
+
+          <v-spacer></v-spacer>
+        </v-card-title>
+        <v-data-table
+          v-model="select_question"
+          :search="search_question"
+          :headers="headers_question"
+          :items="estatutos"
+          :single-select="singleSelect"
+          item-key="enunciado"
+          show-select
+          class="elevation-1"
+        >
+        </v-data-table>
+
+        <v-card-title>
+          Geografía específica
+          <v-spacer></v-spacer>
+        </v-card-title>
+        <v-data-table
+          v-model="select_question"
+          :search="search_question"
+          :headers="headers_question"
+          :items="geografia"
+          :single-select="singleSelect"
+          item-key="enunciado"
+          show-select
+          class="elevation-1"
+        >
+        </v-data-table>
+
+        <v-card-title>
+          Planes de emergencias
+          <v-spacer></v-spacer>
+        </v-card-title>
+        <v-data-table
+          v-model="select_question"
+          :search="search_question"
+          :headers="headers_question"
+          :items="emergencias"
           :single-select="singleSelect"
           item-key="enunciado"
           show-select
@@ -127,15 +177,28 @@ export default {
     const preguntas = await API.getAllQuestions()
     const bomberil = []
     const legislacion = []
+    const estatutos = []
+    const geografia = []
+    const emergencias = []
     const student_active = []
     for (let i = 0; i < preguntas.length; i++) {
       for (let x = 0; x < temas.length; x++) {
         if (preguntas[i].tema_id === temas[x]._id) {
           preguntas[i].tema_id = temas[x].name
-          if (preguntas[i].category === 'bomberil') {
+          if (preguntas[i].category === 'Especifico de bombero') {
             bomberil.push(preguntas[i])
-          } else {
+          }
+          if (preguntas[i].category === 'Materias Jurídicas comunes') {
             legislacion.push(preguntas[i])
+          }
+          if (preguntas[i].category === 'Estatutos de autonomía') {
+            estatutos.push(preguntas[i])
+          }
+          if (preguntas[i].category === 'Geografía específica') {
+            geografia.push(preguntas[i])
+          }
+          if (preguntas[i].category === 'Planes de emergencias') {
+            emergencias.push(preguntas[i])
           }
         }
       }
@@ -145,7 +208,15 @@ export default {
         student_active.push(student[i])
       }
     }
-    return { student_active, temas, bomberil, legislacion }
+    return {
+      student_active,
+      temas,
+      bomberil,
+      legislacion,
+      estatutos,
+      geografia,
+      emergencias
+    }
   },
   data() {
     return {
@@ -199,6 +270,7 @@ export default {
       }
     },
     async crearExamen() {
+      console.log('hola')
       const id_questions = []
       const now = new Date()
       let date =
@@ -216,11 +288,13 @@ export default {
       for (let i = 0; i < this.select_question.length; i++) {
         id_questions.push(this.select_question[i]._id)
       }
+      // console.log(id_questions)
 
       let respuestas = []
       id_questions.forEach(q => {
         respuestas.push({ id: q, answered: false })
       })
+      console.log(respuestas)
 
       let testCheck = { right: 0, wrong: 0, blank: id_questions.length }
       if (this.allStudent === false) {
@@ -237,10 +311,12 @@ export default {
             fallos_num: 0,
             nota: 0,
             mostrar_solucion: this.correctorSwitch,
-            desafio: this.desafio
+            desafio: this.desafio,
+            deberes: false
           }
+          console.log(test)
           API.crearExamen(test)
-          location.reload()
+          // location.reload()
         }
       } else {
         const students = await API.getAllUsers()
@@ -258,10 +334,12 @@ export default {
               fallos_num: 0,
               nota: 0,
               mostrar_solucion: this.correctorSwitch,
-              desafio: this.desafio
+              desafio: this.desafio,
+              deberes: false
             }
+            console.log(test)
             API.crearExamen(test)
-            location.reload()
+            // location.reload()
           }
         }
       }
@@ -272,11 +350,12 @@ export default {
       for (let i = 0; i < student.length; i++) {
         if (
           student[i].role === 'cliente' &&
-          student[i].suscription_type === 'Premium'
+          student[i].suscription_type === 'premium'
         ) {
           testPremium.user_id = student[i]._id
+          // console.log(testPremium)
           API.crearExamen(testPremium)
-          location.reload()
+          // location.reload()
         }
       }
     },
@@ -297,7 +376,8 @@ export default {
             nota: testPremium.nota,
             no_contestadas: testPremium.no_contestadas,
             mostrar_solucion: testPremium.mostrar_solucion,
-            desafio: true
+            desafio: true,
+            deberes: true
           }
           testPremium.user_id = student[i]._id
           testPremium.desafio = true
@@ -305,7 +385,7 @@ export default {
           API.crearExamen(testDesafio)
         }
       }
-      location.reload()
+      // location.reload()
     }
   }
 }

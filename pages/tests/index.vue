@@ -37,7 +37,7 @@
               <th class="text-left">Fallos</th>
               <th class="text-left">En Blanco</th>
               <th class="text-left">% Aciertos</th>
-              <th class="text-left">Estado</th>
+              <th class="text-left">Nota</th>
             </tr>
           </thead>
           <tbody>
@@ -58,10 +58,8 @@
                 {{ (item.testCheck.right / item.no_contestadas.length) * 100 }}
               </td>
               <td v-if="!item.desafio">
-                <div v-if="item.time_end === null">
-                  <v-icon>mdi-checkbox-blank-outline</v-icon>
-                </div>
-                <div v-else><v-icon>mdi-check-box-outline</v-icon></div>
+                <span v-if="item.nota > 0">{{ item.nota }}</span>
+                <span v-else>0</span>
               </td>
             </tr>
           </tbody>
@@ -80,28 +78,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="item in tests"
-              :key="item._id"
-              @click="goToTest(item._id)"
-            >
+            <tr v-for="item in tests" :key="item._id" @click="goToTest(item)">
               <td v-if="item.desafio">{{ item.title }}</td>
               <td v-if="item.desafio">
-                {{
-                  item.no_contestadas.length -
-                    item.aciertos_num -
-                    item.fallos_num
-                }}
+                {{ item.no_contestadas.length }}
               </td>
-              <td v-if="item.desafio">{{ item.aciertos_num }}</td>
-              <td v-if="item.desafio">{{ item.fallos_num }}</td>
+              <td v-if="item.desafio">{{ item.testCheck.right }}</td>
+              <td v-if="item.desafio">{{ item.testCheck.wrong }}</td>
               <td v-if="item.desafio">
-                <span v-if="item.nota === 'suspendido'" class="red--text">{{
-                  item.nota
-                }}</span>
-                <span v-if="item.nota === 'aprobado'" class="green--text">{{
-                  item.nota
-                }}</span>
+                <span v-if="item.nota > 0">{{ item.nota }}</span>
+                <span v-if="item.nota < 0">0</span>
               </td>
             </tr>
           </tbody>
@@ -136,11 +122,19 @@ export default {
       this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
     },
     async goToTest(item) {
-      console.log(item.time_end)
       if (item.time_end === null) {
-        this.$router.push(`/tests/${item._id}`)
+        // this.$router.push(`/tests/${item._id}`)
       } else {
-        this.$router.push(`/tests/${item._id}/resumen`)
+        console.log(item.deberes)
+        if (item.deberes === true) {
+          let test = await this.$store.dispatch('getByTestId', item._id)
+          if (test === true) {
+            this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
+            await this.$store.dispatch('updateDeberes', item._id)
+          }
+        } else {
+          this.$router.push(`/tests/${item._id}/resumen`)
+        }
       }
     },
 
