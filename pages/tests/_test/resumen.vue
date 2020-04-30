@@ -29,16 +29,16 @@
             <span
               v-if="
                 (currentTest.testCheck.right -
-                  Math.floor(currentTest.testCheck.wrong / 3) -
-                  Math.floor(currentTest.testCheck.blank / 5)) /
+                  currentTest.testCheck.wrong / 3 -
+                  currentTest.testCheck.blank / 5) /
                   Math.floor(currentTest.no_contestadas.length / 10) >
                   0
               "
             >
               {{
                 (currentTest.testCheck.right -
-                  Math.floor(currentTest.testCheck.wrong / 3) -
-                  Math.floor(currentTest.testCheck.blank / 5)) /
+                  currentTest.testCheck.wrong / 3 -
+                  currentTest.testCheck.blank / 5) /
                   Math.floor(currentTest.no_contestadas.length / 10)
               }}
             </span>
@@ -241,8 +241,6 @@ export default {
     },
     prueba(id) {
       var sPaginaURL = window.location.href.split('/')
-      console.log(id)
-      console.log(sPaginaURL[4])
       let body = {
         test: sPaginaURL[4],
         pregunta: id
@@ -253,7 +251,6 @@ export default {
     },
     async evaluarNota() {
       if (!this.currentTest.nota === false) {
-        console.log(this.userId)
         let body = {
           id: this.currentTest._id,
           user_id: this.userId,
@@ -261,8 +258,11 @@ export default {
             (this.currentTest.testCheck.right -
               Math.floor(this.currentTest.testCheck.wrong / 3) -
               Math.floor(this.currentTest.testCheck.blank / 5)) /
-            Math.floor(this.currentTest.no_contestadas.length / 10)
+            Math.floor(this.currentTest.no_contestadas.length / 10),
+          aprobado: 0,
+          suspendido: 0
         }
+
         await this.$store.dispatch('evaluarNota', body)
       }
     }

@@ -27,31 +27,13 @@
       Instrucciones
     </div>
     <ul class="body-1 ml-4 mt-1 grey--text text--darken-1">
-      <li>Lorem ipsm dolor sit amet consectetur, adipiscing elit netus.</li>
       <li>
-        Inceptos vehicula dictum massa sociis auctor, nostra pretium magna
-        lacinia.
+        Hola {{ userName }} vas a realizar un examen de
+        {{ currentTest.no_contestadas.length }} preguntas. Para lo cual
+        dispondrás de {{ currentTest.no_contestadas.length }} minutos.
       </li>
       <li>
-        Pulvinar magna nec est vehicula ultricies, quis tristique congue.
-      </li>
-      <li>Nostra id justo metus posuere inceptos, etiam enim feugiat.</li>
-      <li>Class mus dictum habitant habitasse, egestas lectus.</li>
-      <li>
-        Justo phasellus netus nascetur imperdiet nisi, facilisi elementum
-        blandit.
-      </li>
-      <li>Enim augue erat odio pretium placerat, suscipit vel et aenean.</li>
-      <li>
-        Mi accumsan non lobortis rutrum aliquam, eros interdum tincidunt.
-      </li>
-      <li>
-        Ullamcorper pharetra suscipit inceptos ligula posuere, consequat litora
-        primis potenti.
-      </li>
-      <li>
-        Nisi dapibus habitasse sociosqu vestibulum parturient donec, ultricies
-        laoreet duis viverra.
+        Cuando estés preparado pulsa el botón "Comenzar Test"
       </li>
     </ul>
     <div class="d-flex justify-start ml-4 mt-4">
@@ -106,7 +88,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentTest', 'currentNotAnswered']),
+    ...mapGetters(['currentTest', 'currentNotAnswered', 'userName']),
     getQuestionSubject() {
       let questions = this.currentTest.no_contestadas
       let questionsSubject = []

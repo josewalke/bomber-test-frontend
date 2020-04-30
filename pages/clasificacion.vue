@@ -2,39 +2,42 @@
   <div>
     <v-container>
       <h1>
-        Clasificacion del bombero mas preparado
+        Clasificación del bombero mas preparado
       </h1>
     </v-container>
     <v-simple-table>
       <template v-slot:default>
         <thead>
           <tr>
-            <th>Clasificacion</th>
+            <th>Clasificación</th>
             <th>Usuario</th>
-            <th>Puntuacion</th>
+            <th>Puntuación</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, idx) in clasificacion" :key="idx">
             <td>{{ idx + 1 }}</td>
             <td>{{ item.usuario }}</td>
-            <td>{{ item.puntuacion + negativos }}</td>
+            <td v-if="item.usuario === nickName">
+              {{ item.puntuacion + negativos }}
+            </td>
+            <td v-else>{{ item.puntuacion }}</td>
           </tr>
         </tbody>
       </template>
     </v-simple-table>
     <v-container>
       <h1>
-        Clasificacion de la semana
+        Clasificación de la semana
       </h1>
     </v-container>
     <v-simple-table>
       <template v-slot:default>
         <thead>
           <tr>
-            <th>Clasificacion</th>
+            <th>Clasificación</th>
             <th>Usuario</th>
-            <th>Puntuacion</th>
+            <th>Puntuación</th>
           </tr>
         </thead>
         <tbody>
@@ -42,10 +45,7 @@
             <td>{{ idx + 1 }}</td>
             <td>{{ item.usuario }}</td>
             <td>
-              <span v-if="idx + 1 === 1"> {{ item.desafio + 50 }}</span>
-              <span v-else>
-                {{ item.desafio }}
-              </span>
+              {{ item.desafio }}
             </td>
           </tr>
         </tbody>
@@ -68,7 +68,8 @@ export default {
     let contador1 = 0
     let contador2 = 0
     let desafio = 0
-    let organizacion = []
+    let organizacion1 = []
+    let organizacion2 = []
     for (let i = 0; i < student.length; i++) {
       for (let x = 0; x < tests.length; x++) {
         if (student[i]._id === tests[x].user_id) {
@@ -77,8 +78,8 @@ export default {
               tests[x].testCheck.right -
               Math.floor(tests[x].testCheck.wrong / 3)
           }
+
           if (tests[x].desafio === true && tests[x].deberes === false) {
-            console.log('es true')
             desafio += 100
             contador2 +=
               tests[x].testCheck.right * 2 -
@@ -87,23 +88,33 @@ export default {
         }
         plantilla = {
           usuario: student[i].nickName,
-          puntuacion: contador1,
+          puntuacion: contador1 + student[i].negativos,
           desafio: desafio + contador2
         }
       }
-      organizacion.push(plantilla)
+      organizacion1.push(plantilla)
+      organizacion2.push(plantilla)
+
       contador1 = 0
       contador2 = 0
       desafio = 0
     }
 
-    let clasificacion = organizacion
+    let clasificacion = organizacion1.sort(function(a, b) {
+      return a.puntuacion - b.puntuacion
+    })
 
-    console.log(clasificacion)
-    return { clasificacion }
+    let clasificacion2 = organizacion2.sort(function(a, b) {
+      return a.desafio - b.desafio
+    })
+
+    // let clasificacion = []
+
+    clasificacion.reverse()
+    return { clasificacion, clasificacion2 }
   },
   computed: {
-    ...mapGetters(['negativos'])
+    ...mapGetters(['negativos', 'nickName'])
   }
 }
 </script>

@@ -44,6 +44,7 @@
           <tr>
             <th class="text-left">Pregunta</th>
             <th class="text-left">Respondido</th>
+            <th class="text-left">Tipo</th>
           </tr>
         </thead>
         <tbody>
@@ -62,6 +63,7 @@
             <td v-if="item.respuesta_leida === false">
               <v-icon>mdi-check</v-icon>
             </td>
+            <td v-if="item.respuesta_leida === false">{{ item.type }}</td>
           </tr>
         </tbody>
       </template>

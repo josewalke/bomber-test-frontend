@@ -263,7 +263,7 @@ export default {
   },
   data() {
     return {
-      title: 'Oposicion de Bombero',
+      title: 'Oposiciones de Bomberos',
       items: [{ title: 'Login', to: '/auth' }],
       tab: null
     }
