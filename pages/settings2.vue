@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Localizacion</h1>
+    <h1>Localizacion de prueba</h1>
     <v-card class="mx-auto">
       <v-list-item three-line>
         <v-list-item-content>
