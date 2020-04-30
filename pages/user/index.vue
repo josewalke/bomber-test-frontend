@@ -28,6 +28,24 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col md="6" offset="3">
+        <v-card>
+          <v-card-title>
+            <h4>Para activar su cuenta</h4>
+          </v-card-title>
+
+          <v-card-actions>
+            <p>
+              Deberá comunicarse con el profesor a travez del:<br />
+              correo {{ localizacion[0].correo }} <br />
+              movil {{ localizacion[0].telefono }}
+            </p>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <v-row v-if="!active">
       <v-col v-if="formato != 'movil'" md="6" offset="3">
         <v-card v-if="suscription_type === 'basic'">
@@ -76,7 +94,8 @@
         <v-card>
           <h1>Clases por Streaming</h1>
           <v-card-subtitle>
-            <a href="https://opocan.milaulas.com/">Asistir a una clase</a>
+            <a :href="url[0].direccion">Asistir a una clase</a>
+            <p>contraseña: {{ url[0].contraseña }}</p>
           </v-card-subtitle>
         </v-card>
       </v-col>
@@ -152,7 +171,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import API from '~/services/api'
 import StripeBasic from '~/components/StripeBasic.vue'
 import StripePro from '~/components/StripePro.vue'
 import StripePremium from '~/components/StripePremium.vue'
@@ -161,6 +180,12 @@ export default {
     StripeBasic,
     StripePro,
     StripePremium
+  },
+  async asyncData() {
+    const url = await API.getURL()
+    const localizacion = await API.getAllLocalizacion()
+
+    return { url, localizacion }
   },
   data() {
     return {

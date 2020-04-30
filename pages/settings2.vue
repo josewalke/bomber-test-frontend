@@ -21,6 +21,28 @@
         </v-list-item-content>
       </v-list-item>
     </v-card>
+
+    <h1>URL de las clases Online</h1>
+    <v-card class="mx-auto">
+      <v-list-item three-line>
+        <v-list-item-content>
+          <v-list-item-title>
+            <v-text-field
+              v-model="url_streaming"
+              label="URL de la clase Streaming"
+            ></v-text-field>
+            <v-text-field
+              v-model="contraseña_url"
+              label="Contraseña"
+            ></v-text-field>
+          </v-list-item-title>
+          <v-card-actions>
+            <v-btn @click="streaming">Guardar</v-btn>
+          </v-card-actions>
+        </v-list-item-content>
+      </v-list-item>
+    </v-card>
+
     <h1>Ofertas de suscripcion</h1>
     <v-row class="d-flex justify-center">
       <v-col md="4" xs="12">
@@ -167,7 +189,9 @@ export default {
       seleccion18: '',
       upt_telefono: '',
       upt_correo: '',
-      upt_direccion: ''
+      upt_direccion: '',
+      url_streaming: '',
+      contraseña_url: ''
     }
   },
   computed: {
@@ -344,6 +368,16 @@ export default {
       this.upt_telefono = ''
       this.upt_correo = ''
       this.upt_direccion = ''
+    },
+    async streaming() {
+      var dato = await API.getURL()
+      console.log(dato[0])
+      let body = {
+        id: dato[0]._id,
+        direccion: this.url_streaming,
+        contraseña: this.contraseña_url
+      }
+      await API.putURL(body)
     }
   }
 }

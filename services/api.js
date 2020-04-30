@@ -320,5 +320,18 @@ export default {
     return axios
       .put(`tests/nota/${datos.id}`, body)
       .then(response => response.data)
+  },
+  getURL() {
+    return axios.get('/url_clase').then(response => response.data)
+  },
+  putURL(dato) {
+    let body = {
+      direccion: dato.direccion,
+      contraseña: dato.contraseña
+    }
+    console.log(dato)
+    return axios
+      .put(`url_clase/${dato.id}`, body)
+      .then(response => response.data)
   }
 }

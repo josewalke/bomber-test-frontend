@@ -264,7 +264,7 @@ export const mutations = {
   prueba() {},
   evaluar(state) {
     for (let i = 0; i < state.tests.length; i++) {
-      if (state.tests[i].nota === 'aprobado') {
+      if (state.tests[i].nota >= 5) {
         state.aprobados++
       } else {
         state.suspendidos++
@@ -617,13 +617,10 @@ export const actions = {
   },
   async evaluarNota({ commit }, datos) {
     commit('prueba')
-    console.log(datos)
     let response = await API.updateNota(datos)
 
     if (response) {
-      // console.log(datos.user_id)
       const tests = await API.getAllTestById(datos.user_id)
-      console.log(tests)
       commit('saveTests', tests)
     }
   }

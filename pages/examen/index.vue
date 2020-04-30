@@ -19,7 +19,7 @@
           <v-col cols="3">
             <v-switch
               v-model="correctorSwitch"
-              :label="`Corrección instantánea ${switchStatus}`"
+              :label="`Corrección instantánea `"
               correction-on-
               color="primary"
             ></v-switch>
@@ -27,7 +27,7 @@
           <v-col cols="3">
             <v-switch
               v-model="desafio"
-              label="Desafio de la semana"
+              label="Desafío de la semana"
               correction-on-
               color="primary"
             ></v-switch>
@@ -36,13 +36,13 @@
             <v-btn class="mt-4" @click="testPremium">Test Premium</v-btn>
           </v-col>
           <v-col md="3" xs="2">
-            <v-btn class="mt-4" @click="testDesafio">Desafio Automatico</v-btn>
+            <v-btn class="mt-4" @click="testDesafio">Desafío Automático</v-btn>
           </v-col>
         </v-row>
       </v-form>
       <v-card fixd flat>
         <v-card-title>
-          Seleccion de alumnos
+          Selección de alumnos
           <v-switch
             v-model="allStudent"
             label="Todos los estudiantes"
@@ -270,7 +270,6 @@ export default {
       }
     },
     async crearExamen() {
-      console.log('hola')
       const id_questions = []
       const now = new Date()
       let date =
@@ -294,7 +293,6 @@ export default {
       id_questions.forEach(q => {
         respuestas.push({ id: q, answered: false })
       })
-      console.log(respuestas)
 
       let testCheck = { right: 0, wrong: 0, blank: id_questions.length }
       if (this.allStudent === false) {
@@ -312,9 +310,8 @@ export default {
             nota: 0,
             mostrar_solucion: this.correctorSwitch,
             desafio: this.desafio,
-            deberes: false
+            deberes: true
           }
-          console.log(test)
           API.crearExamen(test)
           // location.reload()
         }
@@ -335,9 +332,8 @@ export default {
               nota: 0,
               mostrar_solucion: this.correctorSwitch,
               desafio: this.desafio,
-              deberes: false
+              deberes: true
             }
-            console.log(test)
             API.crearExamen(test)
             // location.reload()
           }

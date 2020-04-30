@@ -65,12 +65,12 @@
           </tbody>
         </template>
       </v-simple-table>
-      <h1 class="ml-4">Desafio de la semana</h1>
+      <h1 class="ml-4">Desafío de la semana</h1>
       <v-simple-table>
         <template v-slot:default>
           <thead>
             <tr>
-              <th class="text-left">Titulo</th>
+              <th class="text-left">Título</th>
               <th class="text-left">Preguntas</th>
               <th class="text-left">Aciertos</th>
               <th class="text-left">Fallos</th>
@@ -106,7 +106,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters(['tests', 'userName', 'nickName', 'currentTest']),
+    ...mapGetters(['tests', 'userName', 'nickName', 'currentTest', 'active']),
     sorted() {
       let sorted = []
       for (let i = this.tests.length - 1; i > -1; i--) {
@@ -118,14 +118,15 @@ export default {
   },
   methods: {
     async testGeneration() {
-      await this.$store.dispatch('createTest')
-      this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
+      if (this.active === true) {
+        await this.$store.dispatch('createTest')
+        this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
+      }
     },
     async goToTest(item) {
       if (item.time_end === null) {
         // this.$router.push(`/tests/${item._id}`)
       } else {
-        console.log(item.deberes)
         if (item.deberes === true) {
           let test = await this.$store.dispatch('getByTestId', item._id)
           if (test === true) {

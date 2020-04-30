@@ -115,7 +115,7 @@ export default {
       f_nombre: '',
       f_apellido: '',
       filtro: false,
-      items: ['Basic', 'Pro', 'Premium'],
+      items: ['basic', 'pro', 'premium'],
       seleccion: '',
       filter: this.student,
       switch1: false,
