@@ -28,7 +28,7 @@
           <v-list-item>
             <v-list-item-content>
               <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
-                <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
+                <v-icon class="mr-2">mdi-logout-variant</v-icon> Salir
               </v-btn>
             </v-list-item-content>
           </v-list-item>
@@ -45,7 +45,7 @@
           <v-list-item>
             <v-list-item-content>
               <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
-                <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
+                <v-icon class="mr-2">mdi-logout-variant</v-icon> Salir
               </v-btn>
             </v-list-item-content>
           </v-list-item>
@@ -74,7 +74,7 @@
           <v-list-item>
             <v-list-item-content>
               <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
-                <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
+                <v-icon class="mr-2">mdi-logout-variant</v-icon> Salir
               </v-btn>
             </v-list-item-content>
           </v-list-item>
@@ -91,7 +91,7 @@
           <v-list-item>
             <v-list-item-content>
               <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
-                <v-icon class="mr-2">mdi-logout-variant</v-icon> Logout
+                <v-icon class="mr-2">mdi-logout-variant</v-icon> Salir
               </v-btn>
             </v-list-item-content>
           </v-list-item>
@@ -120,7 +120,7 @@ export default {
           icon: 'mdi-playlist-star',
           page: '/clasificacion'
         },
-        { title: 'Configuracion', icon: 'mdi-cogs', page: '/settings' }
+        { title: 'Configuración', icon: 'mdi-cogs', page: '/settings' }
       ],
       admin: [
         { title: 'Alumnos', icon: 'mdi-account', page: '/dashboard' },
@@ -133,7 +133,7 @@ export default {
           icon: 'mdi-playlist-star',
           page: '/clasificacion'
         },
-        { title: 'Configuracion', icon: 'mdi-cogs', page: '/settings2' }
+        { title: 'Configuración', icon: 'mdi-cogs', page: '/settings2' }
       ],
       formato: ''
     }

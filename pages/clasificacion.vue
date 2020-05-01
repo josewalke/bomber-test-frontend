@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <h1>
-        Clasificación del bombero mas preparado
+        Clasificación general
       </h1>
     </v-container>
     <v-simple-table>

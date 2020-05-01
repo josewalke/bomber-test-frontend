@@ -37,9 +37,9 @@
 
           <v-card-actions>
             <p>
-              Deberá comunicarse con el profesor a travez del:<br />
+              Deberá comunicarse con el profesor a traves del:<br />
               correo {{ localizacion[0].correo }} <br />
-              movil {{ localizacion[0].telefono }}
+              móvil {{ localizacion[0].telefono }}
             </p>
           </v-card-actions>
         </v-card>

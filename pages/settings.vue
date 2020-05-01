@@ -45,7 +45,7 @@
               <v-col cols="12" md="6">
                 <v-text-field
                   v-model="phone"
-                  label="Telefono"
+                  label="Teléfono"
                   append-icon="mdi-pencil"
                   :rules="[rules.required, rules.phone]"
                   @click:append="updatePhone"

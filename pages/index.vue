@@ -40,7 +40,7 @@
     <!-- Inicio de Foto de bombero -->
     <div class="hero-banner">
       <v-layout class="banner-text" column justify-center align-center>
-        <h1>Conviertete en Bombero</h1>
+        <h1>Conviértete en Bombero</h1>
         <br />
         <p class="subtitle">
           La mayor Base de Datos <br />de preguntas de examen
@@ -80,7 +80,7 @@
     <!-- Final de la Foto de bombero -->
     <!-- Inicio del Espacio en blanco -->
     <div class="quotes ma-12">
-      <h1>2.000+ Preguntas de Examen</h1>
+      <h1>15.000+ Preguntas de Examen</h1>
       <p>con las que prepararte para aprobar la Oposicion de Bombero</p>
     </div>
     <!-- Final del Espacio en blanco -->
@@ -105,7 +105,7 @@
                     <v-row align="center" justify="center">
                       <v-col cols="12" md="6">
                         <v-tabs v-model="tab">
-                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                          <v-tab key="1" :href="`#tab-1`">Regístro</v-tab>
                           <v-tab key="2" :href="`#tab-2`">Login</v-tab>
                           <v-tab-item key="1" value="tab-1">
                             <v-row class="py-2">
@@ -140,13 +140,13 @@
               <li class="grey">
                 <v-dialog max-width="500">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                    <v-btn color="primary" dark v-on="on">Regístrate</v-btn>
                   </template>
                   <v-card>
                     <v-row align="center" justify="center">
                       <v-col cols="12" md="6">
                         <v-tabs v-model="tab">
-                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                          <v-tab key="1" :href="`#tab-1`">Regístro</v-tab>
                           <v-tab key="2" :href="`#tab-2`">Login</v-tab>
                           <v-tab-item key="1" value="tab-1">
                             <v-row class="py-2">
@@ -181,13 +181,13 @@
               <li class="grey">
                 <v-dialog max-width="500">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                    <v-btn color="primary" dark v-on="on">Regístrate</v-btn>
                   </template>
                   <v-card>
                     <v-row align="center" justify="center">
                       <v-col cols="12" md="6">
                         <v-tabs v-model="tab">
-                          <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                          <v-tab key="1" :href="`#tab-1`">Regístro</v-tab>
                           <v-tab key="2" :href="`#tab-2`">Login</v-tab>
                           <v-tab-item key="1" value="tab-1">
                             <v-row class="py-2">

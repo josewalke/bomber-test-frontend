@@ -32,8 +32,8 @@ export default {
   data() {
     return {
       // email: 'admin@gmail.com',
-      email: 'jose@gmail.com',
-      password: '123456',
+      email: '',
+      password: '',
       showPassword: false,
       rules: {
         required: v => !!v || 'Item is required',
