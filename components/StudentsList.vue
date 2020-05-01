@@ -1,20 +1,19 @@
 <template>
   <div>
     <h1>Alumnos</h1>
-    {{ switch1 }}
-    {{ switch2 }}
+
     <v-row>
       <v-col cols="2">
         <v-switch
           v-model="switch1"
-          :label="`activos: ${switch1.toString()}`"
+          :label="`activos`"
           @change="solo_activos"
         ></v-switch>
       </v-col>
       <v-col cols="2">
         <v-switch
           v-model="switch2"
-          :label="`inactivos: ${switch2.toString()}`"
+          :label="`inactivos`"
           @change="solo_inactivos"
         ></v-switch>
       </v-col>

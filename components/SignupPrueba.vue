@@ -89,7 +89,7 @@ export default {
           password: this.password,
           lastName: this.cap(this.lastName),
           phone: this.phone,
-          role: 'prueba'
+          role: 'cliente'
         }
 
         const response = await this.$store.dispatch('signup', user)

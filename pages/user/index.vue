@@ -46,7 +46,7 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="!active">
+    <v-row v-if="false">
       <v-col v-if="formato != 'movil'" md="6" offset="3">
         <v-card v-if="suscription_type === 'basic'">
           <v-card-title>
@@ -88,8 +88,7 @@
         </v-card>
       </v-col>
     </v-row>
-
-    <v-row>
+    <v-row v-if="suscription_type === 'premium'">
       <v-col md="10" offset="1">
         <v-card>
           <h1>Clases por Streaming</h1>

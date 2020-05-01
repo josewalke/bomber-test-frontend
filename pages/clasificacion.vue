@@ -41,7 +41,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, idx) in clasificacion" :key="idx">
+          <tr v-for="(item, idx) in clasificacion2" :key="idx">
             <td>{{ idx + 1 }}</td>
             <td>{{ item.usuario }}</td>
             <td>
@@ -108,9 +108,9 @@ export default {
       return a.desafio - b.desafio
     })
 
-    // let clasificacion = []
-
     clasificacion.reverse()
+    clasificacion2.reverse()
+
     return { clasificacion, clasificacion2 }
   },
   computed: {
