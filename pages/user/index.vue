@@ -88,7 +88,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row v-if="suscription_type === 'premium'">
+    <v-row v-if="suscription_type === 'premium' || suscription_type === 'pro'">
       <v-col md="10" offset="1">
         <v-card>
           <h1>Clases por Streaming</h1>
