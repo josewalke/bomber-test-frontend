@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    {{ resolucion() }}
     <div class="question-holder">
       <v-row>
         <v-col>
@@ -22,13 +23,14 @@
           </div>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row v-if="formato === 'ordenador'">
         <v-col
           v-for="(answer, idx) in showQuestion[0].answers"
           :key="idx"
           cols="6"
         >
           <v-card
+            v-if="answer.respuesta"
             :id="`${id}-` + idx"
             outlined
             min-height="200"
@@ -36,7 +38,51 @@
           >
             <div class="title">{{ answer.respuesta }}</div>
           </v-card>
-          <h4 class="water-mark">© Jaime Heras</h4>
+          <h4 v-if="answer.respuesta" class="water-mark">
+            © Jaime Heras
+          </h4>
+        </v-col>
+        <v-col>
+          <div id="under-buttons">
+            <v-btn
+              class="ma-2"
+              outlined
+              small
+              color="#DA3E3E"
+              @click="message = true"
+            >
+              DUDA / IMPUGNAR
+            </v-btn>
+            <!-- <v-btn
+              class="ma-2"
+              outlined
+              small
+              color="#DA3E3E"
+              @click="message = true"
+            >
+              CORREGIR
+            </v-btn> -->
+          </div>
+        </v-col>
+      </v-row>
+      <v-row v-if="formato === 'movil'">
+        <v-col
+          v-for="(answer, idx) in showQuestion[0].answers"
+          :key="idx"
+          cols="12"
+        >
+          <v-card
+            v-if="answer.respuesta"
+            :id="`${id}-` + idx"
+            outlined
+            min-height="200"
+            @click="selectAnswer(answer, idx)"
+          >
+            <div class="title">{{ answer.respuesta }}</div>
+          </v-card>
+          <h4 v-if="answer.respuesta" class="water-mark">
+            © Jaime Heras
+          </h4>
         </v-col>
         <v-col>
           <div id="under-buttons">
@@ -117,7 +163,8 @@ export default {
       response: false,
       guess: 'blank',
       counter: 0,
-      message: false
+      message: false,
+      formato: ''
     }
   },
   computed: {
@@ -277,9 +324,16 @@ export default {
       this.$store.dispatch('updateTest', data)
       this.$store.commit('saveCurrentTest', this.currentTest)
     },
-
     messageOff() {
       this.message = false
+    },
+    resolucion() {
+      if (window.screen.width < 600) {
+        this.formato = 'movil'
+      } else {
+        this.formato = 'ordenador'
+      }
+      console.log(this.formato)
     }
   }
 }
