@@ -216,7 +216,7 @@
     </div>
     <!-- Fin de Tabla de suscripcion -->
     <!-- Inicio del Footer -->
-    <v-footer class="text-center">
+    <v-footer class="text-center" color="rgba(184, 0, 0, 1)">
       <v-row align="center" justify="center">
         <v-col md="6" xs="12">
           <h1 class="white--text">Siguenos en las redes</h1>
