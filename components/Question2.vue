@@ -333,7 +333,6 @@ export default {
       } else {
         this.formato = 'ordenador'
       }
-      console.log(this.formato)
     }
   }
 }

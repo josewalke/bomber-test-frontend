@@ -45,7 +45,7 @@
         >
           Finalizar
         </v-btn>
-        <h1>{{ minutos }}:{{ segundos }}</h1>
+        <h3>{{ minutos }}:{{ segundos }}</h3>
       </div>
     </div>
     <v-divider class="mt-4"></v-divider>
@@ -168,7 +168,7 @@ export default {
     },
     goToTest() {
       if (this.currentTest.time_end2 === null) {
-        this.$router.push(`/tests/${this.$route.params.test}`)
+        this.$router.push(`/tests`)
       } else {
         this.$router.push(`/tests/${this.$route.params.test}/resumen`)
       }
