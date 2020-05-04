@@ -1,5 +1,6 @@
 <template>
   <div>
+    {resolucion()}
     <!-- Empieza Barra de inicio -->
     <v-app-bar class="nav-bar" fixed flat color="rgba(184, 0, 0, 1)">
       <v-toolbar-title class="white--text font-weight-black" v-text="title" />
@@ -80,8 +81,8 @@
     <!-- Final de la Foto de bombero -->
     <!-- Inicio del Espacio en blanco -->
     <div class="quotes ma-12">
-      <h1>15.000+ Preguntas de Examen</h1>
-      <p>con las que prepararte para aprobar la Oposicion de Bombero</p>
+      <h1>+15.000 Preguntas de Examen</h1>
+      <p>con las que prepárarte para aprobar la Oposición de Bombero</p>
     </div>
     <!-- Final del Espacio en blanco -->
     <!-- Inicio de Tabla de suscripcion -->
@@ -265,12 +266,17 @@ export default {
     return {
       title: 'Oposiciones de Bomberos',
       items: [{ title: 'Login', to: '/auth' }],
-      tab: null
+      tab: null,
+      formato: ''
     }
   },
   method: {
-    prueba() {
-      console.log('rube')
+    resolucion() {
+      if (window.screen.width < 600) {
+        this.formato = 'movil'
+      } else {
+        this.formato = 'ordenador'
+      }
     }
   },
   layout: 'basic'

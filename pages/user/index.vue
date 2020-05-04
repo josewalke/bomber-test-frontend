@@ -38,8 +38,8 @@
           <v-card-actions>
             <p>
               Deberá comunicarse con el profesor a traves del:<br />
-              correo {{ localizacion[0].correo }} <br />
-              móvil {{ localizacion[0].telefono }}
+              Correo {{ localizacion[0].correo }} <br />
+              Móvil {{ localizacion[0].telefono }}
             </p>
           </v-card-actions>
         </v-card>
