@@ -557,6 +557,7 @@ export const actions = {
   async cambiarTemas({ commit }, tema) {
     const pregunta = await API.getAllQuestions()
     commit('prueba')
+
     if (!pregunta.error) {
       const temario = await API.getAllTemas()
       if (!temario.error) {
@@ -570,15 +571,22 @@ export const actions = {
                 pregunta[i].tema_id = temario[x]._id
                 const newQuestion = await API.updateQuestionById(pregunta[i])
                 if (!newQuestion.error) {
-                  const deleteT = await API.deleteTema(tema._id)
-                  if (!deleteT.error) {
-                    location.reload()
-                  }
+                  console.log('actualizado')
                 }
               }
             }
           }
         }
+        const deleteT = await API.deleteTema(tema._id)
+        if (!deleteT.error) {
+          console.log('hola')
+          location.reload()
+        }
+      }
+    } else {
+      const deleteT = await API.deleteTema(tema._id)
+      if (!deleteT.error) {
+        location.reload()
       }
     }
   },

@@ -20,7 +20,7 @@ export default {
     return axios.get('questions').then(response => response.data)
   },
   getAllTestById(userId) {
-    return axios.get('tests/user/me' + userId).then(response => response.data)
+    return axios.get('tests/user/me/' + userId).then(response => response.data)
   },
   generateTest(token) {
     return axios.post('tests', null, { headers: { token } }).then(response => {
