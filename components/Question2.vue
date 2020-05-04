@@ -75,10 +75,10 @@
             v-if="answer.respuesta"
             :id="`${id}-` + idx"
             outlined
-            min-height="200"
+            min-height="120"
             @click="selectAnswer(answer, idx)"
           >
-            <div class="title">{{ answer.respuesta }}</div>
+            <div class="title2">{{ answer.respuesta }}</div>
           </v-card>
           <h4 v-if="answer.respuesta" class="water-mark">
             © Jaime Heras
@@ -406,5 +406,8 @@ h2 {
 h3 {
   font-size: 1.5rem;
   font-weight: 300;
+}
+.title2 {
+  font-size: 1rem;
 }
 </style>
