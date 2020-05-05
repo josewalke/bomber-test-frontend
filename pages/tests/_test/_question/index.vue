@@ -169,6 +169,7 @@ export default {
     goToTest() {
       if (this.currentTest.time_end2 === null) {
         this.$router.push(`/tests`)
+        clearInterval(this.cronos)
       } else {
         this.$router.push(`/tests/${this.$route.params.test}/resumen`)
       }
@@ -226,7 +227,7 @@ export default {
     },
     cronometro() {
       this.minutos = this.currentTest.no_contestadas.length - 1
-      var cronos = setInterval(() => {
+      this.cronos = setInterval(() => {
         if (this.minutos > 0) {
           this.segundos--
           // console.log('restando')
@@ -240,9 +241,11 @@ export default {
           if (this.minutos === 0 && this.segundos === 0) {
             // console.log('funcionoo ')
             this.endTest()
-            clearInterval(cronos)
+            clearInterval(this.cronos)
           }
         }
+        console.log('minutos: ' + this.minutos)
+        console.log('segundos: ' + this.segundos)
       }, 1000)
     }
   }

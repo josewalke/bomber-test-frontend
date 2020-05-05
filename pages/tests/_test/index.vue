@@ -8,9 +8,7 @@
     </div>
     <v-chip-group column class="ml-3 mb-4">
       <v-chip> {{ currentTest.no_contestadas.length }} preguntas </v-chip>
-      <v-chip v-if="notAnswered.length > 0">
-        {{ notAnswered.length }} sin contestar
-      </v-chip>
+
       <v-chip v-if="currentTest.no_contestadas.length - notAnswered.length > 0">
         {{ currentTest.no_contestadas.length - notAnswered.length }} contestadas
       </v-chip>
