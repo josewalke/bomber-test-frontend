@@ -4,7 +4,7 @@
     <div class="question-holder">
       <v-row>
         <v-col>
-          <div v-if="showQuestion[0].imagen_url.length > 0">
+          <div v-show="showQuestion[0].imagen_url.length > 0">
             <div
               class="photo-holder mb-3"
               :style="{
