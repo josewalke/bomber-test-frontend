@@ -30,7 +30,7 @@
           cols="6"
         >
           <v-card
-            v-if="answer.respuesta"
+            v-show="answer.respuesta"
             :id="`${id}-` + idx"
             outlined
             min-height="200"
@@ -38,7 +38,7 @@
           >
             <div class="title">{{ answer.respuesta }}</div>
           </v-card>
-          <h4 v-if="answer.respuesta" class="water-mark">
+          <h4 v-show="answer.respuesta" class="water-mark">
             © Jaime Heras
           </h4>
         </v-col>
@@ -72,7 +72,7 @@
           cols="12"
         >
           <v-card
-            v-if="answer.respuesta"
+            v-show="answer.respuesta"
             :id="`${id}-` + idx"
             outlined
             min-height="120"
@@ -80,7 +80,7 @@
           >
             <div class="title2">{{ answer.respuesta }}</div>
           </v-card>
-          <h4 v-if="answer.respuesta" class="water-mark">
+          <h4 v-show="answer.respuesta" class="water-mark">
             © Jaime Heras
           </h4>
         </v-col>
@@ -218,15 +218,16 @@ export default {
     },
     cleanAnswers() {
       for (let i = 0; i < 4; i++) {
-        document
-          .getElementById(`${this.id}-${i}`)
-          .classList.remove(
+        let clase = document.getElementById(`${this.id}-${i}`)
+        if (clase) {
+          clase.classList.remove(
             'selected-answer',
             'selected-circle',
             'selected-red',
             'selected-green',
             'no-click'
           )
+        }
       }
     },
 

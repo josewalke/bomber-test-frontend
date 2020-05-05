@@ -62,7 +62,7 @@ module.exports = {
   ],
   stripe: {
     version: 'v3',
-    publishableKey: 'pk_test_nQsrNLrkYw7lxkhRpIEVSynD00mvlxpBub'
+    publishableKey: 'pk_test_ezWwY83XHKU9CtONibdNYGXA00plca98gw'
   },
   /*
    ** vuetify module configuration

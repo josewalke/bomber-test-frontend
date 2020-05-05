@@ -20,7 +20,7 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      stripeKey: 'sk_test_I9y5Cytv97AlhMQIOCqNoVrF00Q2NJqGZ2',
+      stripeKey: 'sk_test_TjTSauL02STOqR0fzf0jZjII00rIkQjdiq',
       name: 'name',
       email: 'email',
       card: {
@@ -42,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['suscription_type', 'userName'])
+    ...mapGetters(['suscription_type', 'userName', 'userId'])
   },
   mounted: function() {
     this.setUpStripe()
@@ -80,6 +80,7 @@ export default {
               id: this.userId,
               active: true
             }
+            debugger
             this.$store.dispatch('suscription_end_active', body)
             console.log('Transferencia Relealizada')
           }
