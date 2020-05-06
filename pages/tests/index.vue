@@ -78,7 +78,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in tests" :key="item._id" @click="goToTest(item)">
+            <tr v-for="item in sorted" :key="item._id" @click="goToTest(item)">
               <td v-if="item.desafio">{{ item.title }}</td>
               <td v-if="item.desafio">
                 {{ item.no_contestadas.length }}
@@ -112,7 +112,9 @@ export default {
       for (let i = this.tests.length - 1; i > -1; i--) {
         let test = this.tests[i]
         sorted.push(test)
+        console.log(test)
       }
+
       return sorted
     }
   },
