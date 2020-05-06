@@ -112,7 +112,6 @@ export default {
       for (let i = this.tests.length - 1; i > -1; i--) {
         let test = this.tests[i]
         sorted.push(test)
-        console.log(test)
       }
 
       return sorted
@@ -127,15 +126,18 @@ export default {
     },
     async goToTest(item) {
       if (item.time_end === null) {
-        // this.$router.push(`/tests/${item._id}`)
+        console.log('iniciar test')
+        this.$router.push(`/tests/${item._id}`)
       } else {
         if (item.deberes === true) {
           let test = await this.$store.dispatch('getByTestId', item._id)
           if (test === true) {
+            console.log('iniciar test marcado')
             this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
             await this.$store.dispatch('updateDeberes', item._id)
           }
         } else {
+          console.log('mostrar resumen')
           this.$router.push(`/tests/${item._id}/resumen`)
         }
       }
