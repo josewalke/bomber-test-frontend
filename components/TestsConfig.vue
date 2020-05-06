@@ -107,8 +107,12 @@ export default {
         temas: this.selected,
         correction: this.correctorSwitch
       }
-      await this.$store.dispatch('createTestConfig', test)
-      this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
+      if (this.testName.length != 0) {
+        await this.$store.dispatch('createTestConfig', test)
+        this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
+      } else {
+        alert('Inserte un nombre al examen porfavor')
+      }
     }
   }
 }
