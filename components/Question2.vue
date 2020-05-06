@@ -19,7 +19,7 @@
             {{ numero }}
           </div> -->
           <div class="headline grey--text text--darken-1">
-            {{ showQuestion[0].enunciado }}
+            <p>{{ showQuestion[0].enunciado }}</p>
           </div>
         </v-col>
       </v-row>
@@ -410,5 +410,8 @@ h3 {
 }
 .title2 {
   font-size: 1rem;
+}
+p {
+  font-size: 1.25rem;
 }
 </style>

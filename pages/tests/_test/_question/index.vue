@@ -193,7 +193,7 @@ export default {
         time_end: timeNow,
         testId: this.currentTest._id
       }
-
+      clearInterval(this.cronos)
       this.$store.dispatch('updateTest', data)
       this.$store.commit('saveCurrentTest', this.currentTest)
       this.$router.push(`/tests/${this.currentTest._id}/resumen`)
