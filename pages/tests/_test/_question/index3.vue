@@ -15,7 +15,7 @@
               v-for="(question, i) in currentTest.no_contestadas"
               :key="i"
             >
-              <h1>Aquí esta el {{ i + 1 }}</h1>
+              <h1>Aquí esta el{{ i + 1 }}</h1>
               <v-sheet color="white" height="100%" tile>
                 <v-row align="center" justify="center">
                   <Question2

@@ -108,7 +108,10 @@
         </v-col>
       </v-row>
       <v-dialog v-model="message" max-width="500" class="pa-8 white">
-        <Message @status="messageOff"></Message>
+        <Message
+          :question-number="questionNumber"
+          @status="messageOff"
+        ></Message>
       </v-dialog>
     </div>
   </v-container>
@@ -152,6 +155,12 @@ export default {
 
     notAnswered: {
       type: Array,
+      default: () => {
+        return []
+      }
+    },
+    questionNumber: {
+      type: Number,
       default: () => {
         return []
       }

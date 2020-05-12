@@ -36,6 +36,14 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  props: {
+    questionNumber: {
+      type: Number,
+      default: () => {
+        return []
+      }
+    }
+  },
   data() {
     return {
       type: '',
@@ -46,7 +54,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['token', 'userId', 'currentTestQuestion'])
+    ...mapGetters(['token', 'userId', 'currentTestQuestion', 'currentTest'])
   },
   methods: {
     async sendMessage() {
@@ -61,12 +69,12 @@ export default {
         this.snackbarText = 'Elige un tipo de mensaje'
       } else {
         this.$emit('status')
-        console.log('dentro')
+        // console.log('dentro')
         const message = {
           userId: this.userId,
           type: this.type,
           message: this.message,
-          questionId: this.currentTestQuestion._id
+          questionId: this.currentTest.no_contestadas[this.questionNumber]._id
         }
         // API.newMessage(this.token, message)
         await this.$store.dispatch('newMessage', message)

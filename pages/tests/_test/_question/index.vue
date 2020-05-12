@@ -58,6 +58,7 @@
           :temas="temas"
           :numero="numero"
           :paint="paint"
+          :question-number="questionNumber"
           @answering="answering"
         />
       </v-col>
@@ -244,8 +245,8 @@ export default {
             clearInterval(this.cronos)
           }
         }
-        console.log('minutos: ' + this.minutos)
-        console.log('segundos: ' + this.segundos)
+        // console.log('minutos: ' + this.minutos)
+        // console.log('segundos: ' + this.segundos)
       }, 1000)
     }
   }

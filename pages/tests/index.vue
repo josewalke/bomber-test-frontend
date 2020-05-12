@@ -142,7 +142,6 @@ export default {
         }
       }
     },
-
     goToTestConfig() {
       this.$router.push(`/tests/config`)
     }
