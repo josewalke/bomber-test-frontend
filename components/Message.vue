@@ -74,7 +74,8 @@ export default {
           userId: this.userId,
           type: this.type,
           message: this.message,
-          questionId: this.currentTest.no_contestadas[this.questionNumber]._id
+          questionId: this.currentTest.no_contestadas[this.questionNumber - 1]
+            ._id
         }
         // API.newMessage(this.token, message)
         await this.$store.dispatch('newMessage', message)

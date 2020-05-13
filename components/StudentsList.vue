@@ -55,6 +55,7 @@
         ></v-switch>
       </v-col>
     </v-row>
+    <StripePremium></StripePremium>
     <v-simple-table>
       <template v-slot:default>
         <thead>
@@ -99,8 +100,12 @@
 
 <script>
 import API from '~/services/api'
+import StripePremium from '~/components/StripePremium.vue'
 export default {
   name: 'StudentsList',
+  components: {
+    StripePremium
+  },
   props: {
     student: {
       type: Array,

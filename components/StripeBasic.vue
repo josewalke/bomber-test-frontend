@@ -20,7 +20,7 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      stripeKey: 'sk_test_I9y5Cytv97AlhMQIOCqNoVrF00Q2NJqGZ2',
+      stripeKey: 'esta en el back',
       name: 'name',
       email: 'email',
       card: {

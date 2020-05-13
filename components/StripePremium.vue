@@ -20,7 +20,7 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      stripeKey: 'sk_test_TjTSauL02STOqR0fzf0jZjII00rIkQjdiq',
+      stripeKey: 'esta en el back',
       name: 'name',
       email: 'email',
       card: {
@@ -76,12 +76,11 @@ export default {
             return console.error(result.error)
           }
           if (result.paymentIntent.status === 'succeeded') {
-            const body = {
-              id: this.userId,
-              active: true
-            }
-            debugger
-            this.$store.dispatch('suscription_end_active', body)
+            // const body = {
+            //   id: this.userId,
+            //   active: true
+            // }
+            // this.$store.dispatch('suscription_end_active', body)
             console.log('Transferencia Relealizada')
           }
         } catch (e) {
