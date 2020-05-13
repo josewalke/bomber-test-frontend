@@ -3,28 +3,28 @@
     <h1>Alumnos</h1>
 
     <v-row>
-      <v-col cols="2">
+      <v-col md="2">
         <v-switch
           v-model="switch1"
           :label="`activos`"
           @change="solo_activos"
         ></v-switch>
       </v-col>
-      <v-col cols="2">
+      <v-col md="2">
         <v-switch
           v-model="switch2"
           :label="`inactivos`"
           @change="solo_inactivos"
         ></v-switch>
       </v-col>
-      <v-col cols="2">
+      <v-col md="2">
         <v-text-field
           v-model="f_nombre"
           label="Nombre"
           @keyup="filtrar"
         ></v-text-field>
       </v-col>
-      <v-col cols="2">
+      <v-col md="2">
         <v-text-field
           v-model="f_apellido"
           label="Apellido"
