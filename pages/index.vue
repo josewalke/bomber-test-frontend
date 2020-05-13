@@ -39,8 +39,13 @@
     </v-app-bar>
     <!-- Final de Barra de inicio -->
     <!-- Inicio de Foto de bombero -->
-    <div class="hero-banner">
-      <v-layout class="banner-text" column justify-center align-center>
+    <div :class="formato === 'movil' ? 'hero-banner' : 'hero-banner-movil'">
+      <v-layout
+        :class="formato === 'movil' ? 'banner-text' : 'banner-text-movil'"
+        column
+        justify-center
+        align-center
+      >
         <h1>Conviértete en Bombero</h1>
         <br />
         <p class="subtitle">
@@ -306,6 +311,25 @@ export default {
     opacity: 0;
   }
 }
+.hero-banner-movil {
+  color: rgba(255, 0, 0, 1);
+  background-image: url('../static/assets/banner.jpg');
+  width: 100vw;
+  height: 125vh;
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: darken;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
+    opacity: 0;
+  }
+}
 .banner-text {
   margin-left: 40%;
   h1 {
@@ -317,6 +341,21 @@ export default {
   p {
     color: #ffffff;
     font-size: 2.2rem;
+    margin-top: -20px;
+    z-index: 1;
+  }
+}
+.banner-text-movil {
+  margin-left: 40%;
+  h1 {
+    color: #ffffff;
+    font-size: 2rem;
+    margin-top: 40%;
+    z-index: 1;
+  }
+  p {
+    color: #ffffff;
+    font-size: 2rem;
     margin-top: -20px;
     z-index: 1;
   }

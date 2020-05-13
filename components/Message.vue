@@ -79,6 +79,8 @@ export default {
         }
         // API.newMessage(this.token, message)
         await this.$store.dispatch('newMessage', message)
+        this.message = ''
+        this.type = ''
       }
     }
   }
