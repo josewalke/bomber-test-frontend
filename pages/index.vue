@@ -1,6 +1,5 @@
 <template>
   <div>
-    {resolucion()}
     <!-- Empieza Barra de inicio -->
     <v-app-bar class="nav-bar" fixed flat color="rgba(184, 0, 0, 1)">
       <v-toolbar-title class="white--text font-weight-black" v-text="title" />
@@ -39,9 +38,9 @@
     </v-app-bar>
     <!-- Final de Barra de inicio -->
     <!-- Inicio de Foto de bombero -->
-    <div :class="formato === 'movil' ? 'hero-banner' : 'hero-banner-movil'">
+    <div :class="formato === 'movil' ? 'hero-banner-movil' : 'hero-banner'">
       <v-layout
-        :class="formato === 'movil' ? 'banner-text' : 'banner-text-movil'"
+        :class="formato === 'movil' ? 'banner-text-movil' : 'banner-text'"
         column
         justify-center
         align-center
@@ -275,13 +274,11 @@ export default {
       formato: ''
     }
   },
-  method: {
-    resolucion() {
-      if (window.screen.width < 600) {
-        this.formato = 'movil'
-      } else {
-        this.formato = 'ordenador'
-      }
+  mounted() {
+    if (window.screen.width < 600) {
+      this.formato = 'movil'
+    } else {
+      this.formato = 'ordenador'
     }
   },
   layout: 'basic'
@@ -340,7 +337,7 @@ export default {
   }
   p {
     color: #ffffff;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     margin-top: -20px;
     z-index: 1;
   }
