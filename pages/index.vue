@@ -87,7 +87,7 @@
     <!-- Inicio del Espacio en blanco -->
     <div class="quotes ma-12">
       <h1>+15.000 Preguntas de Examen</h1>
-      <p>con las que prepárate para aprobar la Oposición de Bombero</p>
+      <p>con las que prepararte para aprobar la Oposición de Bombero</p>
     </div>
     <!-- Final del Espacio en blanco -->
     <!-- Inicio de Tabla de suscripcion -->
