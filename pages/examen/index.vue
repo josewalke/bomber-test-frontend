@@ -313,7 +313,11 @@ export default {
             deberes: true
           }
           API.crearExamen(test)
-          // location.reload()
+          this.select_student = ''
+          this.testName = ''
+          this.id_questions = ''
+          this.correctorSwitch = false
+          this.desafio = false
         }
       } else {
         const students = await API.getAllUsers()
@@ -335,7 +339,11 @@ export default {
               deberes: true
             }
             API.crearExamen(test)
-            // location.reload()
+            this.select_student = ''
+            this.testName = ''
+            this.id_questions = ''
+            this.correctorSwitch = false
+            this.desafio = false
           }
         }
       }
@@ -381,7 +389,6 @@ export default {
           API.crearExamen(testDesafio)
         }
       }
-      // location.reload()
     }
   }
 }

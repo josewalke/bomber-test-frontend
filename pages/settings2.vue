@@ -1,18 +1,18 @@
 <template>
   <v-container>
-    <h1>Localizacion de prueba</h1>
+    <h1>Localización de prueba</h1>
     <v-card class="mx-auto">
       <v-list-item three-line>
         <v-list-item-content>
           <v-list-item-title class="headline mb-1">
             <v-text-field
               v-model="upt_telefono"
-              label="Telefono"
+              label="Teléfono"
             ></v-text-field>
             <v-text-field v-model="upt_correo" label="Correo"></v-text-field>
             <v-text-field
               v-model="upt_direccion"
-              label="Direccion"
+              label="Dirección"
             ></v-text-field>
           </v-list-item-title>
           <v-card-actions>
@@ -43,7 +43,7 @@
       </v-list-item>
     </v-card>
 
-    <h1>Ofertas de suscripcion</h1>
+    <h1>Ofertas de suscripción</h1>
     <v-row class="d-flex justify-center">
       <v-col md="4" xs="12">
         <ul class="price">

@@ -52,7 +52,58 @@
         </v-list>
       </v-navigation-drawer>
     </div>
-    <div v-else>
+    <div v-if="formato === 'tablet'">
+      <v-icon large class="ma-4" @click.stop="drawer = !drawer">
+        mdi-format-align-justify
+      </v-icon>
+
+      <v-navigation-drawer v-model="drawer" left app>
+        <v-list-item two-line>
+          <v-list-item-avatar width="100px" height="100px">
+            <img :src="image_url" />
+          </v-list-item-avatar>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list v-if="role === 'cliente'" dense>
+          <v-list-item v-for="item in items" :key="item.title">
+            <v-list-item-content>
+              <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
+                <v-icon class="mr-2">{{ item.icon }}</v-icon
+                ><span></span> {{ item.title }}
+              </v-btn>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-content>
+              <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
+                <v-icon class="mr-2">mdi-logout-variant</v-icon> Salir
+              </v-btn>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-list v-else dense>
+          <v-list-item v-for="item in admin" :key="item.title">
+            <v-list-item-content>
+              <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
+                <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
+              </v-btn>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-content>
+              <v-btn text class="justify-start" color="#6b6b6b" @click="logout">
+                <v-icon class="mr-2">mdi-logout-variant</v-icon> Salir
+              </v-btn>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+    </div>
+    <div v-if="formato === 'ordenador'">
       <v-navigation-drawer permanent left app>
         <v-list-item two-line>
           <v-list-item-avatar width="100px" height="100px">
@@ -145,7 +196,11 @@ export default {
     resolucion() {
       if (window.screen.width < 600) {
         this.formato = 'movil'
-      } else {
+      }
+      if (window.screen.width > 600 && window.screen.width < 960) {
+        this.formato = 'tablet'
+      }
+      if (window.screen.width > 960) {
         this.formato = 'ordenador'
       }
     },

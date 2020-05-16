@@ -137,14 +137,14 @@
       </div>
       <!-- /////////////////////////////////////////////////////////////////////// -->
       <v-row>
-        <v-col cols="4">
+        <v-col xs="6" sm="5" md="4">
           <v-select
             v-model="f_categoria"
             :items="categoria"
             label="Categoria"
           ></v-select>
         </v-col>
-        <v-col cols="4">
+        <v-col xs="6" sm="5" md="4">
           <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
             <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
           </span>
@@ -164,7 +164,7 @@
             <v-select v-model="f_tema" :items="nombre5" label="Tema"></v-select>
           </span>
         </v-col>
-        <v-col cols="4">
+        <v-col xs="5" sm="6" md="4">
           <br />
           <v-btn @click="filtrar">Filtrar</v-btn>
           <v-btn @click="change_crear">Crear Pregunta</v-btn>
