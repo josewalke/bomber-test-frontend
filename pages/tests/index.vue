@@ -42,7 +42,7 @@
           </thead>
           <tbody>
             <tr v-for="item in sorted" :key="item._id" @click="goToTest(item)">
-              <td v-if="!item.desafio">
+              <td v-if="!item.desafio && item.userId != userId">
                 {{ item.title
                 }}<span v-if="item.mostrar_solucion">
                   <v-icon small right class="red--text">mdi-eye</v-icon></span
@@ -106,14 +106,21 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters(['tests', 'userName', 'nickName', 'currentTest', 'active']),
+    ...mapGetters([
+      'tests',
+      'userName',
+      'nickName',
+      'currentTest',
+      'active',
+      'userId'
+    ]),
     sorted() {
       let sorted = []
       for (let i = this.tests.length - 1; i > -1; i--) {
         let test = this.tests[i]
         sorted.push(test)
       }
-
+      console.log(sorted)
       return sorted
     }
   },
