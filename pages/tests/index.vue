@@ -42,7 +42,7 @@
           </thead>
           <tbody>
             <tr v-for="item in sorted" :key="item._id" @click="goToTest(item)">
-              <td v-if="!item.desafio && item.user_id === userId">
+              <td v-if="!item.desafio">
                 {{ item.title
                 }}<span v-if="item.mostrar_solucion">
                   <v-icon small right class="red--text">mdi-eye</v-icon></span
