@@ -42,7 +42,7 @@
           </thead>
           <tbody>
             <tr v-for="item in sorted" :key="item._id" @click="goToTest(item)">
-              <td v-if="!item.desafio && item.userId != userId">
+              <td v-if="!item.desafio && item.user_id === userId">
                 {{ item.title
                 }}<span v-if="item.mostrar_solucion">
                   <v-icon small right class="red--text">mdi-eye</v-icon></span
@@ -118,9 +118,11 @@ export default {
       let sorted = []
       for (let i = this.tests.length - 1; i > -1; i--) {
         let test = this.tests[i]
-        sorted.push(test)
+        if (test.user_id === this.userId) {
+          sorted.push(test)
+        }
       }
-      console.log(sorted)
+
       return sorted
     }
   },
