@@ -22,7 +22,7 @@
           Pregunta {{ questionNumber }}/
           {{ currentTest.no_contestadas.length }}
         </div>
-        <v-btn class="ma-2" outlined small color="#DA3E3E" @click="goToTest">
+        <v-btn class="ma-2" outlined small color="#DA3E3E" @click="aviso">
           CERRAR
         </v-btn>
         <v-btn
@@ -45,6 +45,7 @@
         >
           Finalizar
         </v-btn>
+
         <h3>{{ minutos }}:{{ segundos }}</h3>
       </div>
     </div>
@@ -63,6 +64,9 @@
         />
       </v-col>
     </v-row>
+    <v-dialog v-model="CloseAlert" max-width="500" class="pa-8 white">
+      <CloseAlert @endTest="endTest" @changeAviso="changeAviso"></CloseAlert>
+    </v-dialog>
     <v-dialog v-model="blankAlert" max-width="500" class="pa-8 white">
       <BlankAlert @blank="manageBlankAlert"></BlankAlert>
     </v-dialog>
@@ -73,6 +77,7 @@
 import API from '~/services/api'
 import Question2 from '~/components/Question2'
 import BlankAlert from '~/components/BlankAlert'
+import CloseAlert from '~/components/CloseAlert'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -80,7 +85,8 @@ export default {
 
   components: {
     Question2,
-    BlankAlert
+    BlankAlert,
+    CloseAlert
   },
   async fetch({ params, store }) {
     const test = await API.getTest(params.test)
@@ -110,7 +116,8 @@ export default {
       blankAlert: false,
       notAgainAlert: false,
       response: false,
-      cronos: ''
+      cronos: '',
+      CloseAlert: false
     }
   },
 
@@ -248,6 +255,12 @@ export default {
         // console.log('minutos: ' + this.minutos)
         // console.log('segundos: ' + this.segundos)
       }, 1000)
+    },
+    aviso() {
+      this.CloseAlert = true
+    },
+    changeAviso() {
+      this.CloseAlert = false
     }
   }
 }

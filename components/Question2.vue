@@ -36,7 +36,7 @@
             min-height="200"
             @click="selectAnswer(answer, idx)"
           >
-            <div class="title">{{ answer.respuesta }}</div>
+            <div class="title">{{ posicion[idx] }}{{ answer.respuesta }}</div>
           </v-card>
           <h4 v-show="answer.respuesta" class="water-mark">
             © Jaime Heras
@@ -75,10 +75,12 @@
             v-show="answer.respuesta"
             :id="`${id}-` + idx"
             outlined
-            min-height="120"
             @click="selectAnswer(answer, idx)"
           >
-            <div class="title2">{{ answer.respuesta }}</div>
+            <div class="title2">
+              {{ posicion[idx] }}
+              {{ answer.respuesta }}
+            </div>
           </v-card>
           <h4 v-show="answer.respuesta" class="water-mark">
             © Jaime Heras
@@ -173,7 +175,8 @@ export default {
       guess: 'blank',
       counter: 0,
       message: false,
-      formato: ''
+      formato: '',
+      posicion: ['a)', 'b)', 'c)', 'd)']
     }
   },
   computed: {
