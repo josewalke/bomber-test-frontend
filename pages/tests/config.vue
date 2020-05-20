@@ -12,7 +12,13 @@ export default {
     TestsConfig
   },
   async asyncData() {
-    const temas = await API.getAllTemasNames()
+    const colectivo = await API.getAllTemasNames()
+    let temas = []
+    for (let i = 0; i < colectivo.length; i++) {
+      if (colectivo[i].name != 'Sin Tema') {
+        temas.push(colectivo[i])
+      }
+    }
     return { temas }
   }
 }

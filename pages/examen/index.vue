@@ -89,7 +89,7 @@
           :headers="headers_question"
           :items="bomberil"
           :single-select="singleSelect"
-          item-key="enunciado"
+          item-key="idx"
           show-select
           class="elevation-1"
         >
@@ -105,7 +105,7 @@
           :headers="headers_question"
           :items="legislacion"
           :single-select="singleSelect"
-          item-key="enunciado"
+          item-key="idx"
           show-select
           class="elevation-1"
         >
@@ -122,7 +122,7 @@
           :headers="headers_question"
           :items="estatutos"
           :single-select="singleSelect"
-          item-key="enunciado"
+          item-key="idx"
           show-select
           class="elevation-1"
         >
@@ -138,7 +138,7 @@
           :headers="headers_question"
           :items="geografia"
           :single-select="singleSelect"
-          item-key="enunciado"
+          item-key="idx"
           show-select
           class="elevation-1"
         >
@@ -154,7 +154,7 @@
           :headers="headers_question"
           :items="emergencias"
           :single-select="singleSelect"
-          item-key="enunciado"
+          item-key="idx"
           show-select
           class="elevation-1"
         >
