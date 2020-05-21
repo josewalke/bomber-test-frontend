@@ -530,6 +530,7 @@ export const actions = {
   },
   async updateTema({ commit }, body) {
     const response = await API.updateTema(body)
+
     if (!response.error) {
       const pregunta = await API.getQuestionById(body.id)
       if (!pregunta.error) {

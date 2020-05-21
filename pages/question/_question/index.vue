@@ -102,7 +102,7 @@
         <p v-if="ver">{{ temas[posicion].name }}</p>
         <p v-else>{{ seleccion3 }}</p>
         <v-overflow-btn
-          v-if="seleccion === 'Específico bomberos'"
+          v-if="seleccion === 'Especifico de bombero'"
           v-model="seleccion3"
           class="my-2"
           :items="nombre"
@@ -167,6 +167,7 @@ export default {
       if (pregunta.tema_id === temas[i]._id) {
         posicion = i
       }
+
       if (temas[i].category === 'Especifico de bombero') {
         nombre.push(temas[i].name)
         id.push(temas[i]._id)
@@ -213,7 +214,7 @@ export default {
       opcion4: '',
       explicacion: '',
       categoria: [
-        'Específico bomberos',
+        'Especifico de bombero',
         'Materias Jurídicas comunes',
         'Estatutos de autonomía',
         'Geografía específica',
