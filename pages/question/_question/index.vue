@@ -167,7 +167,7 @@ export default {
       if (pregunta.tema_id === temas[i]._id) {
         posicion = i
       }
-      if (temas[i].category === 'Específico bomberos') {
+      if (temas[i].category === 'Especifico de bombero') {
         nombre.push(temas[i].name)
         id.push(temas[i]._id)
       }
@@ -398,7 +398,7 @@ export default {
       this.$store.dispatch('updateDifficulty', body)
     },
     updateTema() {
-      if (this.seleccion === 'Específico bomberos') {
+      if (this.seleccion === 'Especifico de bombero') {
         const body = {
           id: this.updatePregunta._id,
           tema_id: this.id[this.nombre.indexOf(this.seleccion3)]
