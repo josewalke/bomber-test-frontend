@@ -6,6 +6,7 @@
           <tr>
             <th class="text-left">Tema</th>
             <th class="text-left">Categoria</th>
+            <th class="text-left">Activo</th>
             <th class="text-left"></th>
           </tr>
         </thead>
@@ -13,6 +14,13 @@
           <tr v-for="item in items" :key="item._id">
             <td v-if="item.name != 'Sin Tema'">{{ item.name }}</td>
             <td v-if="item.name != 'Sin Tema'">{{ item.category }}</td>
+            <td v-if="item.name != 'Sin Tema'">
+              <v-checkbox
+                v-model="item.visible"
+                color="primary"
+                @change="change_active(item)"
+              ></v-checkbox>
+            </td>
             <td v-if="item.name != 'Sin Tema'">
               <v-dialog max-width="500">
                 <template v-slot:activator="{ on }">
@@ -49,6 +57,7 @@
 </template>
 
 <script>
+import API from '~/services/api'
 export default {
   name: 'TemasList',
   props: {
@@ -74,6 +83,9 @@ export default {
   methods: {
     deleteTema(tema) {
       this.$store.dispatch('cambiarTemas', tema)
+    },
+    change_active(item) {
+      API.activarTema(item)
     }
   }
 }

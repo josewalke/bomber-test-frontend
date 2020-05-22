@@ -64,7 +64,11 @@ export default {
       .then(temas => {
         var temaName = []
         temas.forEach(tema => {
-          let temaData = { name: tema.name, id: tema._id }
+          let temaData = {
+            name: tema.name,
+            id: tema._id,
+            visible: tema.visible
+          }
           temaName.push(temaData)
         })
         return temaName.sort()
@@ -214,6 +218,15 @@ export default {
     }
     return axios
       .put('questions/' + tema.id, body)
+      .then(response => response.data)
+  },
+  activarTema(tema) {
+    const body = {
+      visible: tema.visible
+    }
+    console.log(body)
+    return axios
+      .put('temario/' + tema._id, body)
       .then(response => response.data)
   },
   change_active(change) {

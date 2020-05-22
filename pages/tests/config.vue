@@ -15,7 +15,7 @@ export default {
     const colectivo = await API.getAllTemasNames()
     let temas = []
     for (let i = 0; i < colectivo.length; i++) {
-      if (colectivo[i].name != 'Sin Tema') {
+      if (colectivo[i].name != 'Sin Tema' && colectivo[i].visible === true) {
         temas.push(colectivo[i])
       }
     }
