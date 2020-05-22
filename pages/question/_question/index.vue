@@ -69,6 +69,7 @@
     {{ updatePregunta.answers[3].respuesta }}
     <v-textarea v-model="opcion4" auto-grow solo></v-textarea>
     <v-btn @click="updateOpcion4">Actualizar</v-btn>
+
     <h1>Explicación</h1>
     {{ updatePregunta.explicacion }}
     <v-textarea v-model="explicacion" auto-grow solo></v-textarea>
@@ -359,7 +360,7 @@ export default {
       }
     },
     updateOpcion4() {
-      if (this.opcion3.length > 0) {
+      if (this.opcion4.length > 0) {
         const body = {
           id: this.updatePregunta._id,
           answers: [
