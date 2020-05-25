@@ -164,7 +164,13 @@ export const mutations = {
     state.provincia = provincia
   },
   saveTests(state, tests) {
-    state.tests = tests
+    let testById = []
+    for (let i = 0; i < tests.length; i++) {
+      if (tests[i].user_id === state.userId) {
+        testById.push(tests[i])
+      }
+    }
+    state.tests = testById
   },
   saveMessage(state, mensajes) {
     for (let i = 0; i < mensajes.length; i++) {
@@ -628,9 +634,7 @@ export const actions = {
     let response = await API.updateNota(datos)
 
     if (response) {
-      console.log('hola mundoo')
       const tests = await API.getAllTestById(datos.user_id)
-      console.log(tests.length)
       commit('saveTests', tests)
     }
   }

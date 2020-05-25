@@ -31,7 +31,7 @@
     <v-col md="10" offset="1">
       <v-alert type="error">
         Para el correcto funcionamiento de la pagina evite usar el Google
-        Translate
+        Translate o selecciones la opcion "ingles"
       </v-alert>
     </v-col>
     <v-row v-if="formato != 'movil'">
