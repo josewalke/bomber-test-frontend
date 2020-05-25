@@ -28,9 +28,15 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-col md="10" offset="1">
+      <v-alert type="error">
+        Para el correcto funcionamiento de la pagina evite usar el Google
+        Translate
+      </v-alert>
+    </v-col>
     <v-row v-if="formato != 'movil'">
       <v-col md="6" offset="3">
-        <v-card>
+        <v-card class="mx-auto pt-5">
           <v-card-title>
             <h4>Para activar su cuenta</h4>
           </v-card-title>
@@ -107,8 +113,8 @@
     </v-row>
     <v-row v-if="suscription_type === 'premium' || suscription_type === 'pro'">
       <v-col md="10" offset="1">
-        <v-card>
-          <h1>Clases por Streaming</h1>
+        <v-card :width="formato === 'ordenador' ? '100%' : '90%'">
+          <h2>Clases por Streaming</h2>
           <v-card-subtitle>
             <a :href="url[0].direccion">Asistir a una clase</a>
             <p>contraseña: {{ url[0].contraseña }}</p>
@@ -244,9 +250,13 @@ export default {
   },
   methods: {
     resolucion() {
-      if (window.screen.width < 600) {
+      if (window.screen.width < 960) {
         this.formato = 'movil'
-      } else {
+      }
+      if (window.screen.width > 960 && window.screen.width < 1264) {
+        this.formato = 'tablet'
+      }
+      if (window.screen.width > 1264) {
         this.formato = 'ordenador'
       }
     }

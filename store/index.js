@@ -628,7 +628,9 @@ export const actions = {
     let response = await API.updateNota(datos)
 
     if (response) {
+      console.log('hola mundoo')
       const tests = await API.getAllTestById(datos.user_id)
+      console.log(tests.length)
       commit('saveTests', tests)
     }
   }

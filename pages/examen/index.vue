@@ -16,7 +16,7 @@
         </v-row>
         {{ correctionOn() }}
         <v-row>
-          <v-col cols="3">
+          <v-col xs="3" sm="4" md="3" lg="3">
             <v-switch
               v-model="correctorSwitch"
               :label="`Corrección instantánea `"
@@ -24,7 +24,7 @@
               color="primary"
             ></v-switch>
           </v-col>
-          <v-col cols="3">
+          <v-col xs="3" sm="4" md="3" lg="3">
             <v-switch
               v-model="desafio"
               label="Desafío de la semana"
@@ -32,10 +32,10 @@
               color="primary"
             ></v-switch>
           </v-col>
-          <v-col cols="3">
+          <v-col xs="3" sm="5" md="3" lg="3">
             <v-btn class="mt-4" @click="testPremium">Test Premium</v-btn>
           </v-col>
-          <v-col md="3" xs="2">
+          <v-col xs="3" sm="5" md="3" lg="3">
             <v-btn class="mt-4" @click="testDesafio">Desafío Automático</v-btn>
           </v-col>
         </v-row>

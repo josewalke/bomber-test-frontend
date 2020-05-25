@@ -9,7 +9,9 @@
       <!-- <div v-if="updatePregunta.imagen_url > 0"> -->
       <div
         class="photo-holder"
-        :style="{ 'background-image': `url(${updatePregunta.imagen_url})` }"
+        :style="{
+          'background-image': `url(${updatePregunta.imagen_url});`
+        }"
       ></div>
     </div>
     <v-btn @click="uploadPhoto">Elegir photo</v-btn>
@@ -76,7 +78,7 @@
     <v-btn @click="updateExplicacion">Actualizar</v-btn>
     <!-- ============================================ -->
     <v-row>
-      <v-col cols="4">
+      <v-col cols="12">
         <h1>Dificultad</h1>
         <p>{{ updatePregunta.difficulty }}</p>
         <v-overflow-btn
@@ -87,7 +89,7 @@
         ></v-overflow-btn>
         <v-btn @click="updateDificultad">Actualizar</v-btn>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="12">
         <h1>Categoria</h1>
         <p>{{ updatePregunta.category }}</p>
         <v-overflow-btn
@@ -98,7 +100,7 @@
         ></v-overflow-btn>
         <v-btn @click="updateCategoria">Actualizar</v-btn>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="12">
         <h1>Tema</h1>
         <p v-if="ver">{{ temas[posicion].name }}</p>
         <p v-else>{{ seleccion3 }}</p>
