@@ -231,7 +231,8 @@ export default {
   },
   change_active(change) {
     const body = {
-      active: change.active
+      active: change.active,
+      suscription_end_active: new Date().getTime() + 2629750000
     }
 
     return axios.put('users/' + change.id, body).then(response => response.data)
@@ -310,7 +311,7 @@ export default {
     const body = {
       role: 'cliente',
       active: change.active,
-      suscription_end_active: new Date().getTime() + 2629800000
+      suscription_end_active: new Date().getTime() + 2629750000
     }
 
     return axios.put('users/' + change.id, body).then(response => response.data)

@@ -131,6 +131,8 @@ export default {
       if (this.active === true) {
         await this.$store.dispatch('createTest')
         this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
+      } else {
+        alert('para realizar un test primero debe activar su cuenta')
       }
     },
     async goToTest(item) {
@@ -152,7 +154,11 @@ export default {
       }
     },
     goToTestConfig() {
-      this.$router.push(`/tests/config`)
+      if (this.active === true) {
+        this.$router.push(`/tests/config`)
+      } else {
+        alert('para realizar un test primero debe activar su cuenta')
+      }
     }
   }
 }

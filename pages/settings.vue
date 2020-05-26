@@ -61,8 +61,7 @@
                 />
               </v-col>
               <v-col cols="12">
-                <!-- <v-select
-                  v-if="role === 'cliente'"
+                <v-select
                   id="selector"
                   v-model="seleccion"
                   class="my-2"
@@ -70,7 +69,7 @@
                   append-icon="mdi-pencil"
                   label="Suscripcion"
                   @click:append="updateSuscription"
-                ></v-select> -->
+                ></v-select>
               </v-col>
             </v-row>
           </v-container>

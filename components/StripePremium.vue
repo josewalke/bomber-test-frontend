@@ -76,11 +76,11 @@ export default {
             return console.error(result.error)
           }
           if (result.paymentIntent.status === 'succeeded') {
-            // const body = {
-            //   id: this.userId,
-            //   active: true
-            // }
-            // this.$store.dispatch('suscription_end_active', body)
+            const body = {
+              id: this.userId,
+              active: true
+            }
+            this.$store.dispatch('suscription_end_active', body)
             console.log('Transferencia Relealizada')
           }
         } catch (e) {
