@@ -5,8 +5,9 @@
     </div>
     <v-divider></v-divider>
     <div class="mt-3">
-      Si pasas la pregunta sin contestar se dará como contestadas en blanco.
-      ¿Quieres contiunar?
+      Si pasas la pregunta sin contestar se dará como contestadas en blanco.En
+      caso de tener activado el corrector y haber resondido ignore esta
+      advertencia. ¿Quieres contiunar?
     </div>
     <div class="mt-3">
       <v-btn
