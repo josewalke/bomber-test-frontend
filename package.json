@@ -1,8 +1,8 @@
 {
   "name": "nuxt-express",
   "version": "1.0.0",
-  "description": "Reboot Final Project Template",
-  "author": "Fer Martin",
+  "description": "Oposicion Bomberos",
+  "author": "José Juan Pérez González",
   "private": true,
   "scripts": {
     "dev": "nuxt --spa",
