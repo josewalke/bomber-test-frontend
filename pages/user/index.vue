@@ -34,13 +34,8 @@
         Translate o seleccione la opcion "ingles"
       </v-alert>
     </v-col>
-    <v-col md="10" offset="1">
-      <v-alert type="info">
-        Le informamos de que dentro de poco se iniciara el procedimiento de pago
-        para activar su cuenta
-      </v-alert>
-    </v-col>
-    <v-row v-if="formato != 'movil'">
+
+    <!-- <v-row v-if="formato != 'movil'">
       <v-col md="6" offset="3">
         <v-card class="mx-auto pt-5">
           <v-card-title>
@@ -56,8 +51,8 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-row>
-    <v-row v-if="formato != 'ordenador'">
+    </v-row> -->
+    <!-- <v-row v-if="formato != 'ordenador'">
       <v-col cols="10" offset="1">
         <v-card>
           <v-card-title>
@@ -73,7 +68,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-row>
+    </v-row> -->
 
     <v-row v-if="!active">
       <v-col v-if="formato != 'movil'" md="6" offset="3">
