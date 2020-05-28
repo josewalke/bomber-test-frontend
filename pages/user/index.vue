@@ -34,7 +34,6 @@
         Translate o seleccione la opcion "ingles"
       </v-alert>
     </v-col>
-
     <!-- <v-row v-if="formato != 'movil'">
       <v-col md="6" offset="3">
         <v-card class="mx-auto pt-5">

@@ -42,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['suscription_type', 'userName'])
+    ...mapGetters(['suscription_type', 'userName', 'userId'])
   },
   mounted: function() {
     this.setUpStripe()
