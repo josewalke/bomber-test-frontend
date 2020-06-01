@@ -47,8 +47,6 @@
         </v-btn>
 
         <h3>{{ minutos }}:{{ segundos }}</h3>
-        {{ currentTest.testCheck }}
-        {{ currentTest.respuestas }}
       </div>
     </div>
     <v-divider class="mt-4"></v-divider>
