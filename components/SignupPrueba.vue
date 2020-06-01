@@ -59,12 +59,12 @@
 export default {
   data() {
     return {
-      email: 'leo@gmail.com',
-      password: '123456',
-      name: 'leo',
-      nickName: 'HotLeo',
-      lastName: 'valdez',
-      phone: '123456789',
+      email: '',
+      password: '',
+      name: '',
+      nickName: '',
+      lastName: '',
+      phone: '',
       showPassword: false,
       rules: {
         required: v => !!v || 'Campo Obligatorio',
