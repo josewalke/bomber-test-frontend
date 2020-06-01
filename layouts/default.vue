@@ -33,7 +33,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-list v-else dense>
+        <v-list v-if="role === 'admin'" dense>
           <v-list-item v-for="item in admin" :key="item.title">
             <v-list-item-content>
               <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
@@ -84,7 +84,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-list v-else dense>
+        <v-list v-if="role === 'admin'" dense>
           <v-list-item v-for="item in admin" :key="item.title">
             <v-list-item-content>
               <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
@@ -131,7 +131,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-list v-else dense>
+        <v-list v-if="role === 'admin'" dense>
           <v-list-item v-for="item in admin" :key="item.title">
             <v-list-item-content>
               <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
