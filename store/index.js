@@ -646,7 +646,6 @@ export const actions = {
   },
   async reload({ commit }, data) {
     commit('reload')
-
     API.reload(data)
   }
 }
