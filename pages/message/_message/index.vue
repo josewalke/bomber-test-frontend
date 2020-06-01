@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container id="cp">
     {{ resolucion() }}
     <div>
       <h1>Enunciado</h1>
@@ -157,5 +157,11 @@ export default {
 .carta-opciones {
   max-width: 800px;
   max-height: 200px;
+}
+#cp {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
 }
 </style>

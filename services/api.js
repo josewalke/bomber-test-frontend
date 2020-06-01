@@ -224,7 +224,6 @@ export default {
     const body = {
       visible: tema.visible
     }
-    console.log(body)
     return axios
       .put('temario/' + tema._id, body)
       .then(response => response.data)
@@ -259,8 +258,6 @@ export default {
       return response.data
     })
   },
-  prueba() {},
-
   updateQuestionById(newQuestion) {
     return axios
       .put('questions/' + newQuestion._id, newQuestion)
@@ -343,9 +340,17 @@ export default {
       direccion: dato.direccion,
       contraseña: dato.contraseña
     }
-    console.log(dato)
     return axios
       .put(`url_clase/${dato.id}`, body)
       .then(response => response.data)
+  },
+  reload(data) {
+    let body = {
+      testCheck: data.testCheck,
+      respuestas: data.respuestas
+    }
+    return axios.put('tests/reload/' + data._id, body).then(response => {
+      return response.data
+    })
   }
 }

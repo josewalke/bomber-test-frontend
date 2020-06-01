@@ -456,7 +456,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .photo-holder {
   height: 500px;
   width: 750px;

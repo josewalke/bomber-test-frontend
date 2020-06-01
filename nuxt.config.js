@@ -14,7 +14,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s | Oposiciones de Bomberos',
+    titleTemplate: '',
     title: 'Oposiciones de Bomberos',
     meta: [
       { charset: 'utf-8' },

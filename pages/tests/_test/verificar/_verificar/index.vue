@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container id="cp">
     <h1>Enunciado</h1>
     <p>{{ pregunta_id.enunciado }}</p>
 
@@ -40,6 +40,7 @@
 <script>
 import messageVerificacion from '~/components/messageVerificacion'
 import { mapGetters } from 'vuex'
+
 export default {
   components: {
     messageVerificacion
@@ -63,4 +64,11 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+#cp {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+}
+</style>

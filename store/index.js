@@ -301,6 +301,13 @@ export const mutations = {
   explicacion(state, body) {
     state.test_id = body.test
     state.pregunta_id = body.pregunta
+  },
+  reload(state) {
+    state.currentTest.testCheck = {
+      blank: state.currentTest.no_contestadas.length,
+      right: 0,
+      wrong: 0
+    }
   }
 }
 
@@ -586,7 +593,6 @@ export const actions = {
         }
         const deleteT = await API.deleteTema(tema._id)
         if (!deleteT.error) {
-          console.log('hola')
           location.reload()
         }
       }
@@ -637,5 +643,10 @@ export const actions = {
       const tests = await API.getAllTestById(datos.user_id)
       commit('saveTests', tests)
     }
+  },
+  async reload({ commit }, data) {
+    commit('reload')
+
+    API.reload(data)
   }
 }

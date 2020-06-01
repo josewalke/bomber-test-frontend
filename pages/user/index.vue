@@ -197,6 +197,7 @@ import API from '~/services/api'
 import StripeBasic from '~/components/StripeBasic.vue'
 import StripePro from '~/components/StripePro.vue'
 import StripePremium from '~/components/StripePremium.vue'
+
 export default {
   components: {
     StripeBasic,

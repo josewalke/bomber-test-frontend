@@ -47,6 +47,8 @@
         </v-btn>
 
         <h3>{{ minutos }}:{{ segundos }}</h3>
+        {{ currentTest.testCheck }}
+        {{ currentTest.respuestas }}
       </div>
     </div>
     <v-divider class="mt-4"></v-divider>
@@ -120,7 +122,6 @@ export default {
       CloseAlert: false
     }
   },
-
   computed: {
     ...mapGetters(['currentTest', 'question', 'currentTestQuestion']),
     questionNumber() {
@@ -140,6 +141,7 @@ export default {
     }
   },
   mounted() {
+    window.onbeforeunload = this.reload()
     this.cronometro()
   },
   methods: {
@@ -261,6 +263,18 @@ export default {
     },
     changeAviso() {
       this.CloseAlert = false
+    },
+    reload() {
+      let body = {
+        _id: this.currentTest._id,
+        testCheck: {
+          blank: this.currentTest.no_contestadas.length,
+          right: 0,
+          wrong: 0
+        },
+        respuestas: this.currentTest.respuestas
+      }
+      this.$store.dispatch('reload', body)
     }
   }
 }
