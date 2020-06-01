@@ -36,7 +36,12 @@
         <v-list v-if="role === 'admin'" dense>
           <v-list-item v-for="item in admin" :key="item.title">
             <v-list-item-content>
-              <v-btn text class="justify-start" color="#6b6b6b" :to="item.page">
+              <v-btn
+                text
+                class="justify-start"
+                color="#6b6b6b"
+                :to="role === 'admin' ? item.page : items[0].page"
+              >
                 <v-icon class="mr-2">{{ item.icon }}</v-icon> {{ item.title }}
               </v-btn>
             </v-list-item-content>
