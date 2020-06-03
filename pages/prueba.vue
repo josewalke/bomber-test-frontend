@@ -1,13 +1,636 @@
 <template>
   <div>
-    hola mundooo
+    <v-container>
+      <div v-if="crear">
+        <h1>Enunciado</h1>
+        <v-textarea v-model="enunciado" auto-grow solo></v-textarea>
+        <div v-if="photo.length > 0">
+          <div
+            class="photo-holder"
+            :style="{ 'background-image': `url(${photo})` }"
+          ></div>
+        </div>
+        <v-btn @click="uploadPhoto">Añadir photo</v-btn>
+        <div class="photo-question">
+          <div
+            class="user-card mt-5"
+            :style="{
+              'background-image': `url(${photo})`
+            }"
+          ></div>
+        </div>
+        <h1>Posibles respuestas</h1>
+        <v-checkbox
+          v-model="checkbox1"
+          label="Respuesta correcta"
+          color="primary"
+        ></v-checkbox>
+        <v-textarea
+          v-model="opcion1"
+          auto-grow
+          solo
+          label="Opcion1"
+        ></v-textarea>
+        <v-checkbox
+          v-model="checkbox2"
+          label="Respuesta correcta"
+          color="primary"
+        ></v-checkbox>
+        <v-textarea
+          v-model="opcion2"
+          auto-grow
+          solo
+          label="Opcion2"
+        ></v-textarea>
+        <v-checkbox
+          v-model="checkbox3"
+          label="Respuesta correcta"
+          color="primary"
+        ></v-checkbox>
+        <v-textarea
+          v-model="opcion3"
+          auto-grow
+          solo
+          label="Opcion3"
+        ></v-textarea>
+        <v-checkbox
+          v-model="checkbox4"
+          label="Respuesta correcta"
+          color="primary"
+        ></v-checkbox>
+        <v-textarea
+          v-model="opcion4"
+          auto-grow
+          solo
+          label="Opcion4"
+        ></v-textarea>
+        <h1>Explicacion de la respuesta</h1>
+        <v-textarea
+          v-model="explicacion"
+          auto-grow
+          solo
+          label="Escriba la explicacion de la respuesta"
+        ></v-textarea>
+        <v-row>
+          <v-col cols="4">
+            <v-overflow-btn
+              v-model="seleccion3"
+              class="my-2"
+              :items="dificultad"
+              label="Dificultad"
+            ></v-overflow-btn>
+          </v-col>
+          <v-col cols="4">
+            <v-overflow-btn
+              v-model="seleccion2"
+              class="my-2"
+              :items="categoria"
+              label="Categoria"
+            ></v-overflow-btn>
+          </v-col>
+          <v-col cols="4">
+            <v-overflow-btn
+              v-if="seleccion2 === 'Especifico de bombero'"
+              v-model="seleccion"
+              class="my-2"
+              :items="nombre"
+              label="Tema"
+            >
+            </v-overflow-btn>
+
+            <v-overflow-btn
+              v-if="seleccion2 === 'Materias Jurídicas comunes'"
+              v-model="seleccion4"
+              class="my-2"
+              :items="nombre2"
+              label="Tema"
+            ></v-overflow-btn>
+
+            <v-overflow-btn
+              v-if="seleccion2 === 'Estatutos de autonomía'"
+              v-model="seleccion4"
+              class="my-2"
+              :items="nombre3"
+              label="Tema"
+            ></v-overflow-btn>
+            <v-overflow-btn
+              v-if="seleccion2 === 'Geografía específica'"
+              v-model="seleccion4"
+              class="my-2"
+              :items="nombre4"
+              label="Tema"
+            ></v-overflow-btn>
+
+            <v-overflow-btn
+              v-if="seleccion2 === 'Planes de emergencias'"
+              v-model="seleccion4"
+              class="my-2"
+              :items="nombre5"
+              label="Tema"
+            ></v-overflow-btn>
+          </v-col>
+          <v-col cols="4">
+            <br />
+            <v-btn @click="crearQuestion">Crear</v-btn>
+          </v-col>
+        </v-row>
+      </div>
+      <!-- /////////////////////////////////////////////////////////////////////// -->
+      <v-row>
+        <v-col xs="6" sm="5" md="4">
+          <v-select
+            v-model="f_categoria"
+            :items="categoria"
+            label="Categoria"
+          ></v-select>
+        </v-col>
+        <v-col xs="6" sm="5" md="4">
+          <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
+            <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Especifico de bombero'">
+            <v-select v-model="f_tema" :items="nombre" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Materias Jurídicas comunes'">
+            <v-select v-model="f_tema" :items="nombre2" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Estatutos de autonomía'">
+            <v-select v-model="f_tema" :items="nombre3" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Geografía específica'">
+            <v-select v-model="f_tema" :items="nombre4" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Planes de emergencias'">
+            <v-select v-model="f_tema" :items="nombre5" label="Tema"></v-select>
+          </span>
+        </v-col>
+        <v-col xs="5" sm="6" md="4">
+          <br />
+          <v-btn @click="filtrar">Filtrar</v-btn>
+          <v-btn @click="change_crear">Crear Pregunta</v-btn>
+        </v-col>
+        <v-col cols="8">
+          <v-textarea
+            v-model="searchText"
+            label="Introduzca parte del enunciado con exactitud"
+            auto-grow
+            solo
+            @keyup="buscarText"
+          ></v-textarea>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-simple-table>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">Enunciado</th>
+            <th class="text-left">Temario</th>
+            <th class="text-left">Categoria</th>
+          </tr>
+        </thead>
+        <tbody v-if="filtro">
+          <tr
+            v-for="(item, idx) in preguntas"
+            :key="idx"
+            @click="goToQuestion(item._id, item)"
+          >
+            <td class="text-truncate" style="max-width: 150px;">
+              {{ item.enunciado }}
+            </td>
+
+            <td class="text-truncate" style="max-width: 150px;">
+              {{ item.tema_id }}
+            </td>
+            <td>{{ item.category }}</td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr
+            v-for="(item, idx) in filtrado"
+            :key="idx"
+            @click="goToQuestion(item._id, item)"
+          >
+            <td class="text-truncate" style="max-width: 150px;">
+              {{ item.enunciado }}
+            </td>
+            <td class="text-truncate" style="max-width: 150px;">
+              {{ item.tema_id }}
+            </td>
+            <td class="text-truncate">
+              {{ item.category }}
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
   </div>
 </template>
 
 <script>
+import API from '~/services/api'
 export default {
-  layout: 'basic'
+  async asyncData() {
+    const temas = await API.getAllTemas()
+    let nombre = []
+    let id = []
+    let nombre2 = []
+    let id2 = []
+    let nombre3 = []
+    let id3 = []
+    let nombre4 = []
+    let id4 = []
+    let nombre5 = []
+    let id5 = []
+    let temario = []
+
+    for (let i = 0; i < temas.length; i++) {
+      temario.push(temas[i].name)
+      if (temas[i].category === 'Especifico de bombero') {
+        nombre.push(temas[i].name)
+        id.push(temas[i]._id)
+      }
+      if (temas[i].category === 'Materias Jurídicas comunes') {
+        nombre2.push(temas[i].name)
+        id2.push(temas[i]._id)
+      }
+      if (temas[i].category === 'Estatutos de autonomía') {
+        nombre3.push(temas[i].name)
+        id3.push(temas[i]._id)
+      }
+      if (temas[i].category === 'Geografía específica') {
+        nombre4.push(temas[i].name)
+        id4.push(temas[i]._id)
+      }
+      if (temas[i].category === 'Planes de emergencias') {
+        nombre5.push(temas[i].name)
+        id5.push(temas[i]._id)
+      }
+    }
+
+    const preguntas = await API.getAllQuestions()
+    for (let i = 0; i < preguntas.length; i++) {
+      for (let x = 0; x < temas.length; x++) {
+        if (preguntas[i].tema_id === temas[x]._id) {
+          preguntas[i].tema_id = temas[x].name
+        }
+      }
+    }
+
+    return {
+      nombre,
+      id,
+      preguntas,
+      temas,
+      nombre2,
+      id2,
+      nombre3,
+      id3,
+      nombre4,
+      id4,
+      nombre5,
+      id5,
+      temario
+    }
+  },
+  data() {
+    return {
+      enunciado: '',
+      opcion1: '',
+      opcion2: '',
+      opcion3: '',
+      opcion4: '',
+      checkbox1: false,
+      checkbox2: false,
+      checkbox3: false,
+      checkbox4: false,
+      explicacion: '',
+      seleccion: '',
+      categoria: [
+        'Especifico de bombero',
+        'Materias Jurídicas comunes',
+        'Estatutos de autonomía',
+        'Geografía específica',
+        'Planes de emergencias',
+        'N/A'
+      ],
+      seleccion2: '',
+      dificultad: ['Facil', 'Medio', 'Dificil'],
+      seleccion3: '',
+      seleccion4: '',
+      f_tema: '',
+      f_categoria: '',
+      filtro: true,
+      crear: false,
+      filtrado: [],
+      searchText: '',
+      photo: ''
+    }
+  },
+  methods: {
+    crearQuestion() {
+      if (this.seleccion2 === 'Especifico de bombero') {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.id[this.nombre.indexOf(this.seleccion)],
+          category: this.seleccion2,
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion,
+          photo: this.photo
+        }
+        API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion = ''
+        this.explicacion = ''
+        this.photo = ''
+      }
+      if (this.seleccion2 === 'Materias Jurídicas comunes') {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          photo: this.photo,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.id2[this.nombre2.indexOf(this.seleccion4)],
+          category: this.seleccion2,
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion
+        }
+        API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion4 = ''
+        this.explicacion = ''
+        this.photo = ''
+      }
+      if (this.seleccion2 === 'Estatutos de autonomía') {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          photo: this.photo,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.id3[this.nombre3.indexOf(this.seleccion4)],
+          category: this.seleccion2,
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion
+        }
+        API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion4 = ''
+        this.explicacion = ''
+        this.photo = ''
+      }
+      if (this.seleccion2 === 'Geografía específica') {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          photo: this.photo,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.id4[this.nombre4.indexOf(this.seleccion4)],
+          category: this.seleccion2,
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion
+        }
+        API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion4 = ''
+        this.explicacion = ''
+        this.photo = ''
+      }
+      if (this.seleccion2 === 'Planes de emergencias') {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          photo: this.photo,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.id5[this.nombre5.indexOf(this.seleccion4)],
+          category: this.seleccion2,
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion
+        }
+        API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion4 = ''
+        this.explicacion = ''
+        this.photo = ''
+      }
+    },
+    photoUploader() {
+      // eslint-disable-next-line no-undef
+      const newWidget = cloudinary.createUploadWidget(
+        {
+          cloudName: 'dea2xlykc',
+          uploadPreset: 'questionPhoto',
+          multiple: false,
+          maxFiles: 1,
+          cropping: true,
+          clientAllowedFormats: ['png', 'gif', 'jpeg']
+        },
+        (error, result) => {
+          if (!error && result && result.event === 'success') {
+            const newUrl = result.info.url
+            this.photo = newUrl
+          }
+        }
+      )
+      return newWidget
+    },
+    uploadPhoto() {
+      const widget = this.photoUploader()
+      widget.open()
+    },
+    goToQuestion(question) {
+      this.$router.push(`/question/${question}`)
+    },
+    filtrar() {
+      this.filtro = false
+      var f_categoria = this.f_categoria
+      var f_tema = this.f_tema
+
+      if (f_categoria.length > 0 && f_tema.length === 0) {
+        this.filtrado = this.preguntas.filter(x => x.category === f_categoria)
+      }
+      if (
+        (f_tema.length > 0 && f_categoria.length === 0) ||
+        (f_tema.length > 0 && f_categoria === 'N/A')
+      ) {
+        this.filtrado = this.preguntas.filter(x => x.tema_id === f_tema)
+      }
+      if (f_categoria.length > 0 && f_tema.length > 0) {
+        this.filtrado = this.preguntas.filter(
+          x => x.tema_id === f_tema && x.category === f_categoria
+        )
+      }
+      this.f_categoria = ''
+      this.f_tema = ''
+    },
+    change_crear() {
+      this.crear = true
+    },
+    buscarText() {
+      this.filtrado = []
+      this.filtro = false
+      if (this.searchText.length > 0) {
+        this.preguntas.forEach(p => {
+          if (
+            p.enunciado.toLowerCase().includes(this.searchText.toLowerCase())
+          ) {
+            this.filtrado.push(p)
+          }
+        })
+      }
+      if (this.searchText.length === 0) {
+        this.filtrado = this.preguntas
+      }
+    }
+  },
+  head() {
+    return {
+      script: [{ src: 'https://widget.cloudinary.com/v2.0/global/all.js' }]
+    }
+  }
 }
 </script>
 
-<style></style>
+<style>
+.photo-holder {
+  height: 500px;
+  width: 750px;
+  background-size: contain;
+  background-position: center;
+  margin: 0 auto;
+}
+.box {
+  width: 600px;
+}
+</style>
