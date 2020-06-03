@@ -19,6 +19,7 @@
         />
       </v-card-text>
       <v-card-actions>
+        <a href="reset_pass">¿Ha olvidado la contraseña?</a>
         <v-spacer></v-spacer>
         <v-btn color="success" class="mr-4" @click="login">Login</v-btn>
       </v-card-actions>

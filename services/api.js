@@ -352,5 +352,14 @@ export default {
     return axios.put('tests/reload/' + data._id, body).then(response => {
       return response.data
     })
+  },
+  sendEmail(data) {
+    return axios.post('correo/find', data).then(response => response.data)
+  },
+  new_pass(data) {
+    let token = data.token
+    return axios
+      .post('users/new_pass', data, { headers: { token } })
+      .then(response => response.data)
   }
 }
