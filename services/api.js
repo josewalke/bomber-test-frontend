@@ -231,7 +231,8 @@ export default {
   change_active(change) {
     const body = {
       active: change.active,
-      suscription_end_active: new Date().getTime() + 2629750000
+      suscription_end_active: new Date().getTime() + 2629750000,
+      role: 'cliente'
     }
 
     return axios.put('users/' + change.id, body).then(response => response.data)

@@ -260,10 +260,9 @@ export default {
       console.log(this.filter[idx]._id)
       const body = {
         id: this.filter[idx]._id,
-        active: this.filter[idx].active
+        active: this.filter[idx].active,
+        role: 'cliente'
       }
-      console.log('aqui')
-      console.log(body)
       API.change_active(body)
     },
     change_suscription(idx) {

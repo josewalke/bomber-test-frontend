@@ -23,7 +23,7 @@
 
         <v-text-field
           v-model="phone"
-          label="Telefono"
+          label="Teléfono"
           :rules="[rules.required, rules.phone]"
           validate-on-blur
         />

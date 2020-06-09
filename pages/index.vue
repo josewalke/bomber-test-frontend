@@ -13,7 +13,7 @@
           <v-row align="center" justify="center">
             <v-col cols="12" xs="6">
               <v-tabs v-model="tab">
-                <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                <v-tab key="1" :href="`#tab-1`">Regístro</v-tab>
                 <v-tab key="2" :href="`#tab-2`">Login</v-tab>
                 <v-tab-item key="1" value="tab-1">
                   <v-row class="py-2">
@@ -48,7 +48,7 @@
         <h1>Conviértete en Bombero</h1>
         <br />
         <p class="subtitle">
-          La mayor Base de Datos <br />de preguntas de examen
+          La mayor base de datos <br />de preguntas de examen
         </p>
         <v-dialog max-width="500">
           <template v-slot:activator="{ on }">
@@ -67,7 +67,7 @@
             <v-row align="center" justify="center">
               <v-col cols="12" md="6">
                 <v-tabs v-model="tab">
-                  <v-tab key="1" :href="`#tab-1`">Registro</v-tab>
+                  <v-tab key="1" :href="`#tab-1`">Regístro</v-tab>
                   <v-tab-item key="1" value="tab-1">
                     <v-row class="py-2">
                       <v-col cols="12">
@@ -104,7 +104,7 @@
               <li class="grey">
                 <v-dialog max-width="500">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark v-on="on">Registrate</v-btn>
+                    <v-btn color="primary" dark v-on="on">Regístrate</v-btn>
                   </template>
                   <v-card>
                     <v-row align="center" justify="center">
@@ -224,7 +224,7 @@
     <v-footer class="text-center" color="rgba(184, 0, 0, 1)">
       <v-row align="center" justify="center">
         <v-col md="6" xs="12">
-          <h1 class="white--text">Siguenos en las redes</h1>
+          <h1 class="white--text">Síguenos en las redes</h1>
           <v-col align="center" justify="center">
             <a href="https://www.instagram.com/oposicionbomberos/">
               <v-icon class="white--text" x-large>mdi-instagram</v-icon>
@@ -235,7 +235,7 @@
           </v-col>
         </v-col>
         <v-col md="6" xs="12">
-          <h1 class="white--text">Localizanos</h1>
+          <h1 class="white--text">Localízanos</h1>
           <v-col align="center" justify="center">
             <h3 class="white--text">Teléfono:{{ localizacion[0].telefono }}</h3>
             <h3 class="white--text">Correo:{{ localizacion[0].correo }}</h3>
@@ -268,7 +268,7 @@ export default {
   },
   data() {
     return {
-      title: 'Oposiciones de Bomberos',
+      title: 'Oposición Bomberos',
       items: [{ title: 'Login', to: '/auth' }],
       tab: null,
       formato: ''

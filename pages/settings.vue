@@ -67,7 +67,7 @@
                   class="my-2"
                   :items="dropdown_font"
                   append-icon="mdi-pencil"
-                  label="Suscripcion"
+                  label="Suscripción"
                   @click:append="updateSuscription"
                 ></v-select>
               </v-col>

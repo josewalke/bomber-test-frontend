@@ -34,7 +34,7 @@
               :items="temas"
               item-text="name"
               item-value="id"
-              label="Seleccion de Temas"
+              label="Selección de Temas"
               outlined
               multiple
             ></v-select>
