@@ -205,7 +205,6 @@
 import API from '~/services/api'
 import { mapGetters } from 'vuex'
 export default {
-  layout: 'basic',
   async asyncData() {
     var categoria = [
       'Especifico de bombero',
