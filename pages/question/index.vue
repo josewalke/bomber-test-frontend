@@ -93,7 +93,7 @@
               v-if="seleccion2 === 'Especifico de bombero'"
               v-model="seleccion"
               class="my-2"
-              :items="nombre"
+              :items="cat1"
               label="Tema"
             >
             </v-overflow-btn>
@@ -102,7 +102,7 @@
               v-if="seleccion2 === 'Materias Jurídicas comunes'"
               v-model="seleccion4"
               class="my-2"
-              :items="nombre2"
+              :items="cat3"
               label="Tema"
             ></v-overflow-btn>
 
@@ -110,14 +110,14 @@
               v-if="seleccion2 === 'Estatutos de autonomía'"
               v-model="seleccion4"
               class="my-2"
-              :items="nombre3"
+              :items="cat3"
               label="Tema"
             ></v-overflow-btn>
             <v-overflow-btn
               v-if="seleccion2 === 'Geografía específica'"
               v-model="seleccion4"
               class="my-2"
-              :items="nombre4"
+              :items="cat4"
               label="Tema"
             ></v-overflow-btn>
 
@@ -125,7 +125,7 @@
               v-if="seleccion2 === 'Planes de emergencias'"
               v-model="seleccion4"
               class="my-2"
-              :items="nombre5"
+              :items="cat5"
               label="Tema"
             ></v-overflow-btn>
           </v-col>
@@ -135,13 +135,13 @@
           </v-col>
         </v-row>
       </div>
-      <!-- /////////////////////////////////////////////////////////////////////// -->
       <v-row>
         <v-col xs="6" sm="5" md="4">
           <v-select
             v-model="f_categoria"
             :items="categoria"
             label="Categoria"
+            @change="reset"
           ></v-select>
         </v-col>
         <v-col xs="6" sm="5" md="4">
@@ -149,34 +149,25 @@
             <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
           </span>
           <span v-if="f_categoria === 'Especifico de bombero'">
-            <v-select v-model="f_tema" :items="nombre" label="Tema"></v-select>
+            <v-select v-model="f_tema" :items="cat1" label="Tema"></v-select>
           </span>
           <span v-if="f_categoria === 'Materias Jurídicas comunes'">
-            <v-select v-model="f_tema" :items="nombre2" label="Tema"></v-select>
+            <v-select v-model="f_tema" :items="cat2" label="Tema"></v-select>
           </span>
           <span v-if="f_categoria === 'Estatutos de autonomía'">
-            <v-select v-model="f_tema" :items="nombre3" label="Tema"></v-select>
+            <v-select v-model="f_tema" :items="cat3" label="Tema"></v-select>
           </span>
           <span v-if="f_categoria === 'Geografía específica'">
-            <v-select v-model="f_tema" :items="nombre4" label="Tema"></v-select>
+            <v-select v-model="f_tema" :items="cat4" label="Tema"></v-select>
           </span>
           <span v-if="f_categoria === 'Planes de emergencias'">
-            <v-select v-model="f_tema" :items="nombre5" label="Tema"></v-select>
+            <v-select v-model="f_tema" :items="cat5" label="Tema"></v-select>
           </span>
         </v-col>
         <v-col xs="5" sm="6" md="4">
           <br />
           <v-btn @click="filtrar">Filtrar</v-btn>
           <v-btn @click="change_crear">Crear Pregunta</v-btn>
-        </v-col>
-        <v-col cols="8">
-          <v-textarea
-            v-model="searchText"
-            label="Introduzca parte del enunciado con exactitud"
-            auto-grow
-            solo
-            @keyup="buscarText"
-          ></v-textarea>
         </v-col>
       </v-row>
     </v-container>
@@ -189,9 +180,9 @@
             <th class="text-left">Categoria</th>
           </tr>
         </thead>
-        <tbody v-if="filtro">
+        <tbody>
           <tr
-            v-for="(item, idx) in preguntas"
+            v-for="(item, idx) in f_question"
             :key="idx"
             @click="goToQuestion(item._id, item)"
           >
@@ -205,23 +196,6 @@
             <td>{{ item.category }}</td>
           </tr>
         </tbody>
-        <tbody v-else>
-          <tr
-            v-for="(item, idx) in filtrado"
-            :key="idx"
-            @click="goToQuestion(item._id, item)"
-          >
-            <td class="text-truncate" style="max-width: 150px;">
-              {{ item.enunciado }}
-            </td>
-            <td class="text-truncate" style="max-width: 150px;">
-              {{ item.tema_id }}
-            </td>
-            <td class="text-truncate">
-              {{ item.category }}
-            </td>
-          </tr>
-        </tbody>
       </template>
     </v-simple-table>
   </div>
@@ -229,72 +203,74 @@
 
 <script>
 import API from '~/services/api'
+import { mapGetters } from 'vuex'
 export default {
   async asyncData() {
-    const temas = await API.getAllTemas()
-    let nombre = []
-    let id = []
-    let nombre2 = []
-    let id2 = []
-    let nombre3 = []
-    let id3 = []
-    let nombre4 = []
-    let id4 = []
-    let nombre5 = []
-    let id5 = []
+    var categoria = [
+      'Especifico de bombero',
+      'Materias Jurídicas comunes',
+      'Estatutos de autonomía',
+      'Geografía específica',
+      'Planes de emergencias',
+      'N/A'
+    ]
+    let temas = await API.getAllTemas()
     let temario = []
-
+    let cat1 = []
+    let id1 = []
+    let cat2 = []
+    let id2 = []
+    let cat3 = []
+    let id3 = []
+    let cat4 = []
+    let id4 = []
+    let cat5 = []
+    let id5 = []
     for (let i = 0; i < temas.length; i++) {
       temario.push(temas[i].name)
-      if (temas[i].category === 'Especifico de bombero') {
-        nombre.push(temas[i].name)
-        id.push(temas[i]._id)
+      if (categoria[0] === temas[i].category) {
+        cat1.push(temas[i].name)
+        id1.push(temas[i]._id)
       }
-      if (temas[i].category === 'Materias Jurídicas comunes') {
-        nombre2.push(temas[i].name)
+      if (categoria[1] === temas[i].category) {
+        cat2.push(temas[i].name)
         id2.push(temas[i]._id)
       }
-      if (temas[i].category === 'Estatutos de autonomía') {
-        nombre3.push(temas[i].name)
+      if (categoria[2] === temas[i].category) {
+        cat3.push(temas[i].name)
         id3.push(temas[i]._id)
       }
-      if (temas[i].category === 'Geografía específica') {
-        nombre4.push(temas[i].name)
+      if (categoria[3] === temas[i].category) {
+        cat4.push(temas[i].name)
         id4.push(temas[i]._id)
       }
-      if (temas[i].category === 'Planes de emergencias') {
-        nombre5.push(temas[i].name)
+      if (categoria[4] === temas[i].category) {
+        cat5.push(temas[i].name)
         id5.push(temas[i]._id)
       }
     }
-
-    const preguntas = await API.getAllQuestions()
-    for (let i = 0; i < preguntas.length; i++) {
-      for (let x = 0; x < temas.length; x++) {
-        if (preguntas[i].tema_id === temas[x]._id) {
-          preguntas[i].tema_id = temas[x].name
-        }
-      }
-    }
-
     return {
-      nombre,
-      id,
-      preguntas,
       temas,
-      nombre2,
+      categoria,
+      temario,
+      cat1,
+      cat2,
+      cat3,
+      cat4,
+      cat5,
+      id1,
       id2,
-      nombre3,
       id3,
-      nombre4,
       id4,
-      nombre5,
-      id5,
-      temario
+      id5
     }
   },
   data() {
     return {
+      f_categoria: '',
+      f_tema: '',
+      f_question: [],
+      crear: false,
       enunciado: '',
       opcion1: '',
       opcion2: '',
@@ -306,28 +282,108 @@ export default {
       checkbox4: false,
       explicacion: '',
       seleccion: '',
-      categoria: [
-        'Especifico de bombero',
-        'Materias Jurídicas comunes',
-        'Estatutos de autonomía',
-        'Geografía específica',
-        'Planes de emergencias',
-        'N/A'
-      ],
+      photo: '',
       seleccion2: '',
       dificultad: ['Facil', 'Medio', 'Dificil'],
       seleccion3: '',
-      seleccion4: '',
-      f_tema: '',
-      f_categoria: '',
-      filtro: true,
-      crear: false,
-      filtrado: [],
-      searchText: '',
-      photo: ''
+      seleccion4: ''
     }
   },
+  mounted() {
+    this.Find_end()
+  },
+  computed: {
+    ...mapGetters(['V_categoria', 'V_tema'])
+  },
   methods: {
+    async filtrar() {
+      this.f_question = []
+      let filtros = {
+        f_categoria: this.f_categoria,
+        f_tema: this.f_tema
+      }
+
+      this.$store.dispatch('filtro_search', filtros)
+      //por categoria solo
+      if (this.f_categoria.length > 0 && this.f_tema.length === 0) {
+        var body = {
+          category: this.f_categoria
+        }
+        let question = await API.getQuestion(body)
+        question.forEach(x => {
+          this.f_question.push(x)
+        })
+      }
+
+      for (let i = 0; i < this.temas.length; i++) {
+        for (let x = 0; x < this.f_question.length; x++) {
+          if (this.f_question[x].tema_id === this.temas[i]._id) {
+            this.f_question[x].tema_id = this.temas[i].name
+          }
+        }
+      }
+
+      //por tema solo
+      if (
+        (this.f_tema.length > 0 && this.f_categoria.length === 0) ||
+        (this.f_tema.length > 0 && this.f_categoria === 'N/A')
+      ) {
+        console.log('solo tema')
+        for (let i = 0; i < this.temario.length; i++) {
+          if (this.temas[i].name === this.f_tema) {
+            let body = {
+              tema_id: this.temas[i]._id
+            }
+            let question = await API.getQuestion(body)
+            question.forEach(x => {
+              this.f_question.push(x)
+            })
+          }
+        }
+        for (let i = 0; i < this.temas.length; i++) {
+          for (let x = 0; x < this.f_question.length; x++) {
+            if (this.f_question[x].tema_id === this.temas[i]._id) {
+              this.f_question[x].tema_id = this.temas[i].name
+            }
+          }
+        }
+      }
+      // tema y categoria
+      if (this.f_categoria.length > 0 && this.f_tema.length > 0) {
+        console.log('tema y categoria')
+        for (let i = 0; i < this.temario.length; i++) {
+          if (
+            this.temas[i].name === this.f_tema &&
+            this.temas[i].category === this.f_categoria
+          ) {
+            let body = {
+              tema_id: this.temas[i]._id,
+              category: this.temas[i].category
+            }
+            let question = await API.getQuestion(body)
+            question.forEach(x => {
+              this.f_question.push(x)
+            })
+          }
+        }
+        for (let i = 0; i < this.temas.length; i++) {
+          for (let x = 0; x < this.f_question.length; x++) {
+            if (this.f_question[x].tema_id === this.temas[i]._id) {
+              this.f_question[x].tema_id = this.temas[i].name
+            }
+          }
+        }
+      }
+    },
+    reset() {
+      this.f_tema = ''
+    },
+    goToQuestion(question) {
+      this.$router.push(`/question/${question}`)
+    },
+    change_crear() {
+      this.crear = true
+    },
     crearQuestion() {
       if (this.seleccion2 === 'Especifico de bombero') {
         const newQuestion = {
@@ -350,11 +406,16 @@ export default {
               correcta: this.checkbox4
             }
           ],
-          tema_id: this.id[this.nombre.indexOf(this.seleccion)],
+          tema_id: this.seleccion4,
           category: this.seleccion2,
           difficulty: this.seleccion3,
           explicacion: this.explicacion,
           photo: this.photo
+        }
+        for (let i = 0; i < this.temas.length; i++) {
+          if (newQuestion.tema_id === this.temas[i].name) {
+            newQuestion.tema_id = this.temas[i]._id
+          }
         }
         API.crearQuestion(newQuestion)
         this.enunciado = ''
@@ -394,10 +455,15 @@ export default {
               correcta: this.checkbox4
             }
           ],
-          tema_id: this.id2[this.nombre2.indexOf(this.seleccion4)],
+          tema_id: this.seleccion4,
           category: this.seleccion2,
           difficulty: this.seleccion3,
           explicacion: this.explicacion
+        }
+        for (let i = 0; i < this.temas.length; i++) {
+          if (newQuestion.tema_id === this.temas[i].name) {
+            newQuestion.tema_id = this.temas[i]._id
+          }
         }
         API.crearQuestion(newQuestion)
         this.enunciado = ''
@@ -437,10 +503,15 @@ export default {
               correcta: this.checkbox4
             }
           ],
-          tema_id: this.id3[this.nombre3.indexOf(this.seleccion4)],
+          tema_id: this.seleccion4,
           category: this.seleccion2,
           difficulty: this.seleccion3,
           explicacion: this.explicacion
+        }
+        for (let i = 0; i < this.temas.length; i++) {
+          if (newQuestion.tema_id === this.temas[i].name) {
+            newQuestion.tema_id = this.temas[i]._id
+          }
         }
         API.crearQuestion(newQuestion)
         this.enunciado = ''
@@ -480,10 +551,15 @@ export default {
               correcta: this.checkbox4
             }
           ],
-          tema_id: this.id4[this.nombre4.indexOf(this.seleccion4)],
+          tema_id: this.seleccion4,
           category: this.seleccion2,
           difficulty: this.seleccion3,
           explicacion: this.explicacion
+        }
+        for (let i = 0; i < this.temas.length; i++) {
+          if (newQuestion.tema_id === this.temas[i].name) {
+            newQuestion.tema_id = this.temas[i]._id
+          }
         }
         API.crearQuestion(newQuestion)
         this.enunciado = ''
@@ -523,10 +599,15 @@ export default {
               correcta: this.checkbox4
             }
           ],
-          tema_id: this.id5[this.nombre5.indexOf(this.seleccion4)],
+          tema_id: this.seleccion4,
           category: this.seleccion2,
           difficulty: this.seleccion3,
           explicacion: this.explicacion
+        }
+        for (let i = 0; i < this.temas.length; i++) {
+          if (newQuestion.tema_id === this.temas[i].name) {
+            newQuestion.tema_id = this.temas[i]._id
+          }
         }
         API.crearQuestion(newQuestion)
         this.enunciado = ''
@@ -569,54 +650,14 @@ export default {
       const widget = this.photoUploader()
       widget.open()
     },
-    goToQuestion(question) {
-      this.$router.push(`/question/${question}`)
-    },
-    filtrar() {
-      this.filtro = false
-      var f_categoria = this.f_categoria
-      var f_tema = this.f_tema
-
-      if (f_categoria.length > 0 && f_tema.length === 0) {
-        this.filtrado = this.preguntas.filter(x => x.category === f_categoria)
+    Find_end() {
+      if (this.V_categoria.length > 0) {
+        this.f_categoria = this.V_categoria
       }
-      if (
-        (f_tema.length > 0 && f_categoria.length === 0) ||
-        (f_tema.length > 0 && f_categoria === 'N/A')
-      ) {
-        this.filtrado = this.preguntas.filter(x => x.tema_id === f_tema)
+      if (this.V_tema.length > 0) {
+        this.f_tema = this.V_tema
       }
-      if (f_categoria.length > 0 && f_tema.length > 0) {
-        this.filtrado = this.preguntas.filter(
-          x => x.tema_id === f_tema && x.category === f_categoria
-        )
-      }
-      this.f_categoria = ''
-      this.f_tema = ''
-    },
-    change_crear() {
-      this.crear = true
-    },
-    buscarText() {
-      this.filtrado = []
-      this.filtro = false
-      if (this.searchText.length > 0) {
-        this.preguntas.forEach(p => {
-          if (
-            p.enunciado.toLowerCase().includes(this.searchText.toLowerCase())
-          ) {
-            this.filtrado.push(p)
-          }
-        })
-      }
-      if (this.searchText.length === 0) {
-        this.filtrado = this.preguntas
-      }
-    }
-  },
-  head() {
-    return {
-      script: [{ src: 'https://widget.cloudinary.com/v2.0/global/all.js' }]
+      this.filtrar()
     }
   }
 }

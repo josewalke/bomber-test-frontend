@@ -359,6 +359,7 @@ export default {
           testPremium.user_id = student[i]._id
           // console.log(testPremium)
           API.crearExamen(testPremium)
+          alert('Test premium enviado')
           // location.reload()
         }
       }
@@ -366,11 +367,27 @@ export default {
     async testDesafio() {
       const testPremium = await API.testPremium()
       const student = await API.getAllUsers()
+      const now = new Date()
+      const day = now.getDate() > 9 ? now.getDate() : '0' + now.getDate()
+      const month = now.getMonth() > 9 ? now.getMonth() : '0' + now.getMonth()
+      const minutes =
+        now.getMinutes() > 9 ? now.getMinutes() : '0' + now.getMinutes()
+      // let date = now.getDate() +"/"+ now.getMonth()+1 +"/"+ now.getFullYear() + " - " + now.getHours()+ ":" + minutes
+      let date =
+        day +
+        '/' +
+        month +
+        '/' +
+        now.getFullYear() +
+        ' - ' +
+        now.getHours() +
+        ':' +
+        minutes
       for (let i = 0; i < student.length; i++) {
         if (student[i].role === 'cliente' && student[i].active === true) {
           let testDesafio = {
             user_id: student[i]._id,
-            title: testPremium.title,
+            title: 'Desafio semanal ' + date,
             testCheck: testPremium.testCheck,
             aciertos: testPremium.aciertos,
             aciertos_num: testPremium.aciertos_num,
@@ -385,8 +402,8 @@ export default {
           }
           testPremium.user_id = student[i]._id
           testPremium.desafio = true
-
           API.crearExamen(testDesafio)
+          alert('Desafia enviado')
         }
       }
     }

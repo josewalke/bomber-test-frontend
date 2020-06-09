@@ -28,7 +28,9 @@ export const state = () => ({
   suscripciones: '',
   pregunta_id: '',
   test_id: '',
-  provincia: ''
+  provincia: '',
+  f_categoria: '',
+  f_tema: ''
 })
 
 export const getters = {
@@ -115,6 +117,12 @@ export const getters = {
   },
   test_id(state) {
     return state.test_id
+  },
+  V_categoria(state) {
+    return state.f_categoria
+  },
+  V_tema(state) {
+    return state.f_tema
   }
 }
 
@@ -307,6 +315,14 @@ export const mutations = {
       blank: state.currentTest.no_contestadas.length,
       right: 0,
       wrong: 0
+    }
+  },
+  filtro_search(state, data) {
+    if (data.f_categoria.length > 0) {
+      state.f_categoria = data.f_categoria
+    }
+    if (data.f_tema.length > 0) {
+      state.f_tema = data.f_tema
     }
   }
 }
@@ -647,5 +663,8 @@ export const actions = {
   async reload({ commit }, data) {
     commit('reload')
     API.reload(data)
+  },
+  async filtro_search({ commit }, data) {
+    commit('filtro_search', data)
   }
 }

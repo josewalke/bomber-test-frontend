@@ -361,5 +361,10 @@ export default {
     return axios
       .post('users/new_pass', data, { headers: { token } })
       .then(response => response.data)
+  },
+  getQuestion(data) {
+    return axios
+      .post('questions/especifico', data)
+      .then(response => response.data)
   }
 }
