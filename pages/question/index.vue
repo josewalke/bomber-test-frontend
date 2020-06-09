@@ -211,8 +211,7 @@ export default {
       'Materias Jurídicas comunes',
       'Estatutos de autonomía',
       'Geografía específica',
-      'Planes de emergencias',
-      'N/A'
+      'Planes de emergencias'
     ]
     let temas = await API.getAllTemas()
     let temario = []
