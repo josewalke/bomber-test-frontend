@@ -177,7 +177,7 @@
           <tr>
             <th class="text-left">Enunciado</th>
             <th class="text-left">Temario</th>
-            <th class="text-left">Categoria</th>
+            <th class="text-left">Categoría</th>
           </tr>
         </thead>
         <tbody>
