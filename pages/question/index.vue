@@ -102,7 +102,7 @@
               v-if="seleccion2 === 'Materias Jurídicas comunes'"
               v-model="seleccion4"
               class="my-2"
-              :items="cat3"
+              :items="cat2"
               label="Tema"
             ></v-overflow-btn>
 
