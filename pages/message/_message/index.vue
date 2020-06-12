@@ -18,36 +18,59 @@
     </div>
     <v-row>
       <v-col cols="11">
-        <v-card
-          class="carta-opciones"
-          :color="question.answers[0].correcta ? 'green' : 'red'"
+        <div
+          :id="resaltar === question.answers[0].respuesta ? 'resaltar' : 'none'"
         >
-          {{ question.answers[0].respuesta }}<br />
-        </v-card>
+          <v-card
+            id="respuestas"
+            class="carta-opciones2"
+            :color="question.answers[0].correcta ? 'green' : 'red'"
+          >
+            {{ question.answers[0].respuesta }}<br />
+          </v-card>
+        </div>
       </v-col>
       <v-col cols="11">
-        <v-card
-          class="carta-opciones"
-          :color="question.answers[1].correcta ? 'green' : 'red'"
+        <div
+          :id="resaltar === question.answers[1].respuesta ? 'resaltar' : 'none'"
         >
-          {{ question.answers[1].respuesta }}
-        </v-card>
+          <v-card
+            id="respuestas"
+            class="carta-opciones2"
+            :color="question.answers[1].correcta ? 'green' : 'red'"
+          >
+            {{ question.answers[1].respuesta }}
+          </v-card>
+        </div>
+      </v-col>
+      <!-- <v-icon :color="question.answers[1].correcta ? 'green' : 'red'"
+        >mdi-check</v-icon
+      > -->
+      <v-col cols="11">
+        <div
+          :id="resaltar === question.answers[2].respuesta ? 'resaltar' : 'none'"
+        >
+          <v-card
+            id="respuestas"
+            class="carta-opciones2"
+            :color="question.answers[2].correcta ? 'green' : 'red'"
+          >
+            {{ question.answers[2].respuesta }}
+          </v-card>
+        </div>
       </v-col>
       <v-col cols="11">
-        <v-card
-          class="carta-opciones"
-          :color="question.answers[2].correcta ? 'green' : 'red'"
+        <div
+          :id="resaltar === question.answers[3].respuesta ? 'resaltar' : 'none'"
         >
-          {{ question.answers[2].respuesta }}
-        </v-card>
-      </v-col>
-      <v-col cols="11">
-        <v-card
-          class="carta-opciones"
-          :color="question.answers[3].correcta ? 'green' : 'red'"
-        >
-          {{ question.answers[3].respuesta }}
-        </v-card>
+          <v-card
+            id="respuestas"
+            class="carta-opciones2"
+            :color="question.answers[3].correcta ? 'green' : 'red'"
+          >
+            {{ question.answers[3].respuesta }}
+          </v-card>
+        </div>
       </v-col>
     </v-row>
 
@@ -94,6 +117,7 @@
         <v-btn @click="goToQuestion(question._id)">Modificar Pregunta</v-btn>
       </div>
     </div>
+    {{ resaltar }}
   </v-container>
 </template>
 
@@ -114,11 +138,16 @@ export default {
   data() {
     return {
       respuesta: '',
-      formato: ''
+      formato: '',
+      resaltar: '',
+      test: ''
     }
   },
   computed: {
     ...mapGetters(['question', 'messages', 'position', 'role'])
+  },
+  mounted() {
+    this.mostrar_seleccionada()
   },
   methods: {
     resolucion() {
@@ -138,6 +167,32 @@ export default {
     },
     goToQuestion(id) {
       this.$router.push(`/question/${id}`)
+    },
+    async mostrar_seleccionada() {
+      this.messages.forEach(async x => {
+        // console.log(x)
+        if (x.pregunta_id === this.question._id) {
+          let body = {
+            _id: x.test_id
+          }
+          var test = await API.getByTest(body)
+
+          for (let i = 0; i < this.question.answers.length; i++) {
+            for (let x = 0; x < test.respuestas.length; x++) {
+              // console.log(test.respuestas[x].respuestas[0].respuesta)
+              for (let z = 0; z < 4; z++) {
+                if (
+                  this.question.answers[i].respuesta ===
+                  test.respuestas[x].respuestas[z].respuesta
+                ) {
+                  this.resaltar = test.respuestas[x].respuestas[z].respuesta
+                }
+              }
+            }
+          }
+        }
+      })
+      // console.log(this.messages)
     }
   }
 }
@@ -158,10 +213,19 @@ export default {
   max-width: 800px;
   max-height: 200px;
 }
+.carta-opciones2 {
+  max-width: 800px;
+  max-height: 200px;
+  /* border: solid 240px black; */
+}
 #cp {
   -webkit-user-select: none;
   -moz-user-select: none;
   -khtml-user-select: none;
   -ms-user-select: none;
+}
+#resaltar {
+  border: solid 5px blue;
+  border-radius: 5px;
 }
 </style>

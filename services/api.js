@@ -367,5 +367,8 @@ export default {
     return axios
       .post('questions/especifico', data)
       .then(response => response.data)
+  },
+  getByTest(data) {
+    return axios.get('tests/' + data._id).then(response => response.data)
   }
 }
