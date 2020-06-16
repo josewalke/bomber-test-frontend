@@ -55,7 +55,6 @@ export default {
         name: this.newTema,
         category: this.seleccion
       }
-      console.log(body)
       API.newTema(body)
       location.reload()
     }

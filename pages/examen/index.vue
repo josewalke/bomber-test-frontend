@@ -359,10 +359,10 @@ export default {
           testPremium.user_id = student[i]._id
           // console.log(testPremium)
           API.crearExamen(testPremium)
-          alert('Test premium enviado')
           // location.reload()
         }
       }
+      alert('Test premium enviado')
     },
     async testDesafio() {
       const testPremium = await API.testPremium()
@@ -403,9 +403,9 @@ export default {
           testPremium.user_id = student[i]._id
           testPremium.desafio = true
           API.crearExamen(testDesafio)
-          alert('Desafia enviado')
         }
       }
+      alert('Desafia enviado')
     }
   }
 }

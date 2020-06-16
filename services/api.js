@@ -370,5 +370,10 @@ export default {
   },
   getByTest(data) {
     return axios.get('tests/' + data._id).then(response => response.data)
+  },
+  deleteUser(data) {
+    return axios.delete('users/' + data).then(response => {
+      return response.data
+    })
   }
 }

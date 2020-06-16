@@ -65,6 +65,7 @@
             <th class="text-left">Teléfono</th>
             <th class="text-left">Suscripción</th>
             <th class="text-left">Activo</th>
+            <th class="text-left"></th>
           </tr>
         </thead>
         <tbody>
@@ -90,6 +91,7 @@
                 @change="change_active(idx)"
               ></v-checkbox>
             </td>
+            <td><v-btn color="error" @click="borrar(item)">Eliminar</v-btn></td>
           </tr>
         </tbody>
       </template>
@@ -277,6 +279,10 @@ export default {
     setSelected(value) {
       this.seleccion = value
       console.log(this.seleccion)
+    },
+    borrar(item) {
+      API.deleteUser(item._id)
+      location.reload()
     }
   }
 }
