@@ -128,6 +128,13 @@
               :items="cat5"
               label="Tema"
             ></v-overflow-btn>
+            <v-overflow-btn
+              v-if="seleccion2 === 'Reglamentos,tasas y estatutos particulares'"
+              v-model="seleccion4"
+              class="my-2"
+              :items="cat6"
+              label="Tema"
+            ></v-overflow-btn>
           </v-col>
           <v-col cols="4">
             <br />
@@ -162,6 +169,11 @@
           </span>
           <span v-if="f_categoria === 'Planes de emergencias'">
             <v-select v-model="f_tema" :items="cat5" label="Tema"></v-select>
+          </span>
+          <span
+            v-if="f_categoria === 'Reglamentos,tasas y estatutos particulares'"
+          >
+            <v-select v-model="f_tema" :items="cat6" label="Tema"></v-select>
           </span>
         </v-col>
         <v-col xs="5" sm="6" md="4">
@@ -211,7 +223,8 @@ export default {
       'Materias Jurídicas comunes',
       'Estatutos de autonomía',
       'Geografía específica',
-      'Planes de emergencias'
+      'Planes de emergencias',
+      'Reglamentos,tasas y estatutos particulares'
     ]
     let temas = await API.getAllTemas()
     let temario = []
@@ -225,6 +238,8 @@ export default {
     let id4 = []
     let cat5 = []
     let id5 = []
+    let cat6 = []
+    let id6 = []
     for (let i = 0; i < temas.length; i++) {
       temario.push(temas[i].name)
       if (categoria[0] === temas[i].category) {
@@ -247,6 +262,10 @@ export default {
         cat5.push(temas[i].name)
         id5.push(temas[i]._id)
       }
+      if (categoria[5] === temas[i].category) {
+        cat6.push(temas[i].name)
+        id6.push(temas[i]._id)
+      }
     }
     return {
       temas,
@@ -257,11 +276,13 @@ export default {
       cat3,
       cat4,
       cat5,
+      cat6,
       id1,
       id2,
       id3,
       id4,
-      id5
+      id5,
+      id6
     }
   },
   data() {
@@ -577,6 +598,54 @@ export default {
         this.photo = ''
       }
       if (this.seleccion2 === 'Planes de emergencias') {
+        const newQuestion = {
+          enunciado: this.enunciado,
+          photo: this.photo,
+          answers: [
+            {
+              respuesta: this.opcion1,
+              correcta: this.checkbox1
+            },
+            {
+              respuesta: this.opcion2,
+              correcta: this.checkbox2
+            },
+            {
+              respuesta: this.opcion3,
+              correcta: this.checkbox3
+            },
+            {
+              respuesta: this.opcion4,
+              correcta: this.checkbox4
+            }
+          ],
+          tema_id: this.seleccion4,
+          category: this.seleccion2,
+          difficulty: this.seleccion3,
+          explicacion: this.explicacion
+        }
+        for (let i = 0; i < this.temas.length; i++) {
+          if (newQuestion.tema_id === this.temas[i].name) {
+            newQuestion.tema_id = this.temas[i]._id
+          }
+        }
+        API.crearQuestion(newQuestion)
+        this.enunciado = ''
+        this.opcion1 = ''
+        this.opcion2 = ''
+        this.opcion3 = ''
+        this.opcion4 = ''
+        this.checkbox1 = false
+        this.checkbox2 = false
+        this.checkbox3 = false
+        this.checkbox4 = false
+        this.seleccion2 = ''
+        this.seleccion3 = ''
+        this.seleccion4 = ''
+        this.explicacion = ''
+        this.photo = ''
+      }
+      if (this.seleccion2 === 'Reglamentos,tasas y estatutos particulares') {
         const newQuestion = {
           enunciado: this.enunciado,
           photo: this.photo,

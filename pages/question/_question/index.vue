@@ -139,6 +139,13 @@
           :items="nombre5"
           label="Tema"
         ></v-overflow-btn>
+        <v-overflow-btn
+          v-else-if="seleccion === 'Reglamentos,tasas y estatutos particulares'"
+          v-model="seleccion7"
+          class="my-2"
+          :items="nombre6"
+          label="Tema"
+        ></v-overflow-btn>
         <v-overflow-btn v-else class="my-2" label="Tema"></v-overflow-btn>
         <v-btn @click="updateTema">Actualizar</v-btn>
       </v-col>
@@ -166,6 +173,8 @@ export default {
     const id4 = []
     const nombre5 = []
     const id5 = []
+    const nombre6 = []
+    const id6 = []
     for (let i = 0; i < temas.length; i++) {
       if (pregunta.tema_id === temas[i]._id) {
         posicion = i
@@ -191,6 +200,10 @@ export default {
         nombre5.push(temas[i].name)
         id5.push(temas[i]._id)
       }
+      if (temas[i].category === 'Reglamentos,tasas y estatutos particulares') {
+        nombre6.push(temas[i].name)
+        id6.push(temas[i]._id)
+      }
     }
 
     return {
@@ -205,7 +218,9 @@ export default {
       nombre4,
       id4,
       nombre5,
-      id5
+      id5,
+      nombre6,
+      id6
     }
   },
   data() {
@@ -221,7 +236,8 @@ export default {
         'Materias Jurídicas comunes',
         'Estatutos de autonomía',
         'Geografía específica',
-        'Planes de emergencias'
+        'Planes de emergencias',
+        'Reglamentos,tasas y estatutos particulares'
       ],
       seleccion: '',
       dificultad: ['Facil', 'Medio', 'Dificil'],
@@ -438,6 +454,14 @@ export default {
         const body = {
           id: this.updatePregunta._id,
           tema_id: this.id5[this.nombre5.indexOf(this.seleccion7)]
+        }
+        this.$store.dispatch('updateTema', body)
+        this.ver = false
+      }
+      if (this.seleccion === 'Reglamentos,tasas y estatutos particulares') {
+        const body = {
+          id: this.updatePregunta._id,
+          tema_id: this.id6[this.nombre6.indexOf(this.seleccion7)]
         }
         this.$store.dispatch('updateTema', body)
         this.ver = false

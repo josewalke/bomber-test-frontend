@@ -44,7 +44,8 @@ export default {
         'Especifico de bombero',
         'Materias Jurídicas comunes',
         'Geografía específica',
-        'Planes de emergencias'
+        'Planes de emergencias',
+        'Reglamentos,tasas y estatutos particulares'
       ],
       seleccion: ''
     }
