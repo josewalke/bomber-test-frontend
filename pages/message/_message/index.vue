@@ -89,10 +89,7 @@
       <h1>Pregunta del estudiante</h1>
       <hr class="divisor" />
       <br />
-      <v-card
-        class="carta-opciones"
-        :width="formato === 'movil' ? '350px' : '100%'"
-      >
+      <v-card>
         {{ messages[position].pregunta }}
       </v-card>
     </div>
@@ -100,10 +97,7 @@
       <h1>Respuesta del profesor</h1>
       <hr class="divisor" />
       <br />
-      <v-card
-        class="carta-opciones"
-        :width="formato === 'movil' ? '350px' : '100%'"
-      >
+      <v-card>
         {{ messages[position].respuesta }}
       </v-card>
     </div>
