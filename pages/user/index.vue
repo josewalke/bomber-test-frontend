@@ -111,7 +111,12 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row v-if="suscription_type === 'premium' || suscription_type === 'pro'">
+    <v-row
+      v-if="
+        (suscription_type === 'premium' && active === true) ||
+          (suscription_type === 'pro' && active === true)
+      "
+    >
       <v-col md="10" offset="1">
         <v-card :width="formato === 'ordenador' ? '100%' : '90%'">
           <h2>Clases por Streaming</h2>
