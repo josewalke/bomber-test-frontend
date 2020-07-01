@@ -375,5 +375,8 @@ export default {
     return axios.delete('users/' + data).then(response => {
       return response.data
     })
+  },
+  post_pdf(data) {
+    return axios.post('pdf/', data).then(response => response.data)
   }
 }
