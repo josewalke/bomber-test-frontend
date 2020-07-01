@@ -182,6 +182,7 @@ export default {
       admin: [
         { title: 'Alumnos', icon: 'mdi-account', page: '/dashboard' },
         { title: 'Temas', icon: 'mdi-book-open', page: '/temas' },
+        { title: 'PDF', icon: 'mdi-application-import', page: '/pdf' },
         { title: 'Mensajes', icon: 'mdi-email', page: '/message' },
         { title: 'Preguntas', icon: 'mdi-playlist-edit', page: '/question' },
         { title: 'Test', icon: 'mdi-ballot', page: '/examen' },
