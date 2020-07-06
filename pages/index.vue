@@ -3,9 +3,9 @@
     <!-- Empieza Barra de inicio -->
     <v-app-bar class="nav-bar" fixed flat color="rgba(184, 0, 0, 1)">
       <v-toolbar-title class="white--text font-weight-black" v-text="title" />
-
+      <v-spacer />
       <!-- inicio modal -->
-      <v-dialog max-width="500">
+      <v-dialog max-width="300">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark v-on="on">Login/Registro</v-btn>
         </template>
