@@ -403,4 +403,7 @@ export default {
 a {
   text-decoration: none;
 }
+.text-center {
+  text-align: center;
+}
 </style>

@@ -95,7 +95,7 @@
         >
         </v-data-table>
 
-        <v-card-title>
+        <!-- <v-card-title>
           Materias Jurídicas comunes
           <v-spacer></v-spacer>
         </v-card-title>
@@ -158,7 +158,7 @@
           show-select
           class="elevation-1"
         >
-        </v-data-table>
+        </v-data-table> -->
       </v-card>
     </div>
     <br />
