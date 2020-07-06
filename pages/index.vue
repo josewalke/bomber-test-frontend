@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- Empieza Barra de inicio -->
-    <v-app-bar class="nav-bar" flat color="rgba(184, 0, 0, 1)">
+    <v-app-bar class="nav-bar" fixed color="rgba(184, 0, 0, 1)">
       <v-toolbar-title class="white--text font-weight-black" v-text="title" />
       <v-spacer />
       <!-- inicio modal -->
-      <v-dialog max-width="100">
+      <v-dialog max-width="500">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark v-on="on">Login/Registro</v-btn>
         </template>
@@ -221,7 +221,11 @@
     </div>
     <!-- Fin de Tabla de suscripcion -->
     <!-- Inicio del Footer -->
-    <v-footer class="text-center" color="rgba(184, 0, 0, 1)" md="6" xs="12">
+    <v-footer
+      :id="formato === 'movil' ? 'like' : 'none'"
+      class="text-center"
+      color="rgba(184, 0, 0, 1)"
+    >
       <v-row align="center" justify="center">
         <v-col md="6" xs="12" align="center" justify="center">
           <h1 class="white--text">Síguenos en las redes</h1>
