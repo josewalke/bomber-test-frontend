@@ -5,7 +5,7 @@
       <v-toolbar-title class="white--text font-weight-black" v-text="title" />
       <v-spacer />
       <!-- inicio modal -->
-      <v-dialog max-width="300">
+      <v-dialog max-width="100">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark v-on="on">Login/Registro</v-btn>
         </template>
