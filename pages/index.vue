@@ -407,6 +407,6 @@ a {
   text-align: center;
 }
 .footer-movil {
-  font-size: 15px;
+  font-size: 10px;
 }
 </style>
