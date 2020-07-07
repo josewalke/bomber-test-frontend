@@ -305,6 +305,7 @@ export const mutations = {
   },
   suscription_end_active(state) {
     state.active = true
+    state.suscription_end_active = new Date().getTime() + 2629750000
   },
   explicacion(state, body) {
     state.test_id = body.test
