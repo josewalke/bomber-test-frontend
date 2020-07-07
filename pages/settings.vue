@@ -205,7 +205,7 @@ export default {
       if (this.seleccion.length === 0) {
         console.log('esta vacio')
       } else {
-        if (!parseInt(this.suscription_end_active) > new Date().getTime()) {
+        if (parseInt(this.suscription_end_active) < new Date().getTime()) {
           await this.$store.dispatch('updateSuscription', this.seleccion)
         } else {
           alert('Su suscripción todavia no ha caducado')
