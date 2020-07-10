@@ -22,8 +22,8 @@ export default {
   getAllTestById(userId) {
     return axios.get('tests/user/me/' + userId).then(response => response.data)
   },
-  generateTest(token) {
-    return axios.post('tests', null, { headers: { token } }).then(response => {
+  generateTest() {
+    return axios.post('tests').then(response => {
       return response.data
     })
   },
