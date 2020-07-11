@@ -130,7 +130,8 @@ export default {
     async testGeneration() {
       if (this.active === true) {
         await this.$store.dispatch('createTest')
-        this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
+        // this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
+        this.$router.push('../clasificacion')
       } else {
         alert('para realizar un test primero debe activar su cuenta')
       }
