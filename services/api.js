@@ -26,6 +26,7 @@ export default {
     // return axios.post('tests', null, { headers: { token } }).then(response => {
     //   return response.data
     // })
+    console.log(data)
     return axios.post('tests', data).then(response => {
       return response.data
     })
