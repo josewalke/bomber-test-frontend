@@ -358,13 +358,13 @@ export const actions = {
     commit('saveMessage', mensajes)
   },
   async createTest({ commit, state }) {
-    let body = {
-      _id: state.userId
-    }
-    const newTest = await API.generateTest(body)
-    commit('saveCurrentTest', newTest)
-    // const newTest = await API.generateTest(state.token)
+    // let body = {
+    //   _id: state.userId
+    // }
+    // const newTest = await API.generateTest(body)
     // commit('saveCurrentTest', newTest)
+    const newTest = await API.generateTest(state.token)
+    commit('saveCurrentTest', newTest)
     const tests = await API.getAllTestById(state.userId)
     commit('saveTests', tests)
   },
