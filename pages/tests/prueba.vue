@@ -131,7 +131,7 @@ export default {
       if (this.active === true) {
         // await this.$store.dispatch('createTest')
         // alert('reza')
-        await this.$store.dispatch('createTest2')
+        await this.$store.dispatch('createTest')
         // this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
         // this.$router.push('../clasificacion')
       } else {

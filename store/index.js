@@ -358,8 +358,13 @@ export const actions = {
     commit('saveMessage', mensajes)
   },
   async createTest({ commit, state }) {
-    const newTest = await API.generateTest(state.token)
+    let body = {
+      _id: state.userId
+    }
+    const newTest = await API.generateTest(body)
     commit('saveCurrentTest', newTest)
+    // const newTest = await API.generateTest(state.token)
+    // commit('saveCurrentTest', newTest)
     const tests = await API.getAllTestById(state.userId)
     commit('saveTests', tests)
   },
@@ -368,8 +373,9 @@ export const actions = {
       _id: state.userId
     }
     const newTest = await API.generateTest2(body)
-    console.log(newTest)
-    commit('prueba')
+    commit('saveCurrentTest', newTest)
+    const tests = await API.getAllTestById(state.userId)
+    commit('saveTests', tests)
   },
   async createTestConfig({ commit, state }, testData) {
     const newTest = await API.generateConfigTest(state.token, testData)
