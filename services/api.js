@@ -27,6 +27,12 @@ export default {
       return response.data
     })
   },
+  generateTest2(data) {
+    console.log(data)
+    return axios.post('tests', data).then(response => {
+      return response.data
+    })
+  },
   generateConfigTest(token, test) {
     return axios
       .post('tests/config', test, { headers: { token } })

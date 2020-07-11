@@ -363,6 +363,14 @@ export const actions = {
     const tests = await API.getAllTestById(state.userId)
     commit('saveTests', tests)
   },
+  async createTest2({ commit, state }) {
+    let body = {
+      _id: state.userId
+    }
+    const newTest = await API.generateTest2(body)
+    console.log(newTest)
+    commit('prueba')
+  },
   async createTestConfig({ commit, state }, testData) {
     const newTest = await API.generateConfigTest(state.token, testData)
     commit('saveCurrentTest', newTest)
