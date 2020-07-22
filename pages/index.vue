@@ -283,6 +283,7 @@ export default {
     } else {
       this.formato = 'ordenador'
     }
+    alert('netlify')
   },
   layout: 'basic'
 }
