@@ -129,6 +129,7 @@ export default {
   methods: {
     async testGeneration() {
       if (this.active === true) {
+        console.log('crear test aleatorio')
         await this.$store.dispatch('createTest')
         this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
       } else {
