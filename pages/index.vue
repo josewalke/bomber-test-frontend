@@ -271,7 +271,7 @@ export default {
   },
   data() {
     return {
-      title: 'Oposición Bomberos',
+      title: 'Oposición Bombero',
       items: [{ title: 'Login', to: '/auth' }],
       tab: null,
       formato: ''
