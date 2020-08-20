@@ -20,6 +20,8 @@ export default {
     return axios.get('questions').then(response => response.data)
   },
   getAllTestById(userId) {
+    console.log('probando')
+    console.log(userId)
     return axios.get('tests/user/me/' + userId).then(response => response.data)
   },
   generateTest(token) {
