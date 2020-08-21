@@ -398,7 +398,8 @@ export default {
             no_contestadas: testPremium.no_contestadas,
             mostrar_solucion: testPremium.mostrar_solucion,
             desafio: true,
-            deberes: true
+            deberes: true,
+            visible: true
           }
           testPremium.user_id = student[i]._id
           testPremium.desafio = true

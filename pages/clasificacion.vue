@@ -79,7 +79,11 @@ export default {
               Math.floor(tests[x].testCheck.wrong / 3)
           }
 
-          if (tests[x].desafio === true && tests[x].deberes === false) {
+          if (
+            tests[x].desafio === true &&
+            tests[x].deberes === false &&
+            tests[x].visible === true
+          ) {
             desafio += 100
             contador2 +=
               tests[x].testCheck.right * 2 -
