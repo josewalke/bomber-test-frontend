@@ -3,8 +3,8 @@
     <v-app id="inspire">
       <v-data-table
         v-model="selected"
-        :headers="headers"
-        :items="desserts"
+        :headers="headers_especifico"
+        :items="especifico"
         :single-select="singleSelect"
         item-key="name"
         show-select
@@ -29,35 +29,13 @@ export default {
   async asyncData() {
     const student = await API.getAllUsers()
     const temas = await API.getAllTemas()
-    const preguntas = await API.getAllQuestions()
-    const bomberil = []
-    const legislacion = []
-    const estatutos = []
-    const geografia = []
-    const emergencias = []
+    const Especifico = await API.giveQuestion('Especifico de bombero')
     const student_active = []
-    for (let i = 0; i < preguntas.length; i++) {
-      for (let x = 0; x < temas.length; x++) {
-        if (preguntas[i].tema_id === temas[x]._id) {
-          preguntas[i].tema_id = temas[x].name
-          if (preguntas[i].category === 'Especifico de bombero') {
-            bomberil.push(preguntas[i])
-          }
-          if (preguntas[i].category === 'Materias Jurídicas comunes') {
-            legislacion.push(preguntas[i])
-          }
-          if (preguntas[i].category === 'Estatutos de autonomía') {
-            estatutos.push(preguntas[i])
-          }
-          if (preguntas[i].category === 'Geografía específica') {
-            geografia.push(preguntas[i])
-          }
-          if (preguntas[i].category === 'Planes de emergencias') {
-            emergencias.push(preguntas[i])
-          }
-        }
-      }
+    const especifico = []
+    for (let i = 0; i < Especifico.length; i++) {
+      especifico.push(Especifico[i])
     }
+
     for (let i = 0; i < student.length; i++) {
       if (student[i].active === true) {
         student_active.push(student[i])
@@ -66,11 +44,8 @@ export default {
     return {
       student_active,
       temas,
-      bomberil,
-      legislacion,
-      estatutos,
-      geografia,
-      emergencias
+      Especifico,
+      especifico
     }
   },
   data() {
@@ -78,26 +53,24 @@ export default {
       singleSelect: false,
       selected: [],
       headers: [
-        //   {
-        //     text: 'Dessert (100g serving)',
-        //     align: 'start',
-        //     sortable: false,
-        //     value: 'name'
-        //   },
-        //   { text: 'Calories', value: 'calories' },
-        //   { text: 'Fat (g)', value: 'fat' },
-        //   { text: 'Carbs (g)', value: 'carbs' },
-        //   { text: 'Protein (g)', value: 'protein' },
-        //   { text: 'Iron (%)', value: 'iron' }
+        {
+          text: 'Dessert (100g serving)',
+          align: 'start',
+          sortable: false,
+          value: 'name'
+        },
+        { text: 'Calories', value: 'calories' },
+        { text: 'Fat (g)', value: 'fat' },
+        { text: 'Carbs (g)', value: 'carbs' },
+        { text: 'Protein (g)', value: 'protein' },
+        { text: 'Iron (%)', value: 'iron' }
+      ],
+      headers_especifico: [
         {
           text: 'Enunciado',
-          align: 'left',
-          sortable: false,
           value: 'enunciado'
-        },
-        { text: 'Tema', value: 'tema_id' }
+        }
       ],
-
       desserts: [
         {
           name: 'Frozen Yogurt',

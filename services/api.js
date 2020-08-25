@@ -388,5 +388,12 @@ export default {
   },
   post_pdf(data) {
     return axios.post('pdf/', data).then(response => response.data)
+  },
+  giveQuestion(data) {
+    console.log(data)
+    const body = {
+      category: data
+    }
+    return axios.post('questions/give', body).then(response => response.data)
   }
 }
