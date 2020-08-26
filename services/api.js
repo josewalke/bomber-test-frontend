@@ -395,5 +395,8 @@ export default {
       category: data
     }
     return axios.post('questions/give', body).then(response => response.data)
+  },
+  filtrarQuestion(data) {
+    return axios.post('questions/filtrar', data).then(response => response.data)
   }
 }

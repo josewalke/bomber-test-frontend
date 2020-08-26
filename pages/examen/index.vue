@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <div>
+  <div id="app">
+    <v-container>
       <v-form>
         <h1>Configuración de test</h1>
 
@@ -72,155 +72,184 @@
       </v-card>
       <!-- ============================================Elegir preguntas=========================== -->
       <h1>Preguntas</h1>
-      <v-card fixd flat>
-        <v-card-title>
-          Específico de bombero
-          <v-spacer></v-spacer>
-          <v-text-field
-            v-model="search_question"
-            label="Search"
-            single-line
-            hide-details
-          ></v-text-field>
-        </v-card-title>
-        <v-data-table
-          v-model="select_question"
-          :search="search_question"
-          :headers="headers_question"
-          :items="bomberil"
-          :single-select="singleSelect"
-          item-key="idx"
-          show-select
-          class="elevation-1"
-        >
-        </v-data-table>
+      <v-row>
+        <v-col xs="6" sm="5" md="4">
+          <v-select
+            v-model="f_categoria"
+            :items="categoria"
+            label="Categoria"
+            @change="reset"
+          ></v-select>
+        </v-col>
+        <v-col xs="6" sm="5" md="4">
+          <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
+            <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Especifico de bombero'">
+            <v-select v-model="f_tema" :items="cat1" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Materias Jurídicas comunes'">
+            <v-select v-model="f_tema" :items="cat2" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Estatutos de autonomía'">
+            <v-select v-model="f_tema" :items="cat3" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Geografía específica'">
+            <v-select v-model="f_tema" :items="cat4" label="Tema"></v-select>
+          </span>
+          <span v-if="f_categoria === 'Planes de emergencias'">
+            <v-select v-model="f_tema" :items="cat5" label="Tema"></v-select>
+          </span>
+          <span
+            v-if="f_categoria === 'Reglamentos,tasas y estatutos particulares'"
+          >
+            <v-select v-model="f_tema" :items="cat6" label="Tema"></v-select>
+          </span>
+        </v-col>
+        <v-col xs="5" sm="6" md="4">
+          <br />
+          <v-btn @click="filtrar">Filtrar</v-btn>
+        </v-col>
+      </v-row>
 
-        <!-- <v-card-title>
-          Materias Jurídicas comunes
-          <v-spacer></v-spacer>
-        </v-card-title>
-        <v-data-table
-          v-model="select_question"
-          :search="search_question"
-          :headers="headers_question"
-          :items="legislacion"
-          :single-select="singleSelect"
-          item-key="idx"
-          show-select
-          class="elevation-1"
-        >
-        </v-data-table>
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">Enunciado</th>
+              <!-- <th class="text-left">Temario</th>
+            <th class="text-left">Categoría</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(item, idx) in f_question"
+              :key="idx"
+              @click="seleccionar(item)"
+            >
+              <td class="text-truncate" style="max-width: 150px;">
+                {{ item.enunciado }}
+              </td>
 
-        <v-card-title>
-          Estatutos de autonomía
+              <!-- <td class="text-truncate" style="max-width: 150px;">
+              {{ item.tema_id }}
+            </td>
+            <td>{{ item.category }}</td> -->
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+      <h1>Numero de preguntas {{ selected.length }}</h1>
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">Enunciado</th>
+              <th class="text-left">Temario</th>
+              <th class="text-left">Categoría</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, idx) in selected" :key="idx" @click="Quitar(idx)">
+              <td class="text-truncate" style="max-width: 150px;">
+                {{ item.enunciado }}
+              </td>
 
-          <v-spacer></v-spacer>
-        </v-card-title>
-        <v-data-table
-          v-model="select_question"
-          :search="search_question"
-          :headers="headers_question"
-          :items="estatutos"
-          :single-select="singleSelect"
-          item-key="idx"
-          show-select
-          class="elevation-1"
-        >
-        </v-data-table>
-
-        <v-card-title>
-          Geografía específica
-          <v-spacer></v-spacer>
-        </v-card-title>
-        <v-data-table
-          v-model="select_question"
-          :search="search_question"
-          :headers="headers_question"
-          :items="geografia"
-          :single-select="singleSelect"
-          item-key="idx"
-          show-select
-          class="elevation-1"
-        >
-        </v-data-table>
-
-        <v-card-title>
-          Planes de emergencias
-          <v-spacer></v-spacer>
-        </v-card-title>
-        <v-data-table
-          v-model="select_question"
-          :search="search_question"
-          :headers="headers_question"
-          :items="emergencias"
-          :single-select="singleSelect"
-          item-key="idx"
-          show-select
-          class="elevation-1"
-        >
-        </v-data-table> -->
-      </v-card>
-    </div>
-    <br />
-    <h1>{{ select_question.length }} preguntas seleccionadas</h1>
-    <br />
-    <v-btn @click="crearExamen">Crear Examen</v-btn>
-  </v-container>
+              <td class="text-truncate" style="max-width: 150px;">
+                {{ item.tema_id }}
+              </td>
+              <td>{{ item.category }}</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+      <v-btn @click="crearExamen">Crear Examen</v-btn>
+    </v-container>
+  </div>
 </template>
 
 <script>
 import API from '~/services/api'
+
 export default {
   async asyncData() {
-    const student = await API.getAllUsers()
-    const temas = await API.getAllTemas()
-    const preguntas = await API.getAllQuestions()
-    const bomberil = []
-    const legislacion = []
-    const estatutos = []
-    const geografia = []
-    const emergencias = []
     const student_active = []
-    for (let i = 0; i < preguntas.length; i++) {
-      for (let x = 0; x < temas.length; x++) {
-        if (preguntas[i].tema_id === temas[x]._id) {
-          preguntas[i].tema_id = temas[x].name
-          if (preguntas[i].category === 'Especifico de bombero') {
-            bomberil.push(preguntas[i])
-          }
-          if (preguntas[i].category === 'Materias Jurídicas comunes') {
-            legislacion.push(preguntas[i])
-          }
-          if (preguntas[i].category === 'Estatutos de autonomía') {
-            estatutos.push(preguntas[i])
-          }
-          if (preguntas[i].category === 'Geografía específica') {
-            geografia.push(preguntas[i])
-          }
-          if (preguntas[i].category === 'Planes de emergencias') {
-            emergencias.push(preguntas[i])
-          }
-        }
-      }
-    }
+    const student = await API.getAllUsers()
     for (let i = 0; i < student.length; i++) {
       if (student[i].active === true) {
         student_active.push(student[i])
       }
     }
+    var categoria = [
+      'Especifico de bombero',
+      'Materias Jurídicas comunes',
+      'Estatutos de autonomía',
+      'Geografía específica',
+      'Planes de emergencias',
+      'Reglamentos,tasas y estatutos particulares'
+    ]
+    let temas = await API.getAllTemas()
+    let temario = []
+    let cat1 = []
+    let id1 = []
+    let cat2 = []
+    let id2 = []
+    let cat3 = []
+    let id3 = []
+    let cat4 = []
+    let id4 = []
+    let cat5 = []
+    let id5 = []
+    let cat6 = []
+    let id6 = []
+    for (let i = 0; i < temas.length; i++) {
+      temario.push(temas[i].name)
+      if (categoria[0] === temas[i].category) {
+        cat1.push(temas[i].name)
+        id1.push(temas[i]._id)
+      }
+      if (categoria[1] === temas[i].category) {
+        cat2.push(temas[i].name)
+        id2.push(temas[i]._id)
+      }
+      if (categoria[2] === temas[i].category) {
+        cat3.push(temas[i].name)
+        id3.push(temas[i]._id)
+      }
+      if (categoria[3] === temas[i].category) {
+        cat4.push(temas[i].name)
+        id4.push(temas[i]._id)
+      }
+      if (categoria[4] === temas[i].category) {
+        cat5.push(temas[i].name)
+        id5.push(temas[i]._id)
+      }
+      if (categoria[5] === temas[i].category) {
+        cat6.push(temas[i].name)
+        id6.push(temas[i]._id)
+      }
+    }
     return {
       student_active,
       temas,
-      bomberil,
-      legislacion,
-      estatutos,
-      geografia,
-      emergencias
+      categoria,
+      temario,
+      cat1,
+      cat2,
+      cat3,
+      cat4,
+      cat5,
+      cat6,
+      id1,
+      id2,
+      id3,
+      id4,
+      id5,
+      id6
     }
   },
   data() {
     return {
-      // zona de configuracion del test
       testName: '',
       correction: false,
       formula: '',
@@ -246,28 +275,66 @@ export default {
         { text: 'Apellido', value: 'lastName' },
         { text: 'Usuario', value: 'nickName' }
       ],
-      search_question: '',
-      select_question: [],
-      headers_question: [
-        {
-          text: 'Enunciado',
-          align: 'left',
-          sortable: false,
-          value: 'enunciado'
-        },
-        { text: 'Tema', value: 'tema_id' }
-      ],
       // desafio de la semana
-      desafio: false
+      desafio: false,
+      f_categoria: '',
+      f_tema: '',
+      f_question: [],
+      crear: false,
+      enunciado: '',
+      opcion1: '',
+      opcion2: '',
+      opcion3: '',
+      opcion4: '',
+      checkbox1: false,
+      checkbox2: false,
+      checkbox3: false,
+      checkbox4: false,
+      explicacion: '',
+      seleccion: '',
+      photo: '',
+      seleccion2: '',
+      dificultad: ['Facil', 'Medio', 'Dificil'],
+      seleccion3: '',
+      seleccion4: '',
+      selected: []
     }
   },
+  mounted() {},
   methods: {
-    correctionOn() {
-      if (this.correctorSwitch === true) {
-        this.switchStatus = 'activada'
-      } else {
-        this.switchStatus = 'desactivada'
+    reset() {
+      this.f_tema = ''
+    },
+    async filtrar() {
+      let filtros = {
+        category: this.f_categoria,
+        tema_id: ''
       }
+      for (let i = 0; i < this.temas.length; i++) {
+        if (this.temas[i].name === this.f_tema) {
+          filtros.tema_id = this.temas[i]._id
+        }
+      }
+      console.log(filtros)
+      const preguntas = await API.filtrarQuestion(filtros)
+      preguntas.forEach(x => {
+        this.f_question.push(x)
+      })
+      for (let i = 0; i < this.temas.length; i++) {
+        for (let x = 0; x < this.f_question.length; x++) {
+          if (this.f_question[x].tema_id === this.temas[i]._id) {
+            this.f_question[x].tema_id = this.temas[i].name
+          }
+        }
+      }
+    },
+    seleccionar(item) {
+      this.selected.push(item)
+      console.log(this.selected)
+    },
+    Quitar(idx) {
+      console.log(idx)
+      this.selected.splice(idx, 1)
     },
     async crearExamen() {
       const id_questions = []
@@ -284,8 +351,8 @@ export default {
         ':' +
         now.getMinutes(9)
 
-      for (let i = 0; i < this.select_question.length; i++) {
-        id_questions.push(this.select_question[i]._id)
+      for (let i = 0; i < this.selected.length; i++) {
+        id_questions.push(this.selected[i]._id)
       }
       // console.log(id_questions)
 
@@ -312,12 +379,14 @@ export default {
             desafio: this.desafio,
             deberes: true
           }
+
           API.crearExamen(test)
-          this.select_student = ''
+          this.select_student = []
           this.testName = ''
           this.id_questions = ''
           this.correctorSwitch = false
           this.desafio = false
+          this.selected = []
         }
       } else {
         const students = await API.getAllUsers()
@@ -338,14 +407,23 @@ export default {
               desafio: this.desafio,
               deberes: true
             }
+
             API.crearExamen(test)
-            this.select_student = ''
+            this.select_student = []
             this.testName = ''
             this.id_questions = ''
             this.correctorSwitch = false
             this.desafio = false
+            this.selected = []
           }
         }
+      }
+    },
+    correctionOn() {
+      if (this.correctorSwitch === true) {
+        this.switchStatus = 'activada'
+      } else {
+        this.switchStatus = 'desactivada'
       }
     },
     async testPremium() {

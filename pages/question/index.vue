@@ -354,6 +354,7 @@ export default {
             let body = {
               tema_id: this.temas[i]._id
             }
+            console.log(body)
             let question = await API.getQuestion(body)
             question.forEach(x => {
               this.f_question.push(x)
@@ -380,6 +381,7 @@ export default {
               tema_id: this.temas[i]._id,
               category: this.temas[i].category
             }
+
             let question = await API.getQuestion(body)
             question.forEach(x => {
               this.f_question.push(x)

@@ -46,7 +46,7 @@
     "vue-css-donut-chart": "^1.2.0",
     "vue-pdf": "^4.0.12",
     "vue-pdf-renderer": "^1.0.1",
-    "vue-server-renderer": "^2.6.11",
+    "vue-server-renderer": "^2.6.12",
     "vue-template-compiler": "^2.6.11",
     "vuex-persistedstate": "^2.7.0",
     "w3-css": "^4.1.0"
