@@ -379,7 +379,6 @@ export default {
             desafio: this.desafio,
             deberes: true
           }
-
           API.crearExamen(test)
           this.select_student = []
           this.testName = ''
