@@ -70,101 +70,101 @@
         >
         </v-data-table>
       </v-card>
-      <!-- ============================================Elegir preguntas=========================== -->
-      <h1>Preguntas</h1>
-      <v-row>
-        <v-col xs="6" sm="5" md="4">
-          <v-select
-            v-model="f_categoria"
-            :items="categoria"
-            label="Categoria"
-            @change="reset"
-          ></v-select>
-        </v-col>
-        <v-col xs="6" sm="5" md="4">
-          <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
-            <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
-          </span>
-          <span v-if="f_categoria === 'Especifico de bombero'">
-            <v-select v-model="f_tema" :items="cat1" label="Tema"></v-select>
-          </span>
-          <span v-if="f_categoria === 'Materias Jurídicas comunes'">
-            <v-select v-model="f_tema" :items="cat2" label="Tema"></v-select>
-          </span>
-          <span v-if="f_categoria === 'Estatutos de autonomía'">
-            <v-select v-model="f_tema" :items="cat3" label="Tema"></v-select>
-          </span>
-          <span v-if="f_categoria === 'Geografía específica'">
-            <v-select v-model="f_tema" :items="cat4" label="Tema"></v-select>
-          </span>
-          <span v-if="f_categoria === 'Planes de emergencias'">
-            <v-select v-model="f_tema" :items="cat5" label="Tema"></v-select>
-          </span>
-          <span
-            v-if="f_categoria === 'Reglamentos,tasas y estatutos particulares'"
+    </v-container>
+    <!-- ============================================Elegir preguntas=========================== -->
+    <h1>Preguntas</h1>
+    <v-row>
+      <v-col xs="6" sm="5" md="4">
+        <v-select
+          v-model="f_categoria"
+          :items="categoria"
+          label="Categoria"
+          @change="reset"
+        ></v-select>
+      </v-col>
+      <v-col xs="6" sm="5" md="4">
+        <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
+          <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
+        </span>
+        <span v-if="f_categoria === 'Especifico de bombero'">
+          <v-select v-model="f_tema" :items="cat1" label="Tema"></v-select>
+        </span>
+        <span v-if="f_categoria === 'Materias Jurídicas comunes'">
+          <v-select v-model="f_tema" :items="cat2" label="Tema"></v-select>
+        </span>
+        <span v-if="f_categoria === 'Estatutos de autonomía'">
+          <v-select v-model="f_tema" :items="cat3" label="Tema"></v-select>
+        </span>
+        <span v-if="f_categoria === 'Geografía específica'">
+          <v-select v-model="f_tema" :items="cat4" label="Tema"></v-select>
+        </span>
+        <span v-if="f_categoria === 'Planes de emergencias'">
+          <v-select v-model="f_tema" :items="cat5" label="Tema"></v-select>
+        </span>
+        <span
+          v-if="f_categoria === 'Reglamentos,tasas y estatutos particulares'"
+        >
+          <v-select v-model="f_tema" :items="cat6" label="Tema"></v-select>
+        </span>
+      </v-col>
+      <v-col xs="5" sm="6" md="4">
+        <br />
+        <v-btn @click="filtrar">Filtrar</v-btn>
+      </v-col>
+    </v-row>
+
+    <v-simple-table>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">Enunciado</th>
+            <th class="text-left">Temario</th>
+            <th class="text-left">Categoría</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(item, idx) in f_question"
+            :key="idx"
+            @click="seleccionar(item)"
           >
-            <v-select v-model="f_tema" :items="cat6" label="Tema"></v-select>
-          </span>
-        </v-col>
-        <v-col xs="5" sm="6" md="4">
-          <br />
-          <v-btn @click="filtrar">Filtrar</v-btn>
-        </v-col>
-      </v-row>
+            <td class="text-truncate" style="max-width: 150px;">
+              {{ item.enunciado }}
+            </td>
 
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">Enunciado</th>
-              <!-- <th class="text-left">Temario</th>
-            <th class="text-left">Categoría</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(item, idx) in f_question"
-              :key="idx"
-              @click="seleccionar(item)"
-            >
-              <td class="text-truncate" style="max-width: 150px;">
-                {{ item.enunciado }}
-              </td>
-
-              <!-- <td class="text-truncate" style="max-width: 150px;">
+            <td class="text-truncate" style="max-width: 150px;">
               {{ item.tema_id }}
             </td>
-            <td>{{ item.category }}</td> -->
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-      <h1>Numero de preguntas {{ selected.length }}</h1>
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">Enunciado</th>
-              <th class="text-left">Temario</th>
-              <th class="text-left">Categoría</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, idx) in selected" :key="idx" @click="Quitar(idx)">
-              <td class="text-truncate" style="max-width: 150px;">
-                {{ item.enunciado }}
-              </td>
+            <td>{{ item.category }}</td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+    <h1>Numero de preguntas {{ selected.length }}</h1>
+    <v-simple-table>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">Enunciado</th>
+            <th class="text-left">Temario</th>
+            <th class="text-left">Categoría</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, idx) in selected" :key="idx" @click="Quitar(idx)">
+            <td class="text-truncate" style="max-width: 150px;">
+              {{ item.enunciado }}
+            </td>
 
-              <td class="text-truncate" style="max-width: 150px;">
-                {{ item.tema_id }}
-              </td>
-              <td>{{ item.category }}</td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-      <v-btn @click="crearExamen">Crear Examen</v-btn>
-    </v-container>
+            <td class="text-truncate" style="max-width: 150px;">
+              {{ item.tema_id }}
+            </td>
+            <td>{{ item.category }}</td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+    <v-btn class="button" @click="crearExamen">Crear Examen</v-btn>
   </div>
 </template>
 
@@ -306,6 +306,7 @@ export default {
       this.f_tema = ''
     },
     async filtrar() {
+      this.f_question = []
       let filtros = {
         category: this.f_categoria,
         tema_id: ''
@@ -320,6 +321,7 @@ export default {
       preguntas.forEach(x => {
         this.f_question.push(x)
       })
+      console.log(preguntas)
       for (let i = 0; i < this.temas.length; i++) {
         for (let x = 0; x < this.f_question.length; x++) {
           if (this.f_question[x].tema_id === this.temas[i]._id) {
@@ -379,13 +381,13 @@ export default {
             desafio: this.desafio,
             deberes: true
           }
+
           API.crearExamen(test)
           this.select_student = []
           this.testName = ''
           this.id_questions = ''
           this.correctorSwitch = false
           this.desafio = false
-          this.selected = []
         }
       } else {
         const students = await API.getAllUsers()
@@ -413,7 +415,6 @@ export default {
             this.id_questions = ''
             this.correctorSwitch = false
             this.desafio = false
-            this.selected = []
           }
         }
       }
@@ -489,4 +490,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.button {
+  margin: 40px;
+}
+</style>
