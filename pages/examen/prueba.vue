@@ -306,6 +306,7 @@ export default {
       this.f_tema = ''
     },
     async filtrar() {
+      this.f_question = []
       let filtros = {
         category: this.f_categoria,
         tema_id: ''
