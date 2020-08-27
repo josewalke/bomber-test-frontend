@@ -162,7 +162,8 @@ export default {
       .then(response => response.data)
   },
   crearQuestion(newQuestion) {
-    return axios.post(`questions/`, newQuestion).then(response => response.data)
+    console.log(newQuestion)
+    // return axios.post(`questions/`, newQuestion).then(response => response.data)
   },
   updateEnunciado(newEnunciado) {
     const body = {

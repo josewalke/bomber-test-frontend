@@ -407,6 +407,7 @@ export default {
       this.crear = true
     },
     crearQuestion() {
+      console.log(this.seleccion4)
       if (this.seleccion2 === 'Especifico de bombero') {
         const newQuestion = {
           enunciado: this.enunciado,
