@@ -163,7 +163,7 @@ export default {
   },
   crearQuestion(newQuestion) {
     console.log(newQuestion)
-    // return axios.post(`questions/`, newQuestion).then(response => response.data)
+    return axios.post(`questions/`, newQuestion).then(response => response.data)
   },
   updateEnunciado(newEnunciado) {
     const body = {

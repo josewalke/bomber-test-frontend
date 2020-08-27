@@ -91,7 +91,7 @@
           <v-col cols="4">
             <v-overflow-btn
               v-if="seleccion2 === 'Especifico de bombero'"
-              v-model="seleccion"
+              v-model="seleccion4"
               class="my-2"
               :items="cat1"
               label="Tema"
