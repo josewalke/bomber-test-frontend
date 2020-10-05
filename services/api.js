@@ -365,10 +365,10 @@ export default {
       return response.data
     })
   },
-  sendEmail(data) {
+  sendEmail() {
     console.log('hola mundo')
     // return axios.post('correo/find/', data).then(response => response.data)
-    return axios.post('correo/lolo', data).then(response => response.data)
+    return axios.get('correo/lolo').then(response => response.data)
   },
   new_pass(data) {
     let token = data.token
