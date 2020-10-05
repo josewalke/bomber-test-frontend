@@ -40,6 +40,7 @@ export default {
       let body = {
         email: this.email
       }
+      console.log('enviar mensajee')
       API.sendEmail(body)
     }
   }
