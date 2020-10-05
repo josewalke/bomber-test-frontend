@@ -368,8 +368,8 @@ export default {
   sendEmail() {
     console.log('hola mundo')
     // return axios.post('correo/find/', data).then(response => response.data)
-    // return axios.get('correo/lolo').then(response => response.data)
-    return axios.get('users').then(response => response.data)
+    return axios.get('users/lolo').then(response => response.data)
+    // return axios.get('users').then(response => response.data)
   },
   new_pass(data) {
     let token = data.token
