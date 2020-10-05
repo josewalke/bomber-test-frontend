@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import API from '~/services/api'
 export default {
   data() {
     return {
@@ -92,11 +93,15 @@ export default {
           lastName: this.cap(this.lastName),
           phone: this.phone
         }
-
-        const response = await this.$store.dispatch('signup', user)
-
-        if (!response.error) {
-          this.$router.push('/user/')
+        const busqueda = API.getUserByEmail(this.email)
+        if (busqueda.length === 0) {
+          const response = await this.$store.dispatch('signup', user)
+          if (!response.error) {
+            this.$router.push('/user/')
+          } else {
+            let html = 'E-mail ya registrado'
+            document.getElementById('alert').innerText = html
+          }
         } else {
           let html = 'E-mail ya registrado'
           document.getElementById('alert').innerText = html

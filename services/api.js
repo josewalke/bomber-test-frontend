@@ -13,6 +13,9 @@ export default {
   getUserById(user_id) {
     return axios.get('users/' + user_id).then(response => response.data)
   },
+  getUserByEmail(user_email) {
+    return axios.get('users/' + user_email).then(response => response.data)
+  },
   getQuestionById(pregunta_id) {
     return axios.get('questions/' + pregunta_id).then(response => response.data)
   },
@@ -365,10 +368,10 @@ export default {
       return response.data
     })
   },
-  sendEmail() {
+  sendEmail(data) {
     console.log('hola mundo')
-    // return axios.post('correo/find/', data).then(response => response.data)
-    return axios.get('users/lolo').then(response => response.data)
+    return axios.post('correo/find/', data).then(response => response.data)
+    // return axios.get('users/lolo').then(response => response.data)
     // return axios.get('users').then(response => response.data)
   },
   new_pass(data) {
