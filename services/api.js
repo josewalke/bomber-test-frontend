@@ -366,6 +366,7 @@ export default {
     })
   },
   sendEmail(data) {
+    console.log('hola mundo')
     return axios.post('correo/find', data).then(response => response.data)
   },
   new_pass(data) {
