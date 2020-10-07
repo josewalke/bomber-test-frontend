@@ -41,8 +41,8 @@ import API from '~/services/api'
 export default {
   layout: 'basic',
   async asyncData({ params }) {
-    var token = params.new_pass
-    return { token }
+    var pass = params.new_pass
+    return { pass }
   },
   data() {
     return {
@@ -63,8 +63,8 @@ export default {
         alert('no coincide la contraseña')
       } else {
         let body = {
-          token: this.token,
-          password: this.new_pass2
+          password: this.pass,
+          n_password: this.new_pass2
         }
         let change = await API.new_pass(body)
         if (change) {

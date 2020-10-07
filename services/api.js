@@ -374,10 +374,7 @@ export default {
     // return axios.get('users').then(response => response.data)
   },
   new_pass(data) {
-    let token = data.token
-    return axios
-      .post('users/new_pass', data, { headers: { token } })
-      .then(response => response.data)
+    return axios.post('users/new_pass', data).then(response => response.data)
   },
   getQuestion(data) {
     return axios
