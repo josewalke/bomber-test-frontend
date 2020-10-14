@@ -41,8 +41,8 @@ import API from '~/services/api'
 export default {
   layout: 'basic',
   async asyncData({ params }) {
-    var pass = params.new_pass
-    return { pass }
+    var token = params.new_pass
+    return { token }
   },
   data() {
     return {
@@ -63,9 +63,10 @@ export default {
         alert('no coincide la contraseña')
       } else {
         let body = {
-          password: this.pass,
-          n_password: this.new_pass2
+          token: this.token,
+          password: this.new_pass2
         }
+        console.log(body)
         let change = await API.new_pass(body)
         if (change) {
           this.$router.push('/')
