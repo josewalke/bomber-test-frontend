@@ -370,8 +370,7 @@ export default {
   },
   sendEmail(data) {
     // return axios.post('correo/find', data).then(response => response.data)
-    return axios.post('users/lolo', data).then(response => response.data)
-    // return axios.get('users').then(response => response.data)
+    return axios.post('users/reset_pass', data).then(response => response.data)
   },
   new_pass(data) {
     let token = data.token
