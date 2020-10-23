@@ -40,7 +40,7 @@ export default {
       let body = {
         email: this.email
       }
-      console.log('enviar mensaje')
+      console.log('enviar mensaje de recuperacion')
       API.sendEmail(body)
     }
   }
