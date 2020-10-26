@@ -13,8 +13,16 @@
 
     <h1>Respuesta correcta</h1>
     <div v-for="(answer, idx) in pregunta_id.answers" :key="idx">
-      <p :class="answer.correcta ? 'green--text' : 'red--text'">
-        {{ answer.respuesta }}
+      <p :class="answer.correcta ? 'green--text' : 'red--text '">
+        <span
+          :class="
+            respuesta.respuesta === answer.respuesta
+              ? 'pa-2 secondary text-no-wrap rounded-pill'
+              : ''
+          "
+        >
+          {{ answer.respuesta }}
+        </span>
       </p>
     </div>
 
@@ -40,10 +48,38 @@
 <script>
 import messageVerificacion from '~/components/messageVerificacion'
 import { mapGetters } from 'vuex'
+import API from '~/services/api'
 
 export default {
   components: {
     messageVerificacion
+  },
+  async asyncData({ params }) {
+    let body = {
+      _id: params.test
+    }
+    let body2 = {
+      _id: params.verificar
+    }
+    let respuesta = ''
+    const test = await API.getByTest(body)
+    const question = await API.getQuestion(body2)
+
+    for (let i = 0; i < test.respuestas.length; i++) {
+      if (test.respuestas[i].id === question[0]._id) {
+        for (let x = 0; x < 4; x++) {
+          if (test.respuestas[i].respuestas === undefined) {
+            console.log(false)
+          } else {
+            if (test.respuestas[i].respuestas[x] != '') {
+              respuesta = test.respuestas[i].respuestas[x]
+            }
+          }
+        }
+      }
+    }
+
+    return { respuesta }
   },
   data() {
     return {
@@ -51,7 +87,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['pregunta_id', 'test_id'])
+    ...mapGetters(['pregunta_id', 'test_id', 'currentTest'])
   },
   methods: {
     messageOff() {
