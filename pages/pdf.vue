@@ -277,14 +277,15 @@ export default {
         f_categoria: this.f_categoria,
         f_tema: this.f_tema
       }
+      let find = {
+        categoria: this.f_categoria,
+        tema: this.f_tema
+      }
       this.$store.dispatch('filtro_search', filtros)
       //por categoria solo
       if (this.f_categoria.length > 0 && this.f_tema.length === 0) {
         console.log('solo categoria')
-        let body = {
-          categoria: this.f_categoria
-        }
-        this.pdfs = await API.getPdf(body)
+        this.pdfs = await API.getPdf(find)
       }
 
       //por tema solo
@@ -293,19 +294,12 @@ export default {
         (this.f_tema.length > 0 && this.f_categoria === 'N/A')
       ) {
         console.log('solo tema')
-        let body = {
-          tema: this.f_tema
-        }
-        this.pdfs = await API.getPdf(body)
+        this.pdfs = await API.getPdf(find)
       }
       // tema y categoria
       if (this.f_categoria.length > 0 && this.f_tema.length > 0) {
         console.log('tema y categoria')
-        let body = {
-          categoria: this.f_categoria,
-          tema: this.f_tema
-        }
-        this.pdfs = await API.getPdf(body)
+        this.pdfs = await API.getPdf(find)
       }
     },
     change_crear() {
