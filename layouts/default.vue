@@ -177,6 +177,7 @@ export default {
           icon: 'mdi-playlist-star',
           page: '/clasificacion'
         },
+        { title: 'PDF', icon: 'mdi-application-import', page: '/viewPdf' },
         { title: 'Configuración', icon: 'mdi-cogs', page: '/settings' }
       ],
       admin: [

@@ -404,5 +404,8 @@ export default {
   },
   filtrarQuestion(data) {
     return axios.post('questions/filtrar', data).then(response => response.data)
+  },
+  getPdf(data) {
+    return axios.post('pdf/find', data).then(response => response.data)
   }
 }

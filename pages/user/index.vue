@@ -34,40 +34,6 @@
         Translate o seleccione la opcion "ingles"
       </v-alert>
     </v-col>
-    <!-- <v-row v-if="formato != 'movil'">
-      <v-col md="6" offset="3">
-        <v-card class="mx-auto pt-5">
-          <v-card-title>
-            <h4>Para activar su cuenta</h4>
-          </v-card-title>
-
-          <v-card-actions>
-            <p>
-              Deberá comunicarse con el profesor a traves del:<br />
-              Correo {{ localizacion[0].correo }} <br />
-              Móvil {{ localizacion[0].telefono }}
-            </p>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row> -->
-    <!-- <v-row v-if="formato != 'ordenador'">
-      <v-col cols="10" offset="1">
-        <v-card>
-          <v-card-title>
-            <h4>Para activar su cuenta</h4>
-          </v-card-title>
-
-          <v-card-actions>
-            <p>
-              Deberá comunicarse con el profesor a traves del:<br />
-              correo {{ localizacion[0].correo }} <br />
-              móvil {{ localizacion[0].telefono }}
-            </p>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row> -->
 
     <v-row v-if="!active">
       <v-col v-if="formato != 'movil'" md="6" offset="3">
