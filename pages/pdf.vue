@@ -58,7 +58,7 @@
     </v-container>
     <v-container>
       <v-row>
-        <v-col xs="6" sm="6" md="4">
+        <v-col xs="6" sm="6" md="4" class="ma-3">
           <v-select
             v-model="f_categoria"
             :items="categoria"
@@ -66,7 +66,7 @@
             @change="reset"
           ></v-select>
         </v-col>
-        <v-col xs="6" sm="6" md="4">
+        <v-col xs="6" sm="6" md="4" class="ma-3">
           <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
             <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
           </span>
@@ -91,19 +91,21 @@
             <v-select v-model="f_tema" :items="cat6" label="Tema"></v-select>
           </span>
         </v-col>
-        <v-col xs="12" sm="5" md="4">
+        <v-col xs="12" sm="5" md="4" class="ma-3">
           <br />
-          <v-btn @click="filtrar">Filtrar</v-btn>
-          <v-btn @click="change_crear">Crear Pdf</v-btn>
+          <v-btn class="ma-3" @click="filtrar">Filtrar</v-btn>
+          <v-btn class="ma-3" @click="change_crear">Crear Pdf</v-btn>
         </v-col>
       </v-row>
     </v-container>
     <v-container>
       <div v-for="(pdf, idx) in pdfs" :key="idx">
-        <h2>
-          {{ pdf.name }}
-        </h2>
-        <v-btn>Borrar</v-btn>
+        <v-row class="ma-3">
+          <h2 class="ma-3">
+            {{ pdf.name }}
+          </h2>
+          <v-btn class="ma-3" color="error" @click="borrar(idx)">Borrar</v-btn>
+        </v-row>
 
         <iframe
           :src="pdf.src"
@@ -123,6 +125,7 @@
 
 <script>
 import API from '~/services/api'
+import { mapGetters } from 'vuex'
 export default {
   async asyncData() {
     var categoria = [
@@ -212,6 +215,12 @@ export default {
       crear: false
     }
   },
+  mounted() {
+    this.Find_end()
+  },
+  computed: {
+    ...mapGetters(['V_categoria', 'V_tema'])
+  },
   methods: {
     visualizar() {
       var iframe = this.file
@@ -264,16 +273,18 @@ export default {
       this.f_tema = ''
     },
     async filtrar() {
+      let filtros = {
+        f_categoria: this.f_categoria,
+        f_tema: this.f_tema
+      }
+      this.$store.dispatch('filtro_search', filtros)
       //por categoria solo
       if (this.f_categoria.length > 0 && this.f_tema.length === 0) {
         console.log('solo categoria')
         let body = {
           categoria: this.f_categoria
         }
-
         this.pdfs = await API.getPdf(body)
-
-        console.log(this.pdf)
       }
 
       //por tema solo
@@ -285,10 +296,7 @@ export default {
         let body = {
           tema: this.f_tema
         }
-
         this.pdfs = await API.getPdf(body)
-
-        console.log(this.pdf)
       }
       // tema y categoria
       if (this.f_categoria.length > 0 && this.f_tema.length > 0) {
@@ -298,11 +306,23 @@ export default {
           tema: this.f_tema
         }
         this.pdfs = await API.getPdf(body)
-        console.log(this.pdf)
       }
     },
     change_crear() {
       this.crear = true
+    },
+    async borrar(idx) {
+      await API.deletePdf(this.pdfs[idx]._id)
+      location.reload()
+    },
+    Find_end() {
+      if (this.V_categoria.length > 0) {
+        this.f_categoria = this.V_categoria
+      }
+      if (this.V_tema.length > 0) {
+        this.f_tema = this.V_tema
+      }
+      this.filtrar()
     }
   }
 }

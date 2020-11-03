@@ -407,5 +407,8 @@ export default {
   },
   getPdf(data) {
     return axios.post('pdf/find', data).then(response => response.data)
+  },
+  deletePdf(data) {
+    return axios.delete(`pdf/${data}`).then(response => response.data)
   }
 }

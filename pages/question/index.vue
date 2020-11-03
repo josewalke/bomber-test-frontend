@@ -143,7 +143,7 @@
         </v-row>
       </div>
       <v-row>
-        <v-col xs="6" sm="5" md="4">
+        <v-col xs="6" sm="5" md="4" class="ma-3">
           <v-select
             v-model="f_categoria"
             :items="categoria"
@@ -151,7 +151,7 @@
             @change="reset"
           ></v-select>
         </v-col>
-        <v-col xs="6" sm="5" md="4">
+        <v-col xs="6" sm="5" md="4" class="ma-3">
           <span v-if="f_categoria.length === 0 || f_categoria === 'N/A'">
             <v-select v-model="f_tema" :items="temario" label="Tema"></v-select>
           </span>
@@ -176,10 +176,10 @@
             <v-select v-model="f_tema" :items="cat6" label="Tema"></v-select>
           </span>
         </v-col>
-        <v-col xs="5" sm="6" md="4">
+        <v-col xs="5" sm="6" md="4" class="ma-3">
           <br />
-          <v-btn @click="filtrar">Filtrar</v-btn>
-          <v-btn @click="change_crear">Crear Pregunta</v-btn>
+          <v-btn class="ma-3" @click="filtrar">Filtrar</v-btn>
+          <v-btn class="ma-3" @click="change_crear">Crear Pregunta</v-btn>
         </v-col>
       </v-row>
     </v-container>
