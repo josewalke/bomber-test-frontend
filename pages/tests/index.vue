@@ -41,7 +41,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in sorted" :key="item._id" @click="goToTest(item)">
+            <tr v-for="item in sorted2" :key="item._id" @click="goToTest(item)">
               <td v-if="!item.desafio">
                 {{ item.title
                 }}<span v-if="item.mostrar_solucion">
@@ -78,7 +78,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in sorted" :key="item._id" @click="goToTest(item)">
+            <tr v-for="item in sorted2" :key="item._id" @click="goToTest(item)">
               <td v-if="item.desafio">{{ item.title }}</td>
               <td v-if="item.desafio">
                 {{ item.no_contestadas.length }}
@@ -94,6 +94,7 @@
         </template>
       </v-simple-table>
     </div>
+    {{ user_id }}
   </div>
 </template>
 
@@ -102,8 +103,12 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  async asyncData() {},
   data() {
-    return {}
+    return {
+      user_id: '',
+      sorted2: []
+    }
   },
   computed: {
     ...mapGetters([
@@ -113,18 +118,22 @@ export default {
       'currentTest',
       'active',
       'userId'
-    ]),
-    sorted() {
-      let sorted = []
-      for (let i = this.tests.length - 1; i > -1; i--) {
-        let test = this.tests[i]
-        if (test.user_id === this.userId) {
-          sorted.push(test)
-        }
-      }
+    ])
+    // sorted() {
+    //   let sorted = []
+    //   for (let i = this.tests.length - 1; i > -1; i--) {
+    //     let test = this.tests[i]
+    //     if (test.user_id === this.userId) {
+    //       sorted.push(test)
+    //     }
+    //   }
 
-      return sorted
-    }
+    //   return sorted
+    // }
+  },
+  mounted() {
+    this.user_id = this.userId
+    this.sortedTest()
   },
   methods: {
     async testGeneration() {
@@ -159,6 +168,14 @@ export default {
         this.$router.push(`/tests/config`)
       } else {
         alert('para realizar un test primero debe activar su cuenta')
+      }
+    },
+    sortedTest() {
+      for (let i = this.tests.length - 1; i > -1; i--) {
+        let test = this.tests[i]
+        if (test.user_id === this.userId) {
+          this.sorted2.push(test)
+        }
       }
     }
   }

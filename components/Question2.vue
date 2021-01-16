@@ -316,7 +316,7 @@ export default {
       }
       if (this.currentTest.respuestas[this.numero].answered === false) {
         let respuesta = obj
-
+        // console.log(respuesta)
         this.testUpdate(respuesta)
         if (this.currentTest.mostrar_solucion === true) {
           this.paintCorrection()
