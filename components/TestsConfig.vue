@@ -109,6 +109,7 @@ export default {
         correction: this.correctorSwitch
       }
       if (this.testName.length != 0) {
+        console.log('creando test configurado')
         await this.$store.dispatch('createTestConfig', test)
         this.$router.push(`/tests/${this.$store.state.currentTest._id}/`)
       } else {
