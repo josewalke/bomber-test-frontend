@@ -410,13 +410,11 @@ export const actions = {
       userId: state.userId,
       newName: newName
     }
-
     const response = await API.updateName(data)
-
     if (!response.error) {
       const response2 = await API.getUserById(state.userId)
       if (!response2.error) {
-        commit('saveUpdate', response2)
+        await commit('saveUpdate', response2)
       }
     }
   },

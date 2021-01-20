@@ -175,7 +175,7 @@ export default {
       if (this.lastName.length === 0) {
         console.log('esta vacio')
       } else {
-        await this.$store.dispatch('updateLastName', this.lastName)
+        this.updateLastName()
         this.lastName = ''
       }
       if (this.photo.length === 0) {
