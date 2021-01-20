@@ -2,7 +2,7 @@
   <div class>
     <div>
       <div class="ml-4 mt-5 overline">Los Tests de</div>
-      <div class="ml-4 mb-4 grey--text display-1 ">{{ userName }}</div>
+      <div class="ml-4 mb-4 grey--text display-1 ">{{ nickName }}</div>
       <div class="header-wraper">
         <div>
           <v-btn
