@@ -159,6 +159,7 @@ export default {
   async fetch({ params, store }) {
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
+    return { test }
   },
   async asyncData({ params }) {
     console.log(params.test)
