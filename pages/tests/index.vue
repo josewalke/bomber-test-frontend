@@ -103,7 +103,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   async asyncData({ store }) {
-    // console.log(store.getters.userId)
+    console.log(store.getters.userId)
     const tests = await API.getAllTestById(store.getters.userId)
     return { tests }
   },
