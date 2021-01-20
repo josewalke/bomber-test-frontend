@@ -94,7 +94,6 @@
         </template>
       </v-simple-table>
     </div>
-    {{ user_id }}
   </div>
 </template>
 
