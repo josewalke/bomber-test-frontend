@@ -160,7 +160,8 @@ export default {
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
   },
-  async asyncData() {
+  async asyncData({ params }) {
+    console.log(params.test)
     const temas = await API.getAllTemasNames()
     return { temas }
   },
@@ -192,6 +193,10 @@ export default {
     this.findIfAnswered()
   },
   mounted() {
+    this.questions = this.currentTest.no_contestadas
+    this.respuestas = this.currentTest.respuestas
+    this.title = this.currentTest.title
+    this.findIfAnswered()
     this.evaluarNota()
   },
   methods: {
