@@ -41,7 +41,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in sorted2" :key="item._id" @click="goToTest(item)">
+            <tr v-for="item in sorted" :key="item._id" @click="goToTest(item)">
               <td v-if="!item.desafio">
                 {{ item.title
                 }}<span v-if="item.mostrar_solucion">
@@ -78,7 +78,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in sorted2" :key="item._id" @click="goToTest(item)">
+            <tr v-for="item in sorted" :key="item._id" @click="goToTest(item)">
               <td v-if="item.desafio">{{ item.title }}</td>
               <td v-if="item.desafio">
                 {{ item.no_contestadas.length }}
@@ -98,26 +98,23 @@
 </template>
 
 <script>
-// import API from '~/services/api'
+import API from '~/services/api'
 import { mapGetters } from 'vuex'
 
 export default {
-  async asyncData() {},
+  async asyncData({ store }) {
+    // console.log(store.getters.userId)
+    const tests = await API.getAllTestById(store.getters.userId)
+    return { tests }
+  },
   data() {
     return {
       user_id: '',
-      sorted2: []
+      sorted: []
     }
   },
   computed: {
-    ...mapGetters([
-      'tests',
-      'userName',
-      'nickName',
-      'currentTest',
-      'active',
-      'userId'
-    ])
+    ...mapGetters(['userName', 'nickName', 'currentTest', 'active', 'userId'])
     // sorted() {
     //   let sorted = []
     //   for (let i = this.tests.length - 1; i > -1; i--) {
@@ -173,7 +170,7 @@ export default {
       for (let i = this.tests.length - 1; i > -1; i--) {
         let test = this.tests[i]
         if (test.user_id === this.userId) {
-          this.sorted2.push(test)
+          this.sorted.push(test)
         }
       }
     }
