@@ -156,13 +156,14 @@ import Donut from '~/components/Doughnut.js'
 
 export default {
   components: { Donut },
-  async fetch({ params, store }) {
+  // async fetch({ params, store }) {
+  //   const test = await API.getTest(params.test)
+  //   store.commit('saveCurrentTest', test)
+  //   return { test }
+  // },
+  async asyncData({ params, store }) {
     const test = await API.getTest(params.test)
     store.commit('saveCurrentTest', test)
-    return { test }
-  },
-  async asyncData({ params }) {
-    console.log(params.test)
     const temas = await API.getAllTemasNames()
     return { temas }
   },
