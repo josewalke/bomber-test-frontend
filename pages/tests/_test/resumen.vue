@@ -23,7 +23,7 @@
           style="background-color: #ffffff"
         >
           <div class="text--red">
-            Nota
+            Not a
           </div>
           <div>
             <span
