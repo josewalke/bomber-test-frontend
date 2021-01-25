@@ -206,7 +206,7 @@ export default {
       // Echar un ojo aqui
       // console.log('Fichero _questions/index')
       // console.log(this.currentTest)
-      // await this.$store.commit('saveCurrentTest', this.currentTest)
+      await this.$store.commit('saveCurrentTest', this.currentTest)
       this.$router.push(`/tests/${this.currentTest._id}/resumen`)
     },
     answering() {

@@ -335,6 +335,7 @@ export default {
         respuesta: answer
       }
       await this.$store.dispatch('updateTest', data)
+      this.$store.commit('saveCurrentTest', this.currentTest)
     },
     messageOff() {
       this.message = false
