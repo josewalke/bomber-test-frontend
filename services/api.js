@@ -48,7 +48,6 @@ export default {
       })
   },
   updateTest(token, data) {
-    console.log(data)
     return axios
       .put('tests/' + data.testId, data, { headers: { token } })
       .then(response => {
