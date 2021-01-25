@@ -162,7 +162,7 @@ export default {
   //   return { test }
   // },
   async asyncData({ store }) {
-    console.log(store.currentTest)
+    console.log(store.state.currentTest)
     const temas = await API.getAllTemasNames()
     return { temas }
   },
