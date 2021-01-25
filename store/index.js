@@ -390,6 +390,8 @@ export const actions = {
       const tests = await API.getAllTest(state.userId)
       commit('saveTests', tests)
       const currentTest = await API.getByTestId(testData.testId)
+      console.log('Store mostrar')
+      console.log(currentTest)
       commit('saveCurrentTest', currentTest)
     }
   },
