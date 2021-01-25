@@ -683,5 +683,9 @@ export const actions = {
   },
   async filtro_search({ commit }, data) {
     commit('filtro_search', data)
+  },
+  async prueba() {
+    console.log('FUCK')
+    // const currentTest = await API.getByTestId(.testId)
   }
 }
