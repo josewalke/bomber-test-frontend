@@ -161,9 +161,7 @@ export default {
   //   store.commit('saveCurrentTest', test)
   //   return { test }
   // },
-  async asyncData({ params, store }) {
-    const test = await API.getTest(params.test)
-    store.commit('saveCurrentTest', test)
+  async asyncData() {
     const temas = await API.getAllTemasNames()
     return { temas }
   },
@@ -242,6 +240,7 @@ export default {
         time_end: timeNow,
         testId: this.currentTest._id
       }
+      console.log(this.currentTest)
       this.$store.dispatch('updateTest', data)
       this.$store.commit('saveCurrentTest', this.currentTest)
       this.$router.push(`/tests/${this.currentTest._id}`)
