@@ -263,16 +263,18 @@ export default {
       this.CloseAlert = false
     },
     reload() {
-      let body = {
-        _id: this.currentTest._id,
-        testCheck: {
-          blank: this.currentTest.no_contestadas.length,
-          right: 0,
-          wrong: 0
-        },
-        respuestas: this.currentTest.respuestas
+      if (this.currentTest.time_end === 'ilimitado') {
+        let body = {
+          _id: this.currentTest._id,
+          testCheck: {
+            blank: this.currentTest.no_contestadas.length,
+            right: 0,
+            wrong: 0
+          },
+          respuestas: this.currentTest.respuestas
+        }
+        this.$store.dispatch('reload', body)
       }
-      this.$store.dispatch('reload', body)
     }
   }
 }
