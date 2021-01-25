@@ -162,6 +162,7 @@ export default {
   //   return { test }
   // },
   async asyncData({ store }) {
+    console.log('-----PENE EN EL RESUMEN.VUE----------')
     console.log(store.state.currentTest)
     const temas = await API.getAllTemasNames()
     return { temas }
