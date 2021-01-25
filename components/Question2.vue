@@ -328,14 +328,13 @@ export default {
       // }
     },
 
-    testUpdate(answer) {
+    async testUpdate(answer) {
       const data = {
         testId: this.currentTest._id,
         numero: this.numero,
         respuesta: answer
       }
-      this.$store.dispatch('updateTest', data)
-      this.$store.commit('saveCurrentTest', this.currentTest)
+      await this.$store.dispatch('updateTest', data)
     },
     messageOff() {
       this.message = false

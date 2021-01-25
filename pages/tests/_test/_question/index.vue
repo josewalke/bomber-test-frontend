@@ -195,15 +195,18 @@ export default {
         this.answering()
       }
     },
-    endTest() {
+    async endTest() {
       let timeNow = new Date()
       const data = {
         time_end: timeNow,
         testId: this.currentTest._id
       }
       clearInterval(this.cronos)
-      this.$store.dispatch('updateTest', data)
-      this.$store.commit('saveCurrentTest', this.currentTest)
+      await this.$store.dispatch('updateTest', data)
+      // Echar un ojo aqui
+      // console.log('Fichero _questions/index')
+      // console.log(this.currentTest)
+      // await this.$store.commit('saveCurrentTest', this.currentTest)
       this.$router.push(`/tests/${this.currentTest._id}/resumen`)
     },
     answering() {
@@ -211,7 +214,6 @@ export default {
         this.notAnswered = this.notAnswered.splice(1, this.notAnswered.length)
         if (this.notAnswered.length === 0) {
           this.endTest()
-          this.$router.push(`/tests/${this.currentTest._id}/resumen`)
         } else {
           this.$refs.q.cleanAnswers()
           this.showThisQuestion()
