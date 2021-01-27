@@ -95,7 +95,7 @@ export default {
           lastName: this.cap(this.lastName),
           phone: this.phone
         }
-        const busqueda = API.getUserByEmail(this.email)
+        const busqueda = await API.getUserByEmail(this.email)
         if (busqueda.length === 0) {
           const response = await this.$store.dispatch('signup', user)
           if (!response.error) {
