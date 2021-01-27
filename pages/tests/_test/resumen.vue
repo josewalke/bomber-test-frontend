@@ -156,11 +156,11 @@ import Donut from '~/components/Doughnut.js'
 
 export default {
   components: { Donut },
-  // async fetch({ params, store }) {
-  //   const test = await API.getTest(params.test)
-  //   store.commit('saveCurrentTest', test)
-  //   return { test }
-  // },
+  async fetch({ params, store }) {
+    const test = await API.getTest(params.test)
+    store.commit('saveCurrentTest', test)
+    return { test }
+  },
   async asyncData() {
     // console.log('-----PENE EN EL RESUMEN.VUE----------')
     // console.log(store.state.currentTest)
