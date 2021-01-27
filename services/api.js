@@ -332,7 +332,7 @@ export default {
     return axios.put('users/' + change.id, body).then(response => response.data)
   },
   getByTestId(id) {
-    return axios.get('/tests/myTest/' + id).then(response => response.data)
+    return axios.get('/tests/' + id).then(response => response.data)
   },
   updateDeberes(id) {
     let body = {
