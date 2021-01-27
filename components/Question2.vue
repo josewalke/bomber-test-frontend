@@ -336,9 +336,7 @@ export default {
         respuesta: answer
       }
       await this.$store.dispatch('updateTest', data)
-      // const lolo = await API.prueba(this.currentTest._id)
-      // console.log(lolo.testCheck)
-      this.$store.commit('saveCurrentTest', this.currentTest)
+      // this.$store.commit('saveCurrentTest', this.currentTest)
     },
     messageOff() {
       this.message = false

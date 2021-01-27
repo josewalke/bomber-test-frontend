@@ -162,8 +162,10 @@ export default {
     return { test }
   },
   async asyncData({ store }) {
-    const lolo = await API.myCurrentTest(store.state.currentTest._id)
-    console.log(lolo.testCheck)
+    const current = await API.myCurrentTest(store.state.currentTest._id)
+    console.log(current.testCheck)
+    console.log(current)
+    await store.commit('saveCurrentTest', current)
     const temas = await API.getAllTemasNames()
     return { temas }
   },
