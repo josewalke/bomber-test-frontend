@@ -1,9 +1,5 @@
 <template>
   <div>
-    HOLAA {{ currentTest.testCheck }}
-    {{ notAnswered.length }}
-    {{ incorrect.length }}
-    {{ correct.length }}
     <div class="display-1 grey--text pt-2 pb-4">Test:{{ title }}</div>
     <div class="grid-wrap mb-4">
       <div class="grid">
