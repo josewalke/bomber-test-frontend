@@ -390,8 +390,6 @@ export const actions = {
       const tests = await API.getAllTest(state.userId)
       commit('saveTests', tests)
       const currentTest = await API.getByTestId(testData.testId)
-      console.log('Store mostrar')
-      console.log(currentTest)
       commit('saveCurrentTest', currentTest)
     }
   },
@@ -416,6 +414,7 @@ export const actions = {
     }
     console.log(data)
     const response = await API.updateName(data)
+    console.log(response)
     if (!response.error) {
       const response2 = await API.getUserById(state.userId)
       if (!response2.error) {

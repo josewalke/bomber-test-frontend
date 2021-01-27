@@ -99,6 +99,7 @@ export default {
     let body = {
       name: data.newName
     }
+    console.log(data)
     return axios
       .put('users/' + data.userId, body)
       .then(response => response.data)
@@ -331,7 +332,7 @@ export default {
     return axios.put('users/' + change.id, body).then(response => response.data)
   },
   getByTestId(id) {
-    return axios.get('/tests/' + id).then(response => response.data)
+    return axios.get('/tests/myTest/' + id).then(response => response.data)
   },
   updateDeberes(id) {
     let body = {
