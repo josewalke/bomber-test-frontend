@@ -161,10 +161,7 @@ export default {
     store.commit('saveCurrentTest', test)
     return { test }
   },
-  async asyncData({ store }) {
-    const current = await API.myCurrentTest(store.state.currentTest._id)
-    console.log(current)
-    await store.commit('saveCurrentTest', current)
+  async asyncData() {
     const temas = await API.getAllTemasNames()
     return { temas }
   },
