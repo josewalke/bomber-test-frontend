@@ -86,7 +86,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentTest', 'currentNotAnswered', 'userName']),
+    ...mapGetters(['userId', 'currentTest', 'currentNotAnswered', 'userName']),
     getQuestionSubject() {
       let questions = this.currentTest.no_contestadas
       let questionsSubject = []

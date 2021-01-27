@@ -121,7 +121,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentTest', 'question', 'currentTestQuestion']),
+    ...mapGetters(['userId', 'currentTest', 'question', 'currentTestQuestion']),
     questionNumber() {
       const qs = this.currentTest.no_contestadas
       const idx = qs.findIndex(q => q._id === this.showQuestion[0]._id)
@@ -207,6 +207,8 @@ export default {
       const current = await API.myCurrentTest(this.$store.state.currentTest._id)
       console.log(current)
       await this.$store.commit('saveCurrentTest', current)
+      const newTest = await API.getAllTestById(this.userId)
+      await this.$store.commit('saveTests', newTest)
       if (current) {
         this.$router.push(`/tests/${this.currentTest._id}/resumen2`)
       }
