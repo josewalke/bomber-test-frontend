@@ -162,7 +162,7 @@ export default {
     return { test }
   },
   async asyncData({ store }) {
-    const lolo = await API.MyCurrentTest(store.state.currentTest._id)
+    const lolo = await API.myCurrentTest(store.state.currentTest._id)
     console.log(lolo.testCheck)
     const temas = await API.getAllTemasNames()
     return { temas }
