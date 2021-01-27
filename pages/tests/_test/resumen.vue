@@ -161,9 +161,9 @@ export default {
     store.commit('saveCurrentTest', test)
     return { test }
   },
-  async asyncData() {
-    // console.log('-----PENE EN EL RESUMEN.VUE----------')
-    // console.log(store.state.currentTest)
+  async asyncData({ store }) {
+    const lolo = await API.prueba(store.state.currentTest._id)
+    console.log(lolo.testCheck)
     const temas = await API.getAllTemasNames()
     return { temas }
   },

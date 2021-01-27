@@ -122,7 +122,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Message from '~/components/Message'
-import API from '~/services/api'
+// import API from '~/services/api'
 
 export default {
   components: {
@@ -336,8 +336,8 @@ export default {
         respuesta: answer
       }
       await this.$store.dispatch('updateTest', data)
-      const lolo = await API.prueba(this.currentTest._id)
-      console.log(lolo.testCheck)
+      // const lolo = await API.prueba(this.currentTest._id)
+      // console.log(lolo.testCheck)
       this.$store.commit('saveCurrentTest', this.currentTest)
     },
     messageOff() {
