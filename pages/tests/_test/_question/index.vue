@@ -204,10 +204,10 @@ export default {
       clearInterval(this.cronos)
       await this.$store.dispatch('updateTest', data)
 
-      await this.$store.commit('saveCurrentTest', this.currentTest)
-      console.log('index.vue/_question')
-      console.log('----PENE------')
-      console.log(this.currentTest)
+      // await this.$store.commit('saveCurrentTest', this.currentTest)
+      // console.log('index.vue/_question')
+      // console.log('----PENE------')
+      // console.log(this.currentTest)
       this.$router.push(`/tests/${this.currentTest._id}/resumen`)
     },
     answering() {

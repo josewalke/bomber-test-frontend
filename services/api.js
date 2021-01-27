@@ -415,7 +415,6 @@ export default {
     return axios.delete(`pdf/${data}`).then(response => response.data)
   },
   myCurrentTest(data) {
-    console.log(data)
     return axios.get('tests/prueba/' + data).then(response => response.data)
   }
 }
