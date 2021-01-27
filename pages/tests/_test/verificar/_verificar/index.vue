@@ -94,7 +94,7 @@ export default {
       this.message = false
     },
     volver() {
-      this.$router.push(`/tests/${this.test_id}/resumen`)
+      this.$router.push(`/tests/${this.test_id}/resumen2`)
     }
   }
 }

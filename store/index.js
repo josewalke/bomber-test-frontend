@@ -391,8 +391,6 @@ export const actions = {
     if (!updatedTest.error) {
       const tests = await API.getAllTest(state.userId)
       commit('saveTests', tests)
-      const currentTest = await API.getByTestId(testData.testId)
-      commit('saveCurrentTest', currentTest)
     }
   },
   // async verRespuesta({ state }, responseBody) {

@@ -72,10 +72,10 @@ import API from '~/services/api'
 import { mapGetters } from 'vuex'
 
 export default {
-  async fetch({ params, store }) {
-    const test = await API.getTest(params.test)
-    store.commit('saveCurrentTest', test)
-  },
+  // async fetch({ params, store }) {
+  //   const test = await API.getTest(params.test)
+  //   store.commit('saveCurrentTest', test)
+  // },
   async asyncData() {
     const temas = await API.getAllTemasNames()
     return { temas }
@@ -123,15 +123,15 @@ export default {
         `/tests/${this.$store.state.currentTest._id}/${this.notAnswered[0]._id}`
       )
     },
-    endTest() {
+    async endTest() {
       let timeNow = new Date()
       const data = {
         time_end: timeNow,
         testId: this.currentTest._id
       }
-      this.$store.dispatch('updateTest', data)
-      this.$store.commit('saveCurrentTest', this.currentTest)
-      this.$router.push(`/tests/${this.currentTest._id}/resumen`)
+      await this.$store.dispatch('updateTest', data)
+      await this.$store.commit('saveCurrentTest', this.currentTest)
+      this.$router.push(`/tests/${this.currentTest._id}/resumen2`)
     }
   }
 }

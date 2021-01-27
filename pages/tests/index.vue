@@ -78,7 +78,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in sorted" :key="item._id" @click="goToTest(item)">
+            <tr v-for="item in sorted" :key="item" @click="goToTest(item)">
               <td v-if="item.desafio">{{ item.title }}</td>
               <td v-if="item.desafio">
                 {{ item.no_contestadas.length }}
@@ -154,8 +154,9 @@ export default {
           }
         } else {
           console.log('mostrar resumen')
-          console.log(item._id)
-          this.$router.push(`/tests/${item._id}/resumen`)
+          const otherTest = await API.getByTestId(item._id)
+          await this.$store.commit('saveCurrentTest', otherTest)
+          this.$router.push(`/tests/${otherTest._id}/resumen2`)
         }
       }
     },

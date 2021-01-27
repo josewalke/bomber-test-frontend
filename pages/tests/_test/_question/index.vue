@@ -89,8 +89,8 @@ export default {
     CloseAlert
   },
   async fetch({ params, store }) {
-    const test = await API.getTest(params.test)
-    store.commit('saveCurrentTest', test)
+    // const test = await API.getTest(params.test)
+    // store.commit('saveCurrentTest', test)
     const question = await API.getQuestionById(params.question)
     store.commit('saveCurrentQuestion', question)
   },
@@ -208,7 +208,7 @@ export default {
       console.log(current)
       await this.$store.commit('saveCurrentTest', current)
       if (current) {
-        this.$router.push(`/tests/${this.currentTest._id}/resumen`)
+        this.$router.push(`/tests/${this.currentTest._id}/resumen2`)
       }
     },
     answering() {
