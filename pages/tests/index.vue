@@ -154,6 +154,7 @@ export default {
           }
         } else {
           console.log('mostrar resumen')
+          console.log(item._id)
           this.$router.push(`/tests/${item._id}/resumen`)
         }
       }

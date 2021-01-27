@@ -161,9 +161,9 @@ export default {
   //   store.commit('saveCurrentTest', test)
   //   return { test }
   // },
-  async asyncData({ store }) {
-    console.log('-----PENE EN EL RESUMEN.VUE----------')
-    console.log(store.state.currentTest)
+  async asyncData() {
+    // console.log('-----PENE EN EL RESUMEN.VUE----------')
+    // console.log(store.state.currentTest)
     const temas = await API.getAllTemasNames()
     return { temas }
   },
