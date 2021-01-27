@@ -414,6 +414,7 @@ export const actions = {
       userId: state.userId,
       newName: newName
     }
+    console.log(data)
     const response = await API.updateName(data)
     if (!response.error) {
       const response2 = await API.getUserById(state.userId)
