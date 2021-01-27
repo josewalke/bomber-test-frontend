@@ -202,15 +202,14 @@ export default {
         testId: this.currentTest._id
       }
       clearInterval(this.cronos)
-      const updateTest = await this.$store.dispatch('updateTest', data)
+      await this.$store.dispatch('updateTest', data)
 
       // await this.$store.commit('saveCurrentTest', this.currentTest)
       // console.log('index.vue/_question')
       // console.log('----PENE------')
       // console.log(this.currentTest)
-      if (updateTest) {
-        this.$router.push(`/tests/${this.currentTest._id}/resumen`)
-      }
+
+      this.$router.push(`/tests/${this.currentTest._id}/resumen`)
     },
     answering() {
       if (this.currentTest.time_end2 === null) {
