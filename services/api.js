@@ -413,5 +413,9 @@ export default {
   },
   deletePdf(data) {
     return axios.delete(`pdf/${data}`).then(response => response.data)
+  },
+  prueba(data) {
+    console.log(data)
+    return axios.get('tests/prueba/' + data).then(response => response.data)
   }
 }
