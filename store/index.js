@@ -191,6 +191,7 @@ export const mutations = {
     state.messages = mensajes.reverse()
   },
   saveCurrentTest(state, test) {
+    console.log('mostrar SAVECURRENTTEST')
     console.log(test.testCheck)
     state.currentTest = test
   },

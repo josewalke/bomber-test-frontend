@@ -240,6 +240,7 @@ export default {
         time_end: timeNow,
         testId: this.currentTest._id
       }
+      console.log('RESUMEN.VUE')
       console.log(this.currentTest)
       this.$store.dispatch('updateTest', data)
       this.$store.commit('saveCurrentTest', this.currentTest)
