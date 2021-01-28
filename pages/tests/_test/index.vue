@@ -106,6 +106,7 @@ export default {
   methods: {
     findIfAnswered() {
       let notAnswered = []
+
       this.currentTest.respuestas.forEach(res => {
         if (res.answered === false) {
           let idx = this.currentTest.no_contestadas.findIndex(
@@ -115,6 +116,7 @@ export default {
           notAnswered.push(q)
         }
       })
+
       this.notAnswered = notAnswered
     },
     startTest() {
