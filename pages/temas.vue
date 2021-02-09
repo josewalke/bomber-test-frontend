@@ -51,13 +51,15 @@ export default {
     }
   },
   methods: {
-    crearTema() {
+    async crearTema() {
       const body = {
         name: this.newTema,
         category: this.seleccion
       }
-      API.newTema(body)
-      location.reload()
+      let newTema = await API.newTema(body)
+      if (newTema) {
+        location.reload()
+      }
     }
   }
 }
