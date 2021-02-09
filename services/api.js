@@ -5,6 +5,9 @@ export default {
     return axios.get('users').then(response => response.data)
   },
   getAllTemas() {
+    return axios.get('temario/todos').then(response => response.data)
+  },
+  AllTemas() {
     return axios.get('temario/all').then(response => response.data)
   },
   getAllTest() {

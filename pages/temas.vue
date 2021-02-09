@@ -61,7 +61,7 @@ export default {
         // location.reload()
         this.newTema = ''
         this.seleccion = ''
-        this.temas = await API.getAllTemas()
+        this.temas = await API.AllTemas()
         console.log(this.temas)
       }
     }
