@@ -57,12 +57,10 @@ export default {
         category: this.seleccion
       }
       let newTema = await API.newTema(body)
+      this.temas = await API.AllTemas()
+      console.log(this.temas)
       if (newTema) {
-        // location.reload()
-        this.newTema = ''
-        this.seleccion = ''
-        this.temas = await API.AllTemas()
-        console.log(this.temas)
+        location.reload()
       }
     }
   }
