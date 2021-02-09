@@ -58,7 +58,10 @@ export default {
       }
       let newTema = await API.newTema(body)
       if (newTema) {
-        location.reload()
+        // location.reload()
+        this.newTema = ''
+        this.seleccion = ''
+        this.temas = await API.getAllTemas()
       }
     }
   }
