@@ -52,18 +52,18 @@ export default {
   },
   methods: {
     async crearTema() {
-      // const body = {
-      //   name: this.newTema,
-      //   category: this.seleccion
-      // }
-      // let newTema = await API.newTema(body)
-      // if (newTema) {
-      //   // location.reload()
-      this.newTema = ''
-      this.seleccion = ''
-      this.temas = await API.getAllTemas()
-      console.log(this.temas)
-      // }
+      const body = {
+        name: this.newTema,
+        category: this.seleccion
+      }
+      let newTema = await API.newTema(body)
+      if (newTema) {
+        // location.reload()
+        this.newTema = ''
+        this.seleccion = ''
+        this.temas = await API.getAllTemas()
+        console.log(this.temas)
+      }
     }
   }
 }
