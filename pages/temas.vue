@@ -62,6 +62,7 @@ export default {
         this.newTema = ''
         this.seleccion = ''
         this.temas = await API.getAllTemas()
+        console.log(this.temas)
       }
     }
   }
