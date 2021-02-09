@@ -34,7 +34,7 @@ export default {
     TemasList
   },
   async asyncData() {
-    const temas = await API.getAllTemas()
+    const temas = await API.AllTemas()
     return { temas }
   },
   data() {
