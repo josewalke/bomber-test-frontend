@@ -153,7 +153,7 @@ export default {
       .then(response => response.data)
   },
   newTema(body) {
-    return axios.post('temario', body).then(response => response.data)
+    return axios.post('temario/crear', body).then(response => response.data)
   },
   deleteTema(temaId) {
     return axios.delete(`temario/${temaId}`).then(response => response.data)
