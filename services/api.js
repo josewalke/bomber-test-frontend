@@ -5,7 +5,7 @@ export default {
     return axios.get('users').then(response => response.data)
   },
   getAllTemas() {
-    return axios.get('temario').then(response => response.data)
+    return axios.get('temario/todos').then(response => response.data)
   },
   getAllTest() {
     return axios.get('tests/').then(response => response.data)
