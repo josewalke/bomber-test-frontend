@@ -29,6 +29,7 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "@stripe/stripe-js": "^1.4.0",
     "bcrypt": "^5.0.0",
+    "caniuse-lite": "^1.0.30001185",
     "chart.js": "^2.9.3",
     "cors": "^2.8.4",
     "cross-env": "^5.2.0",
