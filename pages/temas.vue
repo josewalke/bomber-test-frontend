@@ -62,7 +62,7 @@ export default {
       let temas = await this.$store.dispatch('getAllTemas')
       console.log(temas)
       if (alltemas) {
-        // location.reload()
+        location.reload()
       }
     }
   }
