@@ -59,8 +59,10 @@ export default {
       await API.newTema(body)
       let alltemas = await API.AllTemas()
       console.log(this.temas)
+      const temas = await API.getAllTemas()
+      console.log(temas)
       if (alltemas) {
-        location.reload()
+        // location.reload()
       }
     }
   }
