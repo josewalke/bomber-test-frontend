@@ -77,7 +77,7 @@ export default {
   },
   getAllTemasNames() {
     return axios
-      .get('temario')
+      .get('temario/todos')
       .then(response => response.data)
       .then(temas => {
         var temaName = []
