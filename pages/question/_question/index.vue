@@ -23,51 +23,43 @@
         }"
       ></div>
     </div>
-    <h1
-      :class="
-        updatePregunta.answers[0].correcta === true
-          ? `green--text`
-          : `black--text`
-      "
-    >
+    <h1 :class="check0 === true ? `green--text` : `black--text`">
       Opcion1
     </h1>
+    <v-checkbox
+      v-model="check0"
+      :label="check0 === true ? `Correcta` : `Incorrecta`"
+    ></v-checkbox>
     {{ updatePregunta.answers[0].respuesta }}
     <v-textarea v-model="opcion1" auto-grow solo></v-textarea>
     <v-btn @click="updateOpcion1">Actualizar</v-btn>
-    <h1
-      :class="
-        updatePregunta.answers[1].correcta === true
-          ? `green--text`
-          : `black--text`
-      "
-    >
+    <h1 :class="check1 === true ? `green--text` : `black--text`">
       Opcion2
     </h1>
+    <v-checkbox
+      v-model="check1"
+      :label="check1 === true ? `Correcta` : `Incorrecta`"
+    ></v-checkbox>
     {{ updatePregunta.answers[1].respuesta }}
     <v-textarea v-model="opcion2" auto-grow solo></v-textarea>
     <v-btn @click="updateOpcion2">Actualizar</v-btn>
-    <h1
-      :class="
-        updatePregunta.answers[2].correcta === true
-          ? `green--text`
-          : `black--text`
-      "
-    >
+    <h1 :class="check2 === true ? `green--text` : `black--text`">
       Opcion3
     </h1>
+    <v-checkbox
+      v-model="check2"
+      :label="check2 === true ? `Correcta` : `Incorrecta`"
+    ></v-checkbox>
     {{ updatePregunta.answers[2].respuesta }}
     <v-textarea v-model="opcion3" auto-grow solo></v-textarea>
     <v-btn @click="updateOpcion3">Actualizar</v-btn>
-    <h1
-      :class="
-        updatePregunta.answers[3].correcta === true
-          ? `green--text`
-          : `black--text`
-      "
-    >
+    <h1 :class="check3 === true ? `green--text` : `black--text`">
       Opcion4
     </h1>
+    <v-checkbox
+      v-model="check3"
+      :label="check3 === true ? `Correcta` : `Incorrecta`"
+    ></v-checkbox>
     {{ updatePregunta.answers[3].respuesta }}
     <v-textarea v-model="opcion4" auto-grow solo></v-textarea>
     <v-btn @click="updateOpcion4">Actualizar</v-btn>
@@ -175,6 +167,10 @@ export default {
     const id5 = []
     const nombre6 = []
     const id6 = []
+    let check0 = false
+    let check1 = false
+    let check2 = false
+    let check3 = false
     for (let i = 0; i < temas.length; i++) {
       if (pregunta.tema_id === temas[i]._id) {
         posicion = i
@@ -206,6 +202,11 @@ export default {
       }
     }
 
+    check0 = pregunta.answers[0].correcta
+    check1 = pregunta.answers[1].correcta
+    check2 = pregunta.answers[2].correcta
+    check3 = pregunta.answers[3].correcta
+
     return {
       temas,
       posicion,
@@ -220,7 +221,11 @@ export default {
       nombre5,
       id5,
       nombre6,
-      id6
+      id6,
+      check0,
+      check1,
+      check2,
+      check3
     }
   },
   data() {
@@ -300,25 +305,49 @@ export default {
       }
     },
     updateOpcion1() {
+      console.log('lolo1')
       if (this.opcion1.length > 0) {
         const body = {
           id: this.updatePregunta._id,
           answers: [
             {
               respuesta: this.opcion1,
-              correcta: this.updatePregunta.answers[0].correcta
+              correcta: this.check0
             },
             {
               respuesta: this.updatePregunta.answers[1].respuesta,
-              correcta: this.updatePregunta.answers[1].correcta
+              correcta: this.check1
             },
             {
               respuesta: this.updatePregunta.answers[2].respuesta,
-              correcta: this.updatePregunta.answers[2].correcta
+              correcta: this.check2
             },
             {
               respuesta: this.updatePregunta.answers[3].respuesta,
-              correcta: this.updatePregunta.answers[3].correcta
+              correcta: this.check3
+            }
+          ]
+        }
+        this.$store.dispatch('updateOpcion', body)
+      } else if (this.updatePregunta.answers[0].correcta != this.check0) {
+        const body = {
+          id: this.updatePregunta._id,
+          answers: [
+            {
+              respuesta: this.updatePregunta.answers[0].respuesta,
+              correcta: this.check0
+            },
+            {
+              respuesta: this.updatePregunta.answers[1].respuesta,
+              correcta: this.check1
+            },
+            {
+              respuesta: this.updatePregunta.answers[2].respuesta,
+              correcta: this.check2
+            },
+            {
+              respuesta: this.updatePregunta.answers[3].respuesta,
+              correcta: this.check3
             }
           ]
         }
@@ -332,19 +361,42 @@ export default {
           answers: [
             {
               respuesta: this.updatePregunta.answers[0].respuesta,
-              correcta: this.updatePregunta.answers[0].correcta
+              correcta: this.check0
             },
             {
               respuesta: this.opcion2,
-              correcta: this.updatePregunta.answers[1].correcta
+              correcta: this.check1
             },
             {
               respuesta: this.updatePregunta.answers[2].respuesta,
-              correcta: this.updatePregunta.answers[2].correcta
+              correcta: this.check2
             },
             {
               respuesta: this.updatePregunta.answers[3].respuesta,
-              correcta: this.updatePregunta.answers[3].correcta
+              correcta: this.check3
+            }
+          ]
+        }
+        this.$store.dispatch('updateOpcion', body)
+      } else if (this.updatePregunta.answers[1].correcta != this.check1) {
+        const body = {
+          id: this.updatePregunta._id,
+          answers: [
+            {
+              respuesta: this.updatePregunta.answers[0].respuesta,
+              correcta: this.check0
+            },
+            {
+              respuesta: this.updatePregunta.answers[1].respuesta,
+              correcta: this.check1
+            },
+            {
+              respuesta: this.updatePregunta.answers[2].respuesta,
+              correcta: this.check2
+            },
+            {
+              respuesta: this.updatePregunta.answers[3].respuesta,
+              correcta: this.check3
             }
           ]
         }
@@ -358,19 +410,42 @@ export default {
           answers: [
             {
               respuesta: this.updatePregunta.answers[0].respuesta,
-              correcta: this.updatePregunta.answers[0].correcta
+              correcta: this.check0
             },
             {
               respuesta: this.updatePregunta.answers[1].respuesta,
-              correcta: this.updatePregunta.answers[1].correcta
+              correcta: this.check1
             },
             {
               respuesta: this.opcion3,
-              correcta: this.updatePregunta.answers[2].correcta
+              correcta: this.check2
             },
             {
               respuesta: this.updatePregunta.answers[3].respuesta,
-              correcta: this.updatePregunta.answers[3].correcta
+              correcta: this.check3
+            }
+          ]
+        }
+        this.$store.dispatch('updateOpcion', body)
+      } else if (this.updatePregunta.answers[2].correcta != this.check2) {
+        const body = {
+          id: this.updatePregunta._id,
+          answers: [
+            {
+              respuesta: this.updatePregunta.answers[0].respuesta,
+              correcta: this.check0
+            },
+            {
+              respuesta: this.updatePregunta.answers[1].respuesta,
+              correcta: this.check1
+            },
+            {
+              respuesta: this.updatePregunta.answers[2].respuesta,
+              correcta: this.check2
+            },
+            {
+              respuesta: this.updatePregunta.answers[3].respuesta,
+              correcta: this.check3
             }
           ]
         }
@@ -384,19 +459,42 @@ export default {
           answers: [
             {
               respuesta: this.updatePregunta.answers[0].respuesta,
-              correcta: this.updatePregunta.answers[0].correcta
+              correcta: this.check0
             },
             {
               respuesta: this.updatePregunta.answers[1].respuesta,
-              correcta: this.updatePregunta.answers[1].correcta
+              correcta: this.check1
             },
             {
               respuesta: this.updatePregunta.answers[2].respuesta,
-              correcta: this.updatePregunta.answers[2].correcta
+              correcta: this.check2
             },
             {
               respuesta: this.opcion4,
-              correcta: this.updatePregunta.answers[3].correcta
+              correcta: this.check3
+            }
+          ]
+        }
+        this.$store.dispatch('updateOpcion', body)
+      } else if (this.updatePregunta.answers[3].correcta != this.check3) {
+        const body = {
+          id: this.updatePregunta._id,
+          answers: [
+            {
+              respuesta: this.updatePregunta.answers[0].respuesta,
+              correcta: this.check0
+            },
+            {
+              respuesta: this.updatePregunta.answers[1].respuesta,
+              correcta: this.check1
+            },
+            {
+              respuesta: this.updatePregunta.answers[2].respuesta,
+              correcta: this.check2
+            },
+            {
+              respuesta: this.updatePregunta.answers[3].respuesta,
+              correcta: this.check3
             }
           ]
         }

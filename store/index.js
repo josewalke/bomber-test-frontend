@@ -548,6 +548,7 @@ export const actions = {
     }
   },
   async updateOpcion({ commit }, body) {
+    console.log('lolo2')
     const response = await API.updateOpcion(body)
     if (!response.error) {
       const pregunta = await API.getQuestionById(body.id)

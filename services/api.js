@@ -193,6 +193,7 @@ export default {
       .then(response => response.data)
   },
   updateOpcion(newOpcion) {
+    console.log('lolo3')
     const body = {
       answers: newOpcion.answers
     }
